@@ -66,8 +66,8 @@ define('EDUSIGN_MARKING_WORKFLOW_STATE_READYFORRELEASE', 'readyforrelease');
 define('EDUSIGN_MARKING_WORKFLOW_STATE_RELEASED', 'released');
 
 /**
-* 
- * EDUSIGN_MAX_EVENT_LENGTH = 432000 ; 5 days maximum 
+*
+ * EDUSIGN_MAX_EVENT_LENGTH = 432000 ; 5 days maximum
 */
 define("EDUSIGN_MAX_EVENT_LENGTH", "432000");
 
@@ -106,21 +106,21 @@ class edusign
 {
 
     /**
-     * 
      *
-     * @var stdClass the edusignment record that contains the global settings for this edusign instance 
+     *
+     * @var stdClass the edusignment record that contains the global settings for this edusign instance
      */
     private $instance;
 
     /**
-     * 
      *
-     * @var grade_item the grade_item record for this edusign instance's primary grade item. 
+     *
+     * @var grade_item the grade_item record for this edusign instance's primary grade item.
      */
     private $gradeitem;
 
     /**
-     * 
+     *
      *
      * @var context the context of the course module for this edusign instance
      *               (or just the course if we are creating a new one)
@@ -128,35 +128,35 @@ class edusign
     private $context;
 
     /**
-     * 
      *
-     * @var stdClass the course this edusign instance belongs to 
+     *
+     * @var stdClass the course this edusign instance belongs to
      */
     private $course;
 
     /**
-     * 
      *
-     * @var stdClass the admin config for all edusign instances  
+     *
+     * @var stdClass the admin config for all edusign instances
      */
     private $adminconfig;
 
     /**
-     * 
      *
-     * @var edusign_renderer the custom renderer for this module 
+     *
+     * @var edusign_renderer the custom renderer for this module
      */
     private $output;
 
     /**
-     * 
      *
-     * @var cm_info the course module for this edusign instance 
+     *
+     * @var cm_info the course module for this edusign instance
      */
     private $coursemodule;
 
     /**
-     * 
+     *
      *
      * @var array cache for things like the coursemodule name or the scale menu -
      *             only lives for a single request.
@@ -164,21 +164,21 @@ class edusign
     private $cache;
 
     /**
-     * 
      *
-     * @var array list of the installed submission plugins 
+     *
+     * @var array list of the installed submission plugins
      */
     private $submissionplugins;
 
     /**
-     * 
      *
-     * @var array list of the installed feedback plugins 
+     *
+     * @var array list of the installed feedback plugins
      */
     private $feedbackplugins;
 
     /**
-     * 
+     *
      *
      * @var string action to be used to return to this page
      *              (without repeating any form submissions etc).
@@ -186,72 +186,72 @@ class edusign
     private $returnaction = 'view';
 
     /**
-     * 
      *
-     * @var array params to be used to return to this page 
+     *
+     * @var array params to be used to return to this page
      */
     private $returnparams = array();
 
     /**
-     * 
      *
-     * @var string modulename prevents excessive calls to get_string 
+     *
+     * @var string modulename prevents excessive calls to get_string
      */
     private static $modulename = null;
 
     /**
-     * 
      *
-     * @var string modulenameplural prevents excessive calls to get_string 
+     *
+     * @var string modulenameplural prevents excessive calls to get_string
      */
     private static $modulenameplural = null;
 
     /**
-     * 
      *
-     * @var array of marking workflow states for the current user 
+     *
+     * @var array of marking workflow states for the current user
      */
     private $markingworkflowstates = null;
 
     /**
-     * 
      *
-     * @var bool whether to exclude users with inactive enrolment 
+     *
+     * @var bool whether to exclude users with inactive enrolment
      */
     private $showonlyactiveenrol = null;
 
     /**
-     * 
      *
-     * @var string A key used to identify userlists created by this object. 
+     *
+     * @var string A key used to identify userlists created by this object.
      */
     private $useridlistid = null;
 
     /**
-     * 
      *
-     * @var array cached list of participants for this edusignment. The cache key will be group, showactive and the context id 
+     *
+     * @var array cached list of participants for this edusignment. The cache key will be group, showactive and the context id
      */
     private $participants = array();
 
     /**
-     * 
      *
-     * @var array cached list of user groups when team submissions are enabled. The cache key will be the user. 
+     *
+     * @var array cached list of user groups when team submissions are enabled. The cache key will be the user.
      */
     private $usersubmissiongroups = array();
 
     /**
-     * 
      *
-     * @var array cached list of user groups. The cache key will be the user. 
+     *
+     * @var array cached list of user groups. The cache key will be the user.
      */
     private $usergroups = array();
 
     /**
-     * 
      *
-     * @var array cached list of IDs of users who share group membership with the user. The cache key will be the user. 
+     *
+     * @var array cached list of IDs of users who share group membership with the user. The cache key will be the user.
      */
     private $sharedgroupmembers = array();
 
@@ -353,7 +353,7 @@ class edusign
      */
     public function show_intro()
     {
-        if ($this->get_instance()->alwaysshowdescription 
+        if ($this->get_instance()->alwaysshowdescription
             || time() > $this->get_instance()->allowsubmissionsfromdate
         ) {
             return true;
@@ -544,7 +544,7 @@ class edusign
      * @param  array  $args   Optional arguments to pass to the view (instead of getting them from GET and POST).
      * @return string - The page output.
      */
-    public function view($action='', $args = array())
+    public function view($action = '', $args = array())
     {
         global $PAGE;
 
@@ -564,58 +564,58 @@ class edusign
                 $action = 'redirect';
                 $nextpageparams['action'] = 'view';
             }
-        } else if ($action == 'editprevioussubmission') {
+        } elseif ($action == 'editprevioussubmission') {
             $action = 'editsubmission';
             if ($this->process_copy_previous_attempt($notices)) {
                 $action = 'redirect';
                 $nextpageparams['action'] = 'editsubmission';
             }
-        } else if ($action == 'lock') {
+        } elseif ($action == 'lock') {
             $this->process_lock_submission();
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
-        } else if ($action == 'addattempt') {
+        } elseif ($action == 'addattempt') {
             $this->process_add_attempt(required_param('userid', PARAM_INT));
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
-        } else if ($action == 'reverttodraft') {
+        } elseif ($action == 'reverttodraft') {
             $this->process_revert_to_draft();
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
-        } else if ($action == 'unlock') {
+        } elseif ($action == 'unlock') {
             $this->process_unlock_submission();
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
-        } else if ($action == 'setbatchmarkingworkflowstate') {
+        } elseif ($action == 'setbatchmarkingworkflowstate') {
             $this->process_set_batch_marking_workflow_state();
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
-        } else if ($action == 'setbatchmarkingallocation') {
+        } elseif ($action == 'setbatchmarkingallocation') {
             $this->process_set_batch_marking_allocation();
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
-        } else if ($action == 'confirmsubmit') {
+        } elseif ($action == 'confirmsubmit') {
             $action = 'submit';
             if ($this->process_submit_for_grading($mform, $notices)) {
                 $action = 'redirect';
                 $nextpageparams['action'] = 'view';
-            } else if ($notices) {
+            } elseif ($notices) {
                 $action = 'viewsubmitforgradingerror';
             }
-        } else if ($action == 'submitotherforgrading') {
+        } elseif ($action == 'submitotherforgrading') {
             if ($this->process_submit_other_for_grading($mform, $notices)) {
                 $action = 'redirect';
                 $nextpageparams['action'] = 'grading';
             } else {
                 $action = 'viewsubmitforgradingerror';
             }
-        } else if ($action == 'gradingbatchoperation') {
+        } elseif ($action == 'gradingbatchoperation') {
             $action = $this->process_grading_batch_operation($mform);
             if ($action == 'grading') {
                 $action = 'redirect';
                 $nextpageparams['action'] = 'grading';
             }
-        } else if ($action == 'submitgrade') {
+        } elseif ($action == 'submitgrade') {
             if (optional_param('saveandshownext', null, PARAM_RAW)) {
                 // Save and show next.
                 $action = 'grade';
@@ -625,17 +625,17 @@ class edusign
                     $nextpageparams['rownum'] = optional_param('rownum', 0, PARAM_INT) + 1;
                     $nextpageparams['useridlistid'] = optional_param('useridlistid', $this->get_useridlist_key_id(), PARAM_ALPHANUM);
                 }
-            } else if (optional_param('nosaveandprevious', null, PARAM_RAW)) {
+            } elseif (optional_param('nosaveandprevious', null, PARAM_RAW)) {
                 $action = 'redirect';
                 $nextpageparams['action'] = 'grade';
                 $nextpageparams['rownum'] = optional_param('rownum', 0, PARAM_INT) - 1;
                 $nextpageparams['useridlistid'] = optional_param('useridlistid', $this->get_useridlist_key_id(), PARAM_ALPHANUM);
-            } else if (optional_param('nosaveandnext', null, PARAM_RAW)) {
+            } elseif (optional_param('nosaveandnext', null, PARAM_RAW)) {
                 $action = 'redirect';
                 $nextpageparams['action'] = 'grade';
                 $nextpageparams['rownum'] = optional_param('rownum', 0, PARAM_INT) + 1;
                 $nextpageparams['useridlistid'] = optional_param('useridlistid', $this->get_useridlist_key_id(), PARAM_ALPHANUM);
-            } else if (optional_param('savegrade', null, PARAM_RAW)) {
+            } elseif (optional_param('savegrade', null, PARAM_RAW)) {
                 // Save changes button.
                 $action = 'grade';
                 if ($this->process_save_grade($mform)) {
@@ -647,20 +647,20 @@ class edusign
                 $action = 'redirect';
                 $nextpageparams['action'] = 'grading';
             }
-        } else if ($action == 'quickgrade') {
+        } elseif ($action == 'quickgrade') {
             $message = $this->process_save_quick_grades();
             $action = 'quickgradingresult';
-        } else if ($action == 'saveoptions') {
+        } elseif ($action == 'saveoptions') {
             $this->process_save_grading_options();
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
-        } else if ($action == 'saveextension') {
+        } elseif ($action == 'saveextension') {
             $action = 'grantextension';
             if ($this->process_save_extension($mform)) {
                 $action = 'redirect';
                 $nextpageparams['action'] = 'grading';
             }
-        } else if ($action == 'revealidentitiesconfirm') {
+        } elseif ($action == 'revealidentitiesconfirm') {
             $this->process_reveal_identities();
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
@@ -679,47 +679,47 @@ class edusign
             $nextpageurl = new moodle_url('/mod/edusign/view.php', $nextpageparams);
             redirect($nextpageurl);
             return;
-        } else if ($action == 'savegradingresult') {
+        } elseif ($action == 'savegradingresult') {
             $message = get_string('gradingchangessaved', 'edusign');
             $o .= $this->view_savegrading_result($message);
-        } else if ($action == 'quickgradingresult') {
+        } elseif ($action == 'quickgradingresult') {
             $mform = null;
             $o .= $this->view_quickgrading_result($message);
-        } else if ($action == 'gradingpanel') {
+        } elseif ($action == 'gradingpanel') {
             $o .= $this->view_single_grading_panel($args);
-        } else if ($action == 'grade') {
+        } elseif ($action == 'grade') {
             $o .= $this->view_single_grade_page($mform);
-        } else if ($action == 'viewpluginedusignfeedback') {
+        } elseif ($action == 'viewpluginedusignfeedback') {
             $o .= $this->view_plugin_content('edusignfeedback');
-        } else if ($action == 'viewpluginedusignsubmission') {
+        } elseif ($action == 'viewpluginedusignsubmission') {
             $o .= $this->view_plugin_content('edusignsubmission');
-        } else if ($action == 'editsubmission') {
+        } elseif ($action == 'editsubmission') {
             $o .= $this->view_edit_submission_page($mform, $notices);
-        } else if ($action == 'grader') {
+        } elseif ($action == 'grader') {
             $o .= $this->view_grader();
-        } else if ($action == 'grading') {
+        } elseif ($action == 'grading') {
             $o .= $this->view_grading_page();
-        } else if ($action == 'downloadall') {
+        } elseif ($action == 'downloadall') {
             $o .= $this->download_submissions();
-        } else if ($action == 'submit') {
+        } elseif ($action == 'submit') {
             $o .= $this->check_submit_for_grading($mform);
-        } else if ($action == 'grantextension') {
+        } elseif ($action == 'grantextension') {
             $o .= $this->view_grant_extension($mform);
-        } else if ($action == 'revealidentities') {
+        } elseif ($action == 'revealidentities') {
             $o .= $this->view_reveal_identities_confirm($mform);
-        } else if ($action == 'plugingradingbatchoperation') {
+        } elseif ($action == 'plugingradingbatchoperation') {
             $o .= $this->view_plugin_grading_batch_operation($mform);
-        } else if ($action == 'viewpluginpage') {
+        } elseif ($action == 'viewpluginpage') {
              $o .= $this->view_plugin_page();
-        } else if ($action == 'viewcourseindex') {
+        } elseif ($action == 'viewcourseindex') {
              $o .= $this->view_course_index();
-        } else if ($action == 'viewbatchsetmarkingworkflowstate') {
+        } elseif ($action == 'viewbatchsetmarkingworkflowstate') {
              $o .= $this->view_batch_set_workflow_state($mform);
-        } else if ($action == 'viewbatchmarkingallocation') {
+        } elseif ($action == 'viewbatchmarkingallocation') {
             $o .= $this->view_batch_markingallocation($mform);
-        } else if ($action == 'viewsubmitforgradingerror') {
+        } elseif ($action == 'viewsubmitforgradingerror') {
             $o .= $this->view_error_page(get_string('submitforgrading', 'edusign'), $notices);
-        } else if ($action == 'fixrescalednullgrades') {
+        } elseif ($action == 'fixrescalednullgrades') {
             $o .= $this->view_fix_rescaled_null_grades();
         } else {
             $o .= $this->view_submission_page();
@@ -819,12 +819,13 @@ class edusign
             $this->update_calendar($formdata->coursemodule);
             if (!empty($formdata->completionexpected)) {
                 \core_completion\api::update_completion_date_event(
-                    $formdata->coursemodule, 'edusign', $this->instance,
+                    $formdata->coursemodule,
+                    'edusign',
+                    $this->instance,
                     $formdata->completionexpected
                 );
             }
             $this->update_gradebook(false, $formdata->coursemodule);
-
         }
 
         $update = new stdClass();
@@ -882,7 +883,7 @@ class edusign
 
         // Delete files associated with this edusignment.
         $fs = get_file_storage();
-        if (! $fs->delete_area_files($this->context->id) ) {
+        if (! $fs->delete_area_files($this->context->id)) {
             $result = false;
         }
 
@@ -999,7 +1000,6 @@ class edusign
                 $this->get_instance()->{$key} = $override->{$key};
             }
         }
-
     }
 
     /**
@@ -1100,7 +1100,7 @@ class edusign
 
         if (isset($event->groupid)) {
             $overrideparams['groupid'] = $event->groupid;
-        } else if (isset($event->userid)) {
+        } elseif (isset($event->userid)) {
             $overrideparams['userid'] = $event->userid;
         }
 
@@ -1179,13 +1179,13 @@ class edusign
                     ];
                 }
             }
-        } else if ($event->eventtype == edusign_EVENT_TYPE_GRADINGDUE) {
+        } elseif ($event->eventtype == edusign_EVENT_TYPE_GRADINGDUE) {
             if ($duedate) {
                 $mindate = [
                     $duedate,
                     get_string('gradingdueduedatevalidation', 'edusign'),
                 ];
-            } else if ($submissionsfromdate) {
+            } elseif ($submissionsfromdate) {
                 $mindate = [
                     $submissionsfromdate,
                     get_string('gradingduefromdatevalidation', 'edusign'),
@@ -1270,7 +1270,8 @@ class edusign
         if (!empty($data->reset_edusign_user_overrides)) {
             $DB->delete_records_select(
                 'edusign_overrides',
-                'edusignid IN (SELECT id FROM {edusign} WHERE course = ?) AND userid IS NOT NULL', array($data->courseid)
+                'edusignid IN (SELECT id FROM {edusign} WHERE course = ?) AND userid IS NOT NULL',
+                array($data->courseid)
             );
             $status[] = array(
                 'component' => $componentstr,
@@ -1281,7 +1282,8 @@ class edusign
         if (!empty($data->reset_edusign_group_overrides)) {
             $DB->delete_records_select(
                 'edusign_overrides',
-                'edusignid IN (SELECT id FROM {edusign} WHERE course = ?) AND groupid IS NOT NULL', array($data->courseid)
+                'edusignid IN (SELECT id FROM {edusign} WHERE course = ?) AND groupid IS NOT NULL',
+                array($data->courseid)
             );
             $status[] = array(
                 'component' => $componentstr,
@@ -1316,7 +1318,8 @@ class edusign
                 'edusign',
                 array('duedate', 'allowsubmissionsfromdate', 'cutoffdate'),
                 $data->timeshift,
-                $data->courseid, $this->get_instance()->id
+                $data->courseid,
+                $this->get_instance()->id
             );
             $status[] = array('component'=>$componentstr,
                               'item'=>get_string('datechanged'),
@@ -1389,8 +1392,8 @@ class edusign
         if (isset($adminconfig->maxperpage)) {
             $maxperpage = $adminconfig->maxperpage;
         }
-        if (isset($maxperpage) 
-            && $maxperpage != -1 
+        if (isset($maxperpage)
+            && $maxperpage != -1
             && ($perpage == -1 || $perpage > $maxperpage)
         ) {
             $perpage = $maxperpage;
@@ -1481,7 +1484,8 @@ class edusign
             }
         } else {
             $DB->delete_records(
-                'event', array('modulename' => 'edusign', 'instance' => $instance->id,
+                'event',
+                array('modulename' => 'edusign', 'instance' => $instance->id,
                 'eventtype' => $eventtype)
             );
         }
@@ -1493,7 +1497,9 @@ class edusign
             $event->timestart = $instance->gradingduedate;
             $event->timesort = $instance->gradingduedate;
             $event->id = $DB->get_field(
-                'event', 'id', array('modulename' => 'edusign',
+                'event',
+                'id',
+                array('modulename' => 'edusign',
                 'instance' => $instance->id, 'eventtype' => $event->eventtype)
             );
 
@@ -1506,7 +1512,8 @@ class edusign
             }
         } else {
             $DB->delete_records(
-                'event', array('modulename' => 'edusign', 'instance' => $instance->id,
+                'event',
+                array('modulename' => 'edusign', 'instance' => $instance->id,
                 'eventtype' => $eventtype)
             );
         }
@@ -1595,7 +1602,9 @@ class edusign
         $this->update_calendar($this->get_course_module()->id);
         $completionexpected = (!empty($formdata->completionexpected)) ? $formdata->completionexpected : null;
         \core_completion\api::update_completion_date_event(
-            $this->get_course_module()->id, 'edusign', $this->instance,
+            $this->get_course_module()->id,
+            'edusign',
+            $this->instance,
             $completionexpected
         );
         $this->update_gradebook(false, $this->get_course_module()->id);
@@ -1617,8 +1626,11 @@ class edusign
     {
         if (isset($formdata->introattachments)) {
             file_save_draft_area_files(
-                $formdata->introattachments, $this->get_context()->id,
-                'mod_edusign', edusign_INTROATTACHMENT_FILEAREA, 0
+                $formdata->introattachments,
+                $this->get_context()->id,
+                'mod_edusign',
+                edusign_INTROATTACHMENT_FILEAREA,
+                0
             );
         }
     }
@@ -1664,7 +1676,7 @@ class edusign
             $pluginsenabled[] = $mform->createElement('hidden', $name, 1);
             $mform->setType($name, PARAM_BOOL);
             $plugin->get_settings($mform);
-        } else if ($plugin->is_visible() && $plugin->is_configurable()) {
+        } elseif ($plugin->is_visible() && $plugin->is_configurable()) {
             $name = $plugin->get_subtype() . '_' . $plugin->get_type() . '_enabled';
             $label = $plugin->get_name();
             $pluginsenabled[] = $mform->createElement('checkbox', $name, '', $label);
@@ -1678,7 +1690,6 @@ class edusign
             $mform->setDefault($plugin->get_subtype() . '_' . $plugin->get_type() . '_enabled', $default);
 
             $plugin->get_settings($mform);
-
         }
     }
 
@@ -1904,8 +1915,12 @@ class edusign
 
         $fs = get_file_storage();
         $files = $fs->get_area_files(
-            $this->get_context()->id, 'mod_edusign', edusign_INTROATTACHMENT_FILEAREA,
-            0, 'id', false
+            $this->get_context()->id,
+            'mod_edusign',
+            edusign_INTROATTACHMENT_FILEAREA,
+            0,
+            'id',
+            false
         );
 
         return count($files);
@@ -1930,7 +1945,7 @@ class edusign
      * @param  int     $modified Timestamp from when the grade was last modified
      * @return string User-friendly representation of grade
      */
-    public function display_grade($grade, $editing, $userid=0, $modified=0)
+    public function display_grade($grade, $editing, $userid = 0, $modified = 0)
     {
         global $DB;
 
@@ -1971,7 +1986,6 @@ class edusign
                 }
                 return $o;
             }
-
         } else {
             // Scale.
             if (empty($this->cache['scale'])) {
@@ -2073,7 +2087,6 @@ class edusign
                 $this->get_instance()->teamsubmissiongroupingid,
                 'DISTINCT g.id, g.name'
             );
-
         }
         foreach ($participants as $userid => $participant) {
             $participants[$userid]->fullname = $this->fullname($participant);
@@ -2092,8 +2105,8 @@ class edusign
                 $submitted = true;
             }
 
-            if ($submitted && ($submissioninfo->stime >= $submissioninfo->gtime 
-                || empty($submissioninfo->gtime) 
+            if ($submitted && ($submissioninfo->stime >= $submissioninfo->gtime
+                || empty($submissioninfo->gtime)
                 || $submissioninfo->grade === null)
             ) {
                 $requiregrading = true;
@@ -2156,7 +2169,9 @@ class edusign
         $key = $this->context->id . '-' . $currentgroup . '-' . $this->show_only_active_users();
         if (!isset($this->participants[$key])) {
             list($esql, $params) = get_enrolled_sql(
-                $this->context, 'mod/edusign:submit', $currentgroup,
+                $this->context,
+                'mod/edusign:submit',
+                $currentgroup,
                 $this->show_only_active_users()
             );
 
@@ -2185,12 +2200,11 @@ class edusign
                 $orderby = "COALESCE(s.timecreated, " . time() . ") ASC, COALESCE(s.id, " . PHP_INT_MAX . ") ASC, um.id ASC";
             }
 
-            if ($instance->markingworkflow 
-                && $instance->markingallocation 
-                && !has_capability('mod/edusign:manageallocations', $this->get_context()) 
+            if ($instance->markingworkflow
+                && $instance->markingallocation
+                && !has_capability('mod/edusign:manageallocations', $this->get_context())
                 && has_capability('mod/edusign:grade', $this->get_context())
             ) {
-
                 $additionaljoins .= ' LEFT JOIN {edusign_user_flags} uf
                                      ON u.id = uf.userid
                                      AND uf.edusignment = :edusignmentid3';
@@ -2274,7 +2288,6 @@ class edusign
         // are the submission teams, but if no team submission grouping was specified
         // $groups will contain all participants groups.
         if ($this->get_instance()->teamsubmissiongroupingid) {
-
             // We restrict the users to the selected group ones.
             $groups = groups_get_all_groups(
                 $this->get_course()->id,
@@ -2294,7 +2307,7 @@ class edusign
                         $count += 1;
                     }
                 }
-            } else if ($activitygroup != 0 && empty($groups)) {
+            } elseif ($activitygroup != 0 && empty($groups)) {
                 // Set count to 1 if $groups returns empty.
                 // It means the group is not part of $this->get_instance()->teamsubmissiongroupingid.
                 $count = 1;
@@ -2305,7 +2318,7 @@ class edusign
             foreach ($participants as $participant) {
                 if ($group = $this->get_submission_group($participant->id)) {
                     $groups[$group->id] = true;
-                } else if (empty($this->get_instance()->preventsubmissionnotingroup)) {
+                } elseif (empty($this->get_instance()->preventsubmissionnotingroup)) {
                     $groups[0] = true;
                 }
             }
@@ -2446,7 +2459,6 @@ class edusign
                             s.edusignment = :edusignid AND
                             s.timemodified IS NOT NULL ' .
                             $sqlnew;
-
         }
 
         return $DB->count_records_sql($sql, $params);
@@ -2473,7 +2485,6 @@ class edusign
         $params['submissionstatus'] = $status;
 
         if ($this->get_instance()->teamsubmission) {
-
             $groupsstr = '';
             if ($currentgroup != 0) {
                 // If there is an active group we should only display the current group users groups.
@@ -2513,7 +2524,6 @@ class edusign
                             s.edusignment = :edusignid AND
                             s.timemodified IS NOT NULL AND
                             s.status = :submissionstatus';
-
         }
 
         return $DB->count_records_sql($sql, $params);
@@ -2602,7 +2612,6 @@ class edusign
         $submissions = $DB->get_records_sql($sql, $params);
 
         if (!empty($submissions)) {
-
             mtrace('Processing ' . count($submissions) . ' edusignment submissions ...');
 
             // Preload courses we are going to need those.
@@ -2631,7 +2640,6 @@ class edusign
 
             // Message students about new feedback.
             foreach ($submissions as $submission) {
-
                 mtrace("Processing edusignment submission $submission->id ...");
 
                 // Do not cache user lookups - could be too many.
@@ -2814,9 +2822,9 @@ class edusign
             if ($this->get_instance()->grade > 0) {
                 if (!is_numeric($grade->grade)) {
                     return false;
-                } else if ($grade->grade > $this->get_instance()->grade) {
+                } elseif ($grade->grade > $this->get_instance()->grade) {
                     return false;
-                } else if ($grade->grade < 0) {
+                } elseif ($grade->grade < 0) {
                     return false;
                 }
             } else {
@@ -2908,7 +2916,7 @@ class edusign
                     if ($maxoverride[$key] < $override->{$key}) {
                         $maxoverride[$key] = $override->{$key};
                     }
-                } else if ($maxoverride[$key] < $this->get_instance()->{$key}) {
+                } elseif ($maxoverride[$key] < $this->get_instance()->{$key}) {
                     $maxoverride[$key] = $this->get_instance()->{$key};
                 }
             }
@@ -3021,7 +3029,7 @@ class edusign
      * @param  int  $attemptnumber - -1 means the latest attempt
      * @return stdClass The submission
      */
-    public function get_group_submission($userid, $groupid, $create, $attemptnumber=-1)
+    public function get_group_submission($userid, $groupid, $create, $attemptnumber = -1)
     {
         global $DB;
 
@@ -3143,8 +3151,7 @@ class edusign
 
             if (has_capability('mod/edusign:grade', $context)) {
                 $submitted = $edusignment->count_submissions_with_status(edusign_SUBMISSION_STATUS_SUBMITTED);
-
-            } else if (has_capability('mod/edusign:submit', $context)) {
+            } elseif (has_capability('mod/edusign:submit', $context)) {
                 if ($edusignment->get_instance()->teamsubmission) {
                     $usersubmission = $edusignment->get_group_submission($USER->id, 0, false);
                 } else {
@@ -3158,8 +3165,8 @@ class edusign
                 }
             }
             $gradinginfo = grade_get_grades($course->id, 'mod', 'edusign', $cm->instance, $USER->id);
-            if (isset($gradinginfo->items[0]->grades[$USER->id]) 
-                && !$gradinginfo->items[0]->grades[$USER->id]->hidden 
+            if (isset($gradinginfo->items[0]->grades[$USER->id])
+                && !$gradinginfo->items[0]->grades[$USER->id]->hidden
             ) {
                 $grade = $gradinginfo->items[0]->grades[$USER->id]->str_grade;
             } else {
@@ -3167,7 +3174,6 @@ class edusign
             }
 
             $courseindexsummary->add_edusign_info($cm->id, $cm->get_formatted_name(), $sectionname, $timedue, $submitted, $grade);
-
         }
 
         $o .= $this->get_renderer()->render($courseindexsummary);
@@ -3305,7 +3311,6 @@ class edusign
 
             // Trigger event for viewing a submission.
             \mod_edusign\event\submission_viewed::create_from_submission($this, $item)->trigger();
-
         } else {
             $plugin = $this->get_feedback_plugin_by_type($plugintype);
             if ($gradeid <= 0) {
@@ -3628,7 +3633,13 @@ class edusign
 
         // Load all users with submit.
         $students = get_enrolled_users(
-            $this->context, "mod/edusign:submit", null, 'u.*', null, null, null,
+            $this->context,
+            "mod/edusign:submit",
+            null,
+            'u.*',
+            null,
+            null,
+            null,
             $this->show_only_active_users()
         );
 
@@ -3710,7 +3721,7 @@ class edusign
                                     );
                                     if ($type == 'file') {
                                         $pathfilename = $prefixedfilename . $file->get_filepath() . $zipfilename;
-                                    } else if ($type == 'onlinetext') {
+                                    } elseif ($type == 'onlinetext') {
                                         $pathfilename = $prefixedfilename . '/' . $zipfilename;
                                     } else {
                                         $pathfilename = $prefixedfilename . '/' . $zipfilename;
@@ -3755,12 +3766,13 @@ class edusign
             $result .= $this->get_renderer()->render($header);
             $result .= $this->get_renderer()->notification(get_string('nosubmission', 'edusign'));
             $url = new moodle_url(
-                '/mod/edusign/view.php', array('id'=>$this->get_course_module()->id,
+                '/mod/edusign/view.php',
+                array('id'=>$this->get_course_module()->id,
                 'action'=>'grading')
             );
             $result .= $this->get_renderer()->continue_button($url);
             $result .= $this->view_footer();
-        } else if ($zipfile = $this->pack_files($filesforzipping)) {
+        } elseif ($zipfile = $this->pack_files($filesforzipping)) {
             \mod_edusign\event\all_submissions_downloaded::create_from_edusign($this)->trigger();
             // Send file and delete after sending.
             send_temp_file($zipfile, $filename);
@@ -3783,7 +3795,7 @@ class edusign
 
      * @return void|array
      */
-    public function add_to_log($action = '', $info = '', $url='', $return = false)
+    public function add_to_log($action = '', $info = '', $url = '', $return = false)
     {
         global $USER;
 
@@ -3837,7 +3849,7 @@ class edusign
      * @param  int  $attemptnumber - -1 means the latest attempt
      * @return stdClass The submission
      */
-    public function get_user_submission($userid, $create, $attemptnumber=-1)
+    public function get_user_submission($userid, $create, $attemptnumber = -1)
     {
         global $DB, $USER;
 
@@ -3965,7 +3977,7 @@ class edusign
      * @param  int  $attemptnumber The attempt number to retrieve the grade for. -1 means the latest submission.
      * @return stdClass The grade record
      */
-    public function get_user_grade($userid, $create, $attemptnumber=-1)
+    public function get_user_grade($userid, $create, $attemptnumber = -1)
     {
         global $DB, $USER;
 
@@ -4085,7 +4097,6 @@ class edusign
                 $groupid = $submissiongroup->id;
             }
             $notsubmitted = $this->get_submission_group_members_who_have_not_submitted($groupid, false);
-
         }
 
         // Get the requested grade.
@@ -4294,7 +4305,6 @@ class edusign
                 $groupid = $submissiongroup->id;
             }
             $notsubmitted = $this->get_submission_group_members_who_have_not_submitted($groupid, false);
-
         }
 
         // Get the requested grade.
@@ -4491,7 +4501,7 @@ class edusign
         $cmid = $this->get_course_module()->id;
 
         $links = array();
-        if (has_capability('gradereport/grader:view', $this->get_course_context()) 
+        if (has_capability('gradereport/grader:view', $this->get_course_context())
             && has_capability('moodle/grade:viewall', $this->get_course_context())
         ) {
             $gradebookurl = '/grade/report/grader/index.php?id=' . $this->get_course()->id;
@@ -4501,7 +4511,7 @@ class edusign
             $downloadurl = '/mod/edusign/view.php?id=' . $cmid . '&action=downloadall';
             $links[$downloadurl] = get_string('downloadall', 'edusign');
         }
-        if ($this->is_blind_marking() 
+        if ($this->is_blind_marking()
             && has_capability('mod/edusign:revealidentities', $this->get_context())
         ) {
             $revealidentitiesurl = '/mod/edusign/view.php?id=' . $cmid . '&action=revealidentities';
@@ -4880,7 +4890,9 @@ class edusign
                 $this->get_context(),
                 $this->show_intro(),
                 $this->get_course_module()->id,
-                $title, '', $postfix
+                $title,
+                '',
+                $postfix
             )
         );
 
@@ -5056,11 +5068,11 @@ class edusign
                 // Reset the form so the grant extension page will create the extension form.
                 $mform = null;
                 return 'grantextension';
-            } else if ($data->operation == 'setmarkingworkflowstate') {
+            } elseif ($data->operation == 'setmarkingworkflowstate') {
                 return 'viewbatchsetmarkingworkflowstate';
-            } else if ($data->operation == 'setmarkingallocation') {
+            } elseif ($data->operation == 'setmarkingallocation') {
                 return 'viewbatchmarkingallocation';
-            } else if (strpos($data->operation, $prefix) === 0) {
+            } elseif (strpos($data->operation, $prefix) === 0) {
                 $tail = substr($data->operation, strlen($prefix));
                 list($plugintype, $action) = explode('_', $tail, 2);
 
@@ -5076,11 +5088,11 @@ class edusign
                 foreach ($userlist as $userid) {
                     if ($data->operation == 'lock') {
                         $this->process_lock_submission($userid);
-                    } else if ($data->operation == 'unlock') {
+                    } elseif ($data->operation == 'unlock') {
                         $this->process_unlock_submission($userid);
-                    } else if ($data->operation == 'reverttodraft') {
+                    } elseif ($data->operation == 'reverttodraft') {
                         $this->process_revert_to_draft($userid);
-                    } else if ($data->operation == 'addattempt') {
+                    } elseif ($data->operation == 'addattempt') {
                         if (!$this->get_instance()->teamsubmission) {
                             $this->process_add_attempt($userid);
                         }
@@ -5290,7 +5302,8 @@ class edusign
 
         if ($mform == null) {
             $mform = new mod_edusign_confirm_submission_form(
-                null, array($requiresubmissionstatement,
+                null,
+                array($requiresubmissionstatement,
                                                                         $submissionstatement,
                                                                         $this->get_course_module()->id,
                 $data)
@@ -5465,7 +5478,6 @@ class edusign
                         (!is_null($gradebookgrade) && !$gradebookgrade->hidden);
         // If there is a visible grade, show the summary.
         if (($hasgrade || !$emptyplugins) && $gradevisible) {
-
             $gradefordisplay = null;
             $gradeddate = null;
             $grader = null;
@@ -5488,7 +5500,7 @@ class edusign
                 $gradeddate = $gradebookgrade->dategraded;
                 if (isset($grade->grader) && $grade->grader > 0) {
                     $grader = $DB->get_record('user', array('id' => $grade->grader));
-                } else if (isset($gradebookgrade->usermodified) && $gradebookgrade->usermodified > 0) {
+                } elseif (isset($gradebookgrade->usermodified) && $gradebookgrade->usermodified > 0) {
                     $grader = $DB->get_record('user', array('id' => $gradebookgrade->usermodified));
                 }
             }
@@ -5555,7 +5567,6 @@ class edusign
         $o = '';
 
         if ($this->can_view_submission($user->id)) {
-
             if (has_capability('mod/edusign:submit', $this->get_context(), $user, false)) {
                 $submissionstatus = $this->get_edusign_submission_status_renderable($user, $showlinks);
                 $o .= $this->get_renderer()->render($submissionstatus);
@@ -5590,22 +5601,22 @@ class edusign
             if ($teamsubmission->status === edusign_SUBMISSION_STATUS_SUBMITTED) {
                 // The edusignment submission has been completed.
                 return false;
-            } else if ($this->submission_empty($teamsubmission)) {
+            } elseif ($this->submission_empty($teamsubmission)) {
                 // There is nothing to submit yet.
                 return false;
-            } else if ($submission && $submission->status === edusign_SUBMISSION_STATUS_SUBMITTED) {
+            } elseif ($submission && $submission->status === edusign_SUBMISSION_STATUS_SUBMITTED) {
                 // The user has already clicked the submit button on the team submission.
                 return false;
-            } else if (!empty($this->get_instance()->preventsubmissionnotingroup)
+            } elseif (!empty($this->get_instance()->preventsubmissionnotingroup)
                 && $this->get_submission_group($userid) == false
             ) {
                 return false;
             }
-        } else if ($submission) {
+        } elseif ($submission) {
             if ($submission->status === edusign_SUBMISSION_STATUS_SUBMITTED) {
                 // The edusignment submission has been completed.
                 return false;
-            } else if ($this->submission_empty($submission)) {
+            } elseif ($this->submission_empty($submission)) {
                 // There is nothing to submit.
                 return false;
             }
@@ -5662,7 +5673,7 @@ class edusign
             // First lookup the grader info.
             if (isset($gradercache[$grade->grader])) {
                 $grade->grader = $gradercache[$grade->grader];
-            } else if ($grade->grader > 0) {
+            } elseif ($grade->grader > 0) {
                 // Not in cache - need to load the grader record.
                 $grade->grader = $DB->get_record('user', array('id'=>$grade->grader));
                 if ($grade->grader) {
@@ -5683,7 +5694,6 @@ class edusign
             } else {
                 $grade->gradefordisplay = $this->display_grade($grade->grade, false);
             }
-
         }
 
         return $grades;
@@ -5779,7 +5789,6 @@ class edusign
                 false,
                 $this->can_grade()
             );
-
         }
 
         return $summary;
@@ -5810,7 +5819,9 @@ class edusign
                 $this->get_context(),
                 $this->show_intro(),
                 $this->get_course_module()->id,
-                '', '', $postfix
+                '',
+                '',
+                $postfix
             )
         );
 
@@ -5898,7 +5909,7 @@ class edusign
      * @param  mixed $grade      stdClass|null
      * @return bool
      */
-    protected function gradebook_item_update($submission=null, $grade=null)
+    protected function gradebook_item_update($submission = null, $grade = null)
     {
         global $CFG;
 
@@ -5910,7 +5921,7 @@ class edusign
         }
 
         // If marking workflow is enabled and grade is not released then remove any grade that may exist in the gradebook.
-        if ($this->get_instance()->markingworkflow && !empty($grade) 
+        if ($this->get_instance()->markingworkflow && !empty($grade)
             && $this->get_grading_status($grade->userid) != edusign_MARKING_WORKFLOW_STATE_RELEASED
         ) {
             // Remove the grade (if it exists) from the gradebook as it is not 'final'.
@@ -5933,7 +5944,6 @@ class edusign
             }
 
             $gradebookgrade = $this->convert_submission_for_gradebook($submission);
-
         } else {
             $gradebookgrade = $this->convert_grade_for_gradebook($grade);
         }
@@ -6063,7 +6073,8 @@ class edusign
      * @param  stdClass $gradinginfo  - Pre-fetched user gradinginfo record (or false to fetch it)
      * @return bool
      */
-    public function submissions_open($userid = 0,
+    public function submissions_open(
+        $userid = 0,
         $skipenrolled = false,
         $submission = false,
         $flags = false,
@@ -6122,7 +6133,6 @@ class edusign
             }
         }
         if ($submission) {
-
             if ($this->get_instance()->submissiondrafts && $submission->status == edusign_SUBMISSION_STATUS_SUBMITTED) {
                 // Drafts are tracked and the student has submitted the edusignment.
                 return false;
@@ -6139,8 +6149,8 @@ class edusign
                 array($userid)
             );
         }
-        if ($gradinginfo 
-            && isset($gradinginfo->items[0]->grades[$userid]) 
+        if ($gradinginfo
+            && isset($gradinginfo->items[0]->grades[$userid])
             && $gradinginfo->items[0]->grades[$userid]->locked
         ) {
             return false;
@@ -6162,7 +6172,6 @@ class edusign
         global $USER;
 
         return $this->get_renderer()->edusign_files($this->context, $submissionid, $area, $component);
-
     }
 
     /**
@@ -6181,16 +6190,16 @@ class edusign
         }
 
         $instance = $this->get_instance();
-        if ($userid == $graderid 
-            && $instance->teamsubmission 
-            && $instance->preventsubmissionnotingroup 
+        if ($userid == $graderid
+            && $instance->teamsubmission
+            && $instance->preventsubmissionnotingroup
             && $this->get_submission_group($userid) == false
         ) {
             return false;
         }
 
         if ($userid == $graderid) {
-            if ($this->submissions_open($userid) 
+            if ($this->submissions_open($userid)
                 && has_capability('mod/edusign:submit', $this->context, $graderid)
             ) {
                 // User can edit their own submission.
@@ -6294,8 +6303,14 @@ class edusign
     {
         // Potential users should be active users only.
         $potentialusers = get_enrolled_users(
-            $this->context, "mod/edusign:receivegradernotifications",
-            null, 'u.*', null, null, null, true
+            $this->context,
+            "mod/edusign:receivegradernotifications",
+            null,
+            'u.*',
+            null,
+            null,
+            null,
+            true
         );
 
         $notifiableusers = array();
@@ -6349,7 +6364,8 @@ class edusign
      * @param string   $modulename
      * @param string   $edusignmentname
      */
-    protected static function format_notification_message_text($messagetype,
+    protected static function format_notification_message_text(
+        $messagetype,
         $info,
         $course,
         $context,
@@ -6379,7 +6395,8 @@ class edusign
      * @param stdClass $coursemodule
      * @param string   $edusignmentname
      */
-    protected static function format_notification_message_html($messagetype,
+    protected static function format_notification_message_html(
+        $messagetype,
         $info,
         $course,
         $context,
@@ -6422,7 +6439,8 @@ class edusign
      * @param  int      $uniqueidforuser
      * @return void
      */
-    public static function send_edusignment_notification($userfrom,
+    public static function send_edusignment_notification(
+        $userfrom,
         $userto,
         $messagetype,
         $eventtype,
@@ -6767,7 +6785,8 @@ class edusign
 
         if ($mform == null) {
             $mform = new mod_edusign_confirm_submission_form(
-                null, array($requiresubmissionstatement,
+                null,
+                array($requiresubmissionstatement,
                                                                     $submissionstatement,
                                                                     $this->get_course_module()->id,
                 $data)
@@ -6857,7 +6876,7 @@ class edusign
                     if ($maxoverride[$key] < $override->{$key}) {
                         $maxoverride[$key] = $override->{$key};
                     }
-                } else if ($maxoverride[$key] < $this->get_instance()->{$key}) {
+                } elseif ($maxoverride[$key] < $this->get_instance()->{$key}) {
                     $maxoverride[$key] = $this->get_instance()->{$key};
                 }
             }
@@ -7015,7 +7034,7 @@ class edusign
                 }
             }
 
-            if (($current->grade < 0 || $current->grade === null) 
+            if (($current->grade < 0 || $current->grade === null)
                 && ($modified->grade < 0 || $modified->grade === null)
             ) {
                 // Different ways to indicate no grade.
@@ -7047,7 +7066,6 @@ class edusign
                     $modifiedusers[$modified->userid] = $modified;
                 }
             }
-
         }
         $currentgrades->close();
 
@@ -7488,7 +7506,7 @@ class edusign
     public function new_submission_empty($data)
     {
         foreach ($this->submissionplugins as $plugin) {
-            if ($plugin->is_enabled() && $plugin->is_visible() && $plugin->allow_submissions() 
+            if ($plugin->is_enabled() && $plugin->is_visible() && $plugin->allow_submissions()
                 && !$plugin->submission_is_empty($data)
             ) {
                 return false;
@@ -7660,7 +7678,7 @@ class edusign
      * @param  bool $checkworkflow - whether to include a check for the workflow state.
      * @return bool $gradingdisabled
      */
-    public function grading_disabled($userid, $checkworkflow=true)
+    public function grading_disabled($userid, $checkworkflow = true)
     {
         global $CFG;
         if ($checkworkflow && $this->get_instance()->markingworkflow) {
@@ -7718,7 +7736,7 @@ class edusign
                 }
                 if ($gradingdisabled && $itemid) {
                     $gradinginstance = $controller->get_current_instance($USER->id, $itemid);
-                } else if (!$gradingdisabled) {
+                } elseif (!$gradingdisabled) {
                     $instanceid = optional_param('advancedgradinginstanceid', 0, PARAM_INT);
                     $gradinginstance = $controller->get_or_create_instance(
                         $instanceid,
@@ -7876,7 +7894,7 @@ class edusign
             $gradestring = $this->get_renderer()->action_link($url, $usergrade);
         } else {
             $usergrade = '-';
-            if (isset($gradinginfo->items[0]->grades[$userid]) 
+            if (isset($gradinginfo->items[0]->grades[$userid])
                 && !$gradinginfo->items[0]->grades[$userid]->hidden
             ) {
                 $usergrade = $gradinginfo->items[0]->grades[$userid]->str_grade;
@@ -7891,11 +7909,10 @@ class edusign
             $mform->addHelpButton('workflowstate', 'markingworkflowstate', 'edusign');
         }
 
-        if ($this->get_instance()->markingworkflow 
-            && $this->get_instance()->markingallocation 
+        if ($this->get_instance()->markingworkflow
+            && $this->get_instance()->markingallocation
             && has_capability('mod/edusign:manageallocations', $this->context)
         ) {
-
             list($sort, $params) = users_order_by_sql('u');
             // Only enrolled users could be edusigned as potential markers.
             $markers = get_enrolled_users($this->context, 'mod/edusign:grade', 0, 'u.*', $sort);
@@ -7945,8 +7962,8 @@ class edusign
         }
 
         // Do not show if we are editing a previous attempt.
-        if (($attemptnumber == -1 
-            || ($attemptnumber + 1) == count($this->get_all_submissions($userid))) 
+        if (($attemptnumber == -1
+            || ($attemptnumber + 1) == count($this->get_all_submissions($userid)))
             && $this->get_instance()->attemptreopenmethod != edusign_ATTEMPT_REOPEN_METHOD_NONE
         ) {
             $mform->addElement('header', 'attemptsettings', get_string('attemptsettings', 'edusign'));
@@ -7989,7 +8006,7 @@ class edusign
         if (!$cm->uservisible) {
             $mform->setDefault('sendstudentnotifications', 0);
             $mform->freeze('sendstudentnotifications');
-        } else if ($this->get_instance()->markingworkflow) {
+        } elseif ($this->get_instance()->markingworkflow) {
             $mform->setDefault('sendstudentnotifications', 0);
             if (!$gradingpanel) {
                 $mform->disabledIf('sendstudentnotifications', 'workflowstate', 'neq', edusign_MARKING_WORKFLOW_STATE_RELEASED);
@@ -8002,7 +8019,6 @@ class edusign
         $mform->setType('action', PARAM_ALPHA);
 
         if (!$gradingpanel) {
-
             $buttonarray = array();
             $name = get_string('savechanges', 'edusign');
             $buttonarray[] = $mform->createElement('submit', 'savegrade', $name);
@@ -8041,7 +8057,8 @@ class edusign
      * @param  int             $userid     The current userid (same as $USER->id)
      * @return void
      */
-    protected function add_plugin_submission_elements($submission,
+    protected function add_plugin_submission_elements(
+        $submission,
         MoodleQuickForm $mform,
         stdClass $data,
         $userid
@@ -8071,7 +8088,6 @@ class edusign
         }
 
         return $this->cache['any_feedback_plugin_enabled'];
-
     }
 
     /**
@@ -8092,7 +8108,6 @@ class edusign
         }
 
         return $this->cache['any_submission_plugin_enabled'];
-
     }
 
     /**
@@ -8124,7 +8139,6 @@ class edusign
 
         // Only show submission statement if we are editing our own submission.
         if ($requiresubmissionstatement && !$draftsenabled && $userid == $USER->id) {
-
             $submissionstatement = '';
             if (!empty($adminconfig->submissionstatement)) {
                 // Format the submission statement before its sent. We turn off para because this is going within
@@ -8190,7 +8204,7 @@ class edusign
         $this->update_grade($grade);
 
         $completion = new completion_info($this->get_course());
-        if ($completion->is_enabled($this->get_course_module()) 
+        if ($completion->is_enabled($this->get_course_module())
             && $this->get_instance()->completionsubmit
         ) {
             $completion->update_state($this->get_course_module(), COMPLETION_INCOMPLETE, $userid);
@@ -8287,7 +8301,7 @@ class edusign
                 // is "Released".
                 $modinfo = get_fast_modinfo($this->course, $userid);
                 $cm = $modinfo->get_cm($this->get_course_module()->id);
-                if ($formdata->sendstudentnotifications && $cm->uservisible 
+                if ($formdata->sendstudentnotifications && $cm->uservisible
                     && $state == edusign_MARKING_WORKFLOW_STATE_RELEASED
                 ) {
                     $flags->mailed = 0;
@@ -8352,12 +8366,11 @@ class edusign
 
             foreach ($useridlist as $userid) {
                 $flags = $this->get_user_flags($userid, true);
-                if ($flags->workflowstate == edusign_MARKING_WORKFLOW_STATE_READYFORREVIEW 
-                    || $flags->workflowstate == edusign_MARKING_WORKFLOW_STATE_INREVIEW 
-                    || $flags->workflowstate == edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE 
+                if ($flags->workflowstate == edusign_MARKING_WORKFLOW_STATE_READYFORREVIEW
+                    || $flags->workflowstate == edusign_MARKING_WORKFLOW_STATE_INREVIEW
+                    || $flags->workflowstate == edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE
                     || $flags->workflowstate == edusign_MARKING_WORKFLOW_STATE_RELEASED
                 ) {
-
                     continue; // Allocated marker can only be changed in certain workflow states.
                 }
 
@@ -8475,8 +8488,8 @@ class edusign
                 $oldworkflowstate = $flags->workflowstate;
                 $flags->workflowstate = isset($formdata->workflowstate) ? $formdata->workflowstate : $flags->workflowstate;
                 $flags->allocatedmarker = isset($formdata->allocatedmarker) ? $formdata->allocatedmarker : $flags->allocatedmarker;
-                if ($this->update_user_flags($flags) 
-                    && isset($formdata->workflowstate) 
+                if ($this->update_user_flags($flags)
+                    && isset($formdata->workflowstate)
                     && $formdata->workflowstate !== $oldworkflowstate
                 ) {
                     $user = $DB->get_record('user', array('id' => $userid), '*', MUST_EXIST);
@@ -8512,17 +8525,17 @@ class edusign
         }
 
         // We do not want to update the timemodified if no grade was added.
-        if (!empty($formdata->addattempt) 
-            || ($originalgrade !== null && $originalgrade != -1) 
-            || ($grade->grade !== null && $grade->grade != -1) 
+        if (!empty($formdata->addattempt)
+            || ($originalgrade !== null && $originalgrade != -1)
+            || ($grade->grade !== null && $grade->grade != -1)
             || $feedbackmodified
         ) {
             $this->update_grade($grade, !empty($formdata->addattempt));
         }
 
         // We never send notifications if we have marking workflow and the grade is not released.
-        if ($this->get_instance()->markingworkflow 
-            && isset($formdata->workflowstate) 
+        if ($this->get_instance()->markingworkflow
+            && isset($formdata->workflowstate)
             && $formdata->workflowstate != edusign_MARKING_WORKFLOW_STATE_RELEASED
         ) {
             $formdata->sendstudentnotifications = false;
@@ -8570,7 +8583,7 @@ class edusign
             foreach ($gradinginfo->outcomes as $index => $oldoutcome) {
                 $name = 'outcome_'.$index;
                 $sourceuserid = $sourceuserid !== null ? $sourceuserid : $userid;
-                if (isset($formdata->{$name}[$sourceuserid]) 
+                if (isset($formdata->{$name}[$sourceuserid])
                     && $oldoutcome->grades[$userid]->grade != $formdata->{$name}[$sourceuserid]
                 ) {
                     $data[$index] = $formdata->{$name}[$sourceuserid];
@@ -8618,7 +8631,7 @@ class edusign
                 }
             }
         }
-        if ($instance->attemptreopenmethod == edusign_ATTEMPT_REOPEN_METHOD_MANUAL 
+        if ($instance->attemptreopenmethod == edusign_ATTEMPT_REOPEN_METHOD_MANUAL
             && !empty($addattempt)
         ) {
             $shouldreopen = true;
@@ -8793,7 +8806,8 @@ class edusign
      * @param  int $newitemid    The new submissionid (can be null e.g. intro)
      * @return int The number of files copied
      */
-    public function copy_area_files_for_upgrade($oldcontextid,
+    public function copy_area_files_for_upgrade(
+        $oldcontextid,
         $oldcomponent,
         $oldfilearea,
         $olditemid,
@@ -8899,7 +8913,7 @@ class edusign
         }
 
         // No more than max attempts allowed.
-        if ($this->get_instance()->maxattempts != edusign_UNLIMITED_ATTEMPTS 
+        if ($this->get_instance()->maxattempts != edusign_UNLIMITED_ATTEMPTS
             && $oldsubmission->attemptnumber >= ($this->get_instance()->maxattempts - 1)
         ) {
             return false;
@@ -8997,7 +9011,8 @@ class edusign
                                                 JOIN {edusign_grades} g
                                                     ON u.id = g.userid and g.edusignment = :edusignid2 AND
                                                     g.attemptnumber = s.attemptnumber' .
-            $where, $params
+            $where,
+            $params
         );
 
         foreach ($graderesults as $result) {
@@ -9152,7 +9167,8 @@ class edusign
         }
         if (has_any_capability(
             array('mod/edusign:reviewgrades',
-            'mod/edusign:managegrades'), $this->context
+            'mod/edusign:managegrades'),
+            $this->context
         )
         ) {
             $states[edusign_MARKING_WORKFLOW_STATE_INREVIEW] = get_string('markingworkflowstateinreview', 'edusign');
@@ -9160,7 +9176,8 @@ class edusign
         }
         if (has_any_capability(
             array('mod/edusign:releasegrades',
-            'mod/edusign:managegrades'), $this->context
+            'mod/edusign:managegrades'),
+            $this->context
         )
         ) {
             $states[edusign_MARKING_WORKFLOW_STATE_RELEASED] = get_string('markingworkflowstatereleased', 'edusign');
@@ -9290,7 +9307,8 @@ class edusign
      *
      * @return null
      */
-    protected function update_activity_completion_records($teamsubmission,
+    protected function update_activity_completion_records(
+        $teamsubmission,
         $requireallteammemberssubmit,
         $submission,
         $userid,
@@ -9298,11 +9316,10 @@ class edusign
         $completion
     ) {
 
-        if (($teamsubmission && $submission->groupid > 0 && !$requireallteammemberssubmit) 
-            || ($teamsubmission && $submission->groupid > 0 && $requireallteammemberssubmit 
+        if (($teamsubmission && $submission->groupid > 0 && !$requireallteammemberssubmit)
+            || ($teamsubmission && $submission->groupid > 0 && $requireallteammemberssubmit
             && $submission->status == edusign_SUBMISSION_STATUS_SUBMITTED)
         ) {
-
             $members = groups_get_members($submission->groupid);
 
             foreach ($members as $member) {
@@ -9440,51 +9457,51 @@ class edusign_portfolio_caller extends portfolio_module_caller_base
 {
 
     /**
-     * 
      *
-     * @var int callback arg - the id of submission we export 
+     *
+     * @var int callback arg - the id of submission we export
      */
     protected $sid;
 
     /**
-     * 
+     *
      *
      * @var string component of the submission files we export
      */
     protected $component;
 
     /**
-     * 
      *
-     * @var string callback arg - the area of submission files we export 
+     *
+     * @var string callback arg - the area of submission files we export
      */
     protected $area;
 
     /**
-     * 
      *
-     * @var int callback arg - the id of file we export 
+     *
+     * @var int callback arg - the id of file we export
      */
     protected $fileid;
 
     /**
-     * 
      *
-     * @var int callback arg - the cmid of the edusignment we export 
+     *
+     * @var int callback arg - the cmid of the edusignment we export
      */
     protected $cmid;
 
     /**
-     * 
      *
-     * @var string callback arg - the plugintype of the editor we export 
+     *
+     * @var string callback arg - the plugintype of the editor we export
      */
     protected $plugin;
 
     /**
-     * 
      *
-     * @var string callback arg - the name of the editor field we export 
+     *
+     * @var string callback arg - the name of the editor field we export
      */
     protected $editor;
 
@@ -9546,12 +9563,12 @@ class edusign_portfolio_caller extends portfolio_module_caller_base
 
         if (empty($submission)) {
             throw new portfolio_caller_exception('filenotfound');
-        } else if ($submission->userid == 0) {
+        } elseif ($submission->userid == 0) {
             // This must be a group submission.
             if (!groups_is_member($submission->groupid, $this->user->id)) {
                 throw new portfolio_caller_exception('filenotfound');
             }
-        } else if ($this->user->id != $submission->userid) {
+        } elseif ($this->user->id != $submission->userid) {
             throw new portfolio_caller_exception('filenotfound');
         }
 
@@ -9567,7 +9584,6 @@ class edusign_portfolio_caller extends portfolio_module_caller_base
             'timemodified',
             false
         );
-
     }
 
     /**
@@ -9607,7 +9623,7 @@ class edusign_portfolio_caller extends portfolio_module_caller_base
                     }
                 }
                 return $this->exporter->write_new_file($html, 'edusignment.html', !empty($files));
-            } else if ($this->exporter->get('formatclass') == PORTFOLIO_FORMAT_LEAP2A) {
+            } elseif ($this->exporter->get('formatclass') == PORTFOLIO_FORMAT_LEAP2A) {
                 $leapwriter = $this->exporter->get('format')->leap2a_writer();
                 $entry = new portfolio_format_leap2a_entry(
                     $this->area . $this->cmid,
@@ -9633,7 +9649,6 @@ class edusign_portfolio_caller extends portfolio_module_caller_base
             } else {
                 debugging('invalid format class: ' . $this->exporter->get('formatclass'));
             }
-
         }
 
         if ($this->exporter->get('formatclass') == PORTFOLIO_FORMAT_LEAP2A) {
@@ -9641,7 +9656,7 @@ class edusign_portfolio_caller extends portfolio_module_caller_base
             $files = array();
             if ($this->singlefile) {
                 $files[] = $this->singlefile;
-            } else if ($this->multifiles) {
+            } elseif ($this->multifiles) {
                 $files = $this->multifiles;
             } else {
                 throw new portfolio_caller_exception(
@@ -9834,7 +9849,7 @@ function move_group_override($id, $move, $edusignid)
     // Calculate the new sortorder.
     if (($move == 'up') and ($override->sortorder > 1)) {
         $neworder = $override->sortorder - 1;
-    } else if (($move == 'down') and ($override->sortorder < $overridecountgroup)) {
+    } elseif (($move == 'down') and ($override->sortorder < $overridecountgroup)) {
         $neworder = $override->sortorder + 1;
     } else {
         return false;
@@ -9843,7 +9858,6 @@ function move_group_override($id, $move, $edusignid)
     // Retrieve the override object that is currently residing in the new position.
     $params = array('sortorder' => $neworder, 'edusignid' => $edusignid);
     if ($swapoverride = $DB->get_record('edusign_overrides', $params, 'id, sortorder')) {
-
         // Swap the sortorders.
         $swapoverride->sortorder = $override->sortorder;
         $override->sortorder     = $neworder;
