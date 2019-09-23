@@ -1,0 +1,10 @@
+{
+    "name": "moodle-mod_edusign-history",
+    "builds": {
+        "moodle-mod_edusign-history": {
+            "jsfiles": [
+                "history.js"
+            ]
+        }
+    }
+}

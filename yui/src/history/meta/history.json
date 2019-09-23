@@ -1,0 +1,8 @@
+{
+    "moodle-mod_edusign-history": {
+        "requires": [
+            "node",
+            "transition"
+        ]
+    }
+}
