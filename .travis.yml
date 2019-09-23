@@ -2,7 +2,7 @@
 language: php
 
 # This tells Travis CI to use its new architecture.  Everything is better!
-sudo: false
+sudo: required
 
 # This tells Travis CI to cache Composer's cache.  Speeds up build times.
 cache:
