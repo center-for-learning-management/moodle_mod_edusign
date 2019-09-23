@@ -93,7 +93,7 @@ class mod_edusign_grade_form extends moodleform {
             }
         } else {
             // This is a scale.
-            if ($scale = $DB->get_record('scale', array('id'=>-($instance->grade)))) {
+            if ($scale = $DB->get_record('scale', array('id' => -($instance->grade)))) {
                 $scaleoptions = make_menu_from_list($scale->scale);
                 if ((int)$data['grade'] !== -1 && !array_key_exists((int)$data['grade'], $scaleoptions)) {
                     $errors['grade'] = get_string('invalidgradeforscale', 'edusign');

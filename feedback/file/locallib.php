@@ -59,7 +59,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
      */
     public function get_file_feedback($gradeid) {
         global $DB;
-        return $DB->get_record('edusignfeedback_file', array('grade'=>$gradeid));
+        return $DB->get_record('edusignfeedback_file', array('grade' => $gradeid));
     }
 
     /**
@@ -70,10 +70,10 @@ class edusign_feedback_file extends edusign_feedback_plugin {
     private function get_file_options() {
         global $COURSE;
 
-        $fileoptions = array('subdirs'=>1,
-                             'maxbytes'=>$COURSE->maxbytes,
-                             'accepted_types'=>'*',
-                             'return_types'=>FILE_INTERNAL);
+        $fileoptions = array('subdirs' => 1,
+                             'maxbytes' => $COURSE->maxbytes,
+                             'accepted_types' => '*',
+                             'return_types' => FILE_INTERNAL);
         return $fileoptions;
     }
 
@@ -340,7 +340,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
         global $DB;
         // Will throw exception on failure.
         $DB->delete_records('edusignfeedback_file',
-                            array('edusignment'=>$this->edusignment->get_instance()->id));
+                            array('edusignment' => $this->edusignment->get_instance()->id));
 
         return true;
     }
@@ -360,7 +360,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
      * @return array - An array of fileareas (keys) and descriptions (values)
      */
     public function get_file_areas() {
-        return array(edusignFEEDBACK_FILE_FILEAREA=>$this->get_name());
+        return array(edusignFEEDBACK_FILE_FILEAREA => $this->get_name());
     }
 
     /**
@@ -437,7 +437,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
      * @return array The list of batch grading operations
      */
     public function get_grading_batch_operations() {
-        return array('uploadfiles'=>get_string('uploadfiles', 'edusignfeedback_file'));
+        return array('uploadfiles' => get_string('uploadfiles', 'edusignfeedback_file'));
     }
 
     /**
@@ -453,9 +453,9 @@ class edusign_feedback_file extends edusign_feedback_plugin {
         require_once($CFG->dirroot . '/mod/edusign/feedback/file/batchuploadfilesform.php');
         require_once($CFG->dirroot . '/mod/edusign/renderable.php');
 
-        $formparams = array('cm'=>$this->edusignment->get_course_module()->id,
-                            'users'=>$users,
-                            'context'=>$this->edusignment->get_context());
+        $formparams = array('cm' => $this->edusignment->get_course_module()->id,
+                            'users' => $users,
+                            'context' => $this->edusignment->get_context());
 
         $usershtml = '';
 
@@ -466,7 +466,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                 $usershtml .= get_string('moreusers', 'edusignfeedback_file', $moreuserscount);
                 break;
             }
-            $user = $DB->get_record('user', array('id'=>$userid), '*', MUST_EXIST);
+            $user = $DB->get_record('user', array('id' => $userid), '*', MUST_EXIST);
 
             $usersummary = new edusign_user_summary($user,
                                                    $this->edusignment->get_course()->id,
@@ -485,8 +485,8 @@ class edusign_feedback_file extends edusign_feedback_plugin {
 
         if ($mform->is_cancelled()) {
             redirect(new moodle_url('view.php',
-                                    array('id'=>$this->edusignment->get_course_module()->id,
-                                          'action'=>'grading')));
+                                    array('id' => $this->edusignment->get_course_module()->id,
+                                          'action' => 'grading')));
             return;
         } else if ($data = $mform->get_data()) {
             // Copy the files from the draft area to a temporary import area.
@@ -536,8 +536,8 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                                    $USER->id);
 
             redirect(new moodle_url('view.php',
-                                    array('id'=>$this->edusignment->get_course_module()->id,
-                                          'action'=>'grading')));
+                                    array('id' => $this->edusignment->get_course_module()->id,
+                                          'action' => 'grading')));
             return;
         } else {
 
@@ -583,8 +583,8 @@ class edusign_feedback_file extends edusign_feedback_plugin {
         require_once($CFG->dirroot . '/mod/edusign/feedback/file/importziplib.php');
         require_once($CFG->dirroot . '/mod/edusign/feedback/file/importzipform.php');
 
-        $formparams = array('context'=>$this->edusignment->get_context(),
-                            'cm'=>$this->edusignment->get_course_module()->id);
+        $formparams = array('context' => $this->edusignment->get_context(),
+                            'cm' => $this->edusignment->get_course_module()->id);
         $mform = new edusignfeedback_file_upload_zip_form(null, $formparams);
 
         $o = '';
@@ -598,19 +598,19 @@ class edusign_feedback_file extends edusign_feedback_plugin {
 
         if ($mform->is_cancelled()) {
             $importer->delete_import_files($contextid);
-            $urlparams = array('id'=>$this->edusignment->get_course_module()->id,
-                               'action'=>'grading');
+            $urlparams = array('id' => $this->edusignment->get_course_module()->id,
+                               'action' => 'grading');
             $url = new moodle_url('view.php', $urlparams);
             redirect($url);
             return;
         } else if ($confirm) {
-            $params = array('edusignment'=>$this->edusignment, 'importer'=>$importer);
+            $params = array('edusignment' => $this->edusignment, 'importer' => $importer);
 
             $mform = new edusignfeedback_file_import_zip_form(null, $params);
             if ($mform->is_cancelled()) {
                 $importer->delete_import_files($contextid);
-                $urlparams = array('id'=>$this->edusignment->get_course_module()->id,
-                                   'action'=>'grading');
+                $urlparams = array('id' => $this->edusignment->get_course_module()->id,
+                                   'action' => 'grading');
                 $url = new moodle_url('view.php', $urlparams);
                 redirect($url);
                 return;
@@ -630,7 +630,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
 
             $importer->extract_files_from_zip($zipfile, $contextid);
 
-            $params = array('edusignment'=>$this->edusignment, 'importer'=>$importer);
+            $params = array('edusignment' => $this->edusignment, 'importer' => $importer);
 
             $mform = new edusignfeedback_file_import_zip_form(null, $params);
 
@@ -684,7 +684,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
      * @return array The list of grading actions
      */
     public function get_grading_actions() {
-        return array('uploadzip'=>get_string('uploadzip', 'edusignfeedback_file'));
+        return array('uploadzip' => get_string('uploadzip', 'edusignfeedback_file'));
     }
 
     /**

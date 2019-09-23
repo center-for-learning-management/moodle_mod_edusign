@@ -997,7 +997,6 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'userid' => $student->id,
         ]);
 
-
         $DB->insert_record('edusign_overrides', (object) [
                 'edusignid' => $instance->id,
                 'userid' => $student->id,

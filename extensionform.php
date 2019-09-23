@@ -98,7 +98,7 @@ class mod_edusign_extension_form extends moodleform {
             $finaldate = $instance->cutoffdate;
         }
         $mform->addElement('date_time_selector', 'extensionduedate',
-                           get_string('extensionduedate', 'edusign'), array('optional'=>true));
+                           get_string('extensionduedate', 'edusign'), array('optional' => true));
         $mform->setDefault('extensionduedate', $finaldate);
 
         $mform->addElement('hidden', 'id');

@@ -533,9 +533,9 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $submission->status = edusign_SUBMISSION_STATUS_SUBMITTED;
         $edusign->testable_update_submission($submission, $student->id, true, false);
         $data = new stdClass();
-        $data->onlinetext_editor = array('itemid'=>file_get_unused_draft_itemid(),
-                                         'text'=>'Submission text',
-                                         'format'=>FORMAT_MOODLE);
+        $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
+                                         'text' => 'Submission text',
+                                         'format' => FORMAT_MOODLE);
         $plugin = $edusign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -616,9 +616,9 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $this->setUser($student);
         $submission = $edusign->get_user_submission($student->id, true);
         $data = new stdClass();
-        $data->onlinetext_editor = array('itemid'=>file_get_unused_draft_itemid(),
-                                         'text'=>'Submission text',
-                                         'format'=>FORMAT_MOODLE);
+        $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
+                                         'text' => 'Submission text',
+                                         'format' => FORMAT_MOODLE);
         $plugin = $edusign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -636,7 +636,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $this->assertEquals(false, $edusign->has_submissions_or_grades());
 
         // Reload the instance data.
-        $instance = $DB->get_record('edusign', array('id'=>$edusign->get_instance()->id));
+        $instance = $DB->get_record('edusign', array('id' => $edusign->get_instance()->id));
         $this->assertEquals($now + DAYSECS, $instance->duedate);
 
         // Test reset using edusign_reset_userdata().
@@ -652,12 +652,12 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
                 'duedate' => $now,
             ]);
         $edusignduedate = $instance->duedate;
-        $data->timeshift = 3*DAYSECS;
+        $data->timeshift = 3 * DAYSECS;
         $edusign2->reset_userdata($data);
         $instance = $DB->get_record('edusign', array('id' => $edusign->get_instance()->id));
         $this->assertEquals($edusignduedate, $instance->duedate);
         $instance2 = $DB->get_record('edusign', array('id' => $edusign2->get_instance()->id));
-        $this->assertEquals($now + 3*DAYSECS, $instance2->duedate);
+        $this->assertEquals($now + 3 * DAYSECS, $instance2->duedate);
 
         // Reset both edusignments using edusign_reset_userdata() and make sure both edusignments have same date.
         $edusignduedate = $instance->duedate;
@@ -722,7 +722,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
             ]);
 
         // See if there is an event in the calendar.
-        $params = array('modulename'=>'edusign', 'instance'=>$edusign->get_instance()->id);
+        $params = array('modulename' => 'edusign', 'instance' => $edusign->get_instance()->id);
         $event = $DB->get_record('event', $params);
         $this->assertNotEmpty($event);
         $this->assertSame('link', $event->description);     // The pluginfile links are removed.
@@ -747,7 +747,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
             ]);
 
         // Get the event from the calendar.
-        $params = array('modulename'=>'edusign', 'instance'=>$edusign->get_instance()->id);
+        $params = array('modulename' => 'edusign', 'instance' => $edusign->get_instance()->id);
         $event = $DB->get_record('event', [
                 'modulename' => 'edusign',
                 'instance' => $edusign->get_instance()->id,
@@ -758,7 +758,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         // Change the allowsubmissionfromdate to the past - do this directly in the DB
         // because if we call the edusignment update method - it will update the calendar
         // and we want to test that this works from cron.
-        $DB->set_field('edusign', 'allowsubmissionsfromdate', $now - 60, array('id'=>$edusign->get_instance()->id));
+        $DB->set_field('edusign', 'allowsubmissionsfromdate', $now - 60, array('id' => $edusign->get_instance()->id));
         // Run cron to update the event in the calendar.
         edusign::cron();
         $event = $DB->get_record('event', $params);
@@ -1398,8 +1398,6 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         // Add a graded submission.
         $this->add_submission($student, $edusign);
 
-
-
         // Simulate adding a grade.
         $this->setUser($teacher);
         $data = new stdClass();
@@ -1966,7 +1964,6 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
 
         // Add a submission.
         $this->add_submission($student, $edusign);
-
 
         // Check we can see the submit button.
         $output = $edusign->view_student_summary($student, true);
@@ -3519,7 +3516,6 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $grouping = $this->getDataGenerator()->create_grouping(array('courseid' => $course->id));
         $group1 = $this->getDataGenerator()->create_group(['courseid' => $course->id]);
         $group2 = $this->getDataGenerator()->create_group(['courseid' => $course->id]);
-
 
         // Data:
         // - student1 => group A only

@@ -60,11 +60,11 @@ class backup_edusign_activity_task extends backup_activity_task {
 
         $base = preg_quote($CFG->wwwroot, "/");
 
-        $search="/(".$base."\/mod\/edusign\/index.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@edusignINDEX*$2@$', $content);
+        $search = "/(".$base."\/mod\/edusign\/index.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@edusignINDEX*$2@$', $content);
 
-        $search="/(".$base."\/mod\/edusign\/view.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@edusignVIEWBYID*$2@$', $content);
+        $search = "/(".$base."\/mod\/edusign\/view.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@edusignVIEWBYID*$2@$', $content);
 
         return $content;
     }

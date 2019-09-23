@@ -55,7 +55,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
     private function get_signing_submission($submissionid) {
         global $DB;
 
-        return $DB->get_record('edusignsubmission_signing', array('submission'=>$submissionid));
+        return $DB->get_record('edusignsubmission_signing', array('submission' => $submissionid));
     }
 
     /**
@@ -97,7 +97,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
         $mform->setType('edusignsubmission_signing_wordlimit', PARAM_INT);
         $mform->disabledIf('edusignsubmission_signing_wordlimit_group',
                            'edusignsubmission_signing_enabled',
-                           'notchecked'); 
+                           'notchecked');
     }
 
     /**
@@ -158,17 +158,13 @@ class edusign_submission_signing extends edusign_submission_plugin {
                                              edusignSUBMISSION_signing_FILEAREA,
                                              $submissionid);
 
-       
-        
         $mform->addElement('hidden', 'signing','Data/Base64', 'wrap="virtual" rows="1" cols="1"');
         $mform->setType('signing', PARAM_RAW);
 
-
         $mform->addElement('html',"<div class='form-group row'><div class='col-md-3'>Unterschrift</div><div class='col-md-9'><canvas id='canvas' class='form-control' height='250px' width='1000px'></canvas><a class='btn btn-secondary' id='clearCanvas'  role='button'>Reset</a></div></div>");
-      //  $mform->addElement('filepicker', 'userfile', get_string('file'), null,
+        //  $mform->addElement('filepicker', 'userfile', get_string('file'), null,
                  //  array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
         $PAGE->requires->js_call_amd('edusignsubmission_signing/signingjs', 'save');
-
 
         return true;
     }
@@ -212,7 +208,6 @@ class edusign_submission_signing extends edusign_submission_plugin {
                                      'id',
                                      false);
 
-
         $params = array(
             'context' => context_module::instance($this->edusignment->get_course_module()->id),
             'courseid' => $this->edusignment->get_course()->id,
@@ -231,7 +226,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
         }
         $event = \edusignsubmission_signing\event\assessable_uploaded::create($params);
         $event->trigger();
-        
+
         $groupname = null;
         $groupid = 0;
         /*
@@ -254,8 +249,6 @@ class edusign_submission_signing extends edusign_submission_plugin {
             'submissionstatus' => $submission->status,
             'signingwordcount' => $count,
         );
-
-
 
         if ($signingsubmission) {
 
@@ -356,7 +349,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
             $text = "<img src='".strip_tags($signing)."'>";
 
             return  $text;
-            
+
         }
         return '';
     }
@@ -532,7 +525,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
     public function delete_instance() {
         global $DB;
         $DB->delete_records('edusignsubmission_signing',
-                            array('edusignment'=>$this->edusignment->get_instance()->id));
+                            array('edusignment' => $this->edusignment->get_instance()->id));
 
         return true;
     }
@@ -590,7 +583,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
      * @return array - An array of fileareas (keys) and descriptions (values)
      */
     public function get_file_areas() {
-        return array(edusignSUBMISSION_SIGNING_FILEAREA=>$this->get_name());
+        return array(edusignSUBMISSION_SIGNING_FILEAREA => $this->get_name());
     }
 
     /**

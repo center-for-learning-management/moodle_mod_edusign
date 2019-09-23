@@ -45,11 +45,11 @@ class edusignfeedback_offline_upload_grades_form extends moodleform {
 
         $mform->addElement('header', 'uploadgrades', get_string('uploadgrades', 'edusignfeedback_offline'));
 
-        $fileoptions = array('subdirs'=>0,
-                                'maxbytes'=>$COURSE->maxbytes,
-                                'accepted_types'=>'csv',
-                                'maxfiles'=>1,
-                                'return_types'=>FILE_INTERNAL);
+        $fileoptions = array('subdirs' => 0,
+                                'maxbytes' => $COURSE->maxbytes,
+                                'accepted_types' => 'csv',
+                                'maxfiles' => 1,
+                                'return_types' => FILE_INTERNAL);
 
         $mform->addElement('filepicker', 'gradesfile', get_string('uploadafile'), null, $fileoptions);
         $mform->addRule('gradesfile', get_string('uploadnofilefound'), 'required', null, 'client');

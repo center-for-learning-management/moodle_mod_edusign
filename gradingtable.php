@@ -109,7 +109,7 @@ class edusign_grading_table extends table_sql implements renderable {
         $this->quickgrading = $quickgrading && $this->hasgrade;
         $this->output = $PAGE->get_renderer('mod_edusign');
 
-        $urlparams = array('action'=>'grading', 'id'=>$edusignment->get_course_module()->id);
+        $urlparams = array('action' => 'grading', 'id' => $edusignment->get_course_module()->id);
         $url = new moodle_url($CFG->wwwroot . '/mod/edusign/view.php', $urlparams);
         $this->define_baseurl($url);
 
@@ -670,7 +670,7 @@ class edusign_grading_table extends table_sql implements renderable {
             $output = '';
             if ($this->quickgrading) { // Add hidden field for quickgrading page.
                 $name = 'quickgrade_' . $row->id . '_allocatedmarker';
-                $output .= html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>$name, 'value'=>$row->allocatedmarker));
+                $output .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => $name, 'value' => $row->allocatedmarker));
             }
             $output .= $markerlist[$row->allocatedmarker];
             return $output;
@@ -686,7 +686,7 @@ class edusign_grading_table extends table_sql implements renderable {
         global $DB;
 
         if (empty($this->scale)) {
-            $dbparams = array('id'=>-($this->edusignment->get_instance()->grade));
+            $dbparams = array('id' => -($this->edusignment->get_instance()->grade));
             $this->scale = $DB->get_record('scale', $dbparams);
         }
 
@@ -836,7 +836,7 @@ class edusign_grading_table extends table_sql implements renderable {
     public function col_fullname($row) {
         if (!$this->is_downloading()) {
             $courseid = $this->edusignment->get_course()->id;
-            $link= new moodle_url('/user/view.php', array('id' =>$row->id, 'course'=>$courseid));
+            $link = new moodle_url('/user/view.php', array('id' => $row->id, 'course' => $courseid));
             $fullname = $this->output->action_link($link, $this->edusignment->fullname($row));
         } else {
             $fullname = $this->edusignment->fullname($row);
@@ -1061,7 +1061,7 @@ class edusign_grading_table extends table_sql implements renderable {
         if ($this->edusignment->is_any_submission_plugin_enabled()) {
 
             $o .= $this->output->container(get_string('submissionstatus_' . $displaystatus, 'edusign'),
-                                           array('class'=>'submissionstatus' .$displaystatus));
+                                           array('class' => 'submissionstatus' .$displaystatus));
             if ($due && $timesubmitted > $due && $status != edusign_SUBMISSION_STATUS_NEW) {
                 $usertime = format_time($timesubmitted - $due);
                 $latemessage = get_string('submittedlateshort',
@@ -1219,10 +1219,10 @@ class edusign_grading_table extends table_sql implements renderable {
 
                 if (!$row->locked) {
                     $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                                       'userid'=>$row->id,
-                                       'action'=>'lock',
-                                       'sesskey'=>sesskey(),
-                                       'page'=>$this->currpage);
+                                       'userid' => $row->id,
+                                       'action' => 'lock',
+                                       'sesskey' => sesskey(),
+                                       'page' => $this->currpage);
                     $url = new moodle_url('/mod/edusign/view.php', $urlparams);
 
                     $description = get_string('preventsubmissionsshort', 'edusign');
@@ -1233,10 +1233,10 @@ class edusign_grading_table extends table_sql implements renderable {
                     );
                 } else {
                     $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                                       'userid'=>$row->id,
-                                       'action'=>'unlock',
-                                       'sesskey'=>sesskey(),
-                                       'page'=>$this->currpage);
+                                       'userid' => $row->id,
+                                       'action' => 'unlock',
+                                       'sesskey' => sesskey(),
+                                       'page' => $this->currpage);
                     $url = new moodle_url('/mod/edusign/view.php', $urlparams);
                     $description = get_string('allowsubmissionsshort', 'edusign');
                     $actions['unlock'] = new action_menu_link_secondary(
@@ -1251,10 +1251,10 @@ class edusign_grading_table extends table_sql implements renderable {
                     $USER->id != $row->id &&
                     $caneditsubmission) {
                 $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                                   'userid'=>$row->id,
-                                   'action'=>'editsubmission',
-                                   'sesskey'=>sesskey(),
-                                   'page'=>$this->currpage);
+                                   'userid' => $row->id,
+                                   'action' => 'editsubmission',
+                                   'sesskey' => sesskey(),
+                                   'page' => $this->currpage);
                 $url = new moodle_url('/mod/edusign/view.php', $urlparams);
                 $description = get_string('editsubmission', 'edusign');
                 $actions['editsubmission'] = new action_menu_link_secondary(
@@ -1283,10 +1283,10 @@ class edusign_grading_table extends table_sql implements renderable {
         if ($row->status == edusign_SUBMISSION_STATUS_SUBMITTED &&
                 $this->edusignment->get_instance()->submissiondrafts) {
             $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                               'userid'=>$row->id,
-                               'action'=>'reverttodraft',
-                               'sesskey'=>sesskey(),
-                               'page'=>$this->currpage);
+                               'userid' => $row->id,
+                               'action' => 'reverttodraft',
+                               'sesskey' => sesskey(),
+                               'page' => $this->currpage);
             $url = new moodle_url('/mod/edusign/view.php', $urlparams);
             $description = get_string('reverttodraftshort', 'edusign');
             $actions['reverttodraft'] = new action_menu_link_secondary(
@@ -1301,10 +1301,10 @@ class edusign_grading_table extends table_sql implements renderable {
                 $submissionsopen &&
                 $row->id != $USER->id) {
             $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                               'userid'=>$row->id,
-                               'action'=>'submitotherforgrading',
-                               'sesskey'=>sesskey(),
-                               'page'=>$this->currpage);
+                               'userid' => $row->id,
+                               'action' => 'submitotherforgrading',
+                               'sesskey' => sesskey(),
+                               'page' => $this->currpage);
             $url = new moodle_url('/mod/edusign/view.php', $urlparams);
             $description = get_string('submitforgrading', 'edusign');
             $actions['submitforgrading'] = new action_menu_link_secondary(
@@ -1322,10 +1322,10 @@ class edusign_grading_table extends table_sql implements renderable {
 
         if ($ismanual && $hassubmission && $notreopened && $hasattempts) {
             $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                               'userid'=>$row->id,
-                               'action'=>'addattempt',
-                               'sesskey'=>sesskey(),
-                               'page'=>$this->currpage);
+                               'userid' => $row->id,
+                               'action' => 'addattempt',
+                               'sesskey' => sesskey(),
+                               'page' => $this->currpage);
             $url = new moodle_url('/mod/edusign/view.php', $urlparams);
             $description = get_string('addattempt', 'edusign');
             $actions['addattempt'] = new action_menu_link_secondary(
@@ -1376,12 +1376,12 @@ class edusign_grading_table extends table_sql implements renderable {
             $viewstr = get_string('view' . substr($plugin->get_subtype(), strlen('edusign')), 'edusign');
             $icon = $this->output->pix_icon('t/preview', $viewstr);
             $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                                                     'sid'=>$item->id,
-                                                     'gid'=>$item->id,
-                                                     'plugin'=>$plugin->get_type(),
-                                                     'action'=>'viewplugin' . $plugin->get_subtype(),
-                                                     'returnaction'=>$returnaction,
-                                                     'returnparams'=>http_build_query($returnparams));
+                                                     'sid' => $item->id,
+                                                     'gid' => $item->id,
+                                                     'plugin' => $plugin->get_type(),
+                                                     'action' => 'viewplugin' . $plugin->get_subtype(),
+                                                     'returnaction' => $returnaction,
+                                                     'returnparams' => http_build_query($returnparams));
             $url = new moodle_url('/mod/edusign/view.php', $urlparams);
             $link = $this->output->action_link($url, $icon);
             $separator = $this->output->spacer(array(), true);
@@ -1424,7 +1424,7 @@ class edusign_grading_table extends table_sql implements renderable {
                     if ($submission) {
                         if ($submission->status == edusign_SUBMISSION_STATUS_REOPENED) {
                             // For a newly reopened submission - we want to show the previous submission in the table.
-                            $this->get_group_and_submission($row->id, $group, $submission, $submission->attemptnumber-1);
+                            $this->get_group_and_submission($row->id, $group, $submission, $submission->attemptnumber - 1);
                         }
                         if (isset($field)) {
                             return $plugin->get_editor_text($field, $submission->id);

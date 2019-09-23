@@ -78,7 +78,7 @@ abstract class edusign_plugin {
      * @return bool
      */
     public final function is_last() {
-        $lastindex = count(core_component::get_plugin_list($this->get_subtype()))-1;
+        $lastindex = count(core_component::get_plugin_list($this->get_subtype())) - 1;
         $currentindex = get_config($this->get_subtype() . '_' . $this->get_type(), 'sortorder');
         if ($lastindex == $currentindex) {
             return true;
@@ -281,7 +281,7 @@ abstract class edusign_plugin {
      */
     public final function get_sort_order() {
         $order = get_config($this->get_subtype() . '_' . $this->get_type(), 'sortorder');
-        return $order?$order:0;
+        return $order ? $order : 0;
     }
 
     /**
@@ -321,10 +321,10 @@ abstract class edusign_plugin {
     public final function set_config($name, $value) {
         global $DB;
 
-        $dbparams = array('edusignment'=>$this->edusignment->get_instance()->id,
-                          'subtype'=>$this->get_subtype(),
-                          'plugin'=>$this->get_type(),
-                          'name'=>$name);
+        $dbparams = array('edusignment' => $this->edusignment->get_instance()->id,
+                          'subtype' => $this->get_subtype(),
+                          'plugin' => $this->get_type(),
+                          'name' => $name);
         $current = $DB->get_record('edusign_plugin_config', $dbparams, '*', IGNORE_MISSING);
 
         if ($current) {
@@ -357,10 +357,10 @@ abstract class edusign_plugin {
             }
             $edusignment = $this->edusignment->get_instance();
             if ($edusignment) {
-                $dbparams = array('edusignment'=>$edusignment->id,
-                                  'subtype'=>$this->get_subtype(),
-                                  'plugin'=>$this->get_type(),
-                                  'name'=>$setting);
+                $dbparams = array('edusignment' => $edusignment->id,
+                                  'subtype' => $this->get_subtype(),
+                                  'plugin' => $this->get_type(),
+                                  'name' => $setting);
                 $result = $DB->get_record('edusign_plugin_config', $dbparams, '*', IGNORE_MISSING);
                 if ($result) {
                     return $result->value;
@@ -368,9 +368,9 @@ abstract class edusign_plugin {
             }
             return false;
         }
-        $dbparams = array('edusignment'=>$this->edusignment->get_instance()->id,
-                          'subtype'=>$this->get_subtype(),
-                           'plugin'=>$this->get_type());
+        $dbparams = array('edusignment' => $this->edusignment->get_instance()->id,
+                          'subtype' => $this->get_subtype(),
+                           'plugin' => $this->get_type());
         $results = $DB->get_records('edusign_plugin_config', $dbparams);
 
         $config = new stdClass();
@@ -496,7 +496,7 @@ abstract class edusign_plugin {
      * @return bool true or false - false will trigger a rollback
      */
     public function upgrade_settings(context $oldcontext, stdClass $oldedusignment, & $log) {
-        $params = array('type'=>$this->type, 'subtype'=>$this->get_subtype());
+        $params = array('type' => $this->type, 'subtype' => $this->get_subtype());
         $log .= ' ' . get_string('upgradenotimplemented', 'mod_edusign', $params);
         return false;
     }
@@ -516,7 +516,7 @@ abstract class edusign_plugin {
                             stdClass $oldsubmissionorgrade,
                             stdClass $submissionorgrade,
                             & $log) {
-        $params = array('type'=>$this->type, 'subtype'=>$this->get_subtype());
+        $params = array('type' => $this->type, 'subtype' => $this->get_subtype());
         $log = $log . ' ' . get_string('upgradenotimplemented', 'mod_edusign', $params);
         return false;
     }

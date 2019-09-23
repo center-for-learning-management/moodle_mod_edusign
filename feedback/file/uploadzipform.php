@@ -45,11 +45,11 @@ class edusignfeedback_file_upload_zip_form extends moodleform {
 
         $mform->addElement('header', 'uploadzip', get_string('uploadzip', 'edusignfeedback_file'));
 
-        $fileoptions = array('subdirs'=>0,
-                                'maxbytes'=>$COURSE->maxbytes,
-                                'accepted_types'=>'zip',
-                                'maxfiles'=>1,
-                                'return_types'=>FILE_INTERNAL);
+        $fileoptions = array('subdirs' => 0,
+                                'maxbytes' => $COURSE->maxbytes,
+                                'accepted_types' => 'zip',
+                                'maxfiles' => 1,
+                                'return_types' => FILE_INTERNAL);
 
         $mform->addElement('filepicker', 'feedbackzip', get_string('uploadafile'), null, $fileoptions);
         $mform->addRule('feedbackzip', get_string('uploadnofilefound'), 'required', null, 'client');

@@ -67,16 +67,16 @@ class edusignfeedback_offline_import_grades_form extends moodleform implements r
 
         $scaleoptions = null;
         if ($edusignment->get_instance()->grade < 0) {
-            if ($scale = $DB->get_record('scale', array('id'=>-($edusignment->get_instance()->grade)))) {
+            if ($scale = $DB->get_record('scale', array('id' => -($edusignment->get_instance()->grade)))) {
                 $scaleoptions = make_menu_from_list($scale->scale);
             }
         }
         if (!$gradeimporter->init()) {
-            $thisurl = new moodle_url('/mod/edusign/view.php', array('action'=>'viewpluginpage',
-                                                                     'pluginsubtype'=>'edusignfeedback',
-                                                                     'plugin'=>'offline',
-                                                                     'pluginaction'=>'uploadgrades',
-                                                                     'id'=>$edusignment->get_course_module()->id));
+            $thisurl = new moodle_url('/mod/edusign/view.php', array('action' => 'viewpluginpage',
+                                                                     'pluginsubtype' => 'edusignfeedback',
+                                                                     'plugin' => 'offline',
+                                                                     'pluginaction' => 'uploadgrades',
+                                                                     'id' => $edusignment->get_course_module()->id));
             print_error('invalidgradeimport', 'edusignfeedback_offline', $thisurl);
             return;
         }
@@ -138,7 +138,7 @@ class edusignfeedback_offline_import_grades_form extends moodleform implements r
                     $formattedgrade = format_float($grade, $gradeitem->get_decimals());
                 }
                 $updates[] = get_string('gradeupdate', 'edusignfeedback_offline',
-                                            array('grade'=>$formattedgrade, 'student'=>$userdesc));
+                                            array('grade' => $formattedgrade, 'student' => $userdesc));
             }
 
             if ($ignoremodified || !$stalemodificationdate) {
@@ -154,7 +154,7 @@ class edusignfeedback_offline_import_grades_form extends moodleform implements r
                     if ($newvalue != $oldvalue) {
                         $update = true;
                         $updates[] = get_string('feedbackupdate', 'edusignfeedback_offline',
-                                                    array('text'=>$newvalue, 'field'=>$description, 'student'=>$userdesc));
+                                                    array('text' => $newvalue, 'field' => $description, 'student' => $userdesc));
                     }
                 }
             }

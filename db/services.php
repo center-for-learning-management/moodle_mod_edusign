@@ -76,7 +76,7 @@ $functions = array(
                 'classpath'   => 'mod/edusign/externallib.php',
                 'description' => 'Creates or updates user flags',
                 'type'        => 'write',
-                'capabilities'=> 'mod/edusign:grade',
+                'capabilities' => 'mod/edusign:grade',
                 'services'    => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 

@@ -49,10 +49,10 @@ class edusignfeedback_file_batch_upload_files_form extends moodleform {
         $mform->addElement('static', 'userslist', get_string('selectedusers', 'edusignfeedback_file'), $params['usershtml']);
 
         $data = new stdClass();
-        $fileoptions = array('subdirs'=>1,
-                                'maxbytes'=>$COURSE->maxbytes,
-                                'accepted_types'=>'*',
-                                'return_types'=>FILE_INTERNAL);
+        $fileoptions = array('subdirs' => 1,
+                                'maxbytes' => $COURSE->maxbytes,
+                                'accepted_types' => '*',
+                                'return_types' => FILE_INTERNAL);
 
         $data = file_prepare_standard_filemanager($data,
                                                   'files',

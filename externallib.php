@@ -46,15 +46,15 @@ class mod_edusign_external extends external_api {
      */
     private static function generate_warning($edusignmentid, $warningcode, $detail) {
         $warningmessages = array(
-            'couldnotlock'=>'Could not lock the submission for this user.',
-            'couldnotunlock'=>'Could not unlock the submission for this user.',
-            'couldnotsubmitforgrading'=>'Could not submit edusignment for grading.',
-            'couldnotrevealidentities'=>'Could not reveal identities.',
-            'couldnotgrantextensions'=>'Could not grant submission date extensions.',
-            'couldnotrevert'=>'Could not revert submission to draft.',
-            'invalidparameters'=>'Invalid parameters.',
-            'couldnotsavesubmission'=>'Could not save submission.',
-            'couldnotsavegrade'=>'Could not save grade.'
+            'couldnotlock' => 'Could not lock the submission for this user.',
+            'couldnotunlock' => 'Could not unlock the submission for this user.',
+            'couldnotsubmitforgrading' => 'Could not submit edusignment for grading.',
+            'couldnotrevealidentities' => 'Could not reveal identities.',
+            'couldnotgrantextensions' => 'Could not grant submission date extensions.',
+            'couldnotrevert' => 'Could not revert submission to draft.',
+            'invalidparameters' => 'Invalid parameters.',
+            'couldnotsavesubmission' => 'Could not save submission.',
+            'couldnotsavegrade' => 'Could not save grade.'
         );
 
         $message = $warningmessages[$warningcode];
@@ -63,9 +63,9 @@ class mod_edusign_external extends external_api {
         }
 
         return array('item' => s($detail),
-                     'itemid'=>$edusignmentid,
-                     'warningcode'=>$warningcode,
-                     'message'=>$message);
+                     'itemid' => $edusignmentid,
+                     'warningcode' => $warningcode,
+                     'message' => $message);
     }
 
     /**
@@ -357,7 +357,7 @@ class mod_edusign_external extends external_api {
                 unset($courses[$cid]);
             }
         }
-        $extrafields='m.id as edusignmentid, ' .
+        $extrafields = 'm.id as edusignmentid, ' .
                      'm.course, ' .
                      'm.nosubmissions, ' .
                      'm.submissiondrafts, ' .
@@ -480,7 +480,7 @@ class mod_edusign_external extends external_api {
                     $edusignmentarray[] = $edusignment;
                 }
             }
-            $coursearray[]= array(
+            $coursearray[] = array(
                 'id' => $courses[$id]->id,
                 'fullname' => external_format_string($courses[$id]->fullname, $course->contextid),
                 'shortname' => external_format_string($courses[$id]->shortname, $course->contextid),
@@ -1566,7 +1566,6 @@ class mod_edusign_external extends external_api {
                                                  'couldnotsavegrade',
                                                  'Form validation failed.');
         }
-
 
         return $warnings;
     }

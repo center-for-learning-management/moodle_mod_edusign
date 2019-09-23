@@ -115,9 +115,9 @@ class provider implements
             $submissiontext->text = writer::with_context($context)->rewrite_pluginfile_urls($currentpath,
                     'edusignsubmission_signing', 'submissions_signing', $submission->id, $editortext);
             writer::with_context($context)
-                    ->export_area_files($currentpath, 'edusignsubmission_signing', 'submissions_signing', $submission->id)
+                ->export_area_files($currentpath, 'edusignsubmission_signing', 'submissions_signing', $submission->id)
                     // Add the text to the exporter.
-                    ->export_data($currentpath, $submissiontext);
+                ->export_data($currentpath, $submissiontext);
 
             // Handle plagiarism data.
             $coursecontext = $context->get_course_context();

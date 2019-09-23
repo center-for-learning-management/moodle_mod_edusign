@@ -83,9 +83,9 @@ class mod_edusign_locallib_participants extends advanced_testcase {
 
         // Submit a file for the second student.
         $data = new stdClass();
-        $data->onlinetext_editor = array('itemid'=>file_get_unused_draft_itemid(),
-                                         'text'=>'Submission text',
-                                         'format'=>FORMAT_MOODLE);
+        $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
+                                         'text' => 'Submission text',
+                                         'format' => FORMAT_MOODLE);
         static::helper_add_submission($edusign, $participants[$keys[1]], $data, 'onlinetext');
 
         // edusign has a private cache. The easiest way to clear this is to create a new instance.

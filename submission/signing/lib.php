@@ -51,7 +51,7 @@ function edusignsubmission_signing_pluginfile($course,
     require_login($course, false, $cm);
     $itemid = (int)array_shift($args);
     $record = $DB->get_record('edusign_submission',
-                              array('id'=>$itemid),
+                              array('id' => $itemid),
                               'userid, edusignment, groupid',
                               MUST_EXIST);
     $userid = $record->userid;

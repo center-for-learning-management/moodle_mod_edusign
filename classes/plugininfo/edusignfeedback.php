@@ -72,7 +72,7 @@ class edusignfeedback extends base {
      * @return moodle_url
      */
     public static function get_manage_url() {
-        return new moodle_url('/mod/edusign/adminmanageplugins.php', array('subtype'=>'edusignfeedback'));
+        return new moodle_url('/mod/edusign/adminmanageplugins.php', array('subtype' => 'edusignfeedback'));
     }
 
     /**
@@ -82,7 +82,7 @@ class edusignfeedback extends base {
     public function uninstall_cleanup() {
         global $DB;
 
-        $DB->delete_records('edusign_plugin_config', array('plugin'=>$this->name, 'subtype'=>'edusignfeedback'));
+        $DB->delete_records('edusign_plugin_config', array('plugin' => $this->name, 'subtype' => 'edusignfeedback'));
 
         parent::uninstall_cleanup();
     }

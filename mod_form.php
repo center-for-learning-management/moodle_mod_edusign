@@ -47,7 +47,7 @@ class mod_edusign_mod_form extends moodleform_mod {
 
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        $mform->addElement('text', 'name', get_string('edusignmentname', 'edusign'), array('size'=>'64'));
+        $mform->addElement('text', 'name', get_string('edusignmentname', 'edusign'), array('size' => '64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -73,7 +73,7 @@ class mod_edusign_mod_form extends moodleform_mod {
             if (!$ctx) {
                 $ctx = context_course::instance($this->current->course);
             }
-            $course = $DB->get_record('course', array('id'=>$this->current->course), '*', MUST_EXIST);
+            $course = $DB->get_record('course', array('id' => $this->current->course), '*', MUST_EXIST);
             $edusignment->set_course($course);
         }
 
@@ -83,16 +83,16 @@ class mod_edusign_mod_form extends moodleform_mod {
         $mform->setExpanded('availability', true);
 
         $name = get_string('allowsubmissionsfromdate', 'edusign');
-        $options = array('optional'=>true);
+        $options = array('optional' => true);
         $mform->addElement('date_time_selector', 'allowsubmissionsfromdate', $name, $options);
         $mform->addHelpButton('allowsubmissionsfromdate', 'allowsubmissionsfromdate', 'edusign');
 
         $name = get_string('duedate', 'edusign');
-        $mform->addElement('date_time_selector', 'duedate', $name, array('optional'=>true));
+        $mform->addElement('date_time_selector', 'duedate', $name, array('optional' => true));
         $mform->addHelpButton('duedate', 'duedate', 'edusign');
 
         $name = get_string('cutoffdate', 'edusign');
-        $mform->addElement('date_time_selector', 'cutoffdate', $name, array('optional'=>true));
+        $mform->addElement('date_time_selector', 'cutoffdate', $name, array('optional' => true));
         $mform->addHelpButton('cutoffdate', 'cutoffdate', 'edusign');
 
         $name = get_string('gradingduedate', 'edusign');
@@ -271,7 +271,7 @@ class mod_edusign_mod_form extends moodleform_mod {
             if (!$ctx) {
                 $ctx = context_course::instance($this->current->course);
             }
-            $course = $DB->get_record('course', array('id'=>$this->current->course), '*', MUST_EXIST);
+            $course = $DB->get_record('course', array('id' => $this->current->course), '*', MUST_EXIST);
             $edusignment->set_course($course);
         }
 

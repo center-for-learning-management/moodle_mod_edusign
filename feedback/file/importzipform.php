@@ -100,10 +100,10 @@ class edusignfeedback_file_import_zip_form extends moodleform implements rendera
 
                     if (!$grade || !$exists) {
                         $updates[] = get_string('feedbackfileadded', 'edusignfeedback_file',
-                                            array('filename'=>$filename, 'student'=>$userdesc));
+                                            array('filename' => $filename, 'student' => $userdesc));
                     } else {
                         $updates[] = get_string('feedbackfileupdated', 'edusignfeedback_file',
-                                            array('filename'=>$filename, 'student'=>$userdesc));
+                                            array('filename' => $filename, 'student' => $userdesc));
                     }
                 }
             }

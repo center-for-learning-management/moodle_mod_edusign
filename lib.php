@@ -69,9 +69,9 @@ function edusign_reset_userdata($data) {
     require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 
     $status = array();
-    $params = array('courseid'=>$data->courseid);
+    $params = array('courseid' => $data->courseid);
     $sql = "SELECT a.id FROM {edusign} a WHERE a.course=:courseid";
-    $course = $DB->get_record('course', array('id'=>$data->courseid), '*', MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $data->courseid), '*', MUST_EXIST);
     if ($edusigns = $DB->get_records_sql($sql, $params)) {
         foreach ($edusigns as $edusign) {
             $cm = get_coursemodule_from_instance('edusign',
@@ -183,7 +183,7 @@ function edusign_prepare_update_events($edusign, $course = null, $cm = null) {
 function edusign_reset_gradebook($courseid, $type='') {
     global $CFG, $DB;
 
-    $params = array('moduletype'=>'edusign', 'courseid'=>$courseid);
+    $params = array('moduletype' => 'edusign', 'courseid' => $courseid);
     $sql = 'SELECT a.*, cm.idnumber as cmidnumber, a.course as courseid
             FROM {edusign} a, {course_modules} cm, {modules} m
             WHERE m.name=:moduletype AND m.id=cm.module AND cm.instance=a.id AND a.course=:courseid';
@@ -400,7 +400,7 @@ function edusign_supports($feature) {
  * @return array('string'=>'string') An array with area names as keys and descriptions as values
  */
 function edusign_grading_areas_list() {
-    return array('submissions'=>get_string('submissions', 'edusign'));
+    return array('submissions' => get_string('submissions', 'edusign'));
 }
 
 
@@ -460,19 +460,19 @@ function edusign_extend_settings_navigation(settings_navigation $settings, navig
 
     // Link to download all submissions.
     if (has_any_capability(array('mod/edusign:grade', 'mod/edusign:viewgrades'), $context)) {
-        $link = new moodle_url('/mod/edusign/view.php', array('id' => $cm->id, 'action'=>'grading'));
+        $link = new moodle_url('/mod/edusign/view.php', array('id' => $cm->id, 'action' => 'grading'));
         $node = $navref->add(get_string('viewgrading', 'edusign'), $link, navigation_node::TYPE_SETTING);
 
-        $link = new moodle_url('/mod/edusign/view.php', array('id' => $cm->id, 'action'=>'downloadall'));
+        $link = new moodle_url('/mod/edusign/view.php', array('id' => $cm->id, 'action' => 'downloadall'));
         $node = $navref->add(get_string('downloadall', 'edusign'), $link, navigation_node::TYPE_SETTING);
     }
 
     if (has_capability('mod/edusign:revealidentities', $context)) {
-        $dbparams = array('id'=>$cm->instance);
+        $dbparams = array('id' => $cm->instance);
         $edusignment = $DB->get_record('edusign', $dbparams, 'blindmarking, revealidentities');
 
         if ($edusignment && $edusignment->blindmarking && !$edusignment->revealidentities) {
-            $urlparams = array('id' => $cm->id, 'action'=>'revealidentities');
+            $urlparams = array('id' => $cm->id, 'action' => 'revealidentities');
             $url = new moodle_url('/mod/edusign/view.php', $urlparams);
             $linkname = get_string('revealidentities', 'edusign');
             $node = $navref->add($linkname, $url, navigation_node::TYPE_SETTING);
@@ -494,7 +494,7 @@ function edusign_extend_settings_navigation(settings_navigation $settings, navig
 function edusign_get_coursemodule_info($coursemodule) {
     global $CFG, $DB;
 
-    $dbparams = array('id'=>$coursemodule->instance);
+    $dbparams = array('id' => $coursemodule->instance);
     $fields = 'id, name, alwaysshowdescription, allowsubmissionsfromdate, intro, introformat, completionsubmit';
     if (! $edusignment = $DB->get_record('edusign', $dbparams, $fields)) {
         return false;
@@ -950,7 +950,7 @@ function edusign_print_recent_activity($course, $viewfullnames, $timestart) {
             if (!$modinfo->get_groups($cm->groupingid)) {
                 continue;
             }
-            $usersgroups =  groups_get_all_groups($course->id, $submission->userid, $cm->groupingid);
+            $usersgroups = groups_get_all_groups($course->id, $submission->userid, $cm->groupingid);
             if (is_array($usersgroups)) {
                 $usersgroups = array_keys($usersgroups);
                 $intersect = array_intersect($usersgroups, $modinfo->get_groups($cm->groupingid));
@@ -1018,7 +1018,7 @@ function edusign_get_recent_mod_activity(&$activities,
     if ($COURSE->id == $courseid) {
         $course = $COURSE;
     } else {
-        $course = $DB->get_record('course', array('id'=>$courseid));
+        $course = $DB->get_record('course', array('id' => $courseid));
     }
 
     $modinfo = get_fast_modinfo($course);
@@ -1067,7 +1067,6 @@ function edusign_get_recent_mod_activity(&$activities,
     $accessallgroups = has_capability('moodle/site:accessallgroups', $cmcontext);
     $viewfullnames   = has_capability('moodle/site:viewfullnames', $cmcontext);
 
-
     $showrecentsubmissions = get_config('edusign', 'showrecentsubmissions');
     $show = array();
     foreach ($submissions as $submission) {
@@ -1093,7 +1092,7 @@ function edusign_get_recent_mod_activity(&$activities,
             if (!$modinfo->get_groups($cm->groupingid)) {
                 continue;
             }
-            $usersgroups =  groups_get_all_groups($course->id, $submission->userid, $cm->groupingid);
+            $usersgroups = groups_get_all_groups($course->id, $submission->userid, $cm->groupingid);
             if (is_array($usersgroups)) {
                 $usersgroups = array_keys($usersgroups);
                 $intersect = array_intersect($usersgroups, $modinfo->get_groups($cm->groupingid));
@@ -1204,7 +1203,7 @@ function edusign_scale_used($edusignmentid, $scaleid) {
     global $DB;
 
     $return = false;
-    $rec = $DB->get_record('edusign', array('id'=>$edusignmentid, 'grade'=>-$scaleid));
+    $rec = $DB->get_record('edusign', array('id' => $edusignmentid, 'grade' => -$scaleid));
 
     if (!empty($rec) && !empty($scaleid)) {
         $return = true;
@@ -1223,7 +1222,7 @@ function edusign_scale_used($edusignmentid, $scaleid) {
 function edusign_scale_used_anywhere($scaleid) {
     global $DB;
 
-    if ($scaleid and $DB->record_exists('edusign', array('grade'=>-$scaleid))) {
+    if ($scaleid and $DB->record_exists('edusign', array('grade' => -$scaleid))) {
         return true;
     } else {
         return false;
@@ -1314,7 +1313,7 @@ function edusign_grade_item_update($edusign, $grades=null) {
         $edusign->courseid = $edusign->course;
     }
 
-    $params = array('itemname'=>$edusign->name, 'idnumber'=>$edusign->cmidnumber);
+    $params = array('itemname' => $edusign->name, 'idnumber' => $edusign->cmidnumber);
 
     // Check if feedback plugin for gradebook is enabled, if yes then
     // gradetype = GRADE_TYPE_TEXT else GRADE_TYPE_NONE.
@@ -1347,7 +1346,7 @@ function edusign_grade_item_update($edusign, $grades=null) {
         $params['gradetype'] = GRADE_TYPE_NONE;
     }
 
-    if ($grades  === 'reset') {
+    if ($grades === 'reset') {
         $params['reset'] = true;
         $grades = null;
     }

@@ -83,7 +83,7 @@ $capabilities = array(
     ),
 
     'mod/edusign:editothersubmission' => array(
-        'riskbitmask' => RISK_MANAGETRUST|RISK_DATALOSS|RISK_PERSONAL,
+        'riskbitmask' => RISK_MANAGETRUST | RISK_DATALOSS | RISK_PERSONAL,
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE
     ),

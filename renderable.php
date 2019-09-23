@@ -830,12 +830,12 @@ class edusign_course_index_summary implements renderable {
      * @param string $gradeinfo - The current users grade if they have been graded and it is not hidden.
      */
     public function add_edusign_info($cmid, $cmname, $sectionname, $timedue, $submissioninfo, $gradeinfo) {
-        $this->edusignments[] = array('cmid'=>$cmid,
-                               'cmname'=>$cmname,
-                               'sectionname'=>$sectionname,
-                               'timedue'=>$timedue,
-                               'submissioninfo'=>$submissioninfo,
-                               'gradeinfo'=>$gradeinfo);
+        $this->edusignments[] = array('cmid' => $cmid,
+                               'cmname' => $cmname,
+                               'sectionname' => $sectionname,
+                               'timedue' => $timedue,
+                               'submissioninfo' => $submissioninfo,
+                               'gradeinfo' => $gradeinfo);
     }
 
 

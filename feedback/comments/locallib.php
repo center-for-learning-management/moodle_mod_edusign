@@ -50,7 +50,7 @@ class edusign_feedback_comments extends edusign_feedback_plugin {
      */
     public function get_feedback_comments($gradeid) {
         global $DB;
-        return $DB->get_record('edusignfeedback_comments', array('grade'=>$gradeid));
+        return $DB->get_record('edusignfeedback_comments', array('grade' => $gradeid));
     }
 
     /**
@@ -70,11 +70,11 @@ class edusign_feedback_comments extends edusign_feedback_plugin {
         }
 
         $pluginname = get_string('pluginname', 'edusignfeedback_comments');
-        $labeloptions = array('for'=>'quickgrade_comments_' . $userid,
-                              'class'=>'accesshide');
-        $textareaoptions = array('name'=>'quickgrade_comments_' . $userid,
-                                 'id'=>'quickgrade_comments_' . $userid,
-                                 'class'=>'quickgrade');
+        $labeloptions = array('for' => 'quickgrade_comments_' . $userid,
+                              'class' => 'accesshide');
+        $textareaoptions = array('name' => 'quickgrade_comments_' . $userid,
+                                 'id' => 'quickgrade_comments_' . $userid,
+                                 'class' => 'quickgrade');
         return html_writer::tag('label', $pluginname, $labeloptions) .
                html_writer::tag('textarea', $commenttext, $textareaoptions);
     }
@@ -246,7 +246,7 @@ class edusign_feedback_comments extends edusign_feedback_plugin {
         $mform->setDefault('edusignfeedback_comments_commentinline', $default);
         // Disable comment online if comment feedback plugin is disabled.
         $mform->disabledIf('edusignfeedback_comments_commentinline', 'edusignfeedback_comments_enabled', 'notchecked');
-   }
+    }
 
     /**
      * Convert the text from any submission plugin that has an editor field to
@@ -491,7 +491,7 @@ class edusign_feedback_comments extends edusign_feedback_plugin {
         global $DB;
         // Will throw exception on failure.
         $DB->delete_records('edusignfeedback_comments',
-                            array('edusignment'=>$this->edusignment->get_instance()->id));
+                            array('edusignment' => $this->edusignment->get_instance()->id));
         return true;
     }
 

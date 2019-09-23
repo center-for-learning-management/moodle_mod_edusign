@@ -109,10 +109,10 @@ class mod_edusign_base_testcase extends advanced_testcase {
 
         $this->groups = array();
         for ($i = 0; $i < self::GROUP_COUNT; $i++) {
-            array_push($this->groups, $this->getDataGenerator()->create_group(array('courseid'=>$this->course->id)));
+            array_push($this->groups, $this->getDataGenerator()->create_group(array('courseid' => $this->course->id)));
         }
 
-        $teacherrole = $DB->get_record('role', array('shortname'=>'teacher'));
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
         foreach ($this->teachers as $i => $teacher) {
             $this->getDataGenerator()->enrol_user($teacher->id,
                                                   $this->course->id,
@@ -120,7 +120,7 @@ class mod_edusign_base_testcase extends advanced_testcase {
             groups_add_member($this->groups[$i % self::GROUP_COUNT], $teacher);
         }
 
-        $editingteacherrole = $DB->get_record('role', array('shortname'=>'editingteacher'));
+        $editingteacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
         foreach ($this->editingteachers as $i => $editingteacher) {
             $this->getDataGenerator()->enrol_user($editingteacher->id,
                                                   $this->course->id,
@@ -128,7 +128,7 @@ class mod_edusign_base_testcase extends advanced_testcase {
             groups_add_member($this->groups[$i % self::GROUP_COUNT], $editingteacher);
         }
 
-        $studentrole = $DB->get_record('role', array('shortname'=>'student'));
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         foreach ($this->students as $i => $student) {
             $this->getDataGenerator()->enrol_user($student->id,
                                                   $this->course->id,
@@ -162,7 +162,7 @@ class mod_edusign_base_testcase extends advanced_testcase {
             array_push($this->extrasuspendedstudents, $this->getDataGenerator()->create_user());
         }
 
-        $teacherrole = $DB->get_record('role', array('shortname'=>'teacher'));
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
         foreach ($this->extrateachers as $i => $teacher) {
             $this->getDataGenerator()->enrol_user($teacher->id,
                                                   $this->course->id,
@@ -170,7 +170,7 @@ class mod_edusign_base_testcase extends advanced_testcase {
             groups_add_member($this->groups[$i % self::GROUP_COUNT], $teacher);
         }
 
-        $editingteacherrole = $DB->get_record('role', array('shortname'=>'editingteacher'));
+        $editingteacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
         foreach ($this->extraeditingteachers as $i => $editingteacher) {
             $this->getDataGenerator()->enrol_user($editingteacher->id,
                                                   $this->course->id,
@@ -178,7 +178,7 @@ class mod_edusign_base_testcase extends advanced_testcase {
             groups_add_member($this->groups[$i % self::GROUP_COUNT], $editingteacher);
         }
 
-        $studentrole = $DB->get_record('role', array('shortname'=>'student'));
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         foreach ($this->extrastudents as $i => $student) {
             $this->getDataGenerator()->enrol_user($student->id,
                                                   $this->course->id,

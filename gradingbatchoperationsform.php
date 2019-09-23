@@ -76,7 +76,7 @@ class mod_edusign_grading_batch_operations_form extends moodleform {
         $mform->setType('action', PARAM_ALPHA);
         $mform->addElement('hidden', 'id', $instance['cm']);
         $mform->setType('id', PARAM_INT);
-        $mform->addElement('hidden', 'selectedusers', '', array('class'=>'selectedusers'));
+        $mform->addElement('hidden', 'selectedusers', '', array('class' => 'selectedusers'));
         $mform->setType('selectedusers', PARAM_SEQUENCE);
         $mform->addElement('hidden', 'returnaction', 'grading');
         $mform->setType('returnaction', PARAM_ALPHA);

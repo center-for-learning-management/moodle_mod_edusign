@@ -326,7 +326,7 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
         $users = $DB->get_records_sql($sql, $params);
 
         foreach ($users as $userid => $unused) {
-            $params = array('edusignment'=>$edusignmentid, 'groupid'=>0, 'userid'=>$userid);
+            $params = array('edusignment' => $edusignmentid, 'groupid' => 0, 'userid' => $userid);
 
             // Only return the row with the highest attemptnumber.
             $submission = null;
@@ -343,7 +343,7 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
         $groups = $DB->get_records_sql($sql, $params);
 
         foreach ($groups as $groupid => $unused) {
-            $params = array('edusignment'=>$edusignmentid, 'userid'=>0, 'groupid'=>$groupid);
+            $params = array('edusignment' => $edusignmentid, 'userid' => 0, 'groupid' => $groupid);
 
             // Only return the row with the highest attemptnumber.
             $submission = null;

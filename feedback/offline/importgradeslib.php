@@ -108,9 +108,9 @@ class edusignfeedback_offline_grade_importer {
         foreach ($this->edusignment->get_feedback_plugins() as $plugin) {
             if ($plugin->is_enabled() && $plugin->is_visible()) {
                 foreach ($plugin->get_editor_fields() as $field => $description) {
-                    $this->feedbackcolumnindexes[$description] = array('plugin'=>$plugin,
-                                                                       'field'=>$field,
-                                                                       'description'=>$description);
+                    $this->feedbackcolumnindexes[$description] = array('plugin' => $plugin,
+                                                                       'field' => $field,
+                                                                       'description' => $description);
                 }
             }
         }
