@@ -67,9 +67,6 @@ image.onload = function(){
 
 function Draw(x, y, isDown) {
   if (isDown) {
-    
-   
-
     ctx.beginPath();
     ctx.lineWidth = 2;
     ctx.lineJoin = "round";
