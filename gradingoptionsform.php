@@ -34,11 +34,13 @@ require_once($CFG->dirroot . '/mod/edusign/locallib.php');
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_edusign_grading_options_form extends moodleform {
+class mod_edusign_grading_options_form extends moodleform
+{
     /**
      * Define this form - called from the parent constructor.
      */
-    public function definition() {
+    public function definition()
+    {
         $mform = $this->_form;
         $instance = $this->_customdata;
         $dirtyclass = array('class' => 'ignoredirty');
@@ -57,10 +59,10 @@ class mod_edusign_grading_options_form extends moodleform {
         }
         $mform->addElement('select', 'perpage', get_string('edusignmentsperpage', 'edusign'), $options, $dirtyclass);
         $options = array('' => get_string('filternone', 'edusign'),
-                edusign_FILTER_NOT_SUBMITTED => get_string('filternotsubmitted', 'edusign'),
-                edusign_FILTER_SUBMITTED => get_string('filtersubmitted', 'edusign'),
-                edusign_FILTER_REQUIRE_GRADING => get_string('filterrequiregrading', 'edusign'),
-                edusign_FILTER_GRANTED_EXTENSION => get_string('filtergrantedextension', 'edusign'));
+                EDUSIGN_FILTER_NOT_SUBMITTED => get_string('filternotsubmitted', 'edusign'),
+                EDUSIGN_FILTER_SUBMITTED => get_string('filtersubmitted', 'edusign'),
+                EDUSIGN_FILTER_REQUIRE_GRADING => get_string('filterrequiregrading', 'edusign'),
+                EDUSIGN_FILTER_GRANTED_EXTENSION => get_string('filtergrantedextension', 'edusign'));
         if ($instance['submissionsenabled']) {
             $mform->addElement('select', 'filter', get_string('filter', 'edusign'), $options, $dirtyclass);
         }
@@ -107,4 +109,3 @@ class mod_edusign_grading_options_form extends moodleform {
         $this->add_action_buttons(false, get_string('updatetable', 'edusign'));
     }
 }
-
