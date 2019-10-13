@@ -33,7 +33,7 @@ require_once($CFG->dirroot.'/course/lib.php');
  * This is intentionally generous (5 mins) as the effect of a timeout
  * for a legitimate upgrade would be quite harsh (roll back code will not run)
  */
-define('edusign_MAX_UPGRADE_TIME_SECS', 300);
+define('EDUSIGN_MAX_UPGRADE_TIME_SECS', 300);
 
 /**
  * Class to manage upgrades from mod_edusignment to mod_edusign
@@ -42,7 +42,8 @@ define('edusign_MAX_UPGRADE_TIME_SECS', 300);
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class edusign_upgrade_manager {
+class edusign_upgrade_manager
+{
 
     /**
      * This function converts all of the base settings for an instance of
@@ -52,7 +53,8 @@ class edusign_upgrade_manager {
      * @param string $log This string gets appended to during the conversion process
      * @return bool true or false
      */
-    public function upgrade_edusignment($oldedusignmentid, & $log) {
+    public function upgrade_edusignment($oldedusignmentid, & $log)
+    {
         global $DB, $CFG, $USER;
         // Steps to upgrade an edusignment.
 
@@ -61,10 +63,12 @@ class edusign_upgrade_manager {
         // Get the module details.
         $oldmodule = $DB->get_record('modules', array('name' => 'edusignment'), '*', MUST_EXIST);
         $params = array('module' => $oldmodule->id, 'instance' => $oldedusignmentid);
-        $oldcoursemodule = $DB->get_record('course_modules',
-                                           $params,
-                                           '*',
-                                           MUST_EXIST);
+        $oldcoursemodule = $DB->get_record(
+            'course_modules',
+            $params,
+            '*',
+            MUST_EXIST
+        );
         $oldcontext = context_module::instance($oldcoursemodule->id);
         // We used to check for admin capability, but since Moodle 2.7 this is called
         // during restore of a mod_edusignment module.
@@ -106,7 +110,7 @@ class edusign_upgrade_manager {
         $data->teamsubmissiongroupingid = 0;
         $data->blindmarking = 0;
         $data->attemptreopenmethod = 'none';
-        $data->maxattempts = edusign_UNLIMITED_ATTEMPTS;
+        $data->maxattempts = EDUSIGN_UNLIMITED_ATTEMPTS;
 
         $newedusignment = new edusign(null, null, null);
 
@@ -117,9 +121,11 @@ class edusign_upgrade_manager {
 
         // Now create a new coursemodule from the old one.
         $newmodule = $DB->get_record('modules', array('name' => 'edusign'), '*', MUST_EXIST);
-        $newcoursemodule = $this->duplicate_course_module($oldcoursemodule,
-                                                          $newmodule->id,
-                                                          $newedusignment->get_instance()->id);
+        $newcoursemodule = $this->duplicate_course_module(
+            $oldcoursemodule,
+            $newmodule->id,
+            $newedusignment->get_instance()->id
+        );
         if (!$newcoursemodule) {
             $log = get_string('couldnotcreatenewcoursemodule', 'mod_edusign');
             return false;
@@ -142,8 +148,16 @@ class edusign_upgrade_manager {
             // The course module has now been created - time to update the core tables.
 
             // Copy intro files.
-            $newedusignment->copy_area_files_for_upgrade($oldcontext->id, 'mod_edusignment', 'intro', 0,
-                                            $newedusignment->get_context()->id, 'mod_edusign', 'intro', 0);
+            $newedusignment->copy_area_files_for_upgrade(
+                $oldcontext->id,
+                'mod_edusignment',
+                'intro',
+                0,
+                $newedusignment->get_context()->id,
+                'mod_edusign',
+                'intro',
+                0
+            );
 
             // Get the plugins to do their bit.
             foreach ($newedusignment->get_submission_plugins() as $plugin) {
@@ -168,31 +182,43 @@ class edusign_upgrade_manager {
             }
 
             // See if there is advanced grading upgrades required.
-            $gradingarea = $DB->get_record('grading_areas',
-                                           array('contextid' => $oldcontext->id, 'areaname' => 'submission'),
-                                           '*',
-                                           IGNORE_MISSING);
+            $gradingarea = $DB->get_record(
+                'grading_areas',
+                array('contextid' => $oldcontext->id, 'areaname' => 'submission'),
+                '*',
+                IGNORE_MISSING
+            );
             if ($gradingarea) {
                 $params = array('id' => $gradingarea->id,
                                 'contextid' => $newedusignment->get_context()->id,
                                 'component' => 'mod_edusign',
                                 'areaname' => 'submissions');
                 $DB->update_record('grading_areas', $params);
-                $gradingdefinitions = $DB->get_records('grading_definitions',
-                                                       array('areaid' => $gradingarea->id));
+                $gradingdefinitions = $DB->get_records(
+                    'grading_definitions',
+                    array('areaid' => $gradingarea->id)
+                );
             }
 
             // Upgrade availability data.
             \core_availability\info::update_dependency_id_across_course(
-                    $newcoursemodule->course, 'course_modules', $oldcoursemodule->id, $newcoursemodule->id);
+                $newcoursemodule->course,
+                'course_modules',
+                $oldcoursemodule->id,
+                $newcoursemodule->id
+            );
 
             // Upgrade completion data.
-            $DB->set_field('course_modules_completion',
-                           'coursemoduleid',
-                           $newcoursemodule->id,
-                           array('coursemoduleid' => $oldcoursemodule->id));
-            $allcriteria = $DB->get_records('course_completion_criteria',
-                                            array('moduleinstance' => $oldcoursemodule->id));
+            $DB->set_field(
+                'course_modules_completion',
+                'coursemoduleid',
+                $newcoursemodule->id,
+                array('coursemoduleid' => $oldcoursemodule->id)
+            );
+            $allcriteria = $DB->get_records(
+                'course_completion_criteria',
+                array('moduleinstance' => $oldcoursemodule->id)
+            );
             foreach ($allcriteria as $criteria) {
                 $criteria->module = 'edusign';
                 $criteria->moduleinstance = $newcoursemodule->id;
@@ -206,8 +232,10 @@ class edusign_upgrade_manager {
             $DB->set_field('log', 'cmid', $newcoursemodule->id, $logparams);
 
             // Copy all the submission data (and get plugins to do their bit).
-            $oldsubmissions = $DB->get_records('edusignment_submissions',
-                                               array('edusignment' => $oldedusignmentid));
+            $oldsubmissions = $DB->get_records(
+                'edusignment_submissions',
+                array('edusignment' => $oldedusignmentid)
+            );
 
             foreach ($oldsubmissions as $oldsubmission) {
                 $submission = new stdClass();
@@ -215,7 +243,7 @@ class edusign_upgrade_manager {
                 $submission->userid = $oldsubmission->userid;
                 $submission->timecreated = $oldsubmission->timecreated;
                 $submission->timemodified = $oldsubmission->timemodified;
-                $submission->status = edusign_SUBMISSION_STATUS_SUBMITTED;
+                $submission->status = EDUSIGN_SUBMISSION_STATUS_SUBMITTED;
                 // Because in mod_edusignment there could only be one submission per student, it is always the latest.
                 $submission->latest = 1;
                 $submission->id = $DB->insert_record('edusign_submission', $submission);
@@ -225,11 +253,13 @@ class edusign_upgrade_manager {
                 }
                 foreach ($newedusignment->get_submission_plugins() as $plugin) {
                     if ($plugin->can_upgrade($oldedusignment->edusignmenttype, $oldversion)) {
-                        if (!$plugin->upgrade($oldcontext,
-                                              $oldedusignment,
-                                              $oldsubmission,
-                                              $submission,
-                                              $log)) {
+                        if (!$plugin->upgrade(
+                            $oldcontext,
+                            $oldedusignment,
+                            $oldsubmission,
+                            $submission,
+                            $log
+                        )) {
                             $rollback = true;
                         }
                     }
@@ -259,7 +289,6 @@ class edusign_upgrade_manager {
 
                     // Copy any grading instances.
                     if ($gradingarea) {
-
                         $gradeidmap[$grade->id] = $oldsubmission->id;
 
                         foreach ($gradingdefinitions as $definition) {
@@ -267,15 +296,16 @@ class edusign_upgrade_manager {
                                             'itemid' => $oldsubmission->id);
                             $DB->set_field('grading_instances', 'itemid', $grade->id, $params);
                         }
-
                     }
                     foreach ($newedusignment->get_feedback_plugins() as $plugin) {
                         if ($plugin->can_upgrade($oldedusignment->edusignmenttype, $oldversion)) {
-                            if (!$plugin->upgrade($oldcontext,
-                                                  $oldedusignment,
-                                                  $oldsubmission,
-                                                  $grade,
-                                                  $log)) {
+                            if (!$plugin->upgrade(
+                                $oldcontext,
+                                $oldedusignment,
+                                $oldsubmission,
+                                $grade,
+                                $log
+                            )) {
                                 $rollback = true;
                             }
                         }
@@ -301,7 +331,6 @@ class edusign_upgrade_manager {
             $DB->insert_record('edusignment_upgrade', $mapping);
 
             $gradesdone = true;
-
         } catch (Exception $exception) {
             $rollback = true;
             $log .= get_string('conversionexception', 'mod_edusign', $exception->getMessage());
@@ -317,13 +346,17 @@ class edusign_upgrade_manager {
             }
             // Roll back the completion changes.
             if ($completiondone) {
-                $DB->set_field('course_modules_completion',
-                               'coursemoduleid',
-                               $oldcoursemodule->id,
-                               array('coursemoduleid' => $newcoursemodule->id));
+                $DB->set_field(
+                    'course_modules_completion',
+                    'coursemoduleid',
+                    $oldcoursemodule->id,
+                    array('coursemoduleid' => $newcoursemodule->id)
+                );
 
-                $allcriteria = $DB->get_records('course_completion_criteria',
-                                                array('moduleinstance' => $newcoursemodule->id));
+                $allcriteria = $DB->get_records(
+                    'course_completion_criteria',
+                    array('moduleinstance' => $newcoursemodule->id)
+                );
                 foreach ($allcriteria as $criteria) {
                     $criteria->module = 'edusignment';
                     $criteria->moduleinstance = $oldcoursemodule->id;
@@ -338,10 +371,12 @@ class edusign_upgrade_manager {
             if ($gradingarea) {
                 foreach ($gradeidmap as $newgradeid => $oldsubmissionid) {
                     foreach ($gradingdefinitions as $definition) {
-                        $DB->set_field('grading_instances',
-                                       'itemid',
-                                       $oldsubmissionid,
-                                       array('definitionid' => $definition->id, 'itemid' => $newgradeid));
+                        $DB->set_field(
+                            'grading_instances',
+                            'itemid',
+                            $oldsubmissionid,
+                            array('definitionid' => $definition->id, 'itemid' => $newgradeid)
+                        );
                     }
                 }
                 $params = array('id' => $gradingarea->id,
@@ -373,7 +408,8 @@ class edusign_upgrade_manager {
      * @param int $newinstanceid The id of the new instance of the edusign module
      * @return mixed stdClass|bool The new course module record or FALSE
      */
-    private function duplicate_course_module(stdClass $cm, $moduleid, $newinstanceid) {
+    private function duplicate_course_module(stdClass $cm, $moduleid, $newinstanceid)
+    {
         global $DB, $CFG;
 
         $newcm = new stdClass();
@@ -422,7 +458,8 @@ class edusign_upgrade_manager {
  *
  * @return int[] Array of the ids of all the edusignments with rescaled null grades.
  */
-function get_edusignments_with_rescaled_null_grades() {
+function get_edusignments_with_rescaled_null_grades()
+{
     global $DB;
 
     $query = 'SELECT id, edusignment FROM {edusign_grades}

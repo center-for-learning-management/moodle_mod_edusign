@@ -250,14 +250,14 @@ class edusign_submission_signing extends edusign_submission_plugin
 
         $groupname = null;
         $groupid = 0;
-        /*
+        
         // Get the group name as other fields are not transcribed in the logs and this information is important.
         if (empty($submission->userid) && !empty($submission->groupid)) {
             $groupname = $DB->get_field('groups', 'name', array('id' => $submission->groupid), MUST_EXIST);
             $groupid = $submission->groupid;
         } else {
             $params['relateduserid'] = $submisson->userid;
-        }*/
+        }
 
         $count = count_words($data->signing);
 

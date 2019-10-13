@@ -40,7 +40,8 @@ use \mod_edusign\privacy\provider;
  * @copyright  2018 Adrian Greeve <adrian@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_edusign_privacy_testcase extends provider_testcase {
+class mod_edusign_privacy_testcase extends provider_testcase
+{
 
     /**
      * Convenience method for creating a submission.
@@ -51,7 +52,8 @@ class mod_edusign_privacy_testcase extends provider_testcase {
      * @param  integer $attemptnumber The attempt number
      * @return object A submission object.
      */
-    protected function create_submission($edusign, $user, $submissiontext, $attemptnumber = 0) {
+    protected function create_submission($edusign, $user, $submissiontext, $attemptnumber = 0)
+    {
         $submission = $edusign->get_user_submission($user->id, true, $attemptnumber);
         $submission->onlinetext_editor = ['text' => $submissiontext,
                                          'format' => FORMAT_MOODLE];
@@ -68,7 +70,8 @@ class mod_edusign_privacy_testcase extends provider_testcase {
      * @param array $params Array of parameters to pass to the generator
      * @return edusign The edusign class.
      */
-    protected function create_instance($params = array()) {
+    protected function create_instance($params = array())
+    {
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_edusign');
         $instance = $generator->create_instance($params);
         $cm = get_coursemodule_from_instance('edusign', $instance->id);
@@ -79,7 +82,8 @@ class mod_edusign_privacy_testcase extends provider_testcase {
     /**
      * Test that getting the contexts for a user works.
      */
-    public function test_get_contexts_for_userid() {
+    public function test_get_contexts_for_userid()
+    {
         global $DB;
         $this->resetAfterTest();
 
@@ -151,7 +155,8 @@ class mod_edusign_privacy_testcase extends provider_testcase {
     /**
      * Test returning a list of user IDs related to a context (edusign).
      */
-    public function test_get_users_in_context() {
+    public function test_get_users_in_context()
+    {
         global $DB;
 
         $this->resetAfterTest();
@@ -240,7 +245,8 @@ class mod_edusign_privacy_testcase extends provider_testcase {
     /**
      * Test that a student with multiple submissions and grades is returned with the correct data.
      */
-    public function test_export_user_data_student() {
+    public function test_export_user_data_student()
+    {
         global $DB;
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
@@ -253,7 +259,7 @@ class mod_edusign_privacy_testcase extends provider_testcase {
         $edusign = $this->create_instance([
                 'course' => $course,
                 'name' => 'edusign 1',
-                'attemptreopenmethod' => edusign_ATTEMPT_REOPEN_METHOD_MANUAL,
+                'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL,
                 'maxattempts' => 3,
                 'edusignsubmission_onlinetext_enabled' => true,
                 'edusignfeedback_comments_enabled' => true
@@ -323,18 +329,25 @@ class mod_edusign_privacy_testcase extends provider_testcase {
 
         // Check override data was exported correctly.
         $overrideexport = $writer->get_data(['Overrides']);
-        $this->assertEquals(\core_privacy\local\request\transform::datetime($overridedata->duedate),
-                $overrideexport->duedate);
-        $this->assertEquals(\core_privacy\local\request\transform::datetime($overridedata->cutoffdate),
-                $overrideexport->cutoffdate);
-        $this->assertEquals(\core_privacy\local\request\transform::datetime($overridedata->allowsubmissionsfromdate),
-                $overrideexport->allowsubmissionsfromdate);
+        $this->assertEquals(
+            \core_privacy\local\request\transform::datetime($overridedata->duedate),
+            $overrideexport->duedate
+        );
+        $this->assertEquals(
+            \core_privacy\local\request\transform::datetime($overridedata->cutoffdate),
+            $overrideexport->cutoffdate
+        );
+        $this->assertEquals(
+            \core_privacy\local\request\transform::datetime($overridedata->allowsubmissionsfromdate),
+            $overrideexport->allowsubmissionsfromdate
+        );
     }
 
     /**
      * Tests the data returned for a teacher.
      */
-    public function test_export_user_data_teacher() {
+    public function test_export_user_data_teacher()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $coursecontext = \context_course::instance($course->id);
@@ -348,7 +361,7 @@ class mod_edusign_privacy_testcase extends provider_testcase {
         $edusign = $this->create_instance([
                 'course' => $course,
                 'name' => 'edusign 1',
-                'attemptreopenmethod' => edusign_ATTEMPT_REOPEN_METHOD_MANUAL,
+                'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL,
                 'maxattempts' => 3,
                 'edusignsubmission_onlinetext_enabled' => true,
                 'edusignfeedback_comments_enabled' => true
@@ -442,7 +455,8 @@ class mod_edusign_privacy_testcase extends provider_testcase {
     /**
      * A test for deleting all user data for a given context.
      */
-    public function test_delete_data_for_all_users_in_context() {
+    public function test_delete_data_for_all_users_in_context()
+    {
         global $DB;
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
@@ -456,7 +470,7 @@ class mod_edusign_privacy_testcase extends provider_testcase {
         $edusign = $this->create_instance([
                 'course' => $course,
                 'name' => 'edusign 1',
-                'attemptreopenmethod' => edusign_ATTEMPT_REOPEN_METHOD_MANUAL,
+                'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL,
                 'maxattempts' => 3,
                 'edusignsubmission_onlinetext_enabled' => true,
                 'edusignfeedback_comments_enabled' => true
@@ -545,7 +559,8 @@ class mod_edusign_privacy_testcase extends provider_testcase {
     /**
      * A test for deleting all user data for one user.
      */
-    public function test_delete_data_for_user() {
+    public function test_delete_data_for_user()
+    {
         global $DB;
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
@@ -561,7 +576,7 @@ class mod_edusign_privacy_testcase extends provider_testcase {
         $edusign = $this->create_instance([
                 'course' => $course,
                 'name' => 'edusign 1',
-                'attemptreopenmethod' => edusign_ATTEMPT_REOPEN_METHOD_MANUAL,
+                'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL,
                 'maxattempts' => 3,
                 'edusignsubmission_onlinetext_enabled' => true,
                 'edusignfeedback_comments_enabled' => true
@@ -670,7 +685,8 @@ class mod_edusign_privacy_testcase extends provider_testcase {
     /**
      * A test for deleting all user data for a bunch of users.
      */
-    public function test_delete_data_for_users() {
+    public function test_delete_data_for_users()
+    {
         global $DB;
 
         $this->resetAfterTest();

@@ -30,48 +30,59 @@ require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 /**
  * Test subclass that makes all the protected methods we want to test public.
  */
-class mod_edusign_testable_edusign extends edusign {
+class mod_edusign_testable_edusign extends edusign
+{
 
-    public function testable_show_intro() {
+    public function testable_show_intro()
+    {
         return parent::show_intro();
     }
 
-    public function testable_delete_grades() {
+    public function testable_delete_grades()
+    {
         return parent::delete_grades();
     }
 
-    public function testable_apply_grade_to_user($formdata, $userid, $attemptnumber) {
+    public function testable_apply_grade_to_user($formdata, $userid, $attemptnumber)
+    {
         return parent::apply_grade_to_user($formdata, $userid, $attemptnumber);
     }
 
-    public function testable_format_submission_for_log(stdClass $submission) {
+    public function testable_format_submission_for_log(stdClass $submission)
+    {
         return parent::format_submission_for_log($submission);
     }
 
-    public function testable_get_grading_userid_list() {
+    public function testable_get_grading_userid_list()
+    {
         return parent::get_grading_userid_list();
     }
 
-    public function testable_is_graded($userid) {
+    public function testable_is_graded($userid)
+    {
         return parent::is_graded($userid);
     }
 
-    public function testable_update_submission(stdClass $submission, $userid, $updatetime, $teamsubmission) {
+    public function testable_update_submission(stdClass $submission, $userid, $updatetime, $teamsubmission)
+    {
         return parent::update_submission($submission, $userid, $updatetime, $teamsubmission);
     }
 
-    public function testable_process_add_attempt($userid = 0) {
+    public function testable_process_add_attempt($userid = 0)
+    {
         return parent::process_add_attempt($userid);
     }
 
-    public function testable_process_save_quick_grades($postdata) {
+    public function testable_process_save_quick_grades($postdata)
+    {
         // Ugly hack to get something into the method.
         global $_POST;
         $_POST = $postdata;
         return parent::process_save_quick_grades();
     }
 
-    public function testable_process_set_batch_marking_allocation($selectedusers, $markerid) {
+    public function testable_process_set_batch_marking_allocation($selectedusers, $markerid)
+    {
         global $CFG;
         require_once($CFG->dirroot . '/mod/edusign/batchsetallocatedmarkerform.php');
 
@@ -86,7 +97,8 @@ class mod_edusign_testable_edusign extends edusign {
         return parent::process_set_batch_marking_allocation();
     }
 
-    public function testable_process_set_batch_marking_workflow_state($selectedusers, $state) {
+    public function testable_process_set_batch_marking_workflow_state($selectedusers, $state)
+    {
         global $CFG;
         require_once($CFG->dirroot . '/mod/edusign/batchsetmarkingworkflowstateform.php');
 
@@ -101,38 +113,45 @@ class mod_edusign_testable_edusign extends edusign {
         return parent::process_set_batch_marking_workflow_state();
     }
 
-    public function testable_submissions_open($userid = 0) {
+    public function testable_submissions_open($userid = 0)
+    {
         return parent::submissions_open($userid);
     }
 
-    public function testable_save_user_extension($userid, $extensionduedate) {
+    public function testable_save_user_extension($userid, $extensionduedate)
+    {
         return parent::save_user_extension($userid, $extensionduedate);
     }
 
-    public function testable_get_graders($userid) {
+    public function testable_get_graders($userid)
+    {
         // Changed method from protected to public.
         return parent::get_graders($userid);
     }
 
-    public function testable_get_notifiable_users($userid) {
+    public function testable_get_notifiable_users($userid)
+    {
         return parent::get_notifiable_users($userid);
     }
 
-    public function testable_view_batch_set_workflow_state($selectedusers) {
+    public function testable_view_batch_set_workflow_state($selectedusers)
+    {
         global $PAGE;
         $PAGE->set_url('/mod/edusign/view.php');
         $mform = $this->testable_grading_batch_operations_form('setmarkingworkflowstate', $selectedusers);
         return parent::view_batch_set_workflow_state($mform);
     }
 
-    public function testable_view_batch_markingallocation($selectedusers) {
+    public function testable_view_batch_markingallocation($selectedusers)
+    {
         global $PAGE;
         $PAGE->set_url('/mod/edusign/view.php');
         $mform = $this->testable_grading_batch_operations_form('setmarkingallocation', $selectedusers);
         return parent::view_batch_markingallocation($mform);
     }
 
-    public function testable_grading_batch_operations_form($operation, $selectedusers) {
+    public function testable_grading_batch_operations_form($operation, $selectedusers)
+    {
         global $CFG;
 
         require_once($CFG->dirroot . '/mod/edusign/gradingbatchoperationsform.php');
@@ -149,7 +168,7 @@ class mod_edusign_testable_edusign extends edusign {
         $formparams = array();
         $formparams['submissiondrafts'] = 1;
         $formparams['duedate'] = 1;
-        $formparams['attemptreopenmethod'] = edusign_ATTEMPT_REOPEN_METHOD_MANUAL;
+        $formparams['attemptreopenmethod'] = EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL;
         $formparams['feedbackplugins'] = array();
         $formparams['markingworkflow'] = 1;
         $formparams['markingallocation'] = 1;
@@ -160,17 +179,21 @@ class mod_edusign_testable_edusign extends edusign {
         return $mform;
     }
 
-    public function testable_update_activity_completion_records($teamsubmission,
-                                                          $requireallteammemberssubmit,
-                                                          $submission,
-                                                          $userid,
-                                                          $complete,
-                                                          $completion) {
-        return parent::update_activity_completion_records($teamsubmission,
-                                                          $requireallteammemberssubmit,
-                                                          $submission,
-                                                          $userid,
-                                                          $complete,
-                                                          $completion);
+    public function testable_update_activity_completion_records(
+        $teamsubmission,
+        $requireallteammemberssubmit,
+        $submission,
+        $userid,
+        $complete,
+        $completion
+    ) {
+        return parent::update_activity_completion_records(
+            $teamsubmission,
+            $requireallteammemberssubmit,
+            $submission,
+            $userid,
+            $complete,
+            $completion
+        );
     }
 }

@@ -41,12 +41,14 @@ use \core_calendar\local\event\container as calendar_event_container;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-class mod_edusign_lib_testcase extends advanced_testcase {
+class mod_edusign_lib_testcase extends advanced_testcase
+{
 
     // Use the generator helper.
     use mod_edusign_test_generator;
 
-    public function test_edusign_print_overview() {
+    public function test_edusign_print_overview()
+    {
         global $DB;
 
         $this->resetAfterTest();
@@ -64,7 +66,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $secondedusign = $this->create_instance($course, [
                 'name' => 'edusignment with submissions',
                 'duedate' => time(),
-                'attemptreopenmethod' => edusign_ATTEMPT_REOPEN_METHOD_MANUAL,
+                'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL,
                 'maxattempts' => 3,
                 'submissiondrafts' => 1,
                 'edusignsubmission_onlinetext_enabled' => 1,
@@ -105,7 +107,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertNotRegExp('/.*First edusignment.*/', $overview[$course->id]['edusign']); // Has valid submission.
 
         // And now submit the submission.
-        $opensubmission->status = edusign_SUBMISSION_STATUS_SUBMITTED;
+        $opensubmission->status = EDUSIGN_SUBMISSION_STATUS_SUBMITTED;
         $openedusign->testable_update_submission($opensubmission, $student->id, true, false);
 
         $overview = array();
@@ -160,7 +162,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Test that edusign_print_overview does not return any edusignments which are Open Offline.
      */
-    public function test_edusign_print_overview_open_offline() {
+    public function test_edusign_print_overview_open_offline()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
@@ -182,7 +185,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Test that edusign_print_recent_activity shows ungraded submitted edusignments.
      */
-    public function test_print_recent_activity() {
+    public function test_print_recent_activity()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -198,7 +202,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Test that edusign_print_recent_activity does not display any warnings when a custom fullname has been configured.
      */
-    public function test_print_recent_activity_fullname() {
+    public function test_print_recent_activity_fullname()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -215,7 +220,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Test that edusign_print_recent_activity shows the blind marking ID.
      */
-    public function test_print_recent_activity_fullname_blind_marking() {
+    public function test_print_recent_activity_fullname_blind_marking()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -237,7 +243,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Test that edusign_get_recent_mod_activity fetches the edusignment correctly.
      */
-    public function test_edusign_get_recent_mod_activity() {
+    public function test_edusign_get_recent_mod_activity()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -265,7 +272,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Ensure that edusign_user_complete displays information about drafts.
      */
-    public function test_edusign_user_complete() {
+    public function test_edusign_user_complete()
+    {
         global $PAGE, $DB;
 
         $this->resetAfterTest();
@@ -278,7 +286,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', array('id' => $edusign->get_course_module()->id)));
 
         $submission = $edusign->get_user_submission($student->id, true);
-        $submission->status = edusign_SUBMISSION_STATUS_DRAFT;
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_DRAFT;
         $DB->update_record('edusign_submission', $submission);
 
         $this->expectOutputRegex('/Draft/');
@@ -288,7 +296,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Ensure that edusign_user_outline fetches updated grades.
      */
-    public function test_edusign_user_outline() {
+    public function test_edusign_user_outline()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -312,7 +321,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Ensure that edusign_get_completion_state reflects the correct status at each point.
      */
-    public function test_edusign_get_completion_state() {
+    public function test_edusign_get_completion_state()
+    {
         global $DB;
 
         $this->resetAfterTest();
@@ -344,7 +354,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Tests for mod_edusign_refresh_events.
      */
-    public function test_edusign_refresh_events() {
+    public function test_edusign_refresh_events()
+    {
         global $DB;
 
         $this->resetAfterTest();
@@ -365,7 +376,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $eventparams = [
             'modulename' => 'edusign',
             'instance' => $instance->id,
-            'eventtype' => edusign_EVENT_TYPE_DUE,
+            'eventtype' => EDUSIGN_EVENT_TYPE_DUE,
             'groupid' => 0
         ];
 
@@ -388,7 +399,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertEquals($eventtime, $newduedate);
 
         // Create a second course and edusignment.
-        $othercourse = $this->getDataGenerator()->create_course();;
+        $othercourse = $this->getDataGenerator()->create_course();
+        ;
         $otheredusign = $this->create_instance($othercourse, [
             'duedate' => $duedate,
         ]);
@@ -429,7 +441,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertFalse(edusign_refresh_events('aaa'));
     }
 
-    public function test_edusign_core_calendar_is_event_visible_duedate_event_as_teacher() {
+    public function test_edusign_core_calendar_is_event_visible_duedate_event_as_teacher()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -438,14 +451,15 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->setAdminUser();
 
         // Create a calendar event.
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // The teacher should see the due date event.
         $this->setUser($teacher);
         $this->assertTrue(mod_edusign_core_calendar_is_event_visible($event));
     }
 
-    public function test_edusign_core_calendar_is_event_visible_duedate_event_for_teacher() {
+    public function test_edusign_core_calendar_is_event_visible_duedate_event_for_teacher()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -454,7 +468,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->setAdminUser();
 
         // Create a calendar event.
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // Now, log out.
         $this->setUser();
@@ -463,7 +477,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertTrue(mod_edusign_core_calendar_is_event_visible($event, $teacher->id));
     }
 
-    public function test_edusign_core_calendar_is_event_visible_duedate_event_as_student() {
+    public function test_edusign_core_calendar_is_event_visible_duedate_event_as_student()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -473,14 +488,15 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->setAdminUser();
 
         // Create a calendar event.
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // The student should care about the due date event.
         $this->setUser($student);
         $this->assertTrue(mod_edusign_core_calendar_is_event_visible($event));
     }
 
-    public function test_edusign_core_calendar_is_event_visible_duedate_event_for_student() {
+    public function test_edusign_core_calendar_is_event_visible_duedate_event_for_student()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -499,7 +515,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertTrue(mod_edusign_core_calendar_is_event_visible($event, $student->id));
     }
 
-    public function test_edusign_core_calendar_is_event_visible_gradingduedate_event_as_teacher() {
+    public function test_edusign_core_calendar_is_event_visible_gradingduedate_event_as_teacher()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -507,7 +524,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_GRADINGDUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_GRADINGDUE);
 
         // The teacher should see the due date event.
         $this->setUser($teacher);
@@ -515,7 +532,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     }
 
 
-    public function test_edusign_core_calendar_is_event_visible_gradingduedate_event_for_teacher() {
+    public function test_edusign_core_calendar_is_event_visible_gradingduedate_event_for_teacher()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -523,7 +541,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_GRADINGDUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_GRADINGDUE);
 
         // Now, log out.
         $this->setUser();
@@ -532,7 +550,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertTrue(mod_edusign_core_calendar_is_event_visible($event, $teacher->id));
     }
 
-    public function test_edusign_core_calendar_is_event_visible_gradingduedate_event_as_student() {
+    public function test_edusign_core_calendar_is_event_visible_gradingduedate_event_as_student()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
@@ -540,7 +559,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_GRADINGDUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_GRADINGDUE);
 
         // The student should not see the due date event.
         $this->setUser($student);
@@ -548,7 +567,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     }
 
 
-    public function test_edusign_core_calendar_is_event_visible_gradingduedate_event_for_student() {
+    public function test_edusign_core_calendar_is_event_visible_gradingduedate_event_for_student()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
@@ -556,7 +576,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_GRADINGDUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_GRADINGDUE);
 
         // Now, log out.
         $this->setUser();
@@ -565,7 +585,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertFalse(mod_edusign_core_calendar_is_event_visible($event, $student->id));
     }
 
-    public function test_edusign_core_calendar_provide_event_action_duedate_as_teacher() {
+    public function test_edusign_core_calendar_provide_event_action_duedate_as_teacher()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -573,7 +594,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // The teacher should see the event.
         $this->setUser($teacher);
@@ -584,7 +605,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertNull($actionevent);
     }
 
-    public function test_edusign_core_calendar_provide_event_action_duedate_for_teacher() {
+    public function test_edusign_core_calendar_provide_event_action_duedate_for_teacher()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -592,7 +614,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // Now, log out.
         $this->setUser();
@@ -605,7 +627,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertNull($actionevent);
     }
 
-    public function test_edusign_core_calendar_provide_event_action_duedate_as_student() {
+    public function test_edusign_core_calendar_provide_event_action_duedate_as_student()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
@@ -613,7 +636,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // The student should see the event.
         $this->setUser($student);
@@ -628,7 +651,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertTrue($actionevent->is_actionable());
     }
 
-    public function test_edusign_core_calendar_provide_event_action_duedate_for_student() {
+    public function test_edusign_core_calendar_provide_event_action_duedate_for_student()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
@@ -636,7 +660,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // Now, log out.
         $this->setUser();
@@ -653,7 +677,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertTrue($actionevent->is_actionable());
     }
 
-    public function test_edusign_core_calendar_provide_event_action_gradingduedate_as_teacher() {
+    public function test_edusign_core_calendar_provide_event_action_gradingduedate_as_teacher()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -661,7 +686,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_GRADINGDUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_GRADINGDUE);
 
         $this->setUser($teacher);
         $factory = new \core_calendar\action_factory();
@@ -675,7 +700,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertTrue($actionevent->is_actionable());
     }
 
-    public function test_edusign_core_calendar_provide_event_action_gradingduedate_for_teacher() {
+    public function test_edusign_core_calendar_provide_event_action_gradingduedate_for_teacher()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -683,7 +709,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_GRADINGDUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_GRADINGDUE);
 
         // Now, log out.
         $this->setUser();
@@ -700,7 +726,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertTrue($actionevent->is_actionable());
     }
 
-    public function test_edusign_core_calendar_provide_event_action_gradingduedate_as_student() {
+    public function test_edusign_core_calendar_provide_event_action_gradingduedate_as_student()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
@@ -708,7 +735,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_GRADINGDUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_GRADINGDUE);
 
         $this->setUser($student);
         $factory = new \core_calendar\action_factory();
@@ -722,7 +749,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertFalse($actionevent->is_actionable());
     }
 
-    public function test_edusign_core_calendar_provide_event_action_gradingduedate_for_student() {
+    public function test_edusign_core_calendar_provide_event_action_gradingduedate_for_student()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
@@ -730,7 +758,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Create a calendar event.
         $this->setAdminUser();
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_GRADINGDUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_GRADINGDUE);
 
         // Now, log out.
         $this->setUser();
@@ -747,7 +775,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertFalse($actionevent->is_actionable());
     }
 
-    public function test_edusign_core_calendar_provide_event_action_duedate_as_student_submitted() {
+    public function test_edusign_core_calendar_provide_event_action_duedate_as_student_submitted()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -757,7 +786,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->setAdminUser();
 
         // Create a calendar event.
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // Create an action factory.
         $factory = new \core_calendar\action_factory();
@@ -772,7 +801,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->assertNull($actionevent);
     }
 
-    public function test_edusign_core_calendar_provide_event_action_duedate_for_student_submitted() {
+    public function test_edusign_core_calendar_provide_event_action_duedate_for_student_submitted()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -782,7 +812,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->setAdminUser();
 
         // Create a calendar event.
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // Create an action factory.
         $factory = new \core_calendar\action_factory();
@@ -808,7 +838,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
      * @param string $eventtype The event type. eg. edusign_EVENT_TYPE_DUE.
      * @return bool|calendar_event
      */
-    private function create_action_event($course, $edusign, $eventtype) {
+    private function create_action_event($course, $edusign, $eventtype)
+    {
         $event = new stdClass();
         $event->name = 'Calendar event';
         $event->modulename  = 'edusign';
@@ -826,7 +857,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
      * This function should work given either an instance of the module (cm_info), such as when checking the active rules,
      * or if passed a stdClass of similar structure, such as when checking the the default completion settings for a mod type.
      */
-    public function test_mod_edusign_completion_get_active_rule_descriptions() {
+    public function test_mod_edusign_completion_get_active_rule_descriptions()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course(['enablecompletion' => 1]);
 
@@ -858,7 +890,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Test that if some grades are not set, they are left alone and not rescaled
      */
-    public function test_edusign_rescale_activity_grades_some_unset() {
+    public function test_edusign_rescale_activity_grades_some_unset()
+    {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -885,13 +918,14 @@ class mod_edusign_lib_testcase extends advanced_testcase {
 
         // Make sure the real grade is scaled, but the edusign_GRADE_NOT_SET stays the same.
         $this->assertEquals($studentgrade->grade, 5);
-        $this->assertEquals($otherstudentgrade->grade, edusign_GRADE_NOT_SET);
+        $this->assertEquals($otherstudentgrade->grade, EDUSIGN_GRADE_NOT_SET);
     }
 
     /**
      * Return false when there are not overrides for this edusign instance.
      */
-    public function test_edusign_is_override_calendar_event_no_override() {
+    public function test_edusign_is_override_calendar_event_no_override()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -917,7 +951,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Return false if the given event isn't an edusign module event.
      */
-    public function test_edusign_is_override_calendar_event_no_nodule_event() {
+    public function test_edusign_is_override_calendar_event_no_nodule_event()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -943,7 +978,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
      * Return false if there is overrides for this use but they belong to another edusign
      * instance.
      */
-    public function test_edusign_is_override_calendar_event_different_edusign_instance() {
+    public function test_edusign_is_override_calendar_event_different_edusign_instance()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -977,7 +1013,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Return true if there is a user override for this event and edusign instance.
      */
-    public function test_edusign_is_override_calendar_event_user_override() {
+    public function test_edusign_is_override_calendar_event_user_override()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1008,7 +1045,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Return true if there is a group override for the event and edusign instance.
      */
-    public function test_edusign_is_override_calendar_event_group_override() {
+    public function test_edusign_is_override_calendar_event_group_override()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1039,7 +1077,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Unknown event types should not have any limit restrictions returned.
      */
-    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_unkown_event_type() {
+    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_unkown_event_type()
+    {
         global $CFG;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1067,7 +1106,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Override events should not have any limit restrictions returned.
      */
-    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_override_event() {
+    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_override_event()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1086,7 +1126,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'modulename' => 'edusign',
             'instance' => $instance->id,
             'userid' => $student->id,
-            'eventtype' => edusign_EVENT_TYPE_DUE
+            'eventtype' => EDUSIGN_EVENT_TYPE_DUE
         ]);
 
         $record = (object) [
@@ -1105,7 +1145,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
      * edusignments configured without a submissions from and cutoff date should not have
      * any limits applied.
      */
-    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_due_no_limit() {
+    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_due_no_limit()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1126,7 +1167,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'courseid' => $instance->course,
             'modulename' => 'edusign',
             'instance' => $instance->id,
-            'eventtype' => edusign_EVENT_TYPE_DUE
+            'eventtype' => EDUSIGN_EVENT_TYPE_DUE
         ]);
 
         list($min, $max) = mod_edusign_core_calendar_get_valid_event_timestart_range($event, $instance);
@@ -1138,7 +1179,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
      * edusignments should be bottom and top bound by the submissions from date and cutoff date
      * respectively.
      */
-    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_due_with_limits() {
+    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_due_with_limits()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1161,7 +1203,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'courseid' => $instance->course,
             'modulename' => 'edusign',
             'instance' => $instance->id,
-            'eventtype' => edusign_EVENT_TYPE_DUE
+            'eventtype' => EDUSIGN_EVENT_TYPE_DUE
         ]);
 
         list($min, $max) = mod_edusign_core_calendar_get_valid_event_timestart_range($event, $instance);
@@ -1174,7 +1216,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * edusignment grading due date should not have any limits of no due date and cutoff date is set.
      */
-    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_gradingdue_no_limit() {
+    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_gradingdue_no_limit()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1194,7 +1237,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'courseid' => $instance->course,
             'modulename' => 'edusign',
             'instance' => $instance->id,
-            'eventtype' => edusign_EVENT_TYPE_GRADINGDUE
+            'eventtype' => EDUSIGN_EVENT_TYPE_GRADINGDUE
         ]);
 
         list($min, $max) = mod_edusign_core_calendar_get_valid_event_timestart_range($event, $instance);
@@ -1205,7 +1248,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * edusignment grading due event is minimum bound by the due date, if it is set.
      */
-    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_gradingdue_with_due_date() {
+    public function test_mod_edusign_core_calendar_get_valid_event_timestart_range_gradingdue_with_due_date()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1222,7 +1266,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'courseid' => $instance->course,
             'modulename' => 'edusign',
             'instance' => $instance->id,
-            'eventtype' => edusign_EVENT_TYPE_GRADINGDUE
+            'eventtype' => EDUSIGN_EVENT_TYPE_GRADINGDUE
         ]);
 
         list($min, $max) = mod_edusign_core_calendar_get_valid_event_timestart_range($event, $instance);
@@ -1234,7 +1278,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Non due date events should not update the edusignment due date.
      */
-    public function test_mod_edusign_core_calendar_event_timestart_updated_non_due_event() {
+    public function test_mod_edusign_core_calendar_event_timestart_updated_non_due_event()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1258,7 +1303,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'courseid' => $instance->course,
             'modulename' => 'edusign',
             'instance' => $instance->id,
-            'eventtype' => edusign_EVENT_TYPE_GRADINGDUE,
+            'eventtype' => EDUSIGN_EVENT_TYPE_GRADINGDUE,
             'timestart' => $duedate + 1
         ]);
 
@@ -1271,7 +1316,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Due date override events should not change the edusignment due date.
      */
-    public function test_mod_edusign_core_calendar_event_timestart_updated_due_event_override() {
+    public function test_mod_edusign_core_calendar_event_timestart_updated_due_event_override()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1296,7 +1342,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'modulename' => 'edusign',
             'instance' => $instance->id,
             'userid' => $student->id,
-            'eventtype' => edusign_EVENT_TYPE_DUE,
+            'eventtype' => EDUSIGN_EVENT_TYPE_DUE,
             'timestart' => $duedate + 1
         ]);
 
@@ -1317,7 +1363,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * Due date events should update the edusignment due date.
      */
-    public function test_mod_edusign_core_calendar_event_timestart_updated_due_event() {
+    public function test_mod_edusign_core_calendar_event_timestart_updated_due_event()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1342,7 +1389,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'courseid' => $instance->course,
             'modulename' => 'edusign',
             'instance' => $instance->id,
-            'eventtype' => edusign_EVENT_TYPE_DUE,
+            'eventtype' => EDUSIGN_EVENT_TYPE_DUE,
             'timestart' => $newduedate
         ]);
 
@@ -1357,7 +1404,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
      * then the callback should not be executed to update the edusignment due
      * date as well otherwise that would be a security issue.
      */
-    public function test_student_role_cant_update_due_event() {
+    public function test_student_role_cant_update_due_event()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1385,7 +1433,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'courseid' => $course->id,
             'modulename' => 'edusign',
             'instance' => $instance->id,
-            'eventtype' => edusign_EVENT_TYPE_DUE
+            'eventtype' => EDUSIGN_EVENT_TYPE_DUE
         ]);
 
         $event = new \calendar_event($record);
@@ -1413,7 +1461,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
      * able to update the edusignment due date by changing the due date calendar
      * event.
      */
-    public function test_teacher_role_can_update_due_event() {
+    public function test_teacher_role_can_update_due_event()
+    {
         global $CFG, $DB;
         require_once($CFG->dirroot . '/calendar/lib.php');
 
@@ -1439,7 +1488,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
             'courseid' => $course->id,
             'modulename' => 'edusign',
             'instance' => $instance->id,
-            'eventtype' => edusign_EVENT_TYPE_DUE
+            'eventtype' => EDUSIGN_EVENT_TYPE_DUE
         ]);
 
         $event = new \calendar_event($record);
@@ -1457,7 +1506,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         );
 
         $triggeredevents = $sink->get_events();
-        $moduleupdatedevents = array_filter($triggeredevents, function($e) {
+        $moduleupdatedevents = array_filter($triggeredevents, function ($e) {
             return is_a($e, 'core\event\course_module_updated');
         });
 
@@ -1475,7 +1524,8 @@ class mod_edusign_lib_testcase extends advanced_testcase {
     /**
      * A user who does not have capabilities to add events to the calendar should be able to create an edusignment.
      */
-    public function test_creation_with_no_calendar_capabilities() {
+    public function test_creation_with_no_calendar_capabilities()
+    {
         $this->resetAfterTest();
         $course = self::getDataGenerator()->create_course();
         $context = context_course::instance($course->id);

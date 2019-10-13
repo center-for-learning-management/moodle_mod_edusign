@@ -111,7 +111,7 @@ for an event type that does not exist.
                             edusign_ATTEMPT_REOPEN_METHOD_NONE - Attempts cannot be reopened (default)
                             edusign_ATTEMPT_REOPEN_METHOD_UNTIL_PASS - Attempts are reopened on grading until the gradebook
                                                                       indicates this student has passed.
-                            edusign_ATTEMPT_REOPEN_METHOD_MANUAL - Attempts are reopened on manually by the grader.
+                            EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL - Attempts are reopened on manually by the grader.
     maxattempts - The maximum allowed number of attempts per student for this edusign instance.
 
     Extra settings on the submission and grade records:

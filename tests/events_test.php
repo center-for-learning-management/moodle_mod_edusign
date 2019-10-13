@@ -36,14 +36,16 @@ require_once($CFG->dirroot . '/mod/edusign/locallib.php');
  * @copyright 2014 Adrian Greeve <adrian@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class edusign_events_testcase extends advanced_testcase {
+class edusign_events_testcase extends advanced_testcase
+{
     // Use the generator helper.
     use mod_edusign_test_generator;
 
     /**
      * Basic tests for the submission_created() abstract class.
      */
-    public function test_base_event() {
+    public function test_base_event()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -70,7 +72,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Basic tests for the submission_created() abstract class.
      */
-    public function test_submission_created() {
+    public function test_submission_created()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -130,7 +133,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Basic tests for the submission_updated() abstract class.
      */
-    public function test_submission_updated() {
+    public function test_submission_updated()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -187,7 +191,8 @@ class edusign_events_testcase extends advanced_testcase {
         }
     }
 
-    public function test_extension_granted() {
+    public function test_extension_granted()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -228,7 +233,8 @@ class edusign_events_testcase extends advanced_testcase {
         $sink->close();
     }
 
-    public function test_submission_locked() {
+    public function test_submission_locked()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -263,7 +269,8 @@ class edusign_events_testcase extends advanced_testcase {
         $sink->close();
     }
 
-    public function test_identities_revealed() {
+    public function test_identities_revealed()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -298,7 +305,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the submission_status_viewed event.
      */
-    public function test_submission_status_viewed() {
+    public function test_submission_status_viewed()
+    {
         global $PAGE;
         $this->resetAfterTest();
 
@@ -334,7 +342,8 @@ class edusign_events_testcase extends advanced_testcase {
         $this->assertEventContextNotUsed($event);
     }
 
-    public function test_submission_status_updated() {
+    public function test_submission_status_updated()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -345,7 +354,7 @@ class edusign_events_testcase extends advanced_testcase {
 
         $edusign = $this->create_instance($course);
         $submission = $edusign->get_user_submission($student->id, true);
-        $submission->status = edusign_SUBMISSION_STATUS_SUBMITTED;
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_SUBMITTED;
         $edusign->testable_update_submission($submission, $student->id, true, false);
 
         $sink = $this->redirectEvents();
@@ -358,7 +367,7 @@ class edusign_events_testcase extends advanced_testcase {
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $this->assertEquals($submission->id, $event->objectid);
         $this->assertEquals($student->id, $event->relateduserid);
-        $this->assertEquals(edusign_SUBMISSION_STATUS_DRAFT, $event->other['newstatus']);
+        $this->assertEquals(EDUSIGN_SUBMISSION_STATUS_DRAFT, $event->other['newstatus']);
         $expected = array(
             $edusign->get_course()->id,
             'edusign',
@@ -372,7 +381,8 @@ class edusign_events_testcase extends advanced_testcase {
         $sink->close();
     }
 
-    public function test_marker_updated() {
+    public function test_marker_updated()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -409,7 +419,8 @@ class edusign_events_testcase extends advanced_testcase {
         $sink->close();
     }
 
-    public function test_workflow_state_updated() {
+    public function test_workflow_state_updated()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -507,7 +518,8 @@ class edusign_events_testcase extends advanced_testcase {
         $sink->close();
     }
 
-    public function test_submission_duplicated() {
+    public function test_submission_duplicated()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -532,7 +544,7 @@ class edusign_events_testcase extends advanced_testcase {
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $this->assertEquals($submission2->id, $event->objectid);
         $this->assertEquals($student->id, $event->userid);
-        $submission2->status = edusign_SUBMISSION_STATUS_DRAFT;
+        $submission2->status = EDUSIGN_SUBMISSION_STATUS_DRAFT;
         $expected = array(
             $edusign->get_course()->id,
             'edusign',
@@ -545,7 +557,8 @@ class edusign_events_testcase extends advanced_testcase {
         $sink->close();
     }
 
-    public function test_submission_unlocked() {
+    public function test_submission_unlocked()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -580,7 +593,8 @@ class edusign_events_testcase extends advanced_testcase {
         $sink->close();
     }
 
-    public function test_submission_graded() {
+    public function test_submission_graded()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -679,7 +693,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the submission_viewed event.
      */
-    public function test_submission_viewed() {
+    public function test_submission_viewed()
+    {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -727,7 +742,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the feedback_viewed event.
      */
-    public function test_feedback_viewed() {
+    public function test_feedback_viewed()
+    {
         global $DB, $PAGE;
 
         $this->resetAfterTest();
@@ -782,7 +798,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the grading_form_viewed event.
      */
-    public function test_grading_form_viewed() {
+    public function test_grading_form_viewed()
+    {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -828,7 +845,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the grading_table_viewed event.
      */
-    public function test_grading_table_viewed() {
+    public function test_grading_table_viewed()
+    {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -873,7 +891,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the submission_form_viewed event.
      */
-    public function test_submission_form_viewed() {
+    public function test_submission_form_viewed()
+    {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -913,7 +932,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the submission_form_viewed event.
      */
-    public function test_submission_confirmation_form_viewed() {
+    public function test_submission_confirmation_form_viewed()
+    {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -953,7 +973,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the reveal_identities_confirmation_page_viewed event.
      */
-    public function test_reveal_identities_confirmation_page_viewed() {
+    public function test_reveal_identities_confirmation_page_viewed()
+    {
         global $PAGE;
         $this->resetAfterTest();
 
@@ -991,7 +1012,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the statement_accepted event.
      */
-    public function test_statement_accepted() {
+    public function test_statement_accepted()
+    {
         // We want to be a student so we can submit edusignments.
         $this->resetAfterTest();
 
@@ -1024,9 +1046,11 @@ class edusign_events_testcase extends advanced_testcase {
             'edusign',
             'submission statement accepted',
             'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('submissionstatementacceptedlog',
+            get_string(
+                'submissionstatementacceptedlog',
                 'mod_edusign',
-                fullname($student)),
+                fullname($student)
+            ),
             $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
@@ -1067,7 +1091,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the batch_set_workflow_state_viewed event.
      */
-    public function test_batch_set_workflow_state_viewed() {
+    public function test_batch_set_workflow_state_viewed()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1098,7 +1123,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the batch_set_marker_allocation_viewed event.
      */
-    public function test_batch_set_marker_allocation_viewed() {
+    public function test_batch_set_marker_allocation_viewed()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1132,7 +1158,8 @@ class edusign_events_testcase extends advanced_testcase {
      * There is no external API for creating a user override, so the unit test will simply
      * create and trigger the event and ensure the event data is returned as expected.
      */
-    public function test_user_override_created() {
+    public function test_user_override_created()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1166,7 +1193,8 @@ class edusign_events_testcase extends advanced_testcase {
      * There is no external API for creating a group override, so the unit test will simply
      * create and trigger the event and ensure the event data is returned as expected.
      */
-    public function test_group_override_created() {
+    public function test_group_override_created()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1200,7 +1228,8 @@ class edusign_events_testcase extends advanced_testcase {
      * There is no external API for updating a user override, so the unit test will simply
      * create and trigger the event and ensure the event data is returned as expected.
      */
-    public function test_user_override_updated() {
+    public function test_user_override_updated()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1234,7 +1263,8 @@ class edusign_events_testcase extends advanced_testcase {
      * There is no external API for updating a group override, so the unit test will simply
      * create and trigger the event and ensure the event data is returned as expected.
      */
-    public function test_group_override_updated() {
+    public function test_group_override_updated()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1265,7 +1295,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the user override deleted event.
      */
-    public function test_user_override_deleted() {
+    public function test_user_override_deleted()
+    {
         global $DB;
         $this->resetAfterTest();
 
@@ -1296,7 +1327,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test the group override deleted event.
      */
-    public function test_group_override_deleted() {
+    public function test_group_override_deleted()
+    {
         global $DB;
         $this->resetAfterTest();
 
@@ -1327,7 +1359,8 @@ class edusign_events_testcase extends advanced_testcase {
     /**
      * Test that all events generated with blindmarking enabled are anonymous
      */
-    public function test_anonymous_events() {
+    public function test_anonymous_events()
+    {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();

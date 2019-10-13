@@ -29,8 +29,10 @@ defined('MOODLE_INTERNAL') || die();
 global $CFG;
 require_once(__DIR__ . '/../locallib.php');
 
-class mod_edusign_locallib_participants extends advanced_testcase {
-    public function test_list_participants_blind_marking() {
+class mod_edusign_locallib_participants extends advanced_testcase
+{
+    public function test_list_participants_blind_marking()
+    {
         global $DB;
         $this->resetAfterTest(true);
 
@@ -39,9 +41,11 @@ class mod_edusign_locallib_participants extends advanced_testcase {
         $roles = $DB->get_records('role', null, '', 'shortname, id');
         $teacher = $this->getDataGenerator()->create_user();
 
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                $course->id,
-                $roles['teacher']->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $roles['teacher']->id
+        );
 
         $this->setUser($teacher);
 
@@ -49,9 +53,11 @@ class mod_edusign_locallib_participants extends advanced_testcase {
         $students = [];
         for ($i = 0; $i < 2; $i++) {
             $student = $this->getDataGenerator()->create_user();
-            $this->getDataGenerator()->enrol_user($student->id,
-                    $course->id,
-                    $roles['student']->id);
+            $this->getDataGenerator()->enrol_user(
+                $student->id,
+                $course->id,
+                $roles['student']->id
+            );
             $students[$student->id] = $student;
         }
 
@@ -118,14 +124,15 @@ class mod_edusign_locallib_participants extends advanced_testcase {
         $this->assertEquals($newkeys, array_keys($table->rawdata));
     }
 
-    public function helper_add_submission($edusign, $user, $data, $type) {
+    public function helper_add_submission($edusign, $user, $data, $type)
+    {
         global $USER;
 
         $previoususer = $USER;
 
         $this->setUser($user);
         $submission = $edusign->get_user_submission($user->id, true);
-        $submission->status = edusign_SUBMISSION_STATUS_SUBMITTED;
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_SUBMITTED;
 
         $rc = new ReflectionClass('edusign');
         $rcm = $rc->getMethod('update_submission');

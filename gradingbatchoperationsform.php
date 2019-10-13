@@ -34,11 +34,13 @@ require_once($CFG->dirroot . '/mod/edusign/locallib.php');
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_edusign_grading_batch_operations_form extends moodleform {
+class mod_edusign_grading_batch_operations_form extends moodleform
+{
     /**
      * Define this form - called by the parent constructor.
      */
-    public function definition() {
+    public function definition()
+    {
         $mform = $this->_form;
         $instance = $this->_customdata;
 
@@ -53,7 +55,7 @@ class mod_edusign_grading_batch_operations_form extends moodleform {
         if ($instance['duedate'] && has_capability('mod/edusign:grantextension', $instance['context'])) {
             $options['grantextension'] = get_string('grantextension', 'edusign');
         }
-        if ($instance['attemptreopenmethod'] == edusign_ATTEMPT_REOPEN_METHOD_MANUAL) {
+        if ($instance['attemptreopenmethod'] == EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL) {
             $options['addattempt'] = get_string('addattempt', 'edusign');
         }
 
@@ -88,4 +90,3 @@ class mod_edusign_grading_batch_operations_form extends moodleform {
         $mform->addElement('group', 'actionsgrp', $batchdescription, $objs, ' ', false);
     }
 }
-

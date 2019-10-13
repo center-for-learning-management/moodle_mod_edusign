@@ -30,12 +30,14 @@ require_once(__DIR__ . '/fixtures/testable_edusign.php');
  * @copyright 2012 Paul Charsley
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_edusign_external_testcase extends externallib_advanced_testcase {
+class mod_edusign_external_testcase extends externallib_advanced_testcase
+{
 
     /**
      * Test get_grades
      */
-    public function test_get_grades() {
+    public function test_get_grades()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -135,7 +137,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test get_edusignments
      */
-    public function test_get_edusignments() {
+    public function test_get_edusignments()
+    {
         global $DB, $USER, $CFG;
 
         $this->resetAfterTest(true);
@@ -298,7 +301,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test get_edusignments with submissionstatement.
      */
-    public function test_get_edusignments_with_submissionstatement() {
+    public function test_get_edusignments_with_submissionstatement()
+    {
         global $DB, $USER, $CFG;
 
         $this->resetAfterTest(true);
@@ -334,7 +338,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $this->assertCount(2, $edusignmentsret);
 
         // Order the returned edusignments by ID.
-        usort($edusignmentsret, function($a, $b) {
+        usort($edusignmentsret, function ($a, $b) {
             return strcmp($a['id'], $b['id']);
         });
 
@@ -354,7 +358,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test get_submissions
      */
-    public function test_get_submissions() {
+    public function test_get_submissions()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -439,7 +444,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test get_user_flags
      */
-    public function test_get_user_flags() {
+    public function test_get_user_flags()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -510,7 +516,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test get_user_mappings
      */
-    public function test_get_user_mappings() {
+    public function test_get_user_mappings()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -573,7 +580,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException moodle_exception
      */
-    public function test_lock_submissions() {
+    public function test_lock_submissions()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -592,17 +600,23 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $student1 = self::getDataGenerator()->create_user();
         $student2 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
-        $this->getDataGenerator()->enrol_user($student2->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
+        $this->getDataGenerator()->enrol_user(
+            $student2->id,
+            $course->id,
+            $studentrole->id
+        );
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
 
         // Create a student1 with an online text submission.
         // Simulate a submission.
@@ -637,7 +651,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test unlock_submissions
      */
-    public function test_unlock_submissions() {
+    public function test_unlock_submissions()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -656,17 +671,23 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $student1 = self::getDataGenerator()->create_user();
         $student2 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
-        $this->getDataGenerator()->enrol_user($student2->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
+        $this->getDataGenerator()->enrol_user(
+            $student2->id,
+            $course->id,
+            $studentrole->id
+        );
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
 
         // Create a student1 with an online text submission.
         // Simulate a submission.
@@ -707,7 +728,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test submit_for_grading
      */
-    public function test_submit_for_grading() {
+    public function test_submit_for_grading()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -729,9 +751,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $student1 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
 
         // Create a student1 with an online text submission.
         // Simulate a submission.
@@ -758,13 +782,14 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $submission = $edusign->get_user_submission($student1->id, false);
 
-        $this->assertEquals(edusign_SUBMISSION_STATUS_SUBMITTED, $submission->status);
+        $this->assertEquals(EDUSIGN_SUBMISSION_STATUS_SUBMITTED, $submission->status);
     }
 
     /**
      * Test save_user_extensions
      */
-    public function test_save_user_extensions() {
+    public function test_save_user_extensions()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -773,9 +798,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
         $this->setUser($teacher);
 
         $now = time();
@@ -796,9 +823,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $student1 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
 
         $this->setUser($student1);
         $result = mod_edusign_external::submit_for_grading($instance->id, true);
@@ -830,7 +859,6 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $this->setUser($student1);
         $result = mod_edusign_external::save_user_extensions($instance->id, array($student1->id), array($now, $tomorrow));
         $result = external_api::clean_returnvalue(mod_edusign_external::save_user_extensions_returns(), $result);
-
     }
 
     /**
@@ -838,7 +866,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException required_capability_exception
      */
-    public function test_reveal_identities() {
+    public function test_reveal_identities()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -847,9 +876,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
         $this->setUser($teacher);
 
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_edusign');
@@ -865,9 +896,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $student1 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
 
         $this->setUser($student1);
         $result = mod_edusign_external::reveal_identities($instance->id);
@@ -895,13 +928,13 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $result = external_api::clean_returnvalue(mod_edusign_external::reveal_identities_returns(), $result);
         $this->assertEquals(1, count($result));
         $this->assertEquals(false, $edusign->is_blind_marking());
-
     }
 
     /**
      * Test revert_submissions_to_draft
      */
-    public function test_revert_submissions_to_draft() {
+    public function test_revert_submissions_to_draft()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -922,17 +955,23 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $student1 = self::getDataGenerator()->create_user();
         $student2 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
-        $this->getDataGenerator()->enrol_user($student2->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
+        $this->getDataGenerator()->enrol_user(
+            $student2->id,
+            $course->id,
+            $studentrole->id
+        );
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
 
         // Create a student1 with an online text submission.
         // Simulate a submission.
@@ -949,13 +988,13 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         // Check for 0 warnings.
         $this->assertEquals(0, count($result));
-
     }
 
     /**
      * Test save_submission
      */
-    public function test_save_submission() {
+    public function test_save_submission()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -964,9 +1003,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
         $this->setUser($teacher);
 
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_edusign');
@@ -984,12 +1025,16 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $student1 = self::getDataGenerator()->create_user();
         $student2 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
-        $this->getDataGenerator()->enrol_user($student2->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
+        $this->getDataGenerator()->enrol_user(
+            $student2->id,
+            $course->id,
+            $studentrole->id
+        );
         // Create a student1 with an online text submission.
         // Simulate a submission.
         $this->setUser($student1);
@@ -1051,7 +1096,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test save_grade
      */
-    public function test_save_grade() {
+    public function test_save_grade()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -1060,9 +1106,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
         $this->setUser($teacher);
 
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_edusign');
@@ -1078,12 +1126,16 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $student1 = self::getDataGenerator()->create_user();
         $student2 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
-        $this->getDataGenerator()->enrol_user($student2->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
+        $this->getDataGenerator()->enrol_user(
+            $student2->id,
+            $course->id,
+            $studentrole->id
+        );
         // Simulate a grade.
         $this->setUser($teacher);
 
@@ -1109,14 +1161,16 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $feedbackeditorparams = array('text' => 'Yeeha!',
                                         'format' => 1);
         $feedbackpluginparams['edusignfeedbackcomments_editor'] = $feedbackeditorparams;
-        $result = mod_edusign_external::save_grade($instance->id,
-                                                  $student1->id,
-                                                  50.0,
-                                                  -1,
-                                                  true,
-                                                  'released',
-                                                  false,
-                                                  $feedbackpluginparams);
+        $result = mod_edusign_external::save_grade(
+            $instance->id,
+            $student1->id,
+            50.0,
+            -1,
+            true,
+            'released',
+            false,
+            $feedbackpluginparams
+        );
         // No warnings.
         $this->assertNull($result);
 
@@ -1129,7 +1183,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test save grades with advanced grading data
      */
-    public function test_save_grades_with_advanced_grading() {
+    public function test_save_grades_with_advanced_grading()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -1138,9 +1193,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
 
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_edusign');
         $params['course'] = $course->id;
@@ -1155,12 +1212,16 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $student1 = self::getDataGenerator()->create_user();
         $student2 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
-        $this->getDataGenerator()->enrol_user($student2->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
+        $this->getDataGenerator()->enrol_user(
+            $student2->id,
+            $course->id,
+            $studentrole->id
+        );
 
         $this->setUser($teacher);
 
@@ -1269,16 +1330,20 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $result = mod_edusign_external::save_grades($instance->id, false, $grades);
         $this->assertNull($result);
 
-        $student1grade = $DB->get_record('edusign_grades',
-                                         array('userid' => $student1->id, 'edusignment' => $instance->id),
-                                         '*',
-                                         MUST_EXIST);
+        $student1grade = $DB->get_record(
+            'edusign_grades',
+            array('userid' => $student1->id, 'edusignment' => $instance->id),
+            '*',
+            MUST_EXIST
+        );
         $this->assertEquals($student1grade->grade, '50.0');
 
-        $student2grade = $DB->get_record('edusign_grades',
-                                         array('userid' => $student2->id, 'edusignment' => $instance->id),
-                                         '*',
-                                         MUST_EXIST);
+        $student2grade = $DB->get_record(
+            'edusign_grades',
+            array('userid' => $student2->id, 'edusignment' => $instance->id),
+            '*',
+            MUST_EXIST
+        );
         $this->assertEquals($student2grade->grade, '100.0');
     }
 
@@ -1287,7 +1352,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException invalid_parameter_exception
      */
-    public function test_save_grades_with_group_submission() {
+    public function test_save_grades_with_group_submission()
+    {
         global $DB, $USER, $CFG;
         require_once($CFG->dirroot . '/group/lib.php');
 
@@ -1297,9 +1363,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
 
         $groupingdata = array();
         $groupingdata['courseid'] = $course->id;
@@ -1335,18 +1403,26 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $student3 = self::getDataGenerator()->create_user();
         $student4 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
-        $this->getDataGenerator()->enrol_user($student2->id,
-                                              $course->id,
-                                              $studentrole->id);
-        $this->getDataGenerator()->enrol_user($student3->id,
-                                              $course->id,
-                                              $studentrole->id);
-        $this->getDataGenerator()->enrol_user($student4->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
+        $this->getDataGenerator()->enrol_user(
+            $student2->id,
+            $course->id,
+            $studentrole->id
+        );
+        $this->getDataGenerator()->enrol_user(
+            $student3->id,
+            $course->id,
+            $studentrole->id
+        );
+        $this->getDataGenerator()->enrol_user(
+            $student4->id,
+            $course->id,
+            $studentrole->id
+        );
 
         groups_add_member($group1->id, $student1->id);
         groups_add_member($group1->id, $student2->id);
@@ -1405,23 +1481,28 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         // There should be no warnings.
         $this->assertEquals(0, count($result));
 
-        $student3grade = $DB->get_record('edusign_grades',
-                                         array('userid' => $student3->id, 'edusignment' => $instance->id),
-                                         '*',
-                                         MUST_EXIST);
+        $student3grade = $DB->get_record(
+            'edusign_grades',
+            array('userid' => $student3->id, 'edusignment' => $instance->id),
+            '*',
+            MUST_EXIST
+        );
         $this->assertEquals($student3grade->grade, '50.0');
 
-        $student4grade = $DB->get_record('edusign_grades',
-                                         array('userid' => $student4->id, 'edusignment' => $instance->id),
-                                         '*',
-                                         MUST_EXIST);
+        $student4grade = $DB->get_record(
+            'edusign_grades',
+            array('userid' => $student4->id, 'edusignment' => $instance->id),
+            '*',
+            MUST_EXIST
+        );
         $this->assertEquals($student4grade->grade, '75.0');
     }
 
     /**
      * Test copy_previous_attempt
      */
-    public function test_copy_previous_attempt() {
+    public function test_copy_previous_attempt()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -1430,9 +1511,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $teacher = self::getDataGenerator()->create_user();
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                                              $course->id,
-                                              $teacherrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $teacher->id,
+            $course->id,
+            $teacherrole->id
+        );
         $this->setUser($teacher);
 
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_edusign');
@@ -1450,9 +1533,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $student1 = self::getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $this->getDataGenerator()->enrol_user($student1->id,
-                                              $course->id,
-                                              $studentrole->id);
+        $this->getDataGenerator()->enrol_user(
+            $student1->id,
+            $course->id,
+            $studentrole->id
+        );
         // Now try a submission.
         $this->setUser($student1);
         $draftidonlinetext = file_get_unused_draft_itemid();
@@ -1473,14 +1558,16 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $feedbackeditorparams = array('text' => 'Yeeha!',
                                         'format' => 1);
         $feedbackpluginparams['edusignfeedbackcomments_editor'] = $feedbackeditorparams;
-        $result = mod_edusign_external::save_grade($instance->id,
-                                                  $student1->id,
-                                                  50.0,
-                                                  -1,
-                                                  true,
-                                                  'released',
-                                                  false,
-                                                  $feedbackpluginparams);
+        $result = mod_edusign_external::save_grade(
+            $instance->id,
+            $student1->id,
+            50.0,
+            -1,
+            true,
+            'released',
+            false,
+            $feedbackpluginparams
+        );
         $this->assertNull($result);
 
         $this->setUser($student1);
@@ -1498,13 +1585,13 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $this->assertEquals($result['edusignments'][0]['submissions'][0]['attemptnumber'], 1);
         // Check the plugins data is not empty.
         $this->assertNotEmpty($result['edusignments'][0]['submissions'][0]['plugins']);
-
     }
 
     /**
      * Test set_user_flags
      */
-    public function test_set_user_flags() {
+    public function test_set_user_flags()
+    {
         global $DB, $USER;
 
         $this->resetAfterTest(true);
@@ -1556,7 +1643,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $createduserflag = $DB->get_record('edusign_user_flags', array('id' => $createduserflags[0]['id']));
 
         // Confirm that all data was inserted correctly.
-        $this->assertEquals($student->id,  $createduserflag->userid);
+        $this->assertEquals($student->id, $createduserflag->userid);
         $this->assertEquals($edusign->id, $createduserflag->edusignment);
         $this->assertEquals(0, $createduserflag->locked);
         $this->assertEquals(2, $createduserflag->mailed);
@@ -1578,7 +1665,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $updateduserflag = $DB->get_record('edusign_user_flags', array('id' => $updateduserflags[0]['id']));
 
         // Confirm that all data was updated correctly.
-        $this->assertEquals($student->id,  $updateduserflag->userid);
+        $this->assertEquals($student->id, $updateduserflag->userid);
         $this->assertEquals($edusign->id, $updateduserflag->edusignment);
         $this->assertEquals(0, $updateduserflag->locked);
         $this->assertEquals(2, $updateduserflag->mailed);
@@ -1592,7 +1679,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException dml_missing_record_exception
      */
-    public function test_view_grading_table_invalid_instance() {
+    public function test_view_grading_table_invalid_instance()
+    {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -1612,7 +1700,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException require_login_exception
      */
-    public function test_view_grading_table_not_enrolled() {
+    public function test_view_grading_table_not_enrolled()
+    {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -1633,7 +1722,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test view_grading_table
      */
-    public function test_view_grading_table_correct() {
+    public function test_view_grading_table_correct()
+    {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -1675,7 +1765,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      * @expectedException        require_login_exception
      * @expectedExceptionMessage Course or activity not accessible. (Activity is hidden)
      */
-    public function test_view_grading_table_without_capability() {
+    public function test_view_grading_table_without_capability()
+    {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -1705,7 +1796,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test subplugins availability
      */
-    public function test_subplugins_availability() {
+    public function test_subplugins_availability()
+    {
         global $CFG;
 
         require_once($CFG->dirroot . '/mod/edusign/adminlib.php');
@@ -1748,7 +1840,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test test_view_submission_status
      */
-    public function test_view_submission_status() {
+    public function test_view_submission_status()
+    {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -1819,7 +1912,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      * @param  boolean $submitforgrading whether to submit for grading the submission
      * @return array an array containing all the required data for testing
      */
-    private function create_submission_for_testing_status($submitforgrading = false) {
+    private function create_submission_for_testing_status($submitforgrading = false)
+    {
         global $DB;
 
         // Create a course and edusignment and users.
@@ -1838,7 +1932,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
             'submissiondrafts' => 1,
             'edusignfeedback_file_enabled' => 1,
             'edusignfeedback_comments_enabled' => 1,
-            'attemptreopenmethod' => edusign_ATTEMPT_REOPEN_METHOD_MANUAL,
+            'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL,
             'sendnotifications' => 0
         );
 
@@ -1908,7 +2002,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test get_submission_status for a draft submission.
      */
-    public function test_get_submission_status_in_draft_status() {
+    public function test_get_submission_status_in_draft_status()
+    {
         $this->resetAfterTest(true);
 
         list($edusign, $instance, $student1, $student2, $teacher, $g1, $g2) = $this->create_submission_for_testing_status();
@@ -1952,8 +2047,14 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         // Format expected online text.
         $onlinetext = 'Submission text with a <a href="@@PLUGINFILE@@/intro.txt">link</a>';
-        list($expectedtext, $expectedformat) = external_format_text($onlinetext, FORMAT_HTML, $edusign->get_context()->id,
-                'edusignsubmission_onlinetext', edusignSUBMISSION_ONLINETEXT_FILEAREA, $studentsubmission->id);
+        list($expectedtext, $expectedformat) = external_format_text(
+            $onlinetext,
+            FORMAT_HTML,
+            $edusign->get_context()->id,
+            'edusignsubmission_onlinetext',
+            edusignSUBMISSION_ONLINETEXT_FILEAREA,
+            $studentsubmission->id
+        );
 
         $this->assertEquals($expectedtext, $submissionplugins['onlinetext']['editorfields'][0]['text']);
         $this->assertEquals($expectedformat, $submissionplugins['onlinetext']['editorfields'][0]['format']);
@@ -1964,7 +2065,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test get_submission_status for a submitted submission.
      */
-    public function test_get_submission_status_in_submission_status() {
+    public function test_get_submission_status_in_submission_status()
+    {
         $this->resetAfterTest(true);
 
         list($edusign, $instance, $student1, $student2, $teacher, $g1, $g2) = $this->create_submission_for_testing_status(true);
@@ -1988,13 +2090,13 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $this->assertFalse($result['lastattempt']['blindmarking']);
         $this->assertCount(0, $result['lastattempt']['submissiongroupmemberswhoneedtosubmit']);
         $this->assertEquals('notgraded', $result['lastattempt']['gradingstatus']);
-
     }
 
     /**
      * Test get_submission_status using the teacher role.
      */
-    public function test_get_submission_status_in_submission_status_for_teacher() {
+    public function test_get_submission_status_in_submission_status_for_teacher()
+    {
         $this->resetAfterTest(true);
 
         list($edusign, $instance, $student1, $student2, $teacher, $g1, $g2) = $this->create_submission_for_testing_status(true);
@@ -2052,7 +2154,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test get_submission_status for a reopened submission.
      */
-    public function test_get_submission_status_in_reopened_status() {
+    public function test_get_submission_status_in_reopened_status()
+    {
         global $USER;
 
         $this->resetAfterTest(true);
@@ -2067,14 +2170,16 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $feedbackeditorparams = array('text' => 'Yeeha!',
                                         'format' => 1);
         $feedbackpluginparams['edusignfeedbackcomments_editor'] = $feedbackeditorparams;
-        $result = mod_edusign_external::save_grade($instance->id,
-                                                  $student1->id,
-                                                  50.0,
-                                                  -1,
-                                                  false,
-                                                  'released',
-                                                  false,
-                                                  $feedbackpluginparams);
+        $result = mod_edusign_external::save_grade(
+            $instance->id,
+            $student1->id,
+            50.0,
+            -1,
+            false,
+            'released',
+            false,
+            $feedbackpluginparams
+        );
         $USER->ignoresesskey = true;
         $edusign->testable_process_add_attempt($student1->id);
 
@@ -2132,14 +2237,19 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         }
         // Format expected online text.
         $onlinetext = 'Submission text with a <a href="@@PLUGINFILE@@/intro.txt">link</a>';
-        list($expectedtext, $expectedformat) = external_format_text($onlinetext, FORMAT_HTML, $edusign->get_context()->id,
-                'edusignsubmission_onlinetext', edusignSUBMISSION_ONLINETEXT_FILEAREA, $studentsubmission->id);
+        list($expectedtext, $expectedformat) = external_format_text(
+            $onlinetext,
+            FORMAT_HTML,
+            $edusign->get_context()->id,
+            'edusignsubmission_onlinetext',
+            edusignSUBMISSION_ONLINETEXT_FILEAREA,
+            $studentsubmission->id
+        );
 
         $this->assertEquals($expectedtext, $submissionplugins['onlinetext']['editorfields'][0]['text']);
         $this->assertEquals($expectedformat, $submissionplugins['onlinetext']['editorfields'][0]['format']);
         $this->assertEquals('/', $submissionplugins['file']['fileareas'][0]['files'][0]['filepath']);
         $this->assertEquals('t.txt', $submissionplugins['file']['fileareas'][0]['files'][0]['filename']);
-
     }
 
     /**
@@ -2147,7 +2257,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException required_capability_exception
      */
-    public function test_get_submission_status_access_control() {
+    public function test_get_submission_status_access_control()
+    {
         $this->resetAfterTest(true);
 
         list($edusign, $instance, $student1, $student2, $teacher, $g1, $g2) = $this->create_submission_for_testing_status();
@@ -2156,7 +2267,6 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         // Access control test.
         mod_edusign_external::get_submission_status($edusign->get_instance()->id, $student1->id);
-
     }
 
     /**
@@ -2164,7 +2274,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException moodle_exception
      */
-    public function test_get_participant_no_edusignment() {
+    public function test_get_participant_no_edusignment()
+    {
         $this->resetAfterTest(true);
         mod_edusign_external::get_participant('-1', '-1', false);
     }
@@ -2175,7 +2286,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException require_login_exception
      */
-    public function test_get_participant_no_view_capability() {
+    public function test_get_participant_no_view_capability()
+    {
         global $DB;
         $this->resetAfterTest(true);
 
@@ -2198,7 +2310,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException required_capability_exception
      */
-    public function test_get_participant_no_grade_capability() {
+    public function test_get_participant_no_grade_capability()
+    {
         global $DB;
         $this->resetAfterTest(true);
 
@@ -2223,7 +2336,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @expectedException moodle_exception
      */
-    public function test_get_participant_no_participant() {
+    public function test_get_participant_no_participant()
+    {
         global $DB;
         $this->resetAfterTest(true);
 
@@ -2242,7 +2356,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      * get_participant should return a summarised list of details with a different fullname if blind
      * marking is on for the requested edusignment.
      */
-    public function test_get_participant_blind_marking() {
+    public function test_get_participant_blind_marking()
+    {
         global $DB;
         $this->resetAfterTest(true);
 
@@ -2271,7 +2386,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * get_participant should return a summarised list of details if requested.
      */
-    public function test_get_participant_no_user() {
+    public function test_get_participant_no_user()
+    {
         global $DB;
         $this->resetAfterTest(true);
 
@@ -2325,7 +2441,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * get_participant should return user details if requested.
      */
-    public function test_get_participant_full_details() {
+    public function test_get_participant_full_details()
+    {
         global $DB;
         $this->resetAfterTest(true);
 
@@ -2355,7 +2472,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      * get_participant should return group details if a group submission was
      * submitted.
      */
-    public function test_get_participant_group_submission() {
+    public function test_get_participant_group_submission()
+    {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -2379,7 +2497,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
 
         $this->setUser($student);
         $submission = $edusign->get_group_submission($student->id, $group->id, true);
-        $submission->status = edusign_SUBMISSION_STATUS_SUBMITTED;
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_SUBMITTED;
         $edusign->testable_update_submission($submission, $student->id, true, false);
         $data = new stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
@@ -2403,7 +2521,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      *
      * @throws coding_exception
      */
-    public function test_list_participants_user_info_with_special_characters() {
+    public function test_list_participants_user_info_with_special_characters()
+    {
         global $CFG, $DB;
         $this->resetAfterTest(true);
         $CFG->showuseridentity = 'idnumber,email,phone1,phone2,department,institution';
@@ -2453,7 +2572,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test for the type of the user-related properties in mod_edusign_external::list_participants_returns().
      */
-    public function test_list_participants_returns_user_property_types() {
+    public function test_list_participants_returns_user_property_types()
+    {
         // Get user properties.
         $userdesc = core_user_external::user_description();
         $this->assertTrue(isset($userdesc->keys));
@@ -2490,7 +2610,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
      * @param array $params parameters to be provided to the edusignment module creation
      * @return array containing the course, edusignment module, student and teacher
      */
-    private function create_edusign_with_student_and_teacher($params = array()) {
+    private function create_edusign_with_student_and_teacher($params = array())
+    {
         global $DB;
 
         $course = $this->getDataGenerator()->create_course();
@@ -2529,7 +2650,8 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
     /**
      * Test test_view_edusign
      */
-    public function test_view_edusign() {
+    public function test_view_edusign()
+    {
         global $CFG;
 
         $CFG->enablecompletion = 1;
@@ -2538,8 +2660,11 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $this->setAdminUser();
         // Setup test data.
         $course = $this->getDataGenerator()->create_course(array('enablecompletion' => 1));
-        $edusign = $this->getDataGenerator()->create_module('edusign', array('course' => $course->id),
-                                                            array('completion' => 2, 'completionview' => 1));
+        $edusign = $this->getDataGenerator()->create_module(
+            'edusign',
+            array('course' => $course->id),
+            array('completion' => 2, 'completionview' => 1)
+        );
         $context = context_module::instance($edusign->cmid);
         $cm = get_coursemodule_from_instance('edusign', $edusign->id);
 
