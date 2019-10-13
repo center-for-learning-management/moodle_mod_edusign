@@ -137,7 +137,7 @@ class edusign_grading_table extends table_sql implements renderable
         $params['edusignmentid1'] = (int) $this->edusignment->get_instance()->id;
         $params['edusignmentid2'] = (int) $this->edusignment->get_instance()->id;
         $params['edusignmentid3'] = (int) $this->edusignment->get_instance()->id;
-        $params['newstatus'] = edusign_SUBMISSION_STATUS_NEW;
+        $params['newstatus'] = EDUSIGN_SUBMISSION_STATUS_NEW;
 
         $extrauserfields = get_extra_user_fields($this->edusignment->get_context());
 
