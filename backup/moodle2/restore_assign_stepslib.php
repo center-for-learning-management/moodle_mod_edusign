@@ -33,7 +33,8 @@ require_once($CFG->dirroot . '/mod/edusign/locallib.php');
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class restore_edusign_activity_structure_step extends restore_activity_structure_step {
+class restore_edusign_activity_structure_step extends restore_activity_structure_step
+{
 
     /**
      * Store whether submission details should be included. Details may not be included if the
@@ -46,7 +47,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      *
      * @return restore_path_element $structure
      */
-    protected function define_structure() {
+    protected function define_structure()
+    {
 
         $paths = array();
         // To know if we are including userinfo.
@@ -55,21 +57,27 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
         // Define each element separated.
         $paths[] = new restore_path_element('edusign', '/activity/edusign');
         if ($userinfo) {
-            $submission = new restore_path_element('edusign_submission',
-                    '/activity/edusign/submissions/submission');
+            $submission = new restore_path_element(
+                'edusign_submission',
+                '/activity/edusign/submissions/submission'
+            );
             $paths[] = $submission;
             $this->add_subplugin_structure('edusignsubmission', $submission);
             $grade = new restore_path_element('edusign_grade', '/activity/edusign/grades/grade');
             $paths[] = $grade;
             $this->add_subplugin_structure('edusignfeedback', $grade);
-            $userflag = new restore_path_element('edusign_userflag',
-                    '/activity/edusign/userflags/userflag');
+            $userflag = new restore_path_element(
+                'edusign_userflag',
+                '/activity/edusign/userflags/userflag'
+            );
             $paths[] = $userflag;
         }
 
         $paths[] = new restore_path_element('edusign_override', '/activity/edusign/overrides/override');
-        $paths[] = new restore_path_element('edusign_plugin_config',
-                '/activity/edusign/plugin_configs/plugin_config');
+        $paths[] = new restore_path_element(
+            'edusign_plugin_config',
+            '/activity/edusign/plugin_configs/plugin_config'
+        );
 
         return $this->prepare_activity_structure($paths);
     }
@@ -80,7 +88,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      * @param object $data The data in object form
      * @return void
      */
-    protected function process_edusign($data) {
+    protected function process_edusign($data)
+    {
         global $DB;
 
         $data = (object) $data;
@@ -106,8 +115,10 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
         }
 
         if (!empty($data->teamsubmissiongroupingid)) {
-            $data->teamsubmissiongroupingid = $this->get_mappingid('grouping',
-                    $data->teamsubmissiongroupingid);
+            $data->teamsubmissiongroupingid = $this->get_mappingid(
+                'grouping',
+                $data->teamsubmissiongroupingid
+            );
         } else {
             $data->teamsubmissiongroupingid = 0;
         }
@@ -151,7 +162,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      * @param object $data The data in object form
      * @return void
      */
-    protected function process_edusign_submission($data) {
+    protected function process_edusign_submission($data)
+    {
         global $DB;
 
         if (!$this->includesubmission) {
@@ -193,7 +205,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      * @param object $data The data in object form
      * @return void
      */
-    protected function process_edusign_userflag($data) {
+    protected function process_edusign_userflag($data)
+    {
         global $DB;
 
         $data = (object) $data;
@@ -221,7 +234,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      * @param object $data The data in object form
      * @return void
      */
-    protected function process_edusign_grade($data) {
+    protected function process_edusign_grade($data)
+    {
         global $DB;
 
         $data = (object) $data;
@@ -251,8 +265,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
             $DB->insert_record('edusign_user_flags', $flags);
         }
         // Fix null grades that were rescaled.
-        if ($data->grade < 0 && $data->grade != edusign_GRADE_NOT_SET) {
-            $data->grade = edusign_GRADE_NOT_SET;
+        if ($data->grade < 0 && $data->grade != EDUSIGN_GRADE_NOT_SET) {
+            $data->grade = EDUSIGN_GRADE_NOT_SET;
         }
         $newitemid = $DB->insert_record('edusign_grades', $data);
 
@@ -268,7 +282,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      * @param object $data The data in object form
      * @return void
      */
-    protected function process_edusign_plugin_config($data) {
+    protected function process_edusign_plugin_config($data)
+    {
         global $DB;
 
         $data = (object) $data;
@@ -286,7 +301,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      *
      * @return void
      */
-    protected function set_latest_submission_field() {
+    protected function set_latest_submission_field()
+    {
         global $DB, $CFG;
 
         // Required for constants.
@@ -309,7 +325,7 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
             $submission->edusignment = $edusignmentid;
             $submission->userid = $record->userid;
             $submission->attemptnumber = $record->attemptnumber;
-            $submission->status = edusign_SUBMISSION_STATUS_NEW;
+            $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
             $submission->groupid = 0;
             $submission->latest = 0;
             $submission->timecreated = time();
@@ -366,7 +382,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      * @param string $subtype the plugin type to handle
      * @return void
      */
-    protected function add_plugin_config_files($subtype) {
+    protected function add_plugin_config_files($subtype)
+    {
         $dummyedusign = new edusign(null, null, null);
         $plugins = $dummyedusign->load_plugins($subtype);
         foreach ($plugins as $plugin) {
@@ -384,7 +401,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      * @param object $data The data in object form
      * @return void
      */
-    protected function process_edusign_override($data) {
+    protected function process_edusign_override($data)
+    {
         global $DB;
 
         $data = (object) $data;
@@ -428,7 +446,8 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
      *
      * @return void
      */
-    protected function after_execute() {
+    protected function after_execute()
+    {
         $this->add_related_files('mod_edusign', 'intro', null);
         $this->add_related_files('mod_edusign', 'introattachment', null);
 
