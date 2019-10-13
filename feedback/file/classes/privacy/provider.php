@@ -48,10 +48,10 @@ class provider implements
     /**
      * Return meta data about this plugin.
      *
-     * @param  collection $collection A list of information to add to.
+     * @param collection $collection A list of information to add to.
      * @return collection Return the collection after adding to it.
      */
-    public static function get_metadata(collection $collection) : collection {
+    public static function get_metadata(collection $collection): collection {
         $collection->link_subsystem('core_files', 'privacy:metadata:filepurpose');
         return $collection;
     }
@@ -60,8 +60,8 @@ class provider implements
      * No need to fill in this method as all information can be acquired from the edusign_grades table in the mod edusign
      * provider.
      *
-     * @param  int $userid The user ID.
-     * @param  contextlist $contextlist The context list.
+     * @param int $userid The user ID.
+     * @param contextlist $contextlist The context list.
      */
     public static function get_context_for_userid_within_feedback(int $userid, contextlist $contextlist) {
         // This uses the edusign_grade table.
@@ -70,7 +70,7 @@ class provider implements
     /**
      * This also does not need to be filled in as this is already collected in the mod edusign provider.
      *
-     * @param  useridlist $useridlist A list of user IDs
+     * @param useridlist $useridlist A list of user IDs
      */
     public static function get_student_user_ids(useridlist $useridlist) {
         // Not required.
@@ -80,7 +80,7 @@ class provider implements
      * If you have tables that contain userids and you can generate entries in your tables without creating an
      * entry in the edusign_grades table then please fill in this method.
      *
-     * @param  \core_privacy\local\request\userlist $userlist The userlist object
+     * @param \core_privacy\local\request\userlist $userlist The userlist object
      */
     public static function get_userids_from_context(\core_privacy\local\request\userlist $userlist) {
         // Not required.
@@ -89,7 +89,7 @@ class provider implements
     /**
      * Export all user data for this plugin.
      *
-     * @param  edusign_plugin_request_data $exportdata Data used to determine which context and user to export and other useful
+     * @param edusign_plugin_request_data $exportdata Data used to determine which context and user to export and other useful
      * information to help with exporting.
      */
     public static function export_feedback_user_data(edusign_plugin_request_data $exportdata) {
@@ -111,7 +111,7 @@ class provider implements
     /**
      * Any call to this method should delete all user data for the context defined in the deletion_criteria.
      *
-     * @param  edusign_plugin_request_data $requestdata Data useful for deleting user data from this sub-plugin.
+     * @param edusign_plugin_request_data $requestdata Data useful for deleting user data from this sub-plugin.
      */
     public static function delete_feedback_for_context(edusign_plugin_request_data $requestdata) {
 
@@ -129,14 +129,13 @@ class provider implements
     /**
      * Calling this function should delete all user data associated with this grade.
      *
-     * @param  edusign_plugin_request_data $requestdata Data useful for deleting user data.
+     * @param edusign_plugin_request_data $requestdata Data useful for deleting user data.
      */
     public static function delete_feedback_for_grade(edusign_plugin_request_data $requestdata) {
         $requestdata->set_userids([$requestdata->get_user()->id]);
         $requestdata->populate_submissions_and_grades();
         self::delete_feedback_for_grades($requestdata);
     }
-
 
     /**
      * Deletes all feedback for the grade ids / userids provided in a context.
@@ -145,7 +144,8 @@ class provider implements
      * - edusign object
      * - grade ids (pluginids)
      * - user ids
-     * @param  edusign_plugin_request_data $deletedata A class that contains the relevant information required for deletion.
+     *
+     * @param edusign_plugin_request_data $deletedata A class that contains the relevant information required for deletion.
      */
     public static function delete_feedback_for_grades(edusign_plugin_request_data $deletedata) {
         global $DB;

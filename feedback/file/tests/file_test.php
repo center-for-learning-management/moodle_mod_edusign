@@ -50,7 +50,7 @@ class edusignfeedback_file_testcase extends advanced_testcase {
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'edusignfeedback_comments_enabled' => 1,
-            ]);
+        ]);
 
         // Create an online text submission.
         $this->add_submission($student, $edusign);
@@ -63,12 +63,12 @@ class edusignfeedback_file_testcase extends advanced_testcase {
         file_prepare_draft_area($draftitemid, $context->id, 'edusignfeedback_file', 'feedback_files', 1);
 
         $dummy = array(
-            'contextid' => $context->id,
-            'component' => 'user',
-            'filearea' => 'draft',
-            'itemid' => $draftitemid,
-            'filepath' => '/',
-            'filename' => 'feedback1.txt'
+                'contextid' => $context->id,
+                'component' => 'user',
+                'filearea' => 'draft',
+                'itemid' => $draftitemid,
+                'filepath' => '/',
+                'filename' => 'feedback1.txt'
         );
 
         $file = $fs->create_file_from_string($dummy, 'This is the first feedback file');

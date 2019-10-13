@@ -43,6 +43,7 @@ defined('MOODLE_INTERNAL') || die();
 class submission_form_viewed extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -56,11 +57,11 @@ class submission_form_viewed extends base {
      */
     public static function create_from_user(\edusign $edusign, \stdClass $user) {
         $data = array(
-            'relateduserid' => $user->id,
-            'context' => $edusign->get_context(),
-            'other' => array(
-                'edusignid' => $edusign->get_instance()->id,
-            ),
+                'relateduserid' => $user->id,
+                'context' => $edusign->get_context(),
+                'other' => array(
+                        'edusignid' => $edusign->get_instance()->id,
+                ),
         );
         self::$preventcreatecall = false;
         /** @var submission_form_viewed $event */
@@ -96,11 +97,11 @@ class submission_form_viewed extends base {
     public function get_description() {
         if ($this->userid != $this->relateduserid) {
             return "The user with id '$this->userid' viewed the submission form for the user with id '$this->relateduserid' " .
-                "for the edusignment with course module id '$this->contextinstanceid'.";
+                    "for the edusignment with course module id '$this->contextinstanceid'.";
         }
 
         return "The user with id '$this->userid' viewed their submission for the edusignment with course module id " .
-            "'$this->contextinstanceid'.";
+                "'$this->contextinstanceid'.";
     }
 
     /**

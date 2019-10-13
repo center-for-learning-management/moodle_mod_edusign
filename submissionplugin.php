@@ -50,16 +50,17 @@ abstract class edusign_submission_plugin extends edusign_plugin {
      * This plugin accepts submissions from a student
      * The comments plugin has no submission component so should not be counted
      * when determining whether to show the edit submission link.
+     *
      * @return boolean
      */
     public function allow_submissions() {
         return true;
     }
 
-
     /**
      * Check if the submission plugin has all the required data to allow the work
      * to be submitted for grading
+     *
      * @param stdClass $submission the edusign_submission record being submitted.
      * @return bool|string 'true' if OK to proceed with submission, otherwise a
      *                        a message to display to the user
@@ -70,6 +71,7 @@ abstract class edusign_submission_plugin extends edusign_plugin {
 
     /**
      * Carry out any extra processing required when the work is submitted for grading
+     *
      * @param stdClass $submission the edusign_submission record being submitted.
      * @return void
      */
@@ -83,7 +85,7 @@ abstract class edusign_submission_plugin extends edusign_plugin {
      * @param stdClass $submission - New submission record
      * @return bool
      */
-    public function copy_submission( stdClass $oldsubmission, stdClass $submission) {
+    public function copy_submission(stdClass $oldsubmission, stdClass $submission) {
         return true;
     }
 
@@ -119,6 +121,7 @@ abstract class edusign_submission_plugin extends edusign_plugin {
     /**
      * Carry out any extra processing required when a student is given a new attempt
      * (i.e. when the submission is "reopened"
+     *
      * @param stdClass $oldsubmission The previous attempt
      * @param stdClass $newsubmission The new attempt
      */

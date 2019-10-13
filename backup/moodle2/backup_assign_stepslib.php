@@ -37,6 +37,7 @@ class backup_edusign_activity_structure_step extends backup_activity_structure_s
 
     /**
      * Annotate files from plugin configuration
+     *
      * @param backup_nested_element $edusign the backup structure of the activity
      * @param string $subtype the plugin type to handle
      * @return void
@@ -55,6 +56,7 @@ class backup_edusign_activity_structure_step extends backup_activity_structure_s
 
     /**
      * Define the structure for the edusign activity
+     *
      * @return void
      */
     protected function define_structure() {
@@ -65,76 +67,76 @@ class backup_edusign_activity_structure_step extends backup_activity_structure_s
 
         // Define each element separated.
         $edusign = new backup_nested_element('edusign', array('id'),
-                                            array('name',
-                                                  'intro',
-                                                  'introformat',
-                                                  'alwaysshowdescription',
-                                                  'submissiondrafts',
-                                                  'sendnotifications',
-                                                  'sendlatenotifications',
-                                                  'sendstudentnotifications',
-                                                  'duedate',
-                                                  'cutoffdate',
-                                                  'gradingduedate',
-                                                  'allowsubmissionsfromdate',
-                                                  'grade',
-                                                  'timemodified',
-                                                  'completionsubmit',
-                                                  'requiresubmissionstatement',
-                                                  'teamsubmission',
-                                                  'requireallteammemberssubmit',
-                                                  'teamsubmissiongroupingid',
-                                                  'blindmarking',
-                                                  'revealidentities',
-                                                  'attemptreopenmethod',
-                                                  'maxattempts',
-                                                  'markingworkflow',
-                                                  'markingallocation',
-                                                  'preventsubmissionnotingroup'));
+                array('name',
+                        'intro',
+                        'introformat',
+                        'alwaysshowdescription',
+                        'submissiondrafts',
+                        'sendnotifications',
+                        'sendlatenotifications',
+                        'sendstudentnotifications',
+                        'duedate',
+                        'cutoffdate',
+                        'gradingduedate',
+                        'allowsubmissionsfromdate',
+                        'grade',
+                        'timemodified',
+                        'completionsubmit',
+                        'requiresubmissionstatement',
+                        'teamsubmission',
+                        'requireallteammemberssubmit',
+                        'teamsubmissiongroupingid',
+                        'blindmarking',
+                        'revealidentities',
+                        'attemptreopenmethod',
+                        'maxattempts',
+                        'markingworkflow',
+                        'markingallocation',
+                        'preventsubmissionnotingroup'));
 
         $userflags = new backup_nested_element('userflags');
 
         $userflag = new backup_nested_element('userflag', array('id'),
-                                                array('userid',
-                                                      'edusignment',
-                                                      'mailed',
-                                                      'locked',
-                                                      'extensionduedate',
-                                                      'workflowstate',
-                                                      'allocatedmarker'));
+                array('userid',
+                        'edusignment',
+                        'mailed',
+                        'locked',
+                        'extensionduedate',
+                        'workflowstate',
+                        'allocatedmarker'));
 
         $submissions = new backup_nested_element('submissions');
 
         $submission = new backup_nested_element('submission', array('id'),
-                                                array('userid',
-                                                      'timecreated',
-                                                      'timemodified',
-                                                      'status',
-                                                      'groupid',
-                                                      'attemptnumber',
-                                                      'latest'));
+                array('userid',
+                        'timecreated',
+                        'timemodified',
+                        'status',
+                        'groupid',
+                        'attemptnumber',
+                        'latest'));
 
         $grades = new backup_nested_element('grades');
 
         $grade = new backup_nested_element('grade', array('id'),
-                                           array('userid',
-                                                 'timecreated',
-                                                 'timemodified',
-                                                 'grader',
-                                                 'grade',
-                                                 'attemptnumber'));
+                array('userid',
+                        'timecreated',
+                        'timemodified',
+                        'grader',
+                        'grade',
+                        'attemptnumber'));
 
         $pluginconfigs = new backup_nested_element('plugin_configs');
 
         $pluginconfig = new backup_nested_element('plugin_config', array('id'),
-                                                   array('plugin',
-                                                         'subtype',
-                                                         'name',
-                                                         'value'));
+                array('plugin',
+                        'subtype',
+                        'name',
+                        'value'));
 
         $overrides = new backup_nested_element('overrides');
         $override = new backup_nested_element('override', array('id'), array(
-            'groupid', 'userid', 'sortorder', 'allowsubmissionsfromdate', 'duedate', 'cutoffdate'));
+                'groupid', 'userid', 'sortorder', 'allowsubmissionsfromdate', 'duedate', 'cutoffdate'));
 
         // Build the tree.
         $edusign->add_child($userflags);
@@ -151,14 +153,14 @@ class backup_edusign_activity_structure_step extends backup_activity_structure_s
         // Define sources.
         $edusign->set_source_table('edusign', array('id' => backup::VAR_ACTIVITYID));
         $pluginconfig->set_source_table('edusign_plugin_config',
-                                        array('edusignment' => backup::VAR_PARENTID));
+                array('edusignment' => backup::VAR_PARENTID));
 
         // edusign overrides to backup are different depending of user info.
         $overrideparams = array('edusignid' => backup::VAR_PARENTID);
 
         if ($userinfo) {
             $userflag->set_source_table('edusign_user_flags',
-                                     array('edusignment' => backup::VAR_PARENTID));
+                    array('edusignment' => backup::VAR_PARENTID));
 
             $submissionparams = array('edusignment' => backup::VAR_PARENTID);
             if (!$groupinfo) {
@@ -168,7 +170,7 @@ class backup_edusign_activity_structure_step extends backup_activity_structure_s
             $submission->set_source_table('edusign_submission', $submissionparams);
 
             $grade->set_source_table('edusign_grades',
-                                     array('edusignment' => backup::VAR_PARENTID));
+                    array('edusignment' => backup::VAR_PARENTID));
 
             // Support 2 types of subplugins.
             $this->add_subplugin_structure('edusignsubmission', $submission, true);

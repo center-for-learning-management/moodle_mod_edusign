@@ -40,16 +40,14 @@ define('EDUSIGNFEEDBACK_FILE_MAXFILEUNZIPTIME', 120);
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class edusign_feedback_file extends edusign_feedback_plugin
-{
+class edusign_feedback_file extends edusign_feedback_plugin {
 
     /**
      * Get the name of the file feedback plugin.
      *
      * @return string
      */
-    public function get_name()
-    {
+    public function get_name() {
         return get_string('file', 'edusignfeedback_file');
     }
 
@@ -59,8 +57,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param int $gradeid
      * @return mixed
      */
-    public function get_file_feedback($gradeid)
-    {
+    public function get_file_feedback($gradeid) {
         global $DB;
         return $DB->get_record('edusignfeedback_file', array('grade' => $gradeid));
     }
@@ -70,14 +67,13 @@ class edusign_feedback_file extends edusign_feedback_plugin
      *
      * @return array
      */
-    private function get_file_options()
-    {
+    private function get_file_options() {
         global $COURSE;
 
         $fileoptions = array('subdirs' => 1,
-                             'maxbytes' => $COURSE->maxbytes,
-                             'accepted_types' => '*',
-                             'return_types' => FILE_INTERNAL);
+                'maxbytes' => $COURSE->maxbytes,
+                'accepted_types' => '*',
+                'return_types' => FILE_INTERNAL);
         return $fileoptions;
     }
 
@@ -88,8 +84,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param stdClass $data Form data.
      * @return boolean True if the file area has been modified, else false.
      */
-    public function is_feedback_modified(stdClass $grade, stdClass $data)
-    {
+    public function is_feedback_modified(stdClass $grade, stdClass $data) {
         global $USER;
 
         $filekey = null;
@@ -110,12 +105,12 @@ class edusign_feedback_file extends edusign_feedback_plugin
                 $fs = get_file_storage();
                 $draftfiles = $fs->get_area_files($usercontext->id, 'user', 'draft', $data->$filekey, 'id', true);
                 $files = $fs->get_area_files(
-                    $this->edusignment->get_context()->id,
-                    'edusignfeedback_file',
-                    edusignFEEDBACK_FILE_FILEAREA,
-                    $grade->id,
-                    'id',
-                    false
+                        $this->edusignment->get_context()->id,
+                        'edusignfeedback_file',
+                        edusignFEEDBACK_FILE_FILEAREA,
+                        $grade->id,
+                        'id',
+                        false
                 );
                 foreach ($files as $key => $file) {
                     // Flag for recording if we have a matching file.
@@ -163,15 +158,15 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @return boolean
      */
     private function copy_area_files(
-        file_storage $fs,
-        $fromcontextid,
-        $fromcomponent,
-        $fromfilearea,
-        $fromitemid,
-        $tocontextid,
-        $tocomponent,
-        $tofilearea,
-        $toitemid
+            file_storage $fs,
+            $fromcontextid,
+            $fromcomponent,
+            $fromfilearea,
+            $fromitemid,
+            $tocontextid,
+            $tocomponent,
+            $tofilearea,
+            $toitemid
     ) {
 
         $newfilerecord = new stdClass();
@@ -190,12 +185,12 @@ class edusign_feedback_file extends edusign_feedback_plugin
                 }
 
                 $existingfile = $fs->get_file(
-                    $newfilerecord->contextid,
-                    $newfilerecord->component,
-                    $newfilerecord->filearea,
-                    $newfilerecord->itemid,
-                    $file->get_filepath(),
-                    $file->get_filename()
+                        $newfilerecord->contextid,
+                        $newfilerecord->component,
+                        $newfilerecord->filearea,
+                        $newfilerecord->itemid,
+                        $file->get_filepath(),
+                        $file->get_filename()
                 );
                 if ($existingfile) {
                     // If the file already exists, remove it so it can be updated.
@@ -217,21 +212,20 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param int $userid The userid we are currently grading
      * @return bool true if elements were added to the form
      */
-    public function get_form_elements_for_user($grade, MoodleQuickForm $mform, stdClass $data, $userid)
-    {
+    public function get_form_elements_for_user($grade, MoodleQuickForm $mform, stdClass $data, $userid) {
 
         $fileoptions = $this->get_file_options();
         $gradeid = $grade ? $grade->id : 0;
         $elementname = 'files_' . $userid;
 
         $data = file_prepare_standard_filemanager(
-            $data,
-            $elementname,
-            $fileoptions,
-            $this->edusignment->get_context(),
-            'edusignfeedback_file',
-            edusignFEEDBACK_FILE_FILEAREA,
-            $gradeid
+                $data,
+                $elementname,
+                $fileoptions,
+                $this->edusignment->get_context(),
+                'edusignfeedback_file',
+                edusignFEEDBACK_FILE_FILEAREA,
+                $gradeid
         );
         $mform->addElement('filemanager', $elementname . '_filemanager', $this->get_name(), null, $fileoptions);
 
@@ -245,17 +239,16 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param string $area
      * @return int
      */
-    private function count_files($gradeid, $area)
-    {
+    private function count_files($gradeid, $area) {
 
         $fs = get_file_storage();
         $files = $fs->get_area_files(
-            $this->edusignment->get_context()->id,
-            'edusignfeedback_file',
-            $area,
-            $gradeid,
-            'id',
-            false
+                $this->edusignment->get_context()->id,
+                'edusignfeedback_file',
+                $area,
+                $gradeid,
+                'id',
+                false
         );
 
         return count($files);
@@ -267,8 +260,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param stdClass $grade The grade record
      * @return bool - true if the value was saved
      */
-    public function update_file_count($grade)
-    {
+    public function update_file_count($grade) {
         global $DB;
 
         $filefeedback = $this->get_file_feedback($grade->id);
@@ -291,8 +283,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param stdClass $data
      * @return bool
      */
-    public function save(stdClass $grade, stdClass $data)
-    {
+    public function save(stdClass $grade, stdClass $data) {
         $fileoptions = $this->get_file_options();
 
         // The element name may have been for a different user.
@@ -303,13 +294,13 @@ class edusign_feedback_file extends edusign_feedback_plugin
         }
 
         $data = file_postupdate_standard_filemanager(
-            $data,
-            $elementname,
-            $fileoptions,
-            $this->edusignment->get_context(),
-            'edusignfeedback_file',
-            edusignFEEDBACK_FILE_FILEAREA,
-            $grade->id
+                $data,
+                $elementname,
+                $fileoptions,
+                $this->edusignment->get_context(),
+                'edusignfeedback_file',
+                edusignFEEDBACK_FILE_FILEAREA,
+                $grade->id
         );
 
         return $this->update_file_count($grade);
@@ -322,8 +313,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param bool $showviewlink - Set to true to show a link to see the full list of files
      * @return string
      */
-    public function view_summary(stdClass $grade, & $showviewlink)
-    {
+    public function view_summary(stdClass $grade, & $showviewlink) {
 
         $count = $this->count_files($grade->id, edusignFEEDBACK_FILE_FILEAREA);
 
@@ -332,9 +322,9 @@ class edusign_feedback_file extends edusign_feedback_plugin
 
         if ($count <= edusignFEEDBACK_FILE_MAXSUMMARYFILES) {
             return $this->edusignment->render_area_files(
-                'edusignfeedback_file',
-                edusignFEEDBACK_FILE_FILEAREA,
-                $grade->id
+                    'edusignfeedback_file',
+                    edusignFEEDBACK_FILE_FILEAREA,
+                    $grade->id
             );
         } else {
             return get_string('countfiles', 'edusignfeedback_file', $count);
@@ -347,12 +337,11 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param stdClass $grade
      * @return string
      */
-    public function view(stdClass $grade)
-    {
+    public function view(stdClass $grade) {
         return $this->edusignment->render_area_files(
-            'edusignfeedback_file',
-            edusignFEEDBACK_FILE_FILEAREA,
-            $grade->id
+                'edusignfeedback_file',
+                edusignFEEDBACK_FILE_FILEAREA,
+                $grade->id
         );
     }
 
@@ -361,13 +350,12 @@ class edusign_feedback_file extends edusign_feedback_plugin
      *
      * @return bool
      */
-    public function delete_instance()
-    {
+    public function delete_instance() {
         global $DB;
         // Will throw exception on failure.
         $DB->delete_records(
-            'edusignfeedback_file',
-            array('edusignment' => $this->edusignment->get_instance()->id)
+                'edusignfeedback_file',
+                array('edusignment' => $this->edusignment->get_instance()->id)
         );
 
         return true;
@@ -378,8 +366,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      *
      * @param stdClass $grade
      */
-    public function is_empty(stdClass $grade)
-    {
+    public function is_empty(stdClass $grade) {
         return $this->count_files($grade->id, edusignFEEDBACK_FILE_FILEAREA) == 0;
     }
 
@@ -388,8 +375,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      *
      * @return array - An array of fileareas (keys) and descriptions (values)
      */
-    public function get_file_areas()
-    {
+    public function get_file_areas() {
         return array(edusignFEEDBACK_FILE_FILEAREA => $this->get_name());
     }
 
@@ -401,8 +387,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param int $version old edusignment version
      * @return bool True if upgrade is possible
      */
-    public function can_upgrade($type, $version)
-    {
+    public function can_upgrade($type, $version) {
         if (($type == 'upload' || $type == 'uploadsingle') && $version >= 2011112900) {
             return true;
         }
@@ -417,8 +402,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param string $log - can be appended to by the upgrade
      * @return bool was it a success? (false will trigger a rollback)
      */
-    public function upgrade_settings(context $oldcontext, stdClass $oldedusignment, & $log)
-    {
+    public function upgrade_settings(context $oldcontext, stdClass $oldedusignment, & $log) {
         // First upgrade settings (nothing to do).
         return true;
     }
@@ -434,24 +418,24 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @return bool true or false - false will trigger a rollback
      */
     public function upgrade(
-        context $oldcontext,
-        stdClass $oldedusignment,
-        stdClass $oldsubmission,
-        stdClass $grade,
-        & $log
+            context $oldcontext,
+            stdClass $oldedusignment,
+            stdClass $oldsubmission,
+            stdClass $grade,
+            & $log
     ) {
         global $DB;
 
         // Now copy the area files.
         $this->edusignment->copy_area_files_for_upgrade(
-            $oldcontext->id,
-            'mod_edusignment',
-            'response',
-            $oldsubmission->id,
-            $this->edusignment->get_context()->id,
-            'edusignfeedback_file',
-            edusignFEEDBACK_FILE_FILEAREA,
-            $grade->id
+                $oldcontext->id,
+                'mod_edusignment',
+                'response',
+                $oldsubmission->id,
+                $this->edusignment->get_context()->id,
+                'edusignfeedback_file',
+                edusignFEEDBACK_FILE_FILEAREA,
+                $grade->id
         );
 
         // Now count them!
@@ -472,8 +456,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      *
      * @return array The list of batch grading operations
      */
-    public function get_grading_batch_operations()
-    {
+    public function get_grading_batch_operations() {
         return array('uploadfiles' => get_string('uploadfiles', 'edusignfeedback_file'));
     }
 
@@ -483,8 +466,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param array $users - An array of user ids
      * @return string - The response html
      */
-    public function view_batch_upload_files($users)
-    {
+    public function view_batch_upload_files($users) {
         global $CFG, $DB, $USER;
 
         require_capability('mod/edusign:grade', $this->edusignment->get_context());
@@ -492,8 +474,8 @@ class edusign_feedback_file extends edusign_feedback_plugin
         require_once($CFG->dirroot . '/mod/edusign/renderable.php');
 
         $formparams = array('cm' => $this->edusignment->get_course_module()->id,
-                            'users' => $users,
-                            'context' => $this->edusignment->get_context());
+                'users' => $users,
+                'context' => $this->edusignment->get_context());
 
         $usershtml = '';
 
@@ -507,15 +489,15 @@ class edusign_feedback_file extends edusign_feedback_plugin
             $user = $DB->get_record('user', array('id' => $userid), '*', MUST_EXIST);
 
             $usersummary = new edusign_user_summary(
-                $user,
-                $this->edusignment->get_course()->id,
-                has_capability(
-                    'moodle/site:viewfullnames',
-                    $this->edusignment->get_course_context()
-                ),
-                $this->edusignment->is_blind_marking(),
-                $this->edusignment->get_uniqueid_for_user($user->id),
-                get_extra_user_fields($this->edusignment->get_context())
+                    $user,
+                    $this->edusignment->get_course()->id,
+                    has_capability(
+                            'moodle/site:viewfullnames',
+                            $this->edusignment->get_course_context()
+                    ),
+                    $this->edusignment->is_blind_marking(),
+                    $this->edusignment->get_uniqueid_for_user($user->id),
+                    get_extra_user_fields($this->edusignment->get_context())
             );
             $usershtml .= $this->edusignment->get_renderer()->render($usersummary);
             $usercount += 1;
@@ -527,21 +509,21 @@ class edusign_feedback_file extends edusign_feedback_plugin
 
         if ($mform->is_cancelled()) {
             redirect(new moodle_url(
-                'view.php',
-                array('id' => $this->edusignment->get_course_module()->id,
-                'action' => 'grading')
+                    'view.php',
+                    array('id' => $this->edusignment->get_course_module()->id,
+                            'action' => 'grading')
             ));
             return;
-        } elseif ($data = $mform->get_data()) {
+        } else if ($data = $mform->get_data()) {
             // Copy the files from the draft area to a temporary import area.
             $data = file_postupdate_standard_filemanager(
-                $data,
-                'files',
-                $this->get_file_options(),
-                $this->edusignment->get_context(),
-                'edusignfeedback_file',
-                edusignFEEDBACK_FILE_BATCH_FILEAREA,
-                $USER->id
+                    $data,
+                    'files',
+                    $this->get_file_options(),
+                    $this->edusignment->get_context(),
+                    'edusignfeedback_file',
+                    edusignFEEDBACK_FILE_BATCH_FILEAREA,
+                    $USER->id
             );
             $fs = get_file_storage();
 
@@ -551,29 +533,29 @@ class edusign_feedback_file extends edusign_feedback_plugin
                 $this->edusignment->notify_grade_modified($grade);
 
                 $this->copy_area_files(
-                    $fs,
-                    $this->edusignment->get_context()->id,
-                    'edusignfeedback_file',
-                    edusignFEEDBACK_FILE_BATCH_FILEAREA,
-                    $USER->id,
-                    $this->edusignment->get_context()->id,
-                    'edusignfeedback_file',
-                    edusignFEEDBACK_FILE_FILEAREA,
-                    $grade->id
+                        $fs,
+                        $this->edusignment->get_context()->id,
+                        'edusignfeedback_file',
+                        edusignFEEDBACK_FILE_BATCH_FILEAREA,
+                        $USER->id,
+                        $this->edusignment->get_context()->id,
+                        'edusignfeedback_file',
+                        edusignFEEDBACK_FILE_FILEAREA,
+                        $grade->id
                 );
 
                 $filefeedback = $this->get_file_feedback($grade->id);
                 if ($filefeedback) {
                     $filefeedback->numfiles = $this->count_files(
-                        $grade->id,
-                        edusignFEEDBACK_FILE_FILEAREA
+                            $grade->id,
+                            edusignFEEDBACK_FILE_FILEAREA
                     );
                     $DB->update_record('edusignfeedback_file', $filefeedback);
                 } else {
                     $filefeedback = new stdClass();
                     $filefeedback->numfiles = $this->count_files(
-                        $grade->id,
-                        edusignFEEDBACK_FILE_FILEAREA
+                            $grade->id,
+                            edusignFEEDBACK_FILE_FILEAREA
                     );
                     $filefeedback->grade = $grade->id;
                     $filefeedback->edusignment = $this->edusignment->get_instance()->id;
@@ -583,25 +565,25 @@ class edusign_feedback_file extends edusign_feedback_plugin
 
             // Now delete the temporary import area.
             $fs->delete_area_files(
-                $this->edusignment->get_context()->id,
-                'edusignfeedback_file',
-                edusignFEEDBACK_FILE_BATCH_FILEAREA,
-                $USER->id
+                    $this->edusignment->get_context()->id,
+                    'edusignfeedback_file',
+                    edusignFEEDBACK_FILE_BATCH_FILEAREA,
+                    $USER->id
             );
 
             redirect(new moodle_url(
-                'view.php',
-                array('id' => $this->edusignment->get_course_module()->id,
-                'action' => 'grading')
+                    'view.php',
+                    array('id' => $this->edusignment->get_course_module()->id,
+                            'action' => 'grading')
             ));
             return;
         } else {
             $header = new edusign_header(
-                $this->edusignment->get_instance(),
-                $this->edusignment->get_context(),
-                false,
-                $this->edusignment->get_course_module()->id,
-                get_string('batchuploadfiles', 'edusignfeedback_file')
+                    $this->edusignment->get_instance(),
+                    $this->edusignment->get_context(),
+                    false,
+                    $this->edusignment->get_course_module()->id,
+                    get_string('batchuploadfiles', 'edusignfeedback_file')
             );
             $o = '';
             $o .= $this->edusignment->get_renderer()->render($header);
@@ -619,8 +601,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param array $users - An array of user ids
      * @return string - The response html
      */
-    public function grading_batch_operation($action, $users)
-    {
+    public function grading_batch_operation($action, $users) {
 
         if ($action == 'uploadfiles') {
             return $this->view_batch_upload_files($users);
@@ -633,8 +614,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      *
      * @return string - The html response
      */
-    public function view_upload_zip()
-    {
+    public function view_upload_zip() {
         global $CFG, $USER;
 
         require_capability('mod/edusign:grade', $this->edusignment->get_context());
@@ -643,7 +623,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
         require_once($CFG->dirroot . '/mod/edusign/feedback/file/importzipform.php');
 
         $formparams = array('context' => $this->edusignment->get_context(),
-                            'cm' => $this->edusignment->get_course_module()->id);
+                'cm' => $this->edusignment->get_course_module()->id);
         $mform = new edusignfeedback_file_upload_zip_form(null, $formparams);
 
         $o = '';
@@ -658,18 +638,18 @@ class edusign_feedback_file extends edusign_feedback_plugin
         if ($mform->is_cancelled()) {
             $importer->delete_import_files($contextid);
             $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                               'action' => 'grading');
+                    'action' => 'grading');
             $url = new moodle_url('view.php', $urlparams);
             redirect($url);
             return;
-        } elseif ($confirm) {
+        } else if ($confirm) {
             $params = array('edusignment' => $this->edusignment, 'importer' => $importer);
 
             $mform = new edusignfeedback_file_import_zip_form(null, $params);
             if ($mform->is_cancelled()) {
                 $importer->delete_import_files($contextid);
                 $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                                   'action' => 'grading');
+                        'action' => 'grading');
                 $url = new moodle_url('view.php', $urlparams);
                 redirect($url);
                 return;
@@ -677,17 +657,17 @@ class edusign_feedback_file extends edusign_feedback_plugin
 
             $o .= $importer->import_zip_files($this->edusignment, $this);
             $importer->delete_import_files($contextid);
-        } elseif (($data = $mform->get_data()) &&
-                   ($zipfile = $mform->save_stored_file(
-                       'feedbackzip',
-                       $contextid,
-                       'edusignfeedback_file',
-                       edusignFEEDBACK_FILE_IMPORT_FILEAREA,
-                       $USER->id,
-                       '/',
-                       'import.zip',
-                       true
-                   ))) {
+        } else if (($data = $mform->get_data()) &&
+                ($zipfile = $mform->save_stored_file(
+                        'feedbackzip',
+                        $contextid,
+                        'edusignfeedback_file',
+                        edusignFEEDBACK_FILE_IMPORT_FILEAREA,
+                        $USER->id,
+                        '/',
+                        'import.zip',
+                        true
+                ))) {
             $importer->extract_files_from_zip($zipfile, $contextid);
 
             $params = array('edusignment' => $this->edusignment, 'importer' => $importer);
@@ -695,22 +675,22 @@ class edusign_feedback_file extends edusign_feedback_plugin
             $mform = new edusignfeedback_file_import_zip_form(null, $params);
 
             $header = new edusign_header(
-                $this->edusignment->get_instance(),
-                $this->edusignment->get_context(),
-                false,
-                $this->edusignment->get_course_module()->id,
-                get_string('confirmuploadzip', 'edusignfeedback_file')
+                    $this->edusignment->get_instance(),
+                    $this->edusignment->get_context(),
+                    false,
+                    $this->edusignment->get_course_module()->id,
+                    get_string('confirmuploadzip', 'edusignfeedback_file')
             );
             $o .= $renderer->render($header);
             $o .= $renderer->render(new edusign_form('confirmimportzip', $mform));
             $o .= $renderer->render_footer();
         } else {
             $header = new edusign_header(
-                $this->edusignment->get_instance(),
-                $this->edusignment->get_context(),
-                false,
-                $this->edusignment->get_course_module()->id,
-                get_string('uploadzip', 'edusignfeedback_file')
+                    $this->edusignment->get_instance(),
+                    $this->edusignment->get_context(),
+                    false,
+                    $this->edusignment->get_course_module()->id,
+                    get_string('uploadzip', 'edusignfeedback_file')
             );
             $o .= $renderer->render($header);
             $o .= $renderer->render(new edusign_form('uploadfeedbackzip', $mform));
@@ -727,8 +707,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @param string $action - The page to view
      * @return string - The html response
      */
-    public function view_page($action)
-    {
+    public function view_page($action) {
         if ($action == 'uploadfiles') {
             $users = required_param('selectedusers', PARAM_SEQUENCE);
             return $this->view_batch_upload_files(explode(',', $users));
@@ -746,8 +725,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      *
      * @return array The list of grading actions
      */
-    public function get_grading_actions()
-    {
+    public function get_grading_actions() {
         return array('uploadzip' => get_string('uploadzip', 'edusignfeedback_file'));
     }
 
@@ -756,14 +734,13 @@ class edusign_feedback_file extends edusign_feedback_plugin
      *
      * @return external_description|null
      */
-    public function get_external_parameters()
-    {
+    public function get_external_parameters() {
         return array(
-            'files_filemanager' => new external_value(
-                PARAM_INT,
-                'The id of a draft area containing files for this feedback.',
-                VALUE_OPTIONAL
-            )
+                'files_filemanager' => new external_value(
+                        PARAM_INT,
+                        'The id of a draft area containing files for this feedback.',
+                        VALUE_OPTIONAL
+                )
         );
     }
 
@@ -773,8 +750,7 @@ class edusign_feedback_file extends edusign_feedback_plugin
      * @return array the list of settings
      * @since Moodle 3.2
      */
-    public function get_config_for_external()
-    {
+    public function get_config_for_external() {
         return (array) $this->get_config();
     }
 }

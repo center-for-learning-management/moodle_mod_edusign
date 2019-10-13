@@ -57,8 +57,8 @@ class submission_created extends \mod_edusign\event\submission_created {
      */
     public function get_description() {
         $descriptionstring = "The user with id '$this->userid' created an online text submission with " .
-            "'{$this->other['signingwordcount']}' words in the edusignment with course module id " .
-            "'$this->contextinstanceid'";
+                "'{$this->other['signingwordcount']}' words in the edusignment with course module id " .
+                "'$this->contextinstanceid'";
         if (!empty($this->other['groupid'])) {
             $descriptionstring .= " for the group with id '{$this->other['groupid']}'.";
         } else {
@@ -71,8 +71,8 @@ class submission_created extends \mod_edusign\event\submission_created {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         parent::validate_data();

@@ -11,13 +11,13 @@ Feature: Submit edusignment without group
       | Course 2 | C2        | 0        | 1         |
       | Course 3 | C3        | 0        | 1         |
     And the following "activities" exist:
-      | activity | course | idnumber | name                     | intro                       | edusignsubmission_onlinetext_enabled | preventsubmissionnotingroup | teamsubmission |
-      | edusign   | C1     | edusign1  | Allow default group      | Test edusignment description | 1                                   | 0                           | 1              |
-      | edusign   | C1     | edusign2  | Require group membership | Test edusignment description | 1                                   | 1                           | 1              |
-      | edusign   | C2     | edusign2  | Require group membership | Test edusignment description | 1                                   | 1                           | 1              |
-      | edusign   | C3     | edusign2  | Require group membership | Test edusignment description | 1                                   | 1                           | 1              |
+      | activity | course | idnumber | name                     | intro                        | edusignsubmission_onlinetext_enabled | preventsubmissionnotingroup | teamsubmission |
+      | edusign  | C1     | edusign1 | Allow default group      | Test edusignment description | 1                                    | 0                           | 1              |
+      | edusign  | C1     | edusign2 | Require group membership | Test edusignment description | 1                                    | 1                           | 1              |
+      | edusign  | C2     | edusign2 | Require group membership | Test edusignment description | 1                                    | 1                           | 1              |
+      | edusign  | C3     | edusign2 | Require group membership | Test edusignment description | 1                                    | 1                           | 1              |
     And the following "users" exist:
-      | username | firstname | lastname | email            |
+      | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
       | student1 | Student   | 1        | student1@example.com |
       | student2 | Student   | 2        | student2@example.com |

@@ -144,9 +144,9 @@ class edusignfeedback_file_zip_importer {
         $fs = get_file_storage();
 
         return $fs->delete_area_files($contextid,
-                                      'edusignfeedback_file',
-                                      edusignFEEDBACK_FILE_IMPORT_FILEAREA,
-                                      $USER->id);
+                'edusignfeedback_file',
+                edusignFEEDBACK_FILE_IMPORT_FILEAREA,
+                $USER->id);
     }
 
     /**
@@ -170,11 +170,11 @@ class edusignfeedback_file_zip_importer {
         core_php_time_limit::raise(edusignFEEDBACK_FILE_MAXFILEUNZIPTIME);
 
         return $packer->extract_to_storage($zipfile,
-                                    $contextid,
-                                    'edusignfeedback_file',
-                                    edusignFEEDBACK_FILE_IMPORT_FILEAREA,
-                                    $USER->id,
-                                    'import');
+                $contextid,
+                'edusignfeedback_file',
+                edusignFEEDBACK_FILE_IMPORT_FILEAREA,
+                $USER->id,
+                'import');
 
     }
 
@@ -189,10 +189,10 @@ class edusignfeedback_file_zip_importer {
 
         $fs = get_file_storage();
         $files = $fs->get_directory_files($contextid,
-                                          'edusignfeedback_file',
-                                          edusignFEEDBACK_FILE_IMPORT_FILEAREA,
-                                          $USER->id,
-                                          '/import/', true); // Get files recursive (all levels).
+                'edusignfeedback_file',
+                edusignFEEDBACK_FILE_IMPORT_FILEAREA,
+                $USER->id,
+                '/import/', true); // Get files recursive (all levels).
 
         $keys = array_keys($files);
 
@@ -254,11 +254,11 @@ class edusignfeedback_file_zip_importer {
                     }
 
                     if ($oldfile = $fs->get_file($contextid,
-                                                 'edusignfeedback_file',
-                                                 edusignFEEDBACK_FILE_FILEAREA,
-                                                 $grade->id,
-                                                 $dirname,
-                                                 $basename)) {
+                            'edusignfeedback_file',
+                            edusignFEEDBACK_FILE_FILEAREA,
+                            $grade->id,
+                            $dirname,
+                            $basename)) {
                         // Update existing feedback file.
                         $oldfile->replace_file_with($unzippedfile);
                         $feedbackfilesupdated++;
@@ -287,9 +287,9 @@ class edusignfeedback_file_zip_importer {
 
         require_once($CFG->dirroot . '/mod/edusign/feedback/file/renderable.php');
         $importsummary = new edusignfeedback_file_import_summary($edusignment->get_course_module()->id,
-                                                            count($userswithnewfeedback),
-                                                            $feedbackfilesadded,
-                                                            $feedbackfilesupdated);
+                count($userswithnewfeedback),
+                $feedbackfilesadded,
+                $feedbackfilesupdated);
 
         $edusignrenderer = $edusignment->get_renderer();
         $renderer = $PAGE->get_renderer('edusignfeedback_file');
@@ -297,10 +297,10 @@ class edusignfeedback_file_zip_importer {
         $o = '';
 
         $o .= $edusignrenderer->render(new edusign_header($edusignment->get_instance(),
-                                                        $edusignment->get_context(),
-                                                        false,
-                                                        $edusignment->get_course_module()->id,
-                                                        get_string('uploadzipsummary', 'edusignfeedback_file')));
+                $edusignment->get_context(),
+                false,
+                $edusignment->get_course_module()->id,
+                get_string('uploadzipsummary', 'edusignfeedback_file')));
 
         $o .= $renderer->render($importsummary);
 

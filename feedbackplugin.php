@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/mod/edusign/edusignmentplugin.php');
+require_once($CFG->dirroot . '/mod/edusign/edusignmentplugin.php');
 
 /**
  * Abstract class for feedback_plugin inherited from edusign_plugin abstract class.
@@ -150,6 +150,7 @@ abstract class edusign_feedback_plugin extends edusign_plugin {
      * Return a list of the grading actions supported by this plugin.
      *
      * A grading action is a page that is not specific to a user but to the whole edusignment.
+     *
      * @return array - An array of action and description strings.
      *                 The action will be passed to grading_action.
      */

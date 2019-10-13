@@ -1,20 +1,18 @@
-define(['jquery'], function($) {
+define(['jquery'], function ($) {
     var mousePressed;
     var lastX, lastY;
     var ctx;
     var canvas;
     return {
-        init: function() {
+        init: function () {
             initialize();
         },
-        save: function() {
+        save: function () {
             initialize();
         }
 
     };
 });
-
-
 
 
 function initialize() {
@@ -24,32 +22,32 @@ function initialize() {
     canvas.width = rect.width;
     canvas.height = rect.height;
     mousePressed = false;
-    $('#clearCanvas').bind('click', function() {
+    $('#clearCanvas').bind('click', function () {
         clearCanvas(canvas, ctx);
     });
-    $('#id_submitbutton').click(function() {
+    $('#id_submitbutton').click(function () {
         var data = $('#canvas')[0].toDataURL(); // Change here
         $('[name="signing"]').val(data);
     });
-    $('#canvas').mousedown(function(e) {
+    $('#canvas').mousedown(function (e) {
         mousePressed = true;
         Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, false);
     });
 
-    $('#canvas').mousemove(function(e) {
+    $('#canvas').mousemove(function (e) {
         if (mousePressed) {
             Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, true);
         }
     });
 
-    $('#canvas').mouseup(function(e) {
+    $('#canvas').mouseup(function (e) {
         mousePressed = false;
     });
-    $('#canvas').mouseleave(function(e) {
+    $('#canvas').mouseleave(function (e) {
         mousePressed = false;
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         var dataURL = canvas.toDataURL();
         console.log(dataURL);
         var rect = canvas.getBoundingClientRect();

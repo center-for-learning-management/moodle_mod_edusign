@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-require_once($CFG->libdir.'/formslib.php');
-require_once($CFG->dirroot.'/mod/edusign/feedback/file/importziplib.php');
+require_once($CFG->libdir . '/formslib.php');
+require_once($CFG->dirroot . '/mod/edusign/feedback/file/importziplib.php');
 
 /**
  * Import zip form
@@ -84,26 +84,26 @@ class edusignfeedback_file_import_zip_form extends moodleform implements rendera
                     $path = pathinfo($filename);
                     if ($edusignment->is_blind_marking()) {
                         $userdesc = get_string('hiddenuser', 'edusign') .
-                                    $edusignment->get_uniqueid_for_user($user->id);
+                                $edusignment->get_uniqueid_for_user($user->id);
                     }
                     $grade = $edusignment->get_user_grade($user->id, false);
 
                     $exists = false;
                     if ($grade) {
                         $exists = $fs->file_exists($contextid,
-                                                   'edusignfeedback_file',
-                                                   edusignFEEDBACK_FILE_FILEAREA,
-                                                   $grade->id,
-                                                   $path['dirname'],
-                                                   $path['basename']);
+                                'edusignfeedback_file',
+                                edusignFEEDBACK_FILE_FILEAREA,
+                                $grade->id,
+                                $path['dirname'],
+                                $path['basename']);
                     }
 
                     if (!$grade || !$exists) {
                         $updates[] = get_string('feedbackfileadded', 'edusignfeedback_file',
-                                            array('filename' => $filename, 'student' => $userdesc));
+                                array('filename' => $filename, 'student' => $userdesc));
                     } else {
                         $updates[] = get_string('feedbackfileupdated', 'edusignfeedback_file',
-                                            array('filename' => $filename, 'student' => $userdesc));
+                                array('filename' => $filename, 'student' => $userdesc));
                     }
                 }
             }

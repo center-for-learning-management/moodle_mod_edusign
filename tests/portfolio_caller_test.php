@@ -60,12 +60,12 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
 
         $fs = get_file_storage();
         $dummy = (object) array(
-            'contextid' => $context->id,
-            'component' => 'edusignsubmission_file',
-            'filearea' => edusignSUBMISSION_FILE_FILEAREA,
-            'itemid' => $submission->id,
-            'filepath' => '/',
-            'filename' => 'myedusignmnent.pdf'
+                'contextid' => $context->id,
+                'component' => 'edusignsubmission_file',
+                'filearea' => edusignSUBMISSION_FILE_FILEAREA,
+                'itemid' => $submission->id,
+                'filepath' => '/',
+                'filename' => 'myedusignmnent.pdf'
         );
         $file = $fs->create_file_from_string($dummy, 'Content of ' . $dummy->filename);
 
@@ -77,12 +77,12 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
         // This processes the file either by fileid or by other fields in the file table.
         // We should get the same outcome with either approach.
         $caller = new edusign_portfolio_caller(
-            array(
-                'cmid' => $cm->id,
-                'sid' => $submission->id,
-                'area' => edusignSUBMISSION_FILE_FILEAREA,
-                'component' => 'edusignsubmission_file',
-            )
+                array(
+                        'cmid' => $cm->id,
+                        'sid' => $submission->id,
+                        'area' => edusignSUBMISSION_FILE_FILEAREA,
+                        'component' => 'edusignsubmission_file',
+                )
         );
         $caller->set('user', $user);
         $caller->load_data();
@@ -110,12 +110,12 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
 
         $fs = get_file_storage();
         $dummy = (object) array(
-            'contextid' => $context->id,
-            'component' => 'edusignsubmission_file',
-            'filearea' => edusignSUBMISSION_FILE_FILEAREA,
-            'itemid' => $submission->id,
-            'filepath' => '/',
-            'filename' => 'myedusignmnent.pdf'
+                'contextid' => $context->id,
+                'component' => 'edusignsubmission_file',
+                'filearea' => edusignSUBMISSION_FILE_FILEAREA,
+                'itemid' => $submission->id,
+                'filepath' => '/',
+                'filename' => 'myedusignmnent.pdf'
         );
         $file = $fs->create_file_from_string($dummy, 'Content of ' . $dummy->filename);
 
@@ -159,12 +159,12 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
 
         $fs = get_file_storage();
         $dummy = (object) array(
-            'contextid' => $context->id,
-            'component' => 'edusignsubmission_file',
-            'filearea' => edusignSUBMISSION_FILE_FILEAREA,
-            'itemid' => $submission->id,
-            'filepath' => '/',
-            'filename' => 'myedusignmnent.pdf'
+                'contextid' => $context->id,
+                'component' => 'edusignsubmission_file',
+                'filearea' => edusignSUBMISSION_FILE_FILEAREA,
+                'itemid' => $submission->id,
+                'filepath' => '/',
+                'filename' => 'myedusignmnent.pdf'
         );
         $file = $fs->create_file_from_string($dummy, 'Content of ' . $dummy->filename);
 
@@ -176,12 +176,12 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
         // This processes the file either by fileid or by other fields in the file table.
         // We should get the same outcome with either approach.
         $caller = new edusign_portfolio_caller(
-            array(
-                'cmid' => $cm->id,
-                'sid' => $submission->id,
-                'area' => edusignSUBMISSION_FILE_FILEAREA,
-                'component' => 'edusignsubmission_file',
-            )
+                array(
+                        'cmid' => $cm->id,
+                        'sid' => $submission->id,
+                        'area' => edusignSUBMISSION_FILE_FILEAREA,
+                        'component' => 'edusignsubmission_file',
+                )
         );
         $caller->set('user', $user);
         $caller->load_data();
@@ -212,16 +212,16 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
         $context = context_module::instance($cm->id);
         $edusign = new mod_edusign_testable_edusign($context, $cm, $course);
 
-        $submission = $edusign->get_group_submission($user->id, $groupid,true);
+        $submission = $edusign->get_group_submission($user->id, $groupid, true);
 
         $fs = get_file_storage();
         $dummy = (object) array(
-            'contextid' => $context->id,
-            'component' => 'edusignsubmission_file',
-            'filearea' => edusignSUBMISSION_FILE_FILEAREA,
-            'itemid' => $submission->id,
-            'filepath' => '/',
-            'filename' => 'myedusignmnent.pdf'
+                'contextid' => $context->id,
+                'component' => 'edusignsubmission_file',
+                'filearea' => edusignSUBMISSION_FILE_FILEAREA,
+                'itemid' => $submission->id,
+                'filepath' => '/',
+                'filename' => 'myedusignmnent.pdf'
         );
         $file = $fs->create_file_from_string($dummy, 'Content of ' . $dummy->filename);
 
@@ -238,12 +238,12 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
 
         // In the negative test for the user, we loaded the caller via fileid. Switching to the other approach this time.
         $caller = new edusign_portfolio_caller(
-            array(
-                'cmid' => $cm->id,
-                'sid' => $submission->id,
-                'area' => edusignSUBMISSION_FILE_FILEAREA,
-                'component' => 'edusignsubmission_file',
-            )
+                array(
+                        'cmid' => $cm->id,
+                        'sid' => $submission->id,
+                        'area' => edusignSUBMISSION_FILE_FILEAREA,
+                        'component' => 'edusignsubmission_file',
+                )
         );
         $caller->set('user', $wronguser);
 

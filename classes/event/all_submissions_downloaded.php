@@ -37,6 +37,7 @@ defined('MOODLE_INTERNAL') || die();
 class all_submissions_downloaded extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -44,15 +45,15 @@ class all_submissions_downloaded extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @return all_submissions_downloaded
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_edusign(\edusign $edusign) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $edusign->get_instance()->id
+                'context' => $edusign->get_context(),
+                'objectid' => $edusign->get_instance()->id
         );
         self::$preventcreatecall = false;
         /** @var submission_graded $event */
@@ -69,7 +70,7 @@ class all_submissions_downloaded extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has downloaded all the submissions for the edusignment " .
-            "with course module id '$this->contextinstanceid'.";
+                "with course module id '$this->contextinstanceid'.";
     }
 
     /**
@@ -105,8 +106,8 @@ class all_submissions_downloaded extends base {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         if (self::$preventcreatecall) {

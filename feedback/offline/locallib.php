@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/grade/grading/lib.php');
+require_once($CFG->dirroot . '/grade/grading/lib.php');
 
 /**
  * library class for file feedback plugin extending feedback plugin base class
@@ -41,6 +41,7 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
 
     /**
      * Get the name of the file feedback plugin
+     *
      * @return string
      */
     public function get_name() {
@@ -61,6 +62,7 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
 
     /**
      * Return true if there are no feedback files
+     *
      * @param stdClass $grade
      */
     public function is_empty(stdClass $grade) {
@@ -100,8 +102,8 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
         $fs = get_file_storage();
         if (!$files = $fs->get_area_files($context->id, 'user', 'draft', $draftid, 'id DESC', false)) {
             redirect(new moodle_url('view.php',
-                                array('id' => $this->edusignment->get_course_module()->id,
-                                      'action' => 'grading')));
+                    array('id' => $this->edusignment->get_course_module()->id,
+                            'action' => 'grading')));
             return;
         }
         $file = reset($files);
@@ -113,10 +115,10 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
         }
         if (!$gradeimporter->init()) {
             $thisurl = new moodle_url('/mod/edusign/view.php', array('action' => 'viewpluginpage',
-                                                                     'pluginsubtype' => 'edusignfeedback',
-                                                                     'plugin' => 'offline',
-                                                                     'pluginaction' => 'uploadgrades',
-                                                                     'id' => $this->edusignment->get_course_module()->id));
+                    'pluginsubtype' => 'edusignfeedback',
+                    'plugin' => 'offline',
+                    'pluginaction' => 'uploadgrades',
+                    'id' => $this->edusignment->get_course_module()->id));
             print_error('invalidgradeimport', 'edusignfeedback_offline', $thisurl);
             return;
         }
@@ -167,7 +169,7 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
                 // Skip grade is locked.
                 $skip = true;
             } else if (($this->edusignment->get_instance()->grade > -1) &&
-                      (($record->grade < 0) || ($record->grade > $this->edusignment->get_instance()->grade))) {
+                    (($record->grade < 0) || ($record->grade > $this->edusignment->get_instance()->grade))) {
                 // Out of range.
                 $skip = true;
             }
@@ -218,14 +220,14 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
         $o = '';
 
         $o .= $renderer->render(new edusign_header($this->edusignment->get_instance(),
-                                                  $this->edusignment->get_context(),
-                                                  false,
-                                                  $this->edusignment->get_course_module()->id,
-                                                  get_string('importgrades', 'edusignfeedback_offline')));
+                $this->edusignment->get_context(),
+                false,
+                $this->edusignment->get_course_module()->id,
+                get_string('importgrades', 'edusignfeedback_offline')));
         $o .= $renderer->box(get_string('updatedgrades', 'edusignfeedback_offline', $updatecount));
         $url = new moodle_url('view.php',
-                              array('id' => $this->edusignment->get_course_module()->id,
-                                    'action' => 'grading'));
+                array('id' => $this->edusignment->get_course_module()->id,
+                        'action' => 'grading'));
         $o .= $renderer->continue_button($url);
         $o .= $renderer->render_footer();
         return $o;
@@ -246,8 +248,8 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
         require_once($CFG->libdir . '/csvlib.class.php');
 
         $mform = new edusignfeedback_offline_upload_grades_form(null,
-                                                              array('context' => $this->edusignment->get_context(),
-                                                                    'cm' => $this->edusignment->get_course_module()->id));
+                array('context' => $this->edusignment->get_context(),
+                        'cm' => $this->edusignment->get_course_module()->id));
 
         $o = '';
 
@@ -256,11 +258,11 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
 
         if ($mform->is_cancelled()) {
             redirect(new moodle_url('view.php',
-                                    array('id' => $this->edusignment->get_course_module()->id,
-                                          'action' => 'grading')));
+                    array('id' => $this->edusignment->get_course_module()->id,
+                            'action' => 'grading')));
             return;
         } else if (($data = $mform->get_data()) &&
-                   ($csvdata = $mform->get_file_content('gradesfile'))) {
+                ($csvdata = $mform->get_file_content('gradesfile'))) {
 
             $importid = csv_import_reader::get_new_iid('edusignfeedback_offline');
             $gradeimporter = new edusignfeedback_offline_grade_importer($importid, $this->edusignment,
@@ -273,16 +275,16 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
             // Preview import.
 
             $mform = new edusignfeedback_offline_import_grades_form(null, array('edusignment' => $this->edusignment,
-                                                                       'csvdata' => $csvdata,
-                                                                       'ignoremodified' => $ignoremodified,
-                                                                       'gradeimporter' => $gradeimporter,
-                                                                       'draftid' => $draftid));
+                    'csvdata' => $csvdata,
+                    'ignoremodified' => $ignoremodified,
+                    'gradeimporter' => $gradeimporter,
+                    'draftid' => $draftid));
 
             $o .= $renderer->render(new edusign_header($this->edusignment->get_instance(),
-                                                            $this->edusignment->get_context(),
-                                                            false,
-                                                            $this->edusignment->get_course_module()->id,
-                                                            get_string('confirmimport', 'edusignfeedback_offline')));
+                    $this->edusignment->get_context(),
+                    false,
+                    $this->edusignment->get_course_module()->id,
+                    get_string('confirmimport', 'edusignfeedback_offline')));
             $o .= $renderer->render(new edusign_form('confirmimport', $mform));
             $o .= $renderer->render_footer();
         } else if ($confirm) {
@@ -293,14 +295,14 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
             $ignoremodified = optional_param('ignoremodified', 0, PARAM_BOOL);
             $gradeimporter = new edusignfeedback_offline_grade_importer($importid, $this->edusignment, $encoding, $separator);
             $mform = new edusignfeedback_offline_import_grades_form(null, array('edusignment' => $this->edusignment,
-                                                                       'csvdata' => '',
-                                                                       'ignoremodified' => $ignoremodified,
-                                                                       'gradeimporter' => $gradeimporter,
-                                                                       'draftid' => $draftid));
+                    'csvdata' => '',
+                    'ignoremodified' => $ignoremodified,
+                    'gradeimporter' => $gradeimporter,
+                    'draftid' => $draftid));
             if ($mform->is_cancelled()) {
                 redirect(new moodle_url('view.php',
-                                        array('id' => $this->edusignment->get_course_module()->id,
-                                              'action' => 'grading')));
+                        array('id' => $this->edusignment->get_course_module()->id,
+                                'action' => 'grading')));
                 return;
             }
 
@@ -308,10 +310,10 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
         } else {
 
             $o .= $renderer->render(new edusign_header($this->edusignment->get_instance(),
-                                                            $this->edusignment->get_context(),
-                                                            false,
-                                                            $this->edusignment->get_course_module()->id,
-                                                            get_string('uploadgrades', 'edusignfeedback_offline')));
+                    $this->edusignment->get_context(),
+                    false,
+                    $this->edusignment->get_course_module()->id,
+                    get_string('uploadgrades', 'edusignfeedback_offline')));
             $o .= $renderer->render(new edusign_form('batchuploadfiles', $mform));
             $o .= $renderer->render_footer();
         }
@@ -339,10 +341,10 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
             $groupname = groups_get_group_name($groupid) . '-';
         }
         $filename = clean_filename(get_string('offlinegradingworksheet', 'edusignfeedback_offline') . '-' .
-                                   $this->edusignment->get_course()->shortname . '-' .
-                                   $this->edusignment->get_instance()->name . '-' .
-                                   $groupname .
-                                   $this->edusignment->get_course_module()->id);
+                $this->edusignment->get_course()->shortname . '-' .
+                $this->edusignment->get_instance()->name . '-' .
+                $groupname .
+                $this->edusignment->get_course_module()->id);
 
         $table = new edusign_grading_table($this->edusignment, 0, '', 0, false, $filename);
 
@@ -374,7 +376,7 @@ class edusign_feedback_offline extends edusign_feedback_plugin {
      */
     public function get_grading_actions() {
         return array('uploadgrades' => get_string('uploadgrades', 'edusignfeedback_offline'),
-                    'downloadgrades' => get_string('downloadgrades', 'edusignfeedback_offline'));
+                'downloadgrades' => get_string('downloadgrades', 'edusignfeedback_offline'));
     }
 
     /**

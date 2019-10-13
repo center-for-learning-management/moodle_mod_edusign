@@ -45,7 +45,7 @@ class edusignfeedback_offline_grade_importer {
     /** @var int $gradeindex the column index containing the grades */
     private $gradeindex = -1;
 
-    /** @var int $idindex the column index containing the unique id  */
+    /** @var int $idindex the column index containing the unique id */
     private $idindex = -1;
 
     /** @var int $modifiedindex the column index containing the last modified time */
@@ -109,8 +109,8 @@ class edusignfeedback_offline_grade_importer {
             if ($plugin->is_enabled() && $plugin->is_visible()) {
                 foreach ($plugin->get_editor_fields() as $field => $description) {
                     $this->feedbackcolumnindexes[$description] = array('plugin' => $plugin,
-                                                                       'field' => $field,
-                                                                       'description' => $description);
+                            'field' => $field,
+                            'description' => $description);
                 }
             }
         }
@@ -142,7 +142,7 @@ class edusignfeedback_offline_grade_importer {
         $groupname = '';
         if ($groupmode) {
             $groupid = groups_get_activity_group($this->edusignment->get_course_module(), true);
-            $groupname = groups_get_group_name($groupid).'-';
+            $groupname = groups_get_group_name($groupid) . '-';
         }
         $this->validusers = $this->edusignment->list_participants($groupid, false);
         return true;

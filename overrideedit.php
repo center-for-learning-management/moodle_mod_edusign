@@ -22,12 +22,10 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 require_once(dirname(__FILE__) . '/../../config.php');
-require_once($CFG->dirroot.'/mod/edusign/lib.php');
-require_once($CFG->dirroot.'/mod/edusign/locallib.php');
-require_once($CFG->dirroot.'/mod/edusign/override_form.php');
-
+require_once($CFG->dirroot . '/mod/edusign/lib.php');
+require_once($CFG->dirroot . '/mod/edusign/locallib.php');
+require_once($CFG->dirroot . '/mod/edusign/override_form.php');
 
 $cmid = optional_param('cmid', 0, PARAM_INT);
 $overrideid = optional_param('id', 0, PARAM_INT);
@@ -39,7 +37,7 @@ $pagetitle = get_string('editoverride', 'edusign');
 $override = null;
 if ($overrideid) {
 
-    if (! $override = $DB->get_record('edusign_overrides', array('id' => $overrideid))) {
+    if (!$override = $DB->get_record('edusign_overrides', array('id' => $overrideid))) {
         print_error('invalidoverrideid', 'edusign');
     }
 
@@ -168,10 +166,10 @@ if ($mform->is_cancelled()) {
 
     // Set the common parameters for one of the events we may be triggering.
     $params = array(
-        'context' => $context,
-        'other' => array(
-            'edusignid' => $edusigninstance->id
-        )
+            'context' => $context,
+            'other' => array(
+                    'edusignid' => $edusigninstance->id
+            )
     );
     if (!empty($override->id)) {
         $fromform->id = $override->id;
@@ -196,7 +194,7 @@ if ($mform->is_cancelled()) {
             $fromform->sortorder = 1;
 
             $overridecountgroup = $DB->count_records('edusign_overrides',
-                array('userid' => null, 'edusignid' => $edusigninstance->id));
+                    array('userid' => null, 'edusignid' => $edusigninstance->id));
             $overridecountall = $DB->count_records('edusign_overrides', array('edusignid' => $edusigninstance->id));
             if ((!$overridecountgroup) && ($overridecountall)) { // No group overrides and there are user overrides.
                 $fromform->sortorder = 1;

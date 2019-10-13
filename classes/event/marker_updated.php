@@ -43,6 +43,7 @@ defined('MOODLE_INTERNAL') || die();
 class marker_updated extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -50,21 +51,21 @@ class marker_updated extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @param \stdClass $user
      * @param \stdClass $marker
      * @return marker_updated
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_marker(\edusign $edusign, \stdClass $user, \stdClass $marker) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $edusign->get_instance()->id,
-            'relateduserid' => $user->id,
-            'other' => array(
-                'markerid' => $marker->id,
-            ),
+                'context' => $edusign->get_context(),
+                'objectid' => $edusign->get_instance()->id,
+                'relateduserid' => $user->id,
+                'other' => array(
+                        'markerid' => $marker->id,
+                ),
         );
         self::$preventcreatecall = false;
         /** @var marker_updated $event */
@@ -83,7 +84,7 @@ class marker_updated extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has set the marker for the user with id '$this->relateduserid' to " .
-            "'{$this->other['markerid']}' for the edusignment with course module id '$this->contextinstanceid'.";
+                "'{$this->other['markerid']}' for the edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**

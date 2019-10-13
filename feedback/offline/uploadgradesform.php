@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 
 /**
  * Upload modified grading worksheet
@@ -46,10 +46,10 @@ class edusignfeedback_offline_upload_grades_form extends moodleform {
         $mform->addElement('header', 'uploadgrades', get_string('uploadgrades', 'edusignfeedback_offline'));
 
         $fileoptions = array('subdirs' => 0,
-                                'maxbytes' => $COURSE->maxbytes,
-                                'accepted_types' => 'csv',
-                                'maxfiles' => 1,
-                                'return_types' => FILE_INTERNAL);
+                'maxbytes' => $COURSE->maxbytes,
+                'accepted_types' => 'csv',
+                'maxfiles' => 1,
+                'return_types' => FILE_INTERNAL);
 
         $mform->addElement('filepicker', 'gradesfile', get_string('uploadafile'), null, $fileoptions);
         $mform->addRule('gradesfile', get_string('uploadnofilefound'), 'required', null, 'client');

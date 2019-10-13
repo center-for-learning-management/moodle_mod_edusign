@@ -407,11 +407,13 @@
 .path-mod-edusign [data-region="grading-navigation"] {
     padding: 1em;
 }
+
 .path-mod-edusign [data-region="edusignment-info"] {
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
 }
+
 .path-mod-edusign [data-region="edusignment-info"] small[data-region="edusignment-tooltip"] {
     margin-left: 0.5em;
 }
@@ -753,6 +755,7 @@
     max-width: 100%;
     padding-bottom: 0;
 }
+
 .path-mod-edusign .gradingform_rubric {
     max-width: calc(100vw - 200px);
 }
@@ -1216,6 +1219,7 @@
 .path-mod-edusign #page-content {
     position: inherit;
 }
+
 /** End of base fixes **/
 
 /** Fix to YUI tree (which is a table) when displayed within grading table. **/
@@ -1223,4 +1227,5 @@
     border: 0;
     padding: 0;
 }
+
 /** End of YUI tree fix **/

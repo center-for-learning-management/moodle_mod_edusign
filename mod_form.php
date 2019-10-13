@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-require_once($CFG->dirroot.'/course/moodleform_mod.php');
+require_once($CFG->dirroot . '/course/moodleform_mod.php');
 require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 
 /**
@@ -34,16 +34,14 @@ require_once($CFG->dirroot . '/mod/edusign/locallib.php');
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_edusign_mod_form extends moodleform_mod
-{
+class mod_edusign_mod_form extends moodleform_mod {
 
     /**
      * Called to define this moodle form
      *
      * @return void
      */
-    public function definition()
-    {
+    public function definition() {
         global $CFG, $COURSE, $DB, $PAGE;
         $mform = $this->_form;
 
@@ -61,11 +59,11 @@ class mod_edusign_mod_form extends moodleform_mod
         $this->standard_intro_elements(get_string('description', 'edusign'));
 
         $mform->addElement(
-            'filemanager',
-            'introattachments',
-            get_string('introattachments', 'edusign'),
-            null,
-            array('subdirs' => 0, 'maxbytes' => $COURSE->maxbytes)
+                'filemanager',
+                'introattachments',
+                get_string('introattachments', 'edusign'),
+                null,
+                array('subdirs' => 0, 'maxbytes' => $COURSE->maxbytes)
         );
         $mform->addHelpButton('introattachments', 'introattachments', 'edusign');
 
@@ -121,16 +119,16 @@ class mod_edusign_mod_form extends moodleform_mod
         $name = get_string('requiresubmissionstatement', 'edusign');
         $mform->addElement('selectyesno', 'requiresubmissionstatement', $name);
         $mform->addHelpButton(
-            'requiresubmissionstatement',
-            'requiresubmissionstatement',
-            'edusign'
+                'requiresubmissionstatement',
+                'requiresubmissionstatement',
+                'edusign'
         );
         $mform->setType('requiresubmissionstatement', PARAM_BOOL);
 
         $options = array(
-            EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE => get_string('attemptreopenmethod_none', 'mod_edusign'),
-            EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL => get_string('attemptreopenmethod_manual', 'mod_edusign'),
-            EDUSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS => get_string('attemptreopenmethod_untilpass', 'mod_edusign')
+                EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE => get_string('attemptreopenmethod_none', 'mod_edusign'),
+                EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL => get_string('attemptreopenmethod_manual', 'mod_edusign'),
+                EDUSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS => get_string('attemptreopenmethod_untilpass', 'mod_edusign')
         );
         $mform->addElement('select', 'attemptreopenmethod', get_string('attemptreopenmethod', 'mod_edusign'), $options);
         $mform->addHelpButton('attemptreopenmethod', 'attemptreopenmethod', 'mod_edusign');
@@ -153,9 +151,9 @@ class mod_edusign_mod_form extends moodleform_mod
         $name = get_string('preventsubmissionnotingroup', 'edusign');
         $mform->addElement('selectyesno', 'preventsubmissionnotingroup', $name);
         $mform->addHelpButton(
-            'preventsubmissionnotingroup',
-            'preventsubmissionnotingroup',
-            'edusign'
+                'preventsubmissionnotingroup',
+                'preventsubmissionnotingroup',
+                'edusign'
         );
         $mform->setType('preventsubmissionnotingroup', PARAM_BOOL);
         $mform->hideIf('preventsubmissionnotingroup', 'teamsubmission', 'eq', 0);
@@ -227,11 +225,11 @@ class mod_edusign_mod_form extends moodleform_mod
 
     /**
      * Perform minimal validation on the settings form
+     *
      * @param array $data
      * @param array $files
      */
-    public function validation($data, $files)
-    {
+    public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
         if (!empty($data['allowsubmissionsfromdate']) && !empty($data['duedate'])) {
@@ -267,10 +265,10 @@ class mod_edusign_mod_form extends moodleform_mod
     /**
      * Any data processing needed before the form is displayed
      * (needed to set up draft areas for editor and filemanager elements)
+     *
      * @param array $defaultvalues
      */
-    public function data_preprocessing(&$defaultvalues)
-    {
+    public function data_preprocessing(&$defaultvalues) {
         global $DB;
 
         $ctx = null;
@@ -289,12 +287,12 @@ class mod_edusign_mod_form extends moodleform_mod
 
         $draftitemid = file_get_submitted_draft_itemid('introattachments');
         file_prepare_draft_area(
-            $draftitemid,
-            $ctx->id,
-            'mod_edusign',
-            EDUSIGN_INTROATTACHMENT_FILEAREA,
-            0,
-            array('subdirs' => 0)
+                $draftitemid,
+                $ctx->id,
+                'mod_edusign',
+                EDUSIGN_INTROATTACHMENT_FILEAREA,
+                0,
+                array('subdirs' => 0)
         );
         $defaultvalues['introattachments'] = $draftitemid;
 
@@ -306,8 +304,7 @@ class mod_edusign_mod_form extends moodleform_mod
      *
      * @return array Contains the names of the added form elements
      */
-    public function add_completion_rules()
-    {
+    public function add_completion_rules() {
         $mform =& $this->_form;
 
         $mform->addElement('advcheckbox', 'completionsubmit', '', get_string('completionsubmit', 'edusign'));
@@ -322,8 +319,7 @@ class mod_edusign_mod_form extends moodleform_mod
      * @param array $data
      * @return bool
      */
-    public function completion_rule_enabled($data)
-    {
+    public function completion_rule_enabled($data) {
         return !empty($data['completionsubmit']);
     }
 }

@@ -37,9 +37,9 @@ require_capability('mod/edusign:view', $context);
 
 $edusign = new edusign($context, $cm, $course);
 $urlparams = array('id' => $id,
-                  'action' => optional_param('action', '', PARAM_ALPHA),
-                  'rownum' => optional_param('rownum', 0, PARAM_INT),
-                  'useridlistid' => optional_param('useridlistid', $edusign->get_useridlist_key_id(), PARAM_ALPHANUM));
+        'action' => optional_param('action', '', PARAM_ALPHA),
+        'rownum' => optional_param('rownum', 0, PARAM_INT),
+        'useridlistid' => optional_param('useridlistid', $edusign->get_useridlist_key_id(), PARAM_ALPHANUM));
 
 $url = new moodle_url('/mod/edusign/view.php', $urlparams);
 $PAGE->set_url($url);

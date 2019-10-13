@@ -43,6 +43,7 @@ defined('MOODLE_INTERNAL') || die();
 class workflow_state_updated extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -50,21 +51,21 @@ class workflow_state_updated extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @param \stdClass $user
      * @param string $state
      * @return workflow_state_updated
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_user(\edusign $edusign, \stdClass $user, $state) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $edusign->get_instance()->id,
-            'relateduserid' => $user->id,
-            'other' => array(
-                'newstate' => $state,
-            ),
+                'context' => $edusign->get_context(),
+                'objectid' => $edusign->get_instance()->id,
+                'relateduserid' => $user->id,
+                'other' => array(
+                        'newstate' => $state,
+                ),
         );
         self::$preventcreatecall = false;
         /** @var workflow_state_updated $event */
@@ -82,7 +83,7 @@ class workflow_state_updated extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has set the workflow state of the user with id '$this->relateduserid' " .
-            "to the state '{$this->other['newstate']}' for the edusignment with course module id '$this->contextinstanceid'.";
+                "to the state '{$this->other['newstate']}' for the edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**

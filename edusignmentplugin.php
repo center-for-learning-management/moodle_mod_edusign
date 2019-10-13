@@ -90,6 +90,7 @@ abstract class edusign_plugin {
     /**
      * This function should be overridden to provide an array of elements that can be added to a moodle
      * form for display in the settings page for the edusignment.
+     *
      * @param MoodleQuickForm $mform The form to add the elements to
      * @return $array
      */
@@ -101,6 +102,7 @@ abstract class edusign_plugin {
      * Allows the plugin to update the defaultvalues passed in to
      * the settings form (needed to set up draft areas for editor
      * and filemanager elements)
+     *
      * @param array $defaultvalues
      */
     public function data_preprocessing(&$defaultvalues) {
@@ -232,7 +234,6 @@ abstract class edusign_plugin {
         return $this->enabledcache;
     }
 
-
     /**
      * Get any additional fields for the submission/grading form for this edusignment.
      *
@@ -297,7 +298,6 @@ abstract class edusign_plugin {
         return $this->visiblecache;
     }
 
-
     /**
      * Has this plugin got a custom settings.php file?
      *
@@ -322,9 +322,9 @@ abstract class edusign_plugin {
         global $DB;
 
         $dbparams = array('edusignment' => $this->edusignment->get_instance()->id,
-                          'subtype' => $this->get_subtype(),
-                          'plugin' => $this->get_type(),
-                          'name' => $name);
+                'subtype' => $this->get_subtype(),
+                'plugin' => $this->get_type(),
+                'name' => $name);
         $current = $DB->get_record('edusign_plugin_config', $dbparams, '*', IGNORE_MISSING);
 
         if ($current) {
@@ -358,9 +358,9 @@ abstract class edusign_plugin {
             $edusignment = $this->edusignment->get_instance();
             if ($edusignment) {
                 $dbparams = array('edusignment' => $edusignment->id,
-                                  'subtype' => $this->get_subtype(),
-                                  'plugin' => $this->get_type(),
-                                  'name' => $setting);
+                        'subtype' => $this->get_subtype(),
+                        'plugin' => $this->get_type(),
+                        'name' => $setting);
                 $result = $DB->get_record('edusign_plugin_config', $dbparams, '*', IGNORE_MISSING);
                 if ($result) {
                     return $result->value;
@@ -369,8 +369,8 @@ abstract class edusign_plugin {
             return false;
         }
         $dbparams = array('edusignment' => $this->edusignment->get_instance()->id,
-                          'subtype' => $this->get_subtype(),
-                           'plugin' => $this->get_type());
+                'subtype' => $this->get_subtype(),
+                'plugin' => $this->get_type());
         $results = $DB->get_records('edusign_plugin_config', $dbparams);
 
         $config = new stdClass();
@@ -512,10 +512,10 @@ abstract class edusign_plugin {
      * @return boolean true or false - false will trigger a rollback
      */
     public function upgrade(context $oldcontext,
-                            stdClass $oldedusignment,
-                            stdClass $oldsubmissionorgrade,
-                            stdClass $submissionorgrade,
-                            & $log) {
+            stdClass $oldedusignment,
+            stdClass $oldsubmissionorgrade,
+            stdClass $submissionorgrade,
+            & $log) {
         $params = array('type' => $this->type, 'subtype' => $this->get_subtype());
         $log = $log . ' ' . get_string('upgradenotimplemented', 'mod_edusign', $params);
         return false;
@@ -549,6 +549,7 @@ abstract class edusign_plugin {
 
     /**
      * Is this edusignment plugin empty? (ie no submission or feedback)
+     *
      * @param stdClass $submissionorgrade edusign_submission or edusign_grade
      * @return bool
      */
@@ -558,18 +559,19 @@ abstract class edusign_plugin {
 
     /**
      * Get file areas returns a list of areas this plugin stores files
+     *
      * @return array - An array of fileareas (keys) and descriptions (values)
      */
     public function get_file_areas() {
         return array();
     }
 
-
     /**
      * Default implementation of file_get_info for plugins.
      * This is used by the filebrowser to browse a plugins file areas.
      *
      * This implementation should work for most plugins but can be overridden if required.
+     *
      * @param file_browser $browser
      * @param string $filearea
      * @param int $itemid
@@ -579,7 +581,7 @@ abstract class edusign_plugin {
      */
     public function get_file_info($browser, $filearea, $itemid, $filepath, $filename) {
         global $CFG, $DB, $USER;
-        $urlbase = $CFG->wwwroot.'/pluginfile.php';
+        $urlbase = $CFG->wwwroot . '/pluginfile.php';
         $writeaccess = false;
         // Permission check on the itemid.
         $edusignment = $this->edusignment;
@@ -615,23 +617,23 @@ abstract class edusign_plugin {
         $filepath = is_null($filepath) ? '/' : $filepath;
         $filename = is_null($filename) ? '.' : $filename;
         if (!($storedfile = $fs->get_file($edusignment->get_context()->id,
-                                          $this->get_subtype() . '_' . $this->get_type(),
-                                          $filearea,
-                                          $itemid,
-                                          $filepath,
-                                          $filename))) {
+                $this->get_subtype() . '_' . $this->get_type(),
+                $filearea,
+                $itemid,
+                $filepath,
+                $filename))) {
             return null;
         }
 
         return new file_info_stored($browser,
-                                    $edusignment->get_context(),
-                                    $storedfile,
-                                    $urlbase,
-                                    $filearea,
-                                    $itemid,
-                                    true,
-                                    $writeaccess,
-                                    false);
+                $edusignment->get_context(),
+                $storedfile,
+                $urlbase,
+                $filearea,
+                $itemid,
+                true,
+                $writeaccess,
+                false);
     }
 
     /**
@@ -645,6 +647,7 @@ abstract class edusign_plugin {
      *      pluginaction=customaction
      *
      * Then this function will be called to display the page with the pluginaction passed as action
+     *
      * @param string $action The plugin specified action
      * @return string
      */

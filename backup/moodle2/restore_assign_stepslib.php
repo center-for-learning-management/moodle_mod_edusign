@@ -56,20 +56,20 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
         $paths[] = new restore_path_element('edusign', '/activity/edusign');
         if ($userinfo) {
             $submission = new restore_path_element('edusign_submission',
-                                                   '/activity/edusign/submissions/submission');
+                    '/activity/edusign/submissions/submission');
             $paths[] = $submission;
             $this->add_subplugin_structure('edusignsubmission', $submission);
             $grade = new restore_path_element('edusign_grade', '/activity/edusign/grades/grade');
             $paths[] = $grade;
             $this->add_subplugin_structure('edusignfeedback', $grade);
             $userflag = new restore_path_element('edusign_userflag',
-                                                   '/activity/edusign/userflags/userflag');
+                    '/activity/edusign/userflags/userflag');
             $paths[] = $userflag;
         }
 
         $paths[] = new restore_path_element('edusign_override', '/activity/edusign/overrides/override');
         $paths[] = new restore_path_element('edusign_plugin_config',
-                                            '/activity/edusign/plugin_configs/plugin_config');
+                '/activity/edusign/plugin_configs/plugin_config');
 
         return $this->prepare_activity_structure($paths);
     }
@@ -83,7 +83,7 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
     protected function process_edusign($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
         $data->course = $this->get_courseid();
 
@@ -107,7 +107,7 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
 
         if (!empty($data->teamsubmissiongroupingid)) {
             $data->teamsubmissiongroupingid = $this->get_mappingid('grouping',
-                                                                   $data->teamsubmissiongroupingid);
+                    $data->teamsubmissiongroupingid);
         } else {
             $data->teamsubmissiongroupingid = 0;
         }
@@ -147,6 +147,7 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
 
     /**
      * Process a submission restore
+     *
      * @param object $data The data in object form
      * @return void
      */
@@ -157,7 +158,7 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
             return;
         }
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
 
         $data->edusignment = $this->get_new_parentid('edusign');
@@ -188,13 +189,14 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
 
     /**
      * Process a user_flags restore
+     *
      * @param object $data The data in object form
      * @return void
      */
     protected function process_edusign_userflag($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
 
         $data->edusignment = $this->get_new_parentid('edusign');
@@ -215,13 +217,14 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
 
     /**
      * Process a grade restore
+     *
      * @param object $data The data in object form
      * @return void
      */
     protected function process_edusign_grade($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
 
         $data->edusignment = $this->get_new_parentid('edusign');
@@ -261,13 +264,14 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
 
     /**
      * Process a plugin-config restore
+     *
      * @param object $data The data in object form
      * @return void
      */
     protected function process_edusign_plugin_config($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
 
         $data->edusignment = $this->get_new_parentid('edusign');
@@ -358,6 +362,7 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
 
     /**
      * Restore files from plugin configuration
+     *
      * @param string $subtype the plugin type to handle
      * @return void
      */
@@ -375,13 +380,14 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
 
     /**
      * Process a edusign override restore
+     *
      * @param object $data The data in object form
      * @return void
      */
     protected function process_edusign_override($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
 
         // Based on userinfo, we'll restore user overides or no.
@@ -419,6 +425,7 @@ class restore_edusign_activity_structure_step extends restore_activity_structure
 
     /**
      * Once the database tables have been fully restored, restore the files
+     *
      * @return void
      */
     protected function after_execute() {

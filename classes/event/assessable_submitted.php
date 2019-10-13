@@ -44,22 +44,22 @@ class assessable_submitted extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @param \stdClass $submission
      * @param bool $editable
      * @return assessable_submitted
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_submission(\edusign $edusign, \stdClass $submission, $editable) {
         global $USER;
 
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $submission->id,
-            'other' => array(
-                'submission_editable' => $editable,
-            ),
+                'context' => $edusign->get_context(),
+                'objectid' => $submission->id,
+                'other' => array(
+                        'submission_editable' => $editable,
+                ),
         );
         if (!empty($submission->userid) && ($submission->userid != $USER->id)) {
             $data['relateduserid'] = $submission->userid;
@@ -78,7 +78,7 @@ class assessable_submitted extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has submitted the submission with id '$this->objectid' " .
-            "for the edusignment with course module id '$this->contextinstanceid'.";
+                "for the edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**
@@ -140,8 +140,8 @@ class assessable_submitted extends base {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         parent::validate_data();

@@ -50,12 +50,12 @@ class submission_viewed extends base {
      */
     public static function create_from_submission(\edusign $edusign, \stdClass $submission) {
         $data = array(
-            'objectid' => $submission->id,
-            'relateduserid' => $submission->userid,
-            'context' => $edusign->get_context(),
-            'other' => array(
-                'edusignid' => $edusign->get_instance()->id,
-            ),
+                'objectid' => $submission->id,
+                'relateduserid' => $submission->userid,
+                'context' => $edusign->get_context(),
+                'other' => array(
+                        'edusignid' => $edusign->get_instance()->id,
+                ),
         );
         /** @var submission_viewed $event */
         $event = self::create($data);
@@ -89,7 +89,7 @@ class submission_viewed extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' viewed the submission for the user with id '$this->relateduserid' for the " .
-            "edusignment with course module id '$this->contextinstanceid'.";
+                "edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**

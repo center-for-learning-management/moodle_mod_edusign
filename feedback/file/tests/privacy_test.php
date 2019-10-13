@@ -41,11 +41,11 @@ class edusignfeedback_file_privacy_testcase extends \mod_edusign\tests\mod_edusi
     /**
      * Convenience function for creating feedback data.
      *
-     * @param  object   $edusign         edusign object
-     * @param  stdClass $student        user object
-     * @param  stdClass $teacher        user object
-     * @param  string   $submissiontext Submission text
-     * @param  string   $feedbacktext   Feedback text
+     * @param object $edusign edusign object
+     * @param stdClass $student user object
+     * @param stdClass $teacher user object
+     * @param string $submissiontext Submission text
+     * @param string $feedbacktext Feedback text
      * @return array   Feedback plugin object and the grade object.
      */
     protected function create_feedback($edusign, $student, $teacher, $submissiontext, $feedbacktext) {
@@ -55,7 +55,7 @@ class edusignfeedback_file_privacy_testcase extends \mod_edusign\tests\mod_edusi
         $submission->userid = $student->id;
         $submission->timecreated = time();
         $submission->onlinetext_editor = ['text' => $submissiontext,
-                                         'format' => FORMAT_MOODLE];
+                'format' => FORMAT_MOODLE];
 
         $this->setUser($student);
         $notices = [];
@@ -71,12 +71,12 @@ class edusignfeedback_file_privacy_testcase extends \mod_edusign\tests\mod_edusi
         file_prepare_draft_area($draftitemid, $context->id, 'edusignfeedback_file', 'feedback_files', 1);
 
         $dummy = array(
-            'contextid' => $context->id,
-            'component' => 'user',
-            'filearea' => 'draft',
-            'itemid' => $draftitemid,
-            'filepath' => '/',
-            'filename' => 'feedback1.txt'
+                'contextid' => $context->id,
+                'component' => 'user',
+                'filearea' => 'draft',
+                'itemid' => $draftitemid,
+                'filepath' => '/',
+                'filename' => 'feedback1.txt'
         );
 
         $fs = get_file_storage();

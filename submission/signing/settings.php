@@ -23,6 +23,6 @@
  */
 
 $settings->add(new admin_setting_configcheckbox('edusignsubmission_signing/default',
-                   new lang_string('default', 'edusignsubmission_signing') ,
-                   new lang_string('default_help', 'edusignsubmission_signing'), 1));
+        new lang_string('default', 'edusignsubmission_signing'),
+        new lang_string('default_help', 'edusignsubmission_signing'), 1));
 

@@ -68,7 +68,7 @@ class group_override_created extends \core\event\base {
      */
     public function get_description() {
         return "The user with id '$this->userid' created the override with id '$this->objectid' for the edusign with " .
-            "course module id '$this->contextinstanceid' for the group with id '{$this->other['groupid']}'.";
+                "course module id '$this->contextinstanceid' for the group with id '{$this->other['groupid']}'.";
     }
 
     /**
@@ -83,8 +83,8 @@ class group_override_created extends \core\event\base {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         parent::validate_data();

@@ -23,16 +23,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once(__DIR__ . '/../locallib.php');
 
-class mod_edusign_locallib_participants extends advanced_testcase
-{
-    public function test_list_participants_blind_marking()
-    {
+class mod_edusign_locallib_participants extends advanced_testcase {
+    public function test_list_participants_blind_marking() {
         global $DB;
         $this->resetAfterTest(true);
 
@@ -42,9 +39,9 @@ class mod_edusign_locallib_participants extends advanced_testcase
         $teacher = $this->getDataGenerator()->create_user();
 
         $this->getDataGenerator()->enrol_user(
-            $teacher->id,
-            $course->id,
-            $roles['teacher']->id
+                $teacher->id,
+                $course->id,
+                $roles['teacher']->id
         );
 
         $this->setUser($teacher);
@@ -54,9 +51,9 @@ class mod_edusign_locallib_participants extends advanced_testcase
         for ($i = 0; $i < 2; $i++) {
             $student = $this->getDataGenerator()->create_user();
             $this->getDataGenerator()->enrol_user(
-                $student->id,
-                $course->id,
-                $roles['student']->id
+                    $student->id,
+                    $course->id,
+                    $roles['student']->id
             );
             $students[$student->id] = $student;
         }
@@ -90,8 +87,8 @@ class mod_edusign_locallib_participants extends advanced_testcase
         // Submit a file for the second student.
         $data = new stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
-                                         'text' => 'Submission text',
-                                         'format' => FORMAT_MOODLE);
+                'text' => 'Submission text',
+                'format' => FORMAT_MOODLE);
         static::helper_add_submission($edusign, $participants[$keys[1]], $data, 'onlinetext');
 
         // edusign has a private cache. The easiest way to clear this is to create a new instance.
@@ -124,8 +121,7 @@ class mod_edusign_locallib_participants extends advanced_testcase
         $this->assertEquals($newkeys, array_keys($table->rawdata));
     }
 
-    public function helper_add_submission($edusign, $user, $data, $type)
-    {
+    public function helper_add_submission($edusign, $user, $data, $type) {
         global $USER;
 
         $previoususer = $USER;

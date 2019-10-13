@@ -8,24 +8,24 @@ Feature: Check that the edusignment grade can be updated correctly
   Scenario: Update the grade for an edusignment
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | Course 1 | C1        | 0        | 1         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student10@example.com |
+      | username | firstname | lastname | email                 |
+      | teacher1 | Teacher   | 1        | teacher1@example.com  |
+      | student1 | Student   | 1        | student10@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
     And the following "groups" exist:
-      | name | course | idnumber |
-      | Group 1 | C1 | G1 |
+      | name    | course | idnumber |
+      | Group 1 | C1     | G1       |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "edusignment" to section "1" and I fill the form with:
-      | edusignment name | Test edusignment name |
-      | Description | Test edusignment description |
-      | Use marking workflow | Yes |
+      | edusignment name     | Test edusignment name        |
+      | Description          | Test edusignment description |
+      | Use marking workflow | Yes                          |
     When I follow "Test edusignment name"
     Then I navigate to "View all submissions" in current page administration
     And I click on "Grade" "link" in the "Student 1" "table_row"
@@ -42,26 +42,26 @@ Feature: Check that the edusignment grade can be updated correctly
   Scenario: Update the grade for a team edusignment
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | Course 1 | C1        | 0        | 1         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student10@example.com |
+      | username | firstname | lastname | email                 |
+      | teacher1 | Teacher   | 1        | teacher1@example.com  |
+      | student1 | Student   | 1        | student10@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
     And the following "groups" exist:
-      | name | course | idnumber |
-      | Group 1 | C1 | G1 |
+      | name    | course | idnumber |
+      | Group 1 | C1     | G1       |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "edusignment" to section "1" and I fill the form with:
-      | edusignment name | Test edusignment name |
-      | Description | Test edusignment description |
-      | Use marking workflow | Yes |
-      | Students submit in groups | Yes |
-      | Group mode | No groups |
+      | edusignment name          | Test edusignment name        |
+      | Description               | Test edusignment description |
+      | Use marking workflow      | Yes                          |
+      | Students submit in groups | Yes                          |
+      | Group mode                | No groups                    |
     When I follow "Test edusignment name"
     Then I navigate to "View all submissions" in current page administration
     And I click on "Grade" "link" in the "Student 1" "table_row"

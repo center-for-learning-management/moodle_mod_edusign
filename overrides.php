@@ -22,18 +22,16 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 require_once(dirname(__FILE__) . '/../../config.php');
-require_once($CFG->dirroot.'/mod/edusign/lib.php');
-require_once($CFG->dirroot.'/mod/edusign/locallib.php');
-require_once($CFG->dirroot.'/mod/edusign/override_form.php');
-
+require_once($CFG->dirroot . '/mod/edusign/lib.php');
+require_once($CFG->dirroot . '/mod/edusign/locallib.php');
+require_once($CFG->dirroot . '/mod/edusign/override_form.php');
 
 $cmid = required_param('cmid', PARAM_INT);
 $mode = optional_param('mode', '', PARAM_ALPHA); // One of 'user' or 'group', default is 'group'.
 
-$action   = optional_param('action', '', PARAM_ALPHA);
-$redirect = $CFG->wwwroot.'/mod/edusign/overrides.php?cmid=' . $cmid . '&amp;mode=group';
+$action = optional_param('action', '', PARAM_ALPHA);
+$redirect = $CFG->wwwroot . '/mod/edusign/overrides.php?cmid=' . $cmid . '&amp;mode=group';
 
 list($course, $cm) = get_course_and_cm_from_cmid($cmid, 'edusign');
 $edusign = $DB->get_record('edusign', array('id' => $cm->instance), '*', MUST_EXIST);
@@ -183,7 +181,7 @@ foreach ($overrides as $override) {
     if (isset($override->allowsubmissionsfromdate)) {
         $fields[] = get_string('open', 'edusign');
         $values[] = $override->allowsubmissionsfromdate > 0 ? userdate($override->allowsubmissionsfromdate) : get_string('noopen',
-            'edusign');
+                'edusign');
     }
 
     // Format duedate.
@@ -204,7 +202,7 @@ foreach ($overrides as $override) {
     if ($active) {
         // Edit.
         $editurlstr = $overrideediturl->out(true, array('id' => $override->id));
-        $iconstr = '<a title="' . get_string('edit') . '" href="'. $editurlstr . '">' .
+        $iconstr = '<a title="' . get_string('edit') . '" href="' . $editurlstr . '">' .
                 $OUTPUT->pix_icon('t/edit', get_string('edit')) . '</a> ';
         // Duplicate.
         $copyurlstr = $overrideediturl->out(true,
@@ -216,30 +214,29 @@ foreach ($overrides as $override) {
     $deleteurlstr = $overridedeleteurl->out(true,
             array('id' => $override->id, 'sesskey' => sesskey()));
     $iconstr .= '<a title="' . get_string('delete') . '" href="' . $deleteurlstr . '">' .
-                $OUTPUT->pix_icon('t/delete', get_string('delete')) . '</a> ';
+            $OUTPUT->pix_icon('t/delete', get_string('delete')) . '</a> ';
 
     if ($groupmode) {
         $usergroupstr = '<a href="' . $groupurl->out(true,
-                array('group' => $override->groupid)) . '" >' . $override->name . '</a>';
+                        array('group' => $override->groupid)) . '" >' . $override->name . '</a>';
 
         // Move up.
         if ($override->sortorder > 1) {
-            $iconstr .= '<a title="'.get_string('moveup').'" href="overrides.php?cmid=' . $cmid .
-                '&amp;id=' . $override->id .'&amp;action=movegroupoverride&amp;dir=up&amp;sesskey='.sesskey().'">' .
-                $OUTPUT->pix_icon('t/up', get_string('moveup')) . '</a> ';
+            $iconstr .= '<a title="' . get_string('moveup') . '" href="overrides.php?cmid=' . $cmid .
+                    '&amp;id=' . $override->id . '&amp;action=movegroupoverride&amp;dir=up&amp;sesskey=' . sesskey() . '">' .
+                    $OUTPUT->pix_icon('t/up', get_string('moveup')) . '</a> ';
         } else {
             $iconstr .= $OUTPUT->spacer() . ' ';
         }
 
         // Move down.
         if ($override->sortorder < $overridecountgroup) {
-            $iconstr .= '<a title="'.get_string('movedown').'" href="overrides.php?cmid='.$cmid.
-                '&amp;id=' . $override->id . '&amp;action=movegroupoverride&amp;dir=down&amp;sesskey='.sesskey().'">' .
-                $OUTPUT->pix_icon('t/down', get_string('movedown')) . '</a> ';
+            $iconstr .= '<a title="' . get_string('movedown') . '" href="overrides.php?cmid=' . $cmid .
+                    '&amp;id=' . $override->id . '&amp;action=movegroupoverride&amp;dir=down&amp;sesskey=' . sesskey() . '">' .
+                    $OUTPUT->pix_icon('t/down', get_string('movedown')) . '</a> ';
         } else {
             $iconstr .= $OUTPUT->spacer() . ' ';
         }
-
 
     } else {
         $usergroupstr = html_writer::link($userurl->out(false,

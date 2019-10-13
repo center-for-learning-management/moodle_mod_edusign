@@ -57,8 +57,8 @@ class mod_edusignsubmission_privacy_legacy_polyfill_test extends advanced_testca
         $contextlist = new \core_privacy\local\request\contextlist();
         $mock = $this->createMock(test_edusignsubmission_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_get_context_for_userid_within_submission', [$userid, $contextlist]);
+                ->method('get_return_value')
+                ->with('_get_context_for_userid_within_submission', [$userid, $contextlist]);
         test_legacy_polyfill_submission_provider::$mock = $mock;
         test_legacy_polyfill_submission_provider::get_context_for_userid_within_submission($userid, $contextlist);
     }
@@ -72,8 +72,8 @@ class mod_edusignsubmission_privacy_legacy_polyfill_test extends advanced_testca
         $useridlist = new \mod_edusign\privacy\useridlist($teacherid, $edusignid);
         $mock = $this->createMock(test_edusignsubmission_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_get_student_user_ids', [$useridlist]);
+                ->method('get_return_value')
+                ->with('_get_student_user_ids', [$useridlist]);
         test_legacy_polyfill_submission_provider::$mock = $mock;
         test_legacy_polyfill_submission_provider::get_student_user_ids($useridlist);
     }
@@ -90,8 +90,8 @@ class mod_edusignsubmission_privacy_legacy_polyfill_test extends advanced_testca
         $requestdata = new \mod_edusign\privacy\edusign_plugin_request_data($context, $edusign);
         $mock = $this->createMock(test_edusignsubmission_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_export_submission_user_data', [$requestdata]);
+                ->method('get_return_value')
+                ->with('_export_submission_user_data', [$requestdata]);
         test_legacy_polyfill_submission_provider::$mock = $mock;
         test_legacy_polyfill_submission_provider::export_submission_user_data($requestdata);
     }
@@ -108,8 +108,8 @@ class mod_edusignsubmission_privacy_legacy_polyfill_test extends advanced_testca
         $requestdata = new \mod_edusign\privacy\edusign_plugin_request_data($context, $edusign);
         $mock = $this->createMock(test_edusignsubmission_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_delete_submission_for_context', [$requestdata]);
+                ->method('get_return_value')
+                ->with('_delete_submission_for_context', [$requestdata]);
         test_legacy_polyfill_submission_provider::$mock = $mock;
         test_legacy_polyfill_submission_provider::delete_submission_for_context($requestdata);
     }
@@ -126,12 +126,13 @@ class mod_edusignsubmission_privacy_legacy_polyfill_test extends advanced_testca
         $requestdata = new \mod_edusign\privacy\edusign_plugin_request_data($context, $edusign);
         $mock = $this->createMock(test_edusignsubmission_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_delete_submission_for_userid', [$requestdata]);
+                ->method('get_return_value')
+                ->with('_delete_submission_for_userid', [$requestdata]);
         test_legacy_polyfill_submission_provider::$mock = $mock;
         test_legacy_polyfill_submission_provider::delete_submission_for_userid($requestdata);
     }
 }
+
 /**
  * Legacy polyfill test class for the edusignsubmission_provider.
  *
@@ -141,7 +142,7 @@ class mod_edusignsubmission_privacy_legacy_polyfill_test extends advanced_testca
 class test_legacy_polyfill_submission_provider implements \mod_edusign\privacy\edusignsubmission_provider {
     use \mod_edusign\privacy\submission_legacy_polyfill;
     /**
-     * @var test_legacy_polyfill_submission_provider $mock.
+     * @var test_legacy_polyfill_submission_provider $mock .
      */
     public static $mock = null;
 
@@ -150,8 +151,8 @@ class test_legacy_polyfill_submission_provider implements \mod_edusign\privacy\e
      * NOTE if your subplugin must have an entry in the edusign_grade table to work, then this
      * method can be empty.
      *
-     * @param  int $userid The user ID to get context IDs for.
-     * @param  contextlist $contextlist Use add_from_sql with this object to add your context IDs.
+     * @param int $userid The user ID to get context IDs for.
+     * @param contextlist $contextlist Use add_from_sql with this object to add your context IDs.
      */
     public static function _get_context_for_userid_within_submission(int $userid,
             \core_privacy\local\request\contextlist $contextlist) {
@@ -163,7 +164,7 @@ class test_legacy_polyfill_submission_provider implements \mod_edusign\privacy\e
      * the sql query in \mod_edusign\privacy\provider::find_grader_info() Then you need to provide some sql to retrive those
      * student IDs. This is highly likely if you had to fill in get_context_for_userid_within_submission above.
      *
-     * @param  useridlist $useridlist A list of user IDs of students graded by this user.
+     * @param useridlist $useridlist A list of user IDs of students graded by this user.
      */
     public static function _get_student_user_ids(\mod_edusign\privacy\useridlist $useridlist) {
         static::$mock->get_return_value(__FUNCTION__, func_get_args());
@@ -178,7 +179,7 @@ class test_legacy_polyfill_submission_provider implements \mod_edusign\privacy\e
      * - current path (subcontext)
      * - user object
      *
-     * @param  edusign_plugin_request_data $exportdata Contains data to help export the user information.
+     * @param edusign_plugin_request_data $exportdata Contains data to help export the user information.
      */
     public static function _export_submission_user_data(\mod_edusign\privacy\edusign_plugin_request_data $exportdata) {
         static::$mock->get_return_value(__FUNCTION__, func_get_args());
@@ -190,7 +191,7 @@ class test_legacy_polyfill_submission_provider implements \mod_edusign\privacy\e
      * - context
      * - edusign object
      *
-     * @param  edusign_plugin_request_data $requestdata Data useful for deleting user data from this sub-plugin.
+     * @param edusign_plugin_request_data $requestdata Data useful for deleting user data from this sub-plugin.
      */
     public static function _delete_submission_for_context(\mod_edusign\privacy\edusign_plugin_request_data $requestdata) {
         static::$mock->get_return_value(__FUNCTION__, func_get_args());
@@ -204,12 +205,13 @@ class test_legacy_polyfill_submission_provider implements \mod_edusign\privacy\e
      * - user object
      * - edusign object
      *
-     * @param  edusign_plugin_request_data $requestdata Data useful for deleting user data.
+     * @param edusign_plugin_request_data $requestdata Data useful for deleting user data.
      */
     public static function _delete_submission_for_userid(\mod_edusign\privacy\edusign_plugin_request_data $requestdata) {
         static::$mock->get_return_value(__FUNCTION__, func_get_args());
     }
 }
+
 /**
  * Called inside the polyfill methods in the test polyfill provider, allowing us to ensure these are called with correct params.
  *

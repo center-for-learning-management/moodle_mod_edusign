@@ -23,7 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -37,14 +36,12 @@ require_once($CFG->dirroot . '/mod/edusign/tests/generator.php');
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_edusign_locallib_testcase extends advanced_testcase
-{
+class mod_edusign_locallib_testcase extends advanced_testcase {
 
     // Use the generator helper.
     use mod_edusign_test_generator;
 
-    public function test_return_links()
-    {
+    public function test_return_links() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -58,8 +55,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(['param' => 1], $edusign->get_return_params());
     }
 
-    public function test_get_feedback_plugins()
-    {
+    public function test_get_feedback_plugins() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -73,8 +69,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         }
     }
 
-    public function test_get_submission_plugins()
-    {
+    public function test_get_submission_plugins() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -88,8 +83,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         }
     }
 
-    public function test_is_blind_marking()
-    {
+    public function test_is_blind_marking() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -146,27 +140,26 @@ class mod_edusign_locallib_testcase extends advanced_testcase
      *
      * @return array Provider data
      */
-    public function get_edusign_perpage_provider()
-    {
+    public function get_edusign_perpage_provider() {
         return array(
-            array(
-                'maxperpage' => -1,
-                'userprefs' => array(
-                    -1 => -1,
-                    10 => 10,
-                    20 => 20,
-                    50 => 50,
+                array(
+                        'maxperpage' => -1,
+                        'userprefs' => array(
+                                -1 => -1,
+                                10 => 10,
+                                20 => 20,
+                                50 => 50,
+                        ),
                 ),
-            ),
-            array(
-                'maxperpage' => 15,
-                'userprefs' => array(
-                    -1 => 15,
-                    10 => 10,
-                    20 => 15,
-                    50 => 15,
+                array(
+                        'maxperpage' => 15,
+                        'userprefs' => array(
+                                -1 => 15,
+                                10 => 10,
+                                20 => 15,
+                                50 => 15,
+                        ),
                 ),
-            ),
         );
     }
 
@@ -177,8 +170,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
      * @param integer $maxperpage site config value
      * @param array $userprefs Array of user preferences and expected page sizes
      */
-    public function test_get_edusign_perpage($maxperpage, $userprefs)
-    {
+    public function test_get_edusign_perpage($maxperpage, $userprefs) {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -202,8 +194,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
      * This is specifically checking an edusignment with no grade to make sure we do not
      * get an exception thrown when rendering the grading table for this type of edusignment.
      */
-    public function test_gradingtable_filter_by_requiresgrading_no_grade()
-    {
+    public function test_gradingtable_filter_by_requiresgrading_no_grade() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -215,11 +206,11 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'edusignfeedback_comments_enabled' => 0,
                 'grade' => GRADE_TYPE_NONE
-            ]);
+        ]);
 
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', array(
-            'id' => $edusign->get_course_module()->id,
-            'action' => 'grading',
+                'id' => $edusign->get_course_module()->id,
+                'action' => 'grading',
         )));
 
         // Render the table with the requires grading filter.
@@ -230,12 +221,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertContains(get_string('nothingtodisplay'), $output);
     }
 
-
     /**
      * Test submissions with extension date.
      */
-    public function test_gradingtable_extension_due_date()
-    {
+    public function test_gradingtable_extension_due_date() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -249,10 +238,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'duedate' => time() - (4 * DAYSECS),
-            ]);
+        ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', array(
-            'id' => $edusign->get_course_module()->id,
-            'action' => 'grading',
+                'id' => $edusign->get_course_module()->id,
+                'action' => 'grading',
         )));
 
         // Check that the edusignment is late.
@@ -276,9 +265,9 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign->testable_update_submission($submission, $student->id, true, false);
         $data = new stdClass();
         $data->onlinetext_editor = [
-            'itemid' => file_get_unused_draft_itemid(),
-            'text' => 'Submission text',
-            'format' => FORMAT_MOODLE,
+                'itemid' => file_get_unused_draft_itemid(),
+                'text' => 'Submission text',
+                'format' => FORMAT_MOODLE,
         ];
         $plugin = $edusign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
@@ -294,8 +283,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Test that late submissions with extension date calculate correctly.
      */
-    public function test_gradingtable_extension_date_calculation_for_lateness()
-    {
+    public function test_gradingtable_extension_date_calculation_for_lateness() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -309,10 +297,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'duedate' => time() - (4 * DAYSECS),
-            ]);
+        ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', array(
-            'id' => $edusign->get_course_module()->id,
-            'action' => 'grading',
+                'id' => $edusign->get_course_module()->id,
+                'action' => 'grading',
         )));
 
         // Check that the edusignment is late.
@@ -338,9 +326,9 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign->testable_update_submission($submission, $student->id, true, false);
         $data = new stdClass();
         $data->onlinetext_editor = [
-            'itemid' => file_get_unused_draft_itemid(),
-            'text' => 'Submission text',
-            'format' => FORMAT_MOODLE,
+                'itemid' => file_get_unused_draft_itemid(),
+                'text' => 'Submission text',
+                'format' => FORMAT_MOODLE,
         ];
         $plugin = $edusign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
@@ -357,8 +345,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertContains(get_string('submittedlateshort', 'edusign', format_time((2 * DAYSECS) + $difftime)), $output);
     }
 
-    public function test_gradingtable_status_rendering()
-    {
+    public function test_gradingtable_status_rendering() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -370,12 +357,12 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->setUser($teacher);
         $time = time();
         $edusign = $this->create_instance($course, [
-            'edusignsubmission_onlinetext_enabled' => 1,
-            'duedate' => $time - (4 * DAYSECS),
-         ]);
+                'edusignsubmission_onlinetext_enabled' => 1,
+                'duedate' => $time - (4 * DAYSECS),
+        ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', array(
-            'id' => $edusign->get_course_module()->id,
-            'action' => 'grading',
+                'id' => $edusign->get_course_module()->id,
+                'action' => 'grading',
         )));
 
         // Check that the edusignment is late.
@@ -409,8 +396,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
      * Check that group submission information is rendered correctly in the
      * grading table.
      */
-    public function test_gradingtable_group_submissions_rendering()
-    {
+    public function test_gradingtable_group_submissions_rendering() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -441,23 +427,23 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         // Verify group edusignments.
         $this->setUser($teacher);
         $edusign = $this->create_instance($course, [
-            'teamsubmission' => 1,
-            'edusignsubmission_onlinetext_enabled' => 1,
-            'submissiondrafts' => 1,
-            'requireallteammemberssubmit' => 0,
+                'teamsubmission' => 1,
+                'edusignsubmission_onlinetext_enabled' => 1,
+                'submissiondrafts' => 1,
+                'requireallteammemberssubmit' => 0,
         ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', array(
-            'id' => $edusign->get_course_module()->id,
-            'action' => 'grading',
+                'id' => $edusign->get_course_module()->id,
+                'action' => 'grading',
         )));
 
         // Add a submission.
         $this->setUser($student);
         $data = new stdClass();
         $data->onlinetext_editor = [
-            'itemid' => file_get_unused_draft_itemid(),
-            'text' => 'Submission text',
-            'format' => FORMAT_MOODLE,
+                'itemid' => file_get_unused_draft_itemid(),
+                'text' => 'Submission text',
+                'format' => FORMAT_MOODLE,
         ];
         $notices = array();
         $edusign->save_submission($data, $notices);
@@ -475,8 +461,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $xpath = new DOMXPath($document);
 
         // Check status.
-        $this->assertSame(get_string('submissionstatus_submitted', 'edusign'), $xpath->evaluate('string(//td[@id="mod_edusign_grading_r0_c4"]/div[@class="submissionstatussubmitted"])'));
-        $this->assertSame(get_string('submissionstatus_submitted', 'edusign'), $xpath->evaluate('string(//td[@id="mod_edusign_grading_r3_c4"]/div[@class="submissionstatussubmitted"])'));
+        $this->assertSame(get_string('submissionstatus_submitted', 'edusign'),
+                $xpath->evaluate('string(//td[@id="mod_edusign_grading_r0_c4"]/div[@class="submissionstatussubmitted"])'));
+        $this->assertSame(get_string('submissionstatus_submitted', 'edusign'),
+                $xpath->evaluate('string(//td[@id="mod_edusign_grading_r3_c4"]/div[@class="submissionstatussubmitted"])'));
 
         // Check submission last modified date
         $this->assertGreaterThan(0, strtotime($xpath->evaluate('string(//td[@id="mod_edusign_grading_r0_c8"])')));
@@ -491,12 +479,11 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertSame('Submission text', $xpath->evaluate('string(//td[@id="mod_edusign_grading_r3_c9"]/div/div)'));
 
         // Check comments can be made.
-        $this->assertSame(1, (int)$xpath->evaluate('count(//td[@id="mod_edusign_grading_r0_c10"]//textarea)'));
-        $this->assertSame(1, (int)$xpath->evaluate('count(//td[@id="mod_edusign_grading_r3_c10"]//textarea)'));
+        $this->assertSame(1, (int) $xpath->evaluate('count(//td[@id="mod_edusign_grading_r0_c10"]//textarea)'));
+        $this->assertSame(1, (int) $xpath->evaluate('count(//td[@id="mod_edusign_grading_r3_c10"]//textarea)'));
     }
 
-    public function test_show_intro()
-    {
+    public function test_show_intro() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -512,18 +499,17 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'alwaysshowdescription' => 0,
                 'allowsubmissionsfromdate' => $tomorrow,
-            ]);
+        ]);
         $this->assertEquals(false, $edusign->testable_show_intro());
         $yesterday = time() - DAYSECS;
         $edusign = $this->create_instance($course, [
                 'alwaysshowdescription' => 0,
                 'allowsubmissionsfromdate' => $yesterday,
-            ]);
+        ]);
         $this->assertEquals(true, $edusign->testable_show_intro());
     }
 
-    public function test_has_submissions_or_grades()
-    {
+    public function test_has_submissions_or_grades() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -548,8 +534,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign->testable_update_submission($submission, $student->id, true, false);
         $data = new stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
-                                         'text' => 'Submission text',
-                                         'format' => FORMAT_MOODLE);
+                'text' => 'Submission text',
+                'format' => FORMAT_MOODLE);
         $plugin = $edusign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -557,8 +543,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(true, $edusign->has_submissions_or_grades());
     }
 
-    public function test_delete_grades()
-    {
+    public function test_delete_grades() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -584,8 +569,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(0, count($gradinginfo->items));
     }
 
-    public function test_delete_instance()
-    {
+    public function test_delete_instance() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -608,8 +592,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(true, $edusign->delete_instance());
     }
 
-    public function test_reset_userdata()
-    {
+    public function test_reset_userdata() {
         global $DB;
 
         $this->resetAfterTest();
@@ -622,7 +605,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'duedate' => $now,
-            ]);
+        ]);
 
         // Simulate adding a grade.
         $this->add_submission($student, $edusign);
@@ -634,8 +617,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $submission = $edusign->get_user_submission($student->id, true);
         $data = new stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
-                                         'text' => 'Submission text',
-                                         'format' => FORMAT_MOODLE);
+                'text' => 'Submission text',
+                'format' => FORMAT_MOODLE);
         $plugin = $edusign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -667,7 +650,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign2 = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'duedate' => $now,
-            ]);
+        ]);
         $edusignduedate = $instance->duedate;
         $data->timeshift = 3 * DAYSECS;
         $edusign2->reset_userdata($data);
@@ -687,8 +670,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals($edusign2duedate + (4 * DAYSECS), $instance2->duedate);
     }
 
-    public function test_plugin_settings()
-    {
+    public function test_plugin_settings() {
         global $DB;
 
         $this->resetAfterTest();
@@ -702,14 +684,13 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'edusignsubmission_file_enabled' => 1,
                 'edusignsubmission_file_maxfiles' => 12,
                 'edusignsubmission_file_maxsizebytes' => 10,
-            ]);
+        ]);
 
         $plugin = $edusign->get_submission_plugin_by_type('file');
         $this->assertEquals('12', $plugin->get_config('maxfilesubmissions'));
     }
 
-    public function test_update_calendar()
-    {
+    public function test_update_calendar() {
         global $DB;
 
         $this->resetAfterTest();
@@ -728,20 +709,20 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         // Write links to a draft area.
         $fakearealink1 = file_rewrite_pluginfile_urls(
-            '<a href="@@PLUGINFILE@@/pic.gif">link</a>',
-            'draftfile.php',
-            $userctx,
-            'user',
-            'draft',
-            $draftid
+                '<a href="@@PLUGINFILE@@/pic.gif">link</a>',
+                'draftfile.php',
+                $userctx,
+                'user',
+                'draft',
+                $draftid
         );
         $fakearealink2 = file_rewrite_pluginfile_urls(
-            '<a href="@@PLUGINFILE@@/pic.gif">new</a>',
-            'draftfile.php',
-            $userctx,
-            'user',
-            'draft',
-            $draftid
+                '<a href="@@PLUGINFILE@@/pic.gif">new</a>',
+                'draftfile.php',
+                $userctx,
+                'user',
+                'draft',
+                $draftid
         );
 
         // Create a new edusignment with links to a draft area.
@@ -750,7 +731,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'duedate' => $now,
                 'intro' => $fakearealink1,
                 'introformat' => FORMAT_HTML
-            ]);
+        ]);
 
         // See if there is an event in the calendar.
         $params = array('modulename' => 'edusign', 'instance' => $edusign->get_instance()->id);
@@ -775,14 +756,14 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'alwaysshowdescription' => false,
                 'allowsubmissionsfromdate' => $now + 60,
                 'intro' => 'Some text',
-            ]);
+        ]);
 
         // Get the event from the calendar.
         $params = array('modulename' => 'edusign', 'instance' => $edusign->get_instance()->id);
         $event = $DB->get_record('event', [
                 'modulename' => 'edusign',
                 'instance' => $edusign->get_instance()->id,
-            ]);
+        ]);
 
         $this->assertEmpty($event->description);
 
@@ -797,8 +778,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertContains('Some text', $event->description);
     }
 
-    public function test_update_instance()
-    {
+    public function test_update_instance() {
         global $DB;
 
         $this->resetAfterTest();
@@ -821,8 +801,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals($now, $instance->duedate);
     }
 
-    public function test_cannot_submit_empty()
-    {
+    public function test_cannot_submit_empty() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -840,8 +819,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertNotContains(get_string('submitedusignment', 'edusign'), $output, 'Can submit empty offline edusignment');
     }
 
-    public function test_cannot_submit_empty_no_submission()
-    {
+    public function test_cannot_submit_empty_no_submission() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -850,8 +828,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
 
         $edusign = $this->create_instance($course, [
-            'submissiondrafts' => 1,
-            'edusignsubmission_onlinetext_enabled' => 1,
+                'submissiondrafts' => 1,
+                'edusignsubmission_onlinetext_enabled' => 1,
         ]);
 
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
@@ -862,8 +840,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertNotContains(get_string('submitedusignment', 'edusign'), $output, 'Cannot submit empty onlinetext edusignment');
     }
 
-    public function test_can_submit_with_submission()
-    {
+    public function test_can_submit_with_submission() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -872,8 +849,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
 
         $edusign = $this->create_instance($course, [
-            'submissiondrafts' => 1,
-            'edusignsubmission_onlinetext_enabled' => 1,
+                'submissiondrafts' => 1,
+                'edusignsubmission_onlinetext_enabled' => 1,
         ]);
 
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
@@ -897,8 +874,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
      * @param string $data The file submission data
      * @param bool $expected The expected return value
      */
-    public function test_new_submission_empty($data, $expected)
-    {
+    public function test_new_submission_empty($data, $expected) {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -909,7 +885,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'edusignsubmission_file_maxfiles' => 12,
                 'edusignsubmission_file_maxsizebytes' => 10,
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
         $this->setUser($student);
         $submission = new stdClass();
 
@@ -918,7 +894,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
             $submission->files_filemanager = $itemid;
             $data['file'] += ['contextid' => context_user::instance($student->id)->id, 'itemid' => $itemid];
             $fs = get_file_storage();
-            $fs->create_file_from_string((object)$data['file'], 'Content of ' . $data['file']['filename']);
+            $fs->create_file_from_string((object) $data['file'], 'Content of ' . $data['file']['filename']);
         }
 
         if ($data['onlinetext']) {
@@ -934,26 +910,24 @@ class mod_edusign_locallib_testcase extends advanced_testcase
      *
      * @return array of testcases
      */
-    public function test_new_submission_empty_testcases()
-    {
+    public function test_new_submission_empty_testcases() {
         return [
-            'With file and onlinetext' => [
-                [
-                    'file' => [
-                        'component' => 'user',
-                        'filearea' => 'draft',
-                        'filepath' => '/',
-                        'filename' => 'not_a_virus.exe'
-                    ],
-                    'onlinetext' => 'Balin Fundinul Uzbadkhazaddumu'
-                ],
-                false
-            ]
+                'With file and onlinetext' => [
+                        [
+                                'file' => [
+                                        'component' => 'user',
+                                        'filearea' => 'draft',
+                                        'filepath' => '/',
+                                        'filename' => 'not_a_virus.exe'
+                                ],
+                                'onlinetext' => 'Balin Fundinul Uzbadkhazaddumu'
+                        ],
+                        false
+                ]
         ];
     }
 
-    public function test_list_participants()
-    {
+    public function test_list_participants() {
         global $CFG;
 
         $this->resetAfterTest();
@@ -972,8 +946,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertCount(10, $edusign->list_participants(null, true));
     }
 
-    public function test_list_participants_activeenrol()
-    {
+    public function test_list_participants_activeenrol() {
         global $CFG, $DB;
 
         $this->resetAfterTest();
@@ -998,8 +971,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertCount(10, $edusign->list_participants(null, true));
     }
 
-    public function test_list_participants_with_group_restriction()
-    {
+    public function test_list_participants_with_group_restriction() {
         global $CFG;
 
         $this->resetAfterTest();
@@ -1017,17 +989,16 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'grade' => 100,
                 'availability' => json_encode(
-                    \core_availability\tree::get_root_json([\availability_group\condition::get_json($specialgroup->id)])
+                        \core_availability\tree::get_root_json([\availability_group\condition::get_json($specialgroup->id)])
                 ),
-            ]);
+        ]);
 
         groups_add_member($specialgroup, $student);
         groups_add_member($specialgroup, $otherstudent);
         $this->assertEquals(2, count($edusign->list_participants(null, true)));
     }
 
-    public function test_get_participant_user_not_exist()
-    {
+    public function test_get_participant_user_not_exist() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
 
@@ -1035,8 +1006,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertNull($edusign->get_participant('-1'));
     }
 
-    public function test_get_participant_not_enrolled()
-    {
+    public function test_get_participant_not_enrolled() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $edusign = $this->create_instance($course);
@@ -1045,8 +1015,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertNull($edusign->get_participant($user->id));
     }
 
-    public function test_get_participant_no_submission()
-    {
+    public function test_get_participant_no_submission() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $edusign = $this->create_instance($course);
@@ -1060,8 +1029,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertFalse($participant->grantedextension);
     }
 
-    public function test_get_participant_granted_extension()
-    {
+    public function test_get_participant_granted_extension() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $edusign = $this->create_instance($course);
@@ -1078,8 +1046,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertTrue($participant->grantedextension);
     }
 
-    public function test_get_participant_with_ungraded_submission()
-    {
+    public function test_get_participant_with_ungraded_submission() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $edusign = $this->create_instance($course);
@@ -1098,8 +1065,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertFalse($participant->grantedextension);
     }
 
-    public function test_get_participant_with_graded_submission()
-    {
+    public function test_get_participant_with_graded_submission() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $edusign = $this->create_instance($course);
@@ -1127,8 +1093,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * No active group and non-group submissions disallowed => 2 groups.
      */
-    public function test_count_teams_no_active_non_group_allowed()
-    {
+    public function test_count_teams_no_active_non_group_allowed() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1151,8 +1116,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * No active group and non group submissions allowed => 2 groups + the default one.
      */
-    public function test_count_teams_non_group_allowed()
-    {
+    public function test_count_teams_non_group_allowed() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1175,7 +1139,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'teamsubmission' => 1,
                 'teamsubmissiongroupingid' => $grouping->id,
                 'preventsubmissionnotingroup' => false,
-            ]);
+        ]);
 
         $this->setUser($teacher);
         $this->assertEquals(3, $edusign->count_teams());
@@ -1188,8 +1152,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Active group => just selected one.
      */
-    public function test_count_teams_no_active_group()
-    {
+    public function test_count_teams_no_active_group() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1211,7 +1174,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'teamsubmission' => 1,
                 'preventsubmissionnotingroup' => true,
-            ]);
+        ]);
 
         $this->setUser($teacher);
         $this->assertEquals(2, $edusign->count_teams());
@@ -1224,8 +1187,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Active group => just selected one.
      */
-    public function test_count_teams_groups_only()
-    {
+    public function test_count_teams_groups_only() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1235,7 +1197,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'teamsubmission' => 1,
                 'teamsubmissiongroupingid' => $grouping->id,
                 'preventsubmissionnotingroup' => false,
-            ]);
+        ]);
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
 
         $student1 = $this->getDataGenerator()->create_and_enrol($course, 'student');
@@ -1254,12 +1216,11 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'teamsubmission' => 1,
                 'preventsubmissionnotingroup' => true,
-            ]);
+        ]);
         $this->assertEquals(2, $edusign->count_teams());
     }
 
-    public function test_submit_to_default_group()
-    {
+    public function test_submit_to_default_group() {
         global $DB, $SESSION;
 
         $this->resetAfterTest();
@@ -1276,7 +1237,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'submissiondrafts' => 0,
                 'groupmode' => VISIBLEGROUPS,
-            ]);
+        ]);
 
         $usergroup = $edusign->get_submission_group($student->id);
         $this->assertFalse($usergroup, 'New student is in default group');
@@ -1295,8 +1256,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_SUBMITTED));
     }
 
-    public function test_count_submissions_no_draft()
-    {
+    public function test_count_submissions_no_draft() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1305,7 +1265,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
 
         $edusign->get_user_submission($student->id, true);
 
@@ -1320,8 +1280,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_REOPENED));
     }
 
-    public function test_count_submissions_draft()
-    {
+    public function test_count_submissions_draft() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1330,7 +1289,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
 
         $this->add_submission($student, $edusign);
 
@@ -1345,8 +1304,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_REOPENED));
     }
 
-    public function test_count_submissions_submitted()
-    {
+    public function test_count_submissions_submitted() {
         global $SESSION;
 
         $this->resetAfterTest();
@@ -1357,7 +1315,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
 
         $this->add_submission($student, $edusign);
         $this->submit_for_grading($student, $edusign);
@@ -1372,8 +1330,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_REOPENED));
     }
 
-    public function test_count_submissions_graded()
-    {
+    public function test_count_submissions_graded() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1382,7 +1339,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
 
         $this->add_submission($student, $edusign);
         $this->submit_for_grading($student, $edusign);
@@ -1399,8 +1356,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_REOPENED));
     }
 
-    public function test_count_submissions_graded_group()
-    {
+    public function test_count_submissions_graded_group() {
         global $SESSION;
 
         $this->resetAfterTest();
@@ -1415,7 +1371,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'groupmode' => VISIBLEGROUPS,
-            ]);
+        ]);
 
         $this->add_submission($student, $edusign);
         $this->submit_for_grading($student, $edusign);
@@ -1435,8 +1391,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     }
 
     // TODO
-    public function x_test_count_submissions_for_team()
-    {
+    public function x_test_count_submissions_for_team() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1449,7 +1404,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'teamsubmission' => 1,
-            ]);
+        ]);
 
         // Add a graded submission.
         $this->add_submission($student, $edusign);
@@ -1467,8 +1422,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign->testable_update_submission($submission, $this->extrastudents[1]->id, true, false);
         $data = new stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
-                                         'text' => 'Submission text',
-                                         'format' => FORMAT_MOODLE);
+                'text' => 'Submission text',
+                'format' => FORMAT_MOODLE);
         $plugin = $edusign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -1479,8 +1434,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign->testable_update_submission($submission, $this->extrastudents[2]->id, true, false);
         $data = new stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
-                                         'text' => 'Submission text',
-                                         'format' => FORMAT_MOODLE);
+                'text' => 'Submission text',
+                'format' => FORMAT_MOODLE);
         $plugin = $edusign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -1491,8 +1446,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign->testable_update_submission($submission, $this->extrastudents[3]->id, true, false);
         $data = new stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
-                                         'text' => 'Submission text',
-                                         'format' => FORMAT_MOODLE);
+                'text' => 'Submission text',
+                'format' => FORMAT_MOODLE);
         $plugin = $edusign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -1514,14 +1469,14 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(1, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_DRAFT));
     }
 
-    public function test_get_grading_userid_list_only_active()
-    {
+    public function test_get_grading_userid_list_only_active() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'editingteacher');
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
-        $suspendedstudent = $this->getDataGenerator()->create_and_enrol($course, 'student', null, 'manual', 0, 0, ENROL_USER_SUSPENDED);
+        $suspendedstudent =
+                $this->getDataGenerator()->create_and_enrol($course, 'student', null, 'manual', 0, 0, ENROL_USER_SUSPENDED);
 
         $this->setUser($teacher);
 
@@ -1529,14 +1484,14 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertCount(1, $edusign->testable_get_grading_userid_list());
     }
 
-    public function test_get_grading_userid_list_all()
-    {
+    public function test_get_grading_userid_list_all() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'editingteacher');
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
-        $suspendedstudent = $this->getDataGenerator()->create_and_enrol($course, 'student', null, 'manual', 0, 0, ENROL_USER_SUSPENDED);
+        $suspendedstudent =
+                $this->getDataGenerator()->create_and_enrol($course, 'student', null, 'manual', 0, 0, ENROL_USER_SUSPENDED);
 
         $this->setUser($teacher);
         set_user_preference('grade_report_showonlyactiveenrol', false);
@@ -1545,8 +1500,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertCount(2, $edusign->testable_get_grading_userid_list());
     }
 
-    public function test_cron()
-    {
+    public function test_cron() {
         $this->resetAfterTest();
 
         // First run cron so there are no messages waiting to be sent (from other tests).
@@ -1561,7 +1515,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->setUser($teacher);
         $edusign = $this->create_instance($course, [
                 'sendstudentnotifications' => 1,
-            ]);
+        ]);
 
         $this->add_submission($student, $edusign);
         $this->submit_for_grading($student, $edusign);
@@ -1578,8 +1532,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals($edusign->get_instance()->name, $messages[0]->contexturlname);
     }
 
-    public function test_cron_without_notifications()
-    {
+    public function test_cron_without_notifications() {
         $this->resetAfterTest();
 
         // First run cron so there are no messages waiting to be sent (from other tests).
@@ -1594,13 +1547,13 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->setUser($teacher);
         $edusign = $this->create_instance($course, [
                 'sendstudentnotifications' => 1,
-            ]);
+        ]);
 
         $this->add_submission($student, $edusign);
         $this->submit_for_grading($student, $edusign);
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'sendstudentnotifications' => 0,
-            ]);
+        ]);
 
         cron_setup_user();
         $sink = $this->redirectMessages();
@@ -1610,8 +1563,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(0, count($messages));
     }
 
-    public function test_cron_regraded()
-    {
+    public function test_cron_regraded() {
         $this->resetAfterTest();
 
         // First run cron so there are no messages waiting to be sent (from other tests).
@@ -1626,7 +1578,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->setUser($teacher);
         $edusign = $this->create_instance($course, [
                 'sendstudentnotifications' => 1,
-            ]);
+        ]);
 
         $this->add_submission($student, $edusign);
         $this->submit_for_grading($student, $edusign);
@@ -1653,8 +1605,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Test delivery of grade notifications as controlled by marking workflow.
      */
-    public function test_markingworkflow_cron()
-    {
+    public function test_markingworkflow_cron() {
         $this->resetAfterTest();
 
         // First run cron so there are no messages waiting to be sent (from other tests).
@@ -1670,7 +1621,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'sendstudentnotifications' => 1,
                 'markingworkflow' => 1,
-            ]);
+        ]);
 
         // Mark a submission but set the workflowstate to an unreleased state.
         // This should not trigger a notification.
@@ -1679,7 +1630,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'sendstudentnotifications' => 1,
                 'workflowstate' => edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE,
-            ]);
+        ]);
 
         cron_setup_user();
         $sink = $this->redirectMessages();
@@ -1706,8 +1657,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals($edusign->get_instance()->name, $messages[0]->contexturlname);
     }
 
-    public function test_cron_message_includes_courseid()
-    {
+    public function test_cron_message_includes_courseid() {
         $this->resetAfterTest();
 
         // First run cron so there are no messages waiting to be sent (from other tests).
@@ -1722,7 +1672,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->setUser($teacher);
         $edusign = $this->create_instance($course, [
                 'sendstudentnotifications' => 1,
-            ]);
+        ]);
 
         // Mark a submission but set the workflowstate to an unreleased state.
         // This should not trigger a notification.
@@ -1745,8 +1695,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $sink->close();
     }
 
-    public function test_is_graded()
-    {
+    public function test_is_graded() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1765,8 +1714,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(false, $edusign->testable_is_graded($otherstudent->id));
     }
 
-    public function test_can_grade()
-    {
+    public function test_can_grade() {
         global $DB;
 
         $this->resetAfterTest();
@@ -1796,8 +1744,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(false, $edusign->can_grade());
     }
 
-    public function test_can_view_submission()
-    {
+    public function test_can_view_submission() {
         global $DB;
 
         $this->resetAfterTest();
@@ -1807,7 +1754,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $editingteacher = $this->getDataGenerator()->create_and_enrol($course, 'editingteacher');
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
         $otherstudent = $this->getDataGenerator()->create_and_enrol($course, 'student');
-        $suspendedstudent = $this->getDataGenerator()->create_and_enrol($course, 'student', null, 'manual', 0, 0, ENROL_USER_SUSPENDED);
+        $suspendedstudent =
+                $this->getDataGenerator()->create_and_enrol($course, 'student', null, 'manual', 0, 0, ENROL_USER_SUSPENDED);
 
         $edusign = $this->create_instance($course);
 
@@ -1838,8 +1786,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(false, $edusign->can_view_submission($suspendedstudent->id));
     }
 
-    public function test_update_submission()
-    {
+    public function test_update_submission() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1861,8 +1808,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals($student->id, $gradinginfo->items[0]->grades[$student->id]->usermodified);
     }
 
-    public function test_update_submission_team()
-    {
+    public function test_update_submission_team() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1877,7 +1823,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         $edusign = $this->create_instance($course, [
                 'teamsubmission' => 1,
-            ]);
+        ]);
 
         $gradinginfo = grade_get_grades($course->id, 'mod', 'edusign', $edusign->get_instance()->id, $student->id);
         $this->assertTrue(isset($gradinginfo->items[0]->grades[$student->id]));
@@ -1904,8 +1850,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals($otherstudent->id, $gradinginfo->items[0]->grades[$otherstudent->id]->usermodified);
     }
 
-    public function test_update_submission_suspended()
-    {
+    public function test_update_submission_suspended() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1927,8 +1872,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals($student->id, $gradinginfo->items[0]->grades[$student->id]->usermodified);
     }
 
-    public function test_update_submission_blind()
-    {
+    public function test_update_submission_blind() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1937,7 +1881,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         $edusign = $this->create_instance($course, [
                 'blindmarking' => 1,
-            ]);
+        ]);
 
         $this->add_submission($student, $edusign);
         $submission = $edusign->get_user_submission($student->id, 0);
@@ -1951,8 +1895,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertNull($gradinginfo->items[0]->grades[$student->id]->usermodified);
     }
 
-    public function test_group_submissions_submit_for_marking_requireallteammemberssubmit()
-    {
+    public function test_group_submissions_submit_for_marking_requireallteammemberssubmit() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -1972,7 +1915,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'submissiondrafts' => 1,
                 'requireallteammemberssubmit' => 1,
-            ]);
+        ]);
 
         // Now verify group edusignments.
         $this->setUser($teacher);
@@ -2006,8 +1949,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertNotContains(get_string('submitedusignment', 'edusign'), $output);
     }
 
-    public function test_group_submissions_submit_for_marking()
-    {
+    public function test_group_submissions_submit_for_marking() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2031,7 +1973,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'submissiondrafts' => 1,
                 'requireallteammemberssubmit' => 0,
                 'duedate' => $time - (2 * DAYSECS),
-            ]);
+        ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
 
         // Add a submission.
@@ -2069,8 +2011,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertNotContains(get_string('submitedusignment', 'edusign'), $output);
     }
 
-    public function test_submissions_open()
-    {
+    public function test_submissions_open() {
         global $DB;
 
         $this->resetAfterTest();
@@ -2080,7 +2021,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $editingteacher = $this->getDataGenerator()->create_and_enrol($course, 'editingteacher');
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
         $otherstudent = $this->getDataGenerator()->create_and_enrol($course, 'student');
-        $suspendedstudent = $this->getDataGenerator()->create_and_enrol($course, 'student', null, 'manual', 0, 0, ENROL_USER_SUSPENDED);
+        $suspendedstudent =
+                $this->getDataGenerator()->create_and_enrol($course, 'student', null, 'manual', 0, 0, ENROL_USER_SUSPENDED);
 
         $this->setAdminUser();
 
@@ -2119,8 +2061,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(false, $edusign->testable_submissions_open($student->id));
     }
 
-    public function test_get_graders()
-    {
+    public function test_get_graders() {
         global $DB;
 
         $this->resetAfterTest();
@@ -2137,8 +2078,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertCount(2, $edusign->testable_get_graders($student->id));
     }
 
-    public function test_get_graders_separate_groups()
-    {
+    public function test_get_graders_separate_groups() {
         global $DB;
 
         $this->resetAfterTest();
@@ -2164,7 +2104,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'groupingid' => $grouping->id,
                 'groupmode' => SEPARATEGROUPS,
-            ]);
+        ]);
 
         $this->assertCount(4, $edusign->testable_get_graders($student->id));
 
@@ -2173,8 +2113,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertCount(4, $edusign->testable_get_graders($otherstudent->id));
     }
 
-    public function test_get_notified_users()
-    {
+    public function test_get_notified_users() {
         global $CFG, $DB;
 
         $this->resetAfterTest();
@@ -2218,8 +2157,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertCount(1, $edusign->testable_get_notifiable_users($otherstudent->id));
     }
 
-    public function test_get_notified_users_in_grouping()
-    {
+    public function test_get_notified_users_in_grouping() {
         global $CFG, $DB;
 
         $this->resetAfterTest();
@@ -2245,7 +2183,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'groupingid' => $grouping->id,
                 'groupmode' => SEPARATEGROUPS,
-            ]);
+        ]);
 
         // Student is in a group - only the tacher and editing teacher in the group shoudl be present.
         $this->setUser($student);
@@ -2270,8 +2208,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertCount(0, $edusign->testable_get_notifiable_users($otherstudent->id));
     }
 
-    public function test_group_members_only()
-    {
+    public function test_group_members_only() {
         global $CFG;
 
         $this->resetAfterTest();
@@ -2282,13 +2219,13 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->getDataGenerator()->create_grouping_group([
                 'groupid' => $group1->id,
                 'groupingid' => $grouping->id,
-            ]);
+        ]);
 
         $group2 = $this->getDataGenerator()->create_group(['courseid' => $course->id]);
         $this->getDataGenerator()->create_grouping_group([
                 'groupid' => $group2->id,
                 'groupingid' => $grouping->id,
-            ]);
+        ]);
 
         $group3 = $this->getDataGenerator()->create_group(['courseid' => $course->id]);
 
@@ -2317,10 +2254,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $CFG->enableavailability = true;
         $edusign = $this->create_instance($course, [], [
                 'availability' => json_encode(
-                    \core_availability\tree::get_root_json([\availability_grouping\condition::get_json()])
+                        \core_availability\tree::get_root_json([\availability_grouping\condition::get_json()])
                 ),
                 'groupingid' => $grouping->id,
-            ]);
+        ]);
 
         // The two students in groups should be returned, but not the teacher in the group, or the student not in the
         // group, or the student in an unrelated group.
@@ -2331,8 +2268,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertTrue(isset($participants[$otherstudent->id]));
     }
 
-    public function test_get_uniqueid_for_user()
-    {
+    public function test_get_uniqueid_for_user() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -2352,8 +2288,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         }
     }
 
-    public function test_show_student_summary()
-    {
+    public function test_show_student_summary() {
         global $CFG, $PAGE;
 
         $this->resetAfterTest();
@@ -2382,12 +2317,12 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         // Now hide the grade in gradebook.
         $this->setUser($teacher);
-        require_once($CFG->libdir.'/gradelib.php');
+        require_once($CFG->libdir . '/gradelib.php');
         $gradeitem = new grade_item(array(
-            'itemtype'      => 'mod',
-            'itemmodule'    => 'edusign',
-            'iteminstance'  => $edusign->get_instance()->id,
-            'courseid'      => $course->id));
+                'itemtype' => 'mod',
+                'itemmodule' => 'edusign',
+                'iteminstance' => $edusign->get_instance()->id,
+                'courseid' => $course->id));
 
         $gradeitem->set_hidden(1, false);
 
@@ -2397,8 +2332,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertNotRegexp('/Feedback/', $output, 'Do not show feedback if the grade is hidden in the gradebook');
     }
 
-    public function test_show_student_summary_with_feedback()
-    {
+    public function test_show_student_summary_with_feedback() {
         global $CFG, $PAGE;
 
         $this->resetAfterTest();
@@ -2409,7 +2343,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->setUser($teacher);
         $edusign = $this->create_instance($course, [
                 'edusignfeedback_comments_enabled' => 1
-            ]);
+        ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
 
         // No feedback should be available because this student has not been graded.
@@ -2422,10 +2356,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->submit_for_grading($student, $edusign);
         $this->mark_submission($teacher, $edusign, $student, null, [
                 'edusignfeedbackcomments_editor' => [
-                    'text' => 'Tomato sauce',
-                    'format' => FORMAT_MOODLE,
+                        'text' => 'Tomato sauce',
+                        'format' => FORMAT_MOODLE,
                 ],
-            ]);
+        ]);
 
         // Should have feedback but no grade.
         $this->setUser($student);
@@ -2438,10 +2372,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         // Add a grade now.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'edusignfeedbackcomments_editor' => [
-                    'text' => 'Bechamel sauce',
-                    'format' => FORMAT_MOODLE,
+                        'text' => 'Bechamel sauce',
+                        'format' => FORMAT_MOODLE,
                 ],
-            ]);
+        ]);
 
         // Should have feedback but no grade.
         $this->setUser($student);
@@ -2454,10 +2388,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         // Now hide the grade in gradebook.
         $this->setUser($teacher);
         $gradeitem = new grade_item(array(
-            'itemtype'      => 'mod',
-            'itemmodule'    => 'edusign',
-            'iteminstance'  => $edusign->get_instance()->id,
-            'courseid'      => $course->id));
+                'itemtype' => 'mod',
+                'itemmodule' => 'edusign',
+                'iteminstance' => $edusign->get_instance()->id,
+                'courseid' => $course->id));
 
         $gradeitem->set_hidden(1, false);
 
@@ -2470,8 +2404,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Test reopen behavior when in "Manual" mode.
      */
-    public function test_attempt_reopen_method_manual()
-    {
+    public function test_attempt_reopen_method_manual() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2484,7 +2417,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'maxattempts' => 3,
                 'submissiondrafts' => 1,
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
 
         // Student should be able to see an add submission button.
@@ -2567,8 +2500,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Test reopen behavior when in "Reopen until pass" mode.
      */
-    public function test_attempt_reopen_method_untilpass()
-    {
+    public function test_attempt_reopen_method_untilpass() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2581,7 +2513,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'maxattempts' => 3,
                 'submissiondrafts' => 1,
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
 
         // Set grade to pass to 80.
@@ -2642,8 +2574,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertNotEquals(false, strpos($output, get_string('addnewattempt', 'edusign')));
     }
 
-    public function test_attempt_reopen_method_untilpass_passing()
-    {
+    public function test_attempt_reopen_method_untilpass_passing() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2656,7 +2587,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'maxattempts' => 3,
                 'submissiondrafts' => 1,
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
 
         // Set grade to pass to 80.
@@ -2686,8 +2617,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals(false, strpos($output, get_string('addnewattempt', 'edusign')));
     }
 
-    public function test_attempt_reopen_method_untilpass_no_passing_requirement()
-    {
+    public function test_attempt_reopen_method_untilpass_no_passing_requirement() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2700,7 +2630,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'maxattempts' => 3,
                 'submissiondrafts' => 1,
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
 
         // Set grade to pass to 0, so that no attempts should reopen.
@@ -2733,8 +2663,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Test student visibility for each stage of the marking workflow.
      */
-    public function test_markingworkflow()
-    {
+    public function test_markingworkflow() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2744,14 +2673,14 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         $edusign = $this->create_instance($course, [
                 'markingworkflow' => 1,
-            ]);
+        ]);
 
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
 
         // Mark the submission and set to notmarked.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'workflowstate' => edusign_MARKING_WORKFLOW_STATE_NOTMARKED,
-            ]);
+        ]);
 
         // Check the student can't see the grade.
         $this->setUser($student);
@@ -2765,7 +2694,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         // Mark the submission and set to inmarking.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'workflowstate' => edusign_MARKING_WORKFLOW_STATE_INMARKING,
-            ]);
+        ]);
 
         // Check the student can't see the grade.
         $this->setUser($student);
@@ -2779,7 +2708,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         // Mark the submission and set to readyforreview.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'workflowstate' => edusign_MARKING_WORKFLOW_STATE_READYFORREVIEW,
-            ]);
+        ]);
 
         // Check the student can't see the grade.
         $this->setUser($student);
@@ -2793,7 +2722,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         // Mark the submission and set to inreview.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'workflowstate' => edusign_MARKING_WORKFLOW_STATE_INREVIEW,
-            ]);
+        ]);
 
         // Check the student can't see the grade.
         $this->setUser($student);
@@ -2807,7 +2736,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         // Mark the submission and set to readyforrelease.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'workflowstate' => edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE,
-            ]);
+        ]);
 
         // Check the student can't see the grade.
         $this->setUser($student);
@@ -2821,7 +2750,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         // Mark the submission and set to released.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'workflowstate' => edusign_MARKING_WORKFLOW_STATE_RELEASED,
-            ]);
+        ]);
 
         // Check the student can see the grade.
         $this->setUser($student);
@@ -2830,14 +2759,13 @@ class mod_edusign_locallib_testcase extends advanced_testcase
 
         // Make sure the grade is pushed to the gradebook.
         $grades = $edusign->get_user_grades_for_gradebook($student->id);
-        $this->assertEquals(50, (int)$grades[$student->id]->rawgrade);
+        $this->assertEquals(50, (int) $grades[$student->id]->rawgrade);
     }
 
     /**
      * Test that a student allocated a specific marker is only shown to that marker.
      */
-    public function test_markerallocation()
-    {
+    public function test_markerallocation() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2849,13 +2777,13 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $edusign = $this->create_instance($course, [
                 'markingworkflow' => 1,
                 'markingallocation' => 1
-            ]);
+        ]);
 
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
 
         // Allocate marker to submission.
         $this->mark_submission($teacher, $edusign, $student, null, [
-            'allocatedmarker' => $teacher->id,
+                'allocatedmarker' => $teacher->id,
         ]);
 
         // Check the allocated marker can view the submission.
@@ -2877,8 +2805,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Ensure that a teacher cannot submit for students as standard.
      */
-    public function test_teacher_submit_for_student()
-    {
+    public function test_teacher_submit_for_student() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2887,8 +2814,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'editingteacher');
 
         $edusign = $this->create_instance($course, [
-            'edusignsubmission_onlinetext_enabled' => 1,
-            'submissiondrafts' => 1,
+                'edusignsubmission_onlinetext_enabled' => 1,
+                'submissiondrafts' => 1,
         ]);
 
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
@@ -2910,8 +2837,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Ensure that a teacher with the editothersubmission capability can submit on behalf of a student.
      */
-    public function test_teacher_submit_for_student_with_capability()
-    {
+    public function test_teacher_submit_for_student_with_capability() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2921,8 +2847,8 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $otherteacher = $this->getDataGenerator()->create_and_enrol($course, 'editingteacher');
 
         $edusign = $this->create_instance($course, [
-            'edusignsubmission_onlinetext_enabled' => 1,
-            'submissiondrafts' => 1,
+                'edusignsubmission_onlinetext_enabled' => 1,
+                'submissiondrafts' => 1,
         ]);
 
         // Add the required capability.
@@ -2978,8 +2904,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
     /**
      * Ensure that disabling submit after the cutoff date works as expected.
      */
-    public function test_disable_submit_after_cutoff_date()
-    {
+    public function test_disable_submit_after_cutoff_date() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -2996,7 +2921,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'duedate' => $yesterday,
                 'cutoffdate' => $tomorrow,
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
 
         $PAGE->set_url(new moodle_url('/mod/edusign/view.php', ['id' => $edusign->get_course_module()->id]));
 
@@ -3014,19 +2939,19 @@ class mod_edusign_locallib_testcase extends advanced_testcase
                 'duedate' => $lastweek,
                 'cutoffdate' => $yesterday,
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
 
         $this->setUser($student);
         $output = $edusign->view_student_summary($student, true);
         $this->assertNotContains(
-            $output,
-            get_string('editsubmission', 'edusign'),
-            'Should not be able to edit after cutoff date.'
+                $output,
+                get_string('editsubmission', 'edusign'),
+                'Should not be able to edit after cutoff date.'
         );
         $this->assertNotContains(
-            $output,
-            get_string('submitedusignment', 'edusign'),
-            'Should not be able to submit after cutoff date.'
+                $output,
+                get_string('submitedusignment', 'edusign'),
+                'Should not be able to submit after cutoff date.'
         );
     }
 
@@ -3034,12 +2959,11 @@ class mod_edusign_locallib_testcase extends advanced_testcase
      * Testing for submission comment plugin settings.
      *
      * @dataProvider submission_plugin_settings_provider
-     * @param   bool    $globalenabled
-     * @param   array   $instanceconfig
-     * @param   bool    $isenabled
+     * @param bool $globalenabled
+     * @param array $instanceconfig
+     * @param bool $isenabled
      */
-    public function test_submission_comment_plugin_settings($globalenabled, $instanceconfig, $isenabled)
-    {
+    public function test_submission_comment_plugin_settings($globalenabled, $instanceconfig, $isenabled) {
         global $CFG;
 
         $this->resetAfterTest();
@@ -3051,55 +2975,53 @@ class mod_edusign_locallib_testcase extends advanced_testcase
         $this->assertEquals($isenabled, (bool) $plugin->is_enabled('enabled'));
     }
 
-    public function submission_plugin_settings_provider()
-    {
+    public function submission_plugin_settings_provider() {
         return [
-            'CFG->usecomments true, empty config => Enabled by default' => [
-                true,
-                [],
-                true,
-            ],
-            'CFG->usecomments true, config enabled => Comments enabled' => [
-                true,
-                [
-                    'edusignsubmission_comments_enabled' => 1,
+                'CFG->usecomments true, empty config => Enabled by default' => [
+                        true,
+                        [],
+                        true,
                 ],
-                true,
-            ],
-            'CFG->usecomments true, config idisabled => Comments enabled' => [
-                true,
-                [
-                    'edusignsubmission_comments_enabled' => 0,
+                'CFG->usecomments true, config enabled => Comments enabled' => [
+                        true,
+                        [
+                                'edusignsubmission_comments_enabled' => 1,
+                        ],
+                        true,
                 ],
-                true,
-            ],
-            'CFG->usecomments false, empty config => Disabled by default' => [
-                false,
-                [],
-                false,
-            ],
-            'CFG->usecomments false, config enabled => Comments disabled' => [
-                false,
-                [
-                    'edusignsubmission_comments_enabled' => 1,
+                'CFG->usecomments true, config idisabled => Comments enabled' => [
+                        true,
+                        [
+                                'edusignsubmission_comments_enabled' => 0,
+                        ],
+                        true,
                 ],
-                false,
-            ],
-            'CFG->usecomments false, config disabled => Comments disabled' => [
-                false,
-                [
-                    'edusignsubmission_comments_enabled' => 0,
+                'CFG->usecomments false, empty config => Disabled by default' => [
+                        false,
+                        [],
+                        false,
                 ],
-                false,
-            ],
+                'CFG->usecomments false, config enabled => Comments disabled' => [
+                        false,
+                        [
+                                'edusignsubmission_comments_enabled' => 1,
+                        ],
+                        false,
+                ],
+                'CFG->usecomments false, config disabled => Comments disabled' => [
+                        false,
+                        [
+                                'edusignsubmission_comments_enabled' => 0,
+                        ],
+                        false,
+                ],
         ];
     }
 
     /**
      * Testing for comment inline settings
      */
-    public function test_feedback_comment_commentinline()
-    {
+    public function test_feedback_comment_commentinline() {
         global $CFG;
 
         $this->resetAfterTest();
@@ -3143,7 +3065,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'edusignfeedback_comments_enabled' => 1,
                 'edusignfeedback_comments_commentinline' => 1,
-            ]);
+        ]);
 
         $this->setUser($student);
 
@@ -3160,7 +3082,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
                 'last' => true,
                 'useridlistid' => $edusign->get_useridlist_key_id(),
                 'attemptnumber' => 0,
-            ];
+        ];
         $formparams = array($edusign, $data, $pagination);
         $mform = new mod_edusign_grade_form(null, [$edusign, $data, $pagination]);
 
@@ -3171,11 +3093,10 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
      * Testing for feedback comment plugin settings.
      *
      * @dataProvider feedback_plugin_settings_provider
-     * @param   array   $instanceconfig
-     * @param   bool    $isenabled
+     * @param array $instanceconfig
+     * @param bool $isenabled
      */
-    public function test_feedback_plugin_settings($instanceconfig, $isenabled)
-    {
+    public function test_feedback_plugin_settings($instanceconfig, $isenabled) {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
 
@@ -3184,33 +3105,31 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $this->assertEquals($isenabled, (bool) $plugin->is_enabled('enabled'));
     }
 
-    public function feedback_plugin_settings_provider()
-    {
+    public function feedback_plugin_settings_provider() {
         return [
-            'No configuration => disabled' => [
-                [],
-                false,
-            ],
-            'Actively disabled' => [
-                [
-                    'edusignfeedback_comments_enabled' => 0,
+                'No configuration => disabled' => [
+                        [],
+                        false,
                 ],
-                false,
-            ],
-            'Actively enabled' => [
-                [
-                    'edusignfeedback_comments_enabled' => 1,
+                'Actively disabled' => [
+                        [
+                                'edusignfeedback_comments_enabled' => 0,
+                        ],
+                        false,
                 ],
-                true,
-            ],
+                'Actively enabled' => [
+                        [
+                                'edusignfeedback_comments_enabled' => 1,
+                        ],
+                        true,
+                ],
         ];
     }
 
     /**
      * Testing if gradebook feedback plugin is enabled.
      */
-    public function test_is_gradebook_feedback_enabled()
-    {
+    public function test_is_gradebook_feedback_enabled() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -3223,7 +3142,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $edusign = $this->create_instance($course, [
                 "{$gradebookplugin}_enabled" => 1,
                 'grades' => 0,
-            ]);
+        ]);
 
         // Get gradebook feedback plugin.
         $gradebookplugintype = str_replace('edusignfeedback_', '', $gradebookplugin);
@@ -3235,8 +3154,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Testing if gradebook feedback plugin is disabled.
      */
-    public function test_is_gradebook_feedback_disabled()
-    {
+    public function test_is_gradebook_feedback_disabled() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -3249,7 +3167,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $edusign = $this->create_instance($course, [
                 "{$gradebookplugin}_enabled" => 0,
                 'grades' => 0,
-            ]);
+        ]);
 
         $gradebookplugintype = str_replace('edusignfeedback_', '', $gradebookplugin);
         $plugin = $edusign->get_feedback_plugin_by_type($gradebookplugintype);
@@ -3259,8 +3177,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Testing can_edit_submission.
      */
-    public function test_can_edit_submission()
-    {
+    public function test_can_edit_submission() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -3270,7 +3187,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'submissiondrafts' => 1,
-            ]);
+        ]);
 
         // Check student can edit their own submission.
         $this->assertTrue($edusign->can_edit_submission($student->id, $student->id));
@@ -3285,8 +3202,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Testing can_edit_submission with the editothersubmission capability.
      */
-    public function test_can_edit_submission_with_editothersubmission()
-    {
+    public function test_can_edit_submission_with_editothersubmission() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -3296,7 +3212,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'submissiondrafts' => 1,
-            ]);
+        ]);
 
         // Add the required capability to edit a student submission.
         $roleid = create_role('Dummy role', 'dummyrole', 'dummy role description');
@@ -3317,8 +3233,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Testing can_edit_submission
      */
-    public function test_can_edit_submission_separategroups()
-    {
+    public function test_can_edit_submission_separategroups() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -3344,7 +3259,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
                 'submissiondrafts' => 1,
                 'groupingid' => $grouping->id,
                 'groupmode' => SEPARATEGROUPS,
-            ]);
+        ]);
 
         // Verify a student does not have the ability to edit submissions for other users.
         $this->assertTrue($edusign->can_edit_submission($student1->id, $student1->id));
@@ -3356,8 +3271,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Testing can_edit_submission
      */
-    public function test_can_edit_submission_separategroups_with_editothersubmission()
-    {
+    public function test_can_edit_submission_separategroups_with_editothersubmission() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -3383,7 +3297,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
                 'submissiondrafts' => 1,
                 'groupingid' => $grouping->id,
                 'groupmode' => SEPARATEGROUPS,
-            ]);
+        ]);
 
         // Add the capability to the new edusignment for student 1.
         $roleid = create_role('Dummy role', 'dummyrole', 'dummy role description');
@@ -3407,8 +3321,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Test if the view blind details capability works
      */
-    public function test_can_view_blind_details()
-    {
+    public function test_can_view_blind_details() {
         global $DB;
 
         $this->resetAfterTest();
@@ -3419,7 +3332,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
 
         $edusign = $this->create_instance($course, [
                 'blindmarking' => 1,
-            ]);
+        ]);
 
         $this->assertTrue($edusign->is_blind_marking());
 
@@ -3427,7 +3340,8 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $this->setUser($teacher);
         $gradingtable = new edusign_grading_table($edusign, 1, '', 0, true);
         $output = $edusign->get_renderer()->render($gradingtable);
-        $this->assertEquals(true, strpos($output, get_string('hiddenuser', 'edusign')));    // "Participant" is somewhere on the page.
+        $this->assertEquals(true,
+                strpos($output, get_string('hiddenuser', 'edusign')));    // "Participant" is somewhere on the page.
         $this->assertEquals(false, strpos($output, fullname($student)));    // Students full name doesn't appear.
 
         // Test student names are visible to manager.
@@ -3441,8 +3355,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Testing get_shared_group_members
      */
-    public function test_get_shared_group_members()
-    {
+    public function test_get_shared_group_members() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -3466,7 +3379,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $edusign = $this->create_instance($course, [
                 'groupingid' => $grouping->id,
                 'groupmode' => SEPARATEGROUPS,
-            ]);
+        ]);
 
         $cm = $edusign->get_course_module();
 
@@ -3495,8 +3408,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Testing get_shared_group_members
      */
-    public function test_get_shared_group_members_override()
-    {
+    public function test_get_shared_group_members_override() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -3520,7 +3432,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $edusign = $this->create_instance($course, [
                 'groupingid' => $grouping->id,
                 'groupmode' => SEPARATEGROUPS,
-            ]);
+        ]);
 
         $cm = $edusign->get_course_module();
 
@@ -3557,8 +3469,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Test get plugins file areas
      */
-    public function test_get_plugins_file_areas()
-    {
+    public function test_get_plugins_file_areas() {
         global $DB;
 
         $this->resetAfterTest();
@@ -3580,7 +3491,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
             if ($type == 'onlinetext') {
                 $this->assertEquals(array('submissions_onlinetext' => 'Online text'), $fileareas);
                 $usingfilearea++;
-            } elseif ($type == 'file') {
+            } else if ($type == 'file') {
                 $this->assertEquals(array('submission_files' => 'File submissions'), $fileareas);
                 $usingfilearea++;
             } else {
@@ -3601,7 +3512,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
             if ($type == 'editpdf') {
                 $this->assertEquals(array('download' => 'Annotate PDF'), $fileareas);
                 $usingfilearea++;
-            } elseif ($type == 'file') {
+            } else if ($type == 'file') {
                 $this->assertEquals(array('feedback_files' => 'Feedback files'), $fileareas);
                 $usingfilearea++;
             } else {
@@ -3617,8 +3528,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
      * This function needs to obey the group override logic as per the edusign grading table and
      * the overview block.
      */
-    public function test_override_exists()
-    {
+    public function test_override_exists() {
         global $DB;
 
         $this->resetAfterTest();
@@ -3656,36 +3566,36 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
 
         // Overrides for each of the groups, and a user override.
         $overrides = [
-            (object) [
-                // Override for group 1, highest priority (numerically lowest sortorder).
-                'edusignid' => $instance->id,
-                'groupid' => $group1->id,
-                'userid' => null,
-                'sortorder' => 1,
-                'allowsubmissionsfromdate' => 1,
-                'duedate' => 2,
-                'cutoffdate' => 3
-            ],
-            (object) [
-                // Override for group 2, lower priority (numerically higher sortorder).
-                'edusignid' => $instance->id,
-                'groupid' => $group2->id,
-                'userid' => null,
-                'sortorder' => 2,
-                'allowsubmissionsfromdate' => 5,
-                'duedate' => 6,
-                'cutoffdate' => 6
-            ],
-            (object) [
-                // User override.
-                'edusignid' => $instance->id,
-                'groupid' => null,
-                'userid' => $student3->id,
-                'sortorder' => null,
-                'allowsubmissionsfromdate' => 7,
-                'duedate' => 8,
-                'cutoffdate' => 9
-            ],
+                (object) [
+                    // Override for group 1, highest priority (numerically lowest sortorder).
+                        'edusignid' => $instance->id,
+                        'groupid' => $group1->id,
+                        'userid' => null,
+                        'sortorder' => 1,
+                        'allowsubmissionsfromdate' => 1,
+                        'duedate' => 2,
+                        'cutoffdate' => 3
+                ],
+                (object) [
+                    // Override for group 2, lower priority (numerically higher sortorder).
+                        'edusignid' => $instance->id,
+                        'groupid' => $group2->id,
+                        'userid' => null,
+                        'sortorder' => 2,
+                        'allowsubmissionsfromdate' => 5,
+                        'duedate' => 6,
+                        'cutoffdate' => 6
+                ],
+                (object) [
+                    // User override.
+                        'edusignid' => $instance->id,
+                        'groupid' => null,
+                        'userid' => $student3->id,
+                        'sortorder' => null,
+                        'allowsubmissionsfromdate' => 7,
+                        'duedate' => 8,
+                        'cutoffdate' => 9
+                ],
         ];
 
         foreach ($overrides as &$override) {
@@ -3714,8 +3624,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Test the quicksave grades processor
      */
-    public function test_process_save_quick_grades()
-    {
+    public function test_process_save_quick_grades() {
         $this->resetAfterTest();
         $course = $this->getDataGenerator()->create_course();
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
@@ -3725,18 +3634,18 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $this->setUser($teacher);
         $edusign = $this->create_instance($course, [
                 'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL,
-            ]);
+        ]);
 
         // Initially grade the user.
         $grade = (object) [
                 'attemptnumber' => '',
                 'timemodified' => '',
-            ];
+        ];
         $data = [
                 "grademodified_{$student->id}" => $grade->timemodified,
                 "gradeattempt_{$student->id}" => $grade->attemptnumber,
                 "quickgrade_{$student->id}" => '60.0',
-            ];
+        ];
 
         $result = $edusign->testable_process_save_quick_grades($data);
         $this->assertContains(get_string('quickgradingchangessaved', 'edusign'), $result);
@@ -3746,9 +3655,9 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         // Attempt to grade with a past attempts grade info.
         $edusign->testable_process_add_attempt($student->id);
         $data = array(
-            'grademodified_' . $student->id => $grade->timemodified,
-            'gradeattempt_' . $student->id => $grade->attemptnumber,
-            'quickgrade_' . $student->id => '50.0'
+                'grademodified_' . $student->id => $grade->timemodified,
+                'gradeattempt_' . $student->id => $grade->attemptnumber,
+                'quickgrade_' . $student->id => '50.0'
         );
         $result = $edusign->testable_process_save_quick_grades($data);
         $this->assertContains(get_string('errorrecordmodified', 'edusign'), $result);
@@ -3758,9 +3667,9 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         // Attempt to grade a the attempt.
         $submission = $edusign->get_user_submission($student->id, false);
         $data = array(
-            'grademodified_' . $student->id => '',
-            'gradeattempt_' . $student->id => $submission->attemptnumber,
-            'quickgrade_' . $student->id => '40.0'
+                'grademodified_' . $student->id => '',
+                'gradeattempt_' . $student->id => $submission->attemptnumber,
+                'quickgrade_' . $student->id => '40.0'
         );
         $result = $edusign->testable_process_save_quick_grades($data);
         $this->assertContains(get_string('quickgradingchangessaved', 'edusign'), $result);
@@ -3772,9 +3681,9 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $pastdata = $data;
         // Update the grade the 'good' way.
         $data = array(
-            'grademodified_' . $student->id => $grade->timemodified,
-            'gradeattempt_' . $student->id => $grade->attemptnumber,
-            'quickgrade_' . $student->id => '30.0'
+                'grademodified_' . $student->id => $grade->timemodified,
+                'gradeattempt_' . $student->id => $grade->attemptnumber,
+                'quickgrade_' . $student->id => '30.0'
         );
         $result = $edusign->testable_process_save_quick_grades($data);
         $this->assertContains(get_string('quickgradingchangessaved', 'edusign'), $result);
@@ -3791,8 +3700,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Test updating activity completion when submitting an assessment.
      */
-    public function test_update_activity_completion_records_solitary_submission()
-    {
+    public function test_update_activity_completion_records_solitary_submission() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course(['enablecompletion' => 1]);
@@ -3804,7 +3712,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
                 'grade' => 100,
                 'completion' => COMPLETION_TRACKING_AUTOMATIC,
                 'requireallteammemberssubmit' => 0,
-            ]);
+        ]);
         $cm = $edusign->get_course_module();
 
         // Submit the edusignment as the student.
@@ -3818,12 +3726,12 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         // Update to mark as complete.
         $submission = $edusign->get_user_submission($student->id, true);
         $edusign->testable_update_activity_completion_records(
-            0,
-            0,
-            $submission,
-            $student->id,
-            COMPLETION_COMPLETE,
-            $completion
+                0,
+                0,
+                $submission,
+                $student->id,
+                COMPLETION_COMPLETE,
+                $completion
         );
 
         // Completion should now be met.
@@ -3834,8 +3742,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Test updating activity completion when submitting an assessment.
      */
-    public function test_update_activity_completion_records_team_submission()
-    {
+    public function test_update_activity_completion_records_team_submission() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course(['enablecompletion' => 1]);
@@ -3853,7 +3760,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
                 'grade' => 100,
                 'completion' => COMPLETION_TRACKING_AUTOMATIC,
                 'teamsubmission' => 1,
-            ]);
+        ]);
 
         $cm = $edusign->get_course_module();
 
@@ -3883,42 +3790,41 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $this->assertEquals(1, $completiondata->completionstate);
     }
 
-    public function get_edusignments_with_rescaled_null_grades_provider()
-    {
+    public function get_edusignments_with_rescaled_null_grades_provider() {
         return [
-            'Negative less than one is errant' => [
-                'grade' => -0.64,
-                'count' => 1,
-            ],
-            'Negative more than one is errant' => [
-                'grade' => -30.18,
-                'count' => 1,
-            ],
-            'Negative one exactly is not errant' => [
-                'grade' => edusign_GRADE_NOT_SET,
-                'count' => 0,
-            ],
-            'Positive grade is not errant' => [
-                'grade' => 1,
-                'count' => 0,
-            ],
-            'Large grade is not errant' => [
-                'grade' => 100,
-                'count' => 0,
-            ],
-            'Zero grade is not errant' => [
-                'grade' => 0,
-                'count' => 0,
-            ],
+                'Negative less than one is errant' => [
+                        'grade' => -0.64,
+                        'count' => 1,
+                ],
+                'Negative more than one is errant' => [
+                        'grade' => -30.18,
+                        'count' => 1,
+                ],
+                'Negative one exactly is not errant' => [
+                        'grade' => edusign_GRADE_NOT_SET,
+                        'count' => 0,
+                ],
+                'Positive grade is not errant' => [
+                        'grade' => 1,
+                        'count' => 0,
+                ],
+                'Large grade is not errant' => [
+                        'grade' => 100,
+                        'count' => 0,
+                ],
+                'Zero grade is not errant' => [
+                        'grade' => 0,
+                        'count' => 0,
+                ],
         ];
     }
 
     /**
      * Test determining if the edusignment as any null grades that were rescaled.
+     *
      * @dataProvider get_edusignments_with_rescaled_null_grades_provider
      */
-    public function test_get_edusignments_with_rescaled_null_grades($grade, $count)
-    {
+    public function test_get_edusignments_with_rescaled_null_grades($grade, $count) {
         global $DB;
 
         $this->resetAfterTest();
@@ -3930,7 +3836,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $this->setUser($teacher);
         $edusign = $this->create_instance($course, [
                 'grade' => 100,
-            ]);
+        ]);
 
         // Try getting a student's grade. This will give a grade of -1.
         // Then we can override it with a bad negative grade.
@@ -3938,13 +3844,13 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
 
         // Set the grade to something errant.
         $DB->set_field(
-            'edusign_grades',
-            'grade',
-            $grade,
-            [
-                'userid' => $student->id,
-                'edusignment' => $edusign->get_instance()->id,
-            ]
+                'edusign_grades',
+                'grade',
+                $grade,
+                [
+                        'userid' => $student->id,
+                        'edusignment' => $edusign->get_instance()->id,
+                ]
         );
 
         $this->assertCount($count, get_edusignments_with_rescaled_null_grades());
@@ -3952,46 +3858,46 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
 
     /**
      * Data provider for test_fix_null_grades
+     *
      * @return array[] Test data for test_fix_null_grades. Each element should contain grade, expectedcount and gradebookvalue
      */
-    public function fix_null_grades_provider()
-    {
+    public function fix_null_grades_provider() {
         return [
-            'Negative less than one is errant' => [
-                'grade' => -0.64,
-                'gradebookvalue' => null,
-            ],
-            'Negative more than one is errant' => [
-                'grade' => -30.18,
-                'gradebookvalue' => null,
-            ],
-            'Negative one exactly is not errant, but shouldn\'t be pushed to gradebook' => [
-                'grade' => edusign_GRADE_NOT_SET,
-                'gradebookvalue' => null,
-            ],
-            'Positive grade is not errant' => [
-                'grade' => 1,
-                'gradebookvalue' => 1,
-            ],
-            'Large grade is not errant' => [
-                'grade' => 100,
-                'gradebookvalue' => 100,
-            ],
-            'Zero grade is not errant' => [
-                'grade' => 0,
-                'gradebookvalue' => 0,
-            ],
+                'Negative less than one is errant' => [
+                        'grade' => -0.64,
+                        'gradebookvalue' => null,
+                ],
+                'Negative more than one is errant' => [
+                        'grade' => -30.18,
+                        'gradebookvalue' => null,
+                ],
+                'Negative one exactly is not errant, but shouldn\'t be pushed to gradebook' => [
+                        'grade' => edusign_GRADE_NOT_SET,
+                        'gradebookvalue' => null,
+                ],
+                'Positive grade is not errant' => [
+                        'grade' => 1,
+                        'gradebookvalue' => 1,
+                ],
+                'Large grade is not errant' => [
+                        'grade' => 100,
+                        'gradebookvalue' => 100,
+                ],
+                'Zero grade is not errant' => [
+                        'grade' => 0,
+                        'gradebookvalue' => 0,
+                ],
         ];
     }
 
     /**
      * Test fix_null_grades
+     *
      * @param number $grade The grade we should set in the edusign grading table.
      * @param number $expectedcount The finalgrade we expect in the gradebook after fixing the grades.
      * @dataProvider fix_null_grades_provider
      */
-    public function test_fix_null_grades($grade, $gradebookvalue)
-    {
+    public function test_fix_null_grades($grade, $gradebookvalue) {
         global $DB;
 
         $this->resetAfterTest();
@@ -4010,13 +3916,13 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         // Set the grade to something errant.
         // We don't set the grader here, so we expect it to be -1 as a result.
         $DB->set_field(
-            'edusign_grades',
-            'grade',
-            $grade,
-            [
-                'userid' => $student->id,
-                'edusignment' => $edusign->get_instance()->id,
-            ]
+                'edusign_grades',
+                'grade',
+                $grade,
+                [
+                        'userid' => $student->id,
+                        'edusignment' => $edusign->get_instance()->id,
+                ]
         );
         $edusign->grade = $grade;
         $edusigntemp = clone $edusign->get_instance();
@@ -4048,8 +3954,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
     /**
      * Test grade override displays 'Graded' for students
      */
-    public function test_grade_submission_override()
-    {
+    public function test_grade_submission_override() {
         global $DB, $PAGE, $OUTPUT;
 
         $this->resetAfterTest();
@@ -4061,7 +3966,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $this->setUser($teacher);
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
-            ]);
+        ]);
 
         // Simulate adding a grade.
         $this->setUser($teacher);
@@ -4073,7 +3978,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
         $gradegrade = grade_grade::fetch([
                 'userid' => $student->id,
                 'itemid' => $edusign->get_grade_item()->id,
-            ]);
+        ]);
 
         // Check that grade submission is not overridden yet.
         $this->assertEquals(false, $gradegrade->is_overridden());

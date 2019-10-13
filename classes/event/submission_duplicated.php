@@ -37,6 +37,7 @@ defined('MOODLE_INTERNAL') || die();
 class submission_duplicated extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -44,16 +45,16 @@ class submission_duplicated extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @param \stdClass $submission
      * @return submission_duplicated
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_submission(\edusign $edusign, \stdClass $submission) {
         $data = array(
-            'objectid' => $submission->id,
-            'context' => $edusign->get_context(),
+                'objectid' => $submission->id,
+                'context' => $edusign->get_context(),
         );
         self::$preventcreatecall = false;
         /** @var submission_duplicated $event */
@@ -71,7 +72,7 @@ class submission_duplicated extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' duplicated their submission with id '$this->objectid' for the " .
-            "edusignment with course module id '$this->contextinstanceid'.";
+                "edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**

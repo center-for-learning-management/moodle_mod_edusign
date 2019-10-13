@@ -52,16 +52,16 @@ class edusignsubmission_signing_locallib_testcase extends advanced_testcase {
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_signing_enabled' => true,
-            ]);
+        ]);
 
         $this->setUser($student->id);
 
         $plugin = $edusign->get_submission_plugin_by_type('signing');
         $result = $plugin->submission_is_empty((object) [
                 'signing_editor' => [
-                    'text' => $submissiontext,
+                        'text' => $submissiontext,
                 ],
-            ]);
+        ]);
         $this->assertTrue($result === $expected);
     }
 
@@ -79,15 +79,15 @@ class edusignsubmission_signing_locallib_testcase extends advanced_testcase {
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_signing_enabled' => true,
-            ]);
+        ]);
 
         $this->setUser($student->id);
 
         $result = $edusign->new_submission_empty((object) [
                 'signing_editor' => [
-                    'text' => $submissiontext,
+                        'text' => $submissiontext,
                 ],
-            ]);
+        ]);
 
         $this->assertTrue($result === $expected);
     }
@@ -99,11 +99,11 @@ class edusignsubmission_signing_locallib_testcase extends advanced_testcase {
      */
     public function submission_is_empty_testcases() {
         return [
-            'Empty submission string' => ['', true],
-            'Empty submission null' => [null, true],
-            'Value 0' => [0, false],
-            'String 0' => ['0', false],
-            'Text' => ['Ai! laurië lantar lassi súrinen, yéni únótimë ve rámar aldaron!', false]
+                'Empty submission string' => ['', true],
+                'Empty submission null' => [null, true],
+                'Value 0' => [0, false],
+                'String 0' => ['0', false],
+                'Text' => ['Ai! laurië lantar lassi súrinen, yéni únótimë ve rámar aldaron!', false]
         ];
     }
 }

@@ -36,12 +36,12 @@ defined('MOODLE_INTERNAL') || die();
  * @return bool false if file not found, does not return if found - just send the file
  */
 function edusignsubmission_signing_pluginfile($course,
-                                                $cm,
-                                                context $context,
-                                                $filearea,
-                                                $args,
-                                                $forcedownload,
-                                                array $options=array()) {
+        $cm,
+        context $context,
+        $filearea,
+        $args,
+        $forcedownload,
+        array $options = array()) {
     global $DB, $CFG;
 
     if ($context->contextlevel != CONTEXT_MODULE) {
@@ -49,11 +49,11 @@ function edusignsubmission_signing_pluginfile($course,
     }
 
     require_login($course, false, $cm);
-    $itemid = (int)array_shift($args);
+    $itemid = (int) array_shift($args);
     $record = $DB->get_record('edusign_submission',
-                              array('id' => $itemid),
-                              'userid, edusignment, groupid',
-                              MUST_EXIST);
+            array('id' => $itemid),
+            'userid, edusignment, groupid',
+            MUST_EXIST);
     $userid = $record->userid;
     $groupid = $record->groupid;
 
@@ -66,12 +66,12 @@ function edusignsubmission_signing_pluginfile($course,
     }
 
     if ($edusign->get_instance()->teamsubmission &&
-        !$edusign->can_view_group_submission($groupid)) {
+            !$edusign->can_view_group_submission($groupid)) {
         return false;
     }
 
     if (!$edusign->get_instance()->teamsubmission &&
-        !$edusign->can_view_submission($userid)) {
+            !$edusign->can_view_submission($userid)) {
         return false;
     }
 

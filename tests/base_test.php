@@ -23,7 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -59,25 +58,25 @@ class mod_edusign_base_testcase extends advanced_testcase {
     /** @var stdClass $course New course created to hold the edusignments */
     protected $course = null;
 
-    /** @var array $teachers List of DEFAULT_TEACHER_COUNT teachers in the course*/
+    /** @var array $teachers List of DEFAULT_TEACHER_COUNT teachers in the course */
     protected $teachers = null;
 
     /** @var array $editingteachers List of DEFAULT_EDITING_TEACHER_COUNT editing teachers in the course */
     protected $editingteachers = null;
 
-    /** @var array $students List of DEFAULT_STUDENT_COUNT students in the course*/
+    /** @var array $students List of DEFAULT_STUDENT_COUNT students in the course */
     protected $students = null;
 
-    /** @var array $extrateachers List of EXTRA_TEACHER_COUNT teachers in the course*/
+    /** @var array $extrateachers List of EXTRA_TEACHER_COUNT teachers in the course */
     protected $extrateachers = null;
 
-    /** @var array $extraeditingteachers List of EXTRA_EDITING_TEACHER_COUNT editing teachers in the course*/
+    /** @var array $extraeditingteachers List of EXTRA_EDITING_TEACHER_COUNT editing teachers in the course */
     protected $extraeditingteachers = null;
 
-    /** @var array $extrastudents List of EXTRA_STUDENT_COUNT students in the course*/
+    /** @var array $extrastudents List of EXTRA_STUDENT_COUNT students in the course */
     protected $extrastudents = null;
 
-    /** @var array $extrasuspendedstudents List of EXTRA_SUSPENDED_COUNT students in the course*/
+    /** @var array $extrasuspendedstudents List of EXTRA_SUSPENDED_COUNT students in the course */
     protected $extrasuspendedstudents = null;
 
     /** @var array $groups List of 10 groups in the course */
@@ -115,24 +114,24 @@ class mod_edusign_base_testcase extends advanced_testcase {
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
         foreach ($this->teachers as $i => $teacher) {
             $this->getDataGenerator()->enrol_user($teacher->id,
-                                                  $this->course->id,
-                                                  $teacherrole->id);
+                    $this->course->id,
+                    $teacherrole->id);
             groups_add_member($this->groups[$i % self::GROUP_COUNT], $teacher);
         }
 
         $editingteacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
         foreach ($this->editingteachers as $i => $editingteacher) {
             $this->getDataGenerator()->enrol_user($editingteacher->id,
-                                                  $this->course->id,
-                                                  $editingteacherrole->id);
+                    $this->course->id,
+                    $editingteacherrole->id);
             groups_add_member($this->groups[$i % self::GROUP_COUNT], $editingteacher);
         }
 
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         foreach ($this->students as $i => $student) {
             $this->getDataGenerator()->enrol_user($student->id,
-                                                  $this->course->id,
-                                                  $studentrole->id);
+                    $this->course->id,
+                    $studentrole->id);
             groups_add_member($this->groups[$i % self::GROUP_COUNT], $student);
         }
     }
@@ -165,24 +164,24 @@ class mod_edusign_base_testcase extends advanced_testcase {
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
         foreach ($this->extrateachers as $i => $teacher) {
             $this->getDataGenerator()->enrol_user($teacher->id,
-                                                  $this->course->id,
-                                                  $teacherrole->id);
+                    $this->course->id,
+                    $teacherrole->id);
             groups_add_member($this->groups[$i % self::GROUP_COUNT], $teacher);
         }
 
         $editingteacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
         foreach ($this->extraeditingteachers as $i => $editingteacher) {
             $this->getDataGenerator()->enrol_user($editingteacher->id,
-                                                  $this->course->id,
-                                                  $editingteacherrole->id);
+                    $this->course->id,
+                    $editingteacherrole->id);
             groups_add_member($this->groups[$i % self::GROUP_COUNT], $editingteacher);
         }
 
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         foreach ($this->extrastudents as $i => $student) {
             $this->getDataGenerator()->enrol_user($student->id,
-                                                  $this->course->id,
-                                                  $studentrole->id);
+                    $this->course->id,
+                    $studentrole->id);
             if ($i < (self::EXTRA_STUDENT_COUNT / 2)) {
                 groups_add_member($this->groups[$i % self::GROUP_COUNT], $student);
             }
@@ -190,8 +189,8 @@ class mod_edusign_base_testcase extends advanced_testcase {
 
         foreach ($this->extrasuspendedstudents as $i => $suspendedstudent) {
             $this->getDataGenerator()->enrol_user($suspendedstudent->id,
-                                                  $this->course->id,
-                                                  $studentrole->id, 'manual', 0, 0, ENROL_USER_SUSPENDED);
+                    $this->course->id,
+                    $studentrole->id, 'manual', 0, 0, ENROL_USER_SUSPENDED);
             if ($i < (self::EXTRA_SUSPENDED_COUNT / 2)) {
                 groups_add_member($this->groups[$i % self::GROUP_COUNT], $suspendedstudent);
             }
@@ -204,7 +203,7 @@ class mod_edusign_base_testcase extends advanced_testcase {
      * @param array $params Array of parameters to pass to the generator
      * @return testable_edusign Testable wrapper around the edusign class.
      */
-    protected function create_instance($params=array()) {
+    protected function create_instance($params = array()) {
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_edusign');
         if (!isset($params['course'])) {
             $params['course'] = $this->course->id;

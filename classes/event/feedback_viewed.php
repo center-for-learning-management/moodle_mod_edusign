@@ -50,12 +50,12 @@ class feedback_viewed extends base {
      */
     public static function create_from_grade(\edusign $edusign, \stdClass $grade) {
         $data = array(
-            'objectid' => $grade->id,
-            'relateduserid' => $grade->userid,
-            'context' => $edusign->get_context(),
-            'other' => array(
-                'edusignid' => $edusign->get_instance()->id,
-            ),
+                'objectid' => $grade->id,
+                'relateduserid' => $grade->userid,
+                'context' => $edusign->get_context(),
+                'other' => array(
+                        'edusignid' => $edusign->get_instance()->id,
+                ),
         );
         /** @var feedback_viewed $event */
         $event = self::create($data);
@@ -89,7 +89,7 @@ class feedback_viewed extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' viewed the feedback for the user with id '$this->relateduserid' " .
-            "for the edusignment with course module id '$this->contextinstanceid'.";
+                "for the edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**

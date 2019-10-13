@@ -36,16 +36,14 @@ require_once($CFG->dirroot . '/mod/edusign/locallib.php');
  * @copyright 2014 Adrian Greeve <adrian@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class edusign_events_testcase extends advanced_testcase
-{
+class edusign_events_testcase extends advanced_testcase {
     // Use the generator helper.
     use mod_edusign_test_generator;
 
     /**
      * Basic tests for the submission_created() abstract class.
      */
-    public function test_base_event()
-    {
+    public function test_base_event() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -54,7 +52,7 @@ class edusign_events_testcase extends advanced_testcase
         $modcontext = context_module::instance($instance->cmid);
 
         $data = array(
-            'context' => $modcontext,
+                'context' => $modcontext,
         );
 
         $event = \mod_edusign_unittests\event\nothing_happened::create($data);
@@ -72,8 +70,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Basic tests for the submission_created() abstract class.
      */
-    public function test_submission_created()
-    {
+    public function test_submission_created() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -83,15 +80,15 @@ class edusign_events_testcase extends advanced_testcase
 
         // Standard Event parameters.
         $params = array(
-            'context' => $modcontext,
-            'courseid' => $course->id
+                'context' => $modcontext,
+                'courseid' => $course->id
         );
 
         $eventinfo = $params;
         $eventinfo['other'] = array(
-            'submissionid' => '17',
-            'submissionattempt' => 0,
-            'submissionstatus' => 'submitted'
+                'submissionid' => '17',
+                'submissionattempt' => 0,
+                'submissionstatus' => 'submitted'
         );
 
         $sink = $this->redirectEvents();
@@ -133,8 +130,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Basic tests for the submission_updated() abstract class.
      */
-    public function test_submission_updated()
-    {
+    public function test_submission_updated() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -144,15 +140,15 @@ class edusign_events_testcase extends advanced_testcase
 
         // Standard Event parameters.
         $params = array(
-            'context' => $modcontext,
-            'courseid' => $course->id
+                'context' => $modcontext,
+                'courseid' => $course->id
         );
 
         $eventinfo = $params;
         $eventinfo['other'] = array(
-            'submissionid' => '17',
-            'submissionattempt' => 0,
-            'submissionstatus' => 'submitted'
+                'submissionid' => '17',
+                'submissionattempt' => 0,
+                'submissionstatus' => 'submitted'
         );
 
         $sink = $this->redirectEvents();
@@ -191,8 +187,7 @@ class edusign_events_testcase extends advanced_testcase
         }
     }
 
-    public function test_extension_granted()
-    {
+    public function test_extension_granted() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -206,8 +201,8 @@ class edusign_events_testcase extends advanced_testcase
         $yesterday = $now - DAYSECS;
 
         $edusign = $this->create_instance($course, [
-            'duedate' => $yesterday,
-            'cutoffdate' => $yesterday,
+                'duedate' => $yesterday,
+                'cutoffdate' => $yesterday,
         ]);
         $sink = $this->redirectEvents();
 
@@ -222,19 +217,18 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($student->id, $event->relateduserid);
 
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'grant extension',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            $student->id,
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'grant extension',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                $student->id,
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
     }
 
-    public function test_submission_locked()
-    {
+    public function test_submission_locked() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -257,20 +251,19 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($edusign->get_instance()->id, $event->objectid);
         $this->assertEquals($student->id, $event->relateduserid);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'lock submission',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('locksubmissionforstudent', 'edusign', array('id' => $student->id,
-                'fullname' => fullname($student))),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'lock submission',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('locksubmissionforstudent', 'edusign', array('id' => $student->id,
+                        'fullname' => fullname($student))),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
     }
 
-    public function test_identities_revealed()
-    {
+    public function test_identities_revealed() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -291,12 +284,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $this->assertEquals($edusign->get_instance()->id, $event->objectid);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'reveal identities',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('revealidentities', 'edusign'),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'reveal identities',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('revealidentities', 'edusign'),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
@@ -305,8 +298,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the submission_status_viewed event.
      */
-    public function test_submission_status_viewed()
-    {
+    public function test_submission_status_viewed() {
         global $PAGE;
         $this->resetAfterTest();
 
@@ -331,19 +323,18 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertInstanceOf('\mod_edusign\event\submission_status_viewed', $event);
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('viewownsubmissionstatus', 'edusign'),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('viewownsubmissionstatus', 'edusign'),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
     }
 
-    public function test_submission_status_updated()
-    {
+    public function test_submission_status_updated() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -369,20 +360,19 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($student->id, $event->relateduserid);
         $this->assertEquals(EDUSIGN_SUBMISSION_STATUS_DRAFT, $event->other['newstatus']);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'revert submission to draft',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('reverttodraftforstudent', 'edusign', array('id' => $student->id,
-                'fullname' => fullname($student))),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'revert submission to draft',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('reverttodraftforstudent', 'edusign', array('id' => $student->id,
+                        'fullname' => fullname($student))),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
     }
 
-    public function test_marker_updated()
-    {
+    public function test_marker_updated() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -407,20 +397,19 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($teacher->id, $event->userid);
         $this->assertEquals($teacher->id, $event->other['markerid']);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'set marking allocation',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('setmarkerallocationforlog', 'edusign', array('id' => $student->id,
-                'fullname' => fullname($student), 'marker' => fullname($teacher))),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'set marking allocation',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('setmarkerallocationforlog', 'edusign', array('id' => $student->id,
+                        'fullname' => fullname($student), 'marker' => fullname($teacher))),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
     }
 
-    public function test_workflow_state_updated()
-    {
+    public function test_workflow_state_updated() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -446,13 +435,13 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($teacher->id, $event->userid);
         $this->assertEquals(edusign_MARKING_WORKFLOW_STATE_INREVIEW, $event->other['newstate']);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'set marking workflow state',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('setmarkingworkflowstateforlog', 'edusign', array('id' => $student->id,
-                'fullname' => fullname($student), 'state' => edusign_MARKING_WORKFLOW_STATE_INREVIEW)),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'set marking workflow state',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('setmarkingworkflowstateforlog', 'edusign', array('id' => $student->id,
+                        'fullname' => fullname($student), 'state' => edusign_MARKING_WORKFLOW_STATE_INREVIEW)),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
@@ -474,13 +463,13 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($teacher->id, $event->userid);
         $this->assertEquals(edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE, $event->other['newstate']);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'set marking workflow state',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('setmarkingworkflowstateforlog', 'edusign', array('id' => $student->id,
-                'fullname' => fullname($student), 'state' => edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE)),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'set marking workflow state',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('setmarkingworkflowstateforlog', 'edusign', array('id' => $student->id,
+                        'fullname' => fullname($student), 'state' => edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE)),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
@@ -489,10 +478,10 @@ class edusign_events_testcase extends advanced_testcase
         $sink = $this->redirectEvents();
 
         $data = array(
-            'grademodified_' . $student->id => time(),
-            'gradeattempt_' . $student->id => '',
-            'quickgrade_' . $student->id => '60.0',
-            'quickgrade_' . $student->id . '_workflowstate' => 'inmarking'
+                'grademodified_' . $student->id => time(),
+                'gradeattempt_' . $student->id => '',
+                'quickgrade_' . $student->id => '60.0',
+                'quickgrade_' . $student->id . '_workflowstate' => 'inmarking'
         );
         $edusign->testable_process_save_quick_grades($data);
 
@@ -506,20 +495,19 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($teacher->id, $event->userid);
         $this->assertEquals(edusign_MARKING_WORKFLOW_STATE_INMARKING, $event->other['newstate']);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'set marking workflow state',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('setmarkingworkflowstateforlog', 'edusign', array('id' => $student->id,
-                'fullname' => fullname($student), 'state' => edusign_MARKING_WORKFLOW_STATE_INMARKING)),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'set marking workflow state',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('setmarkingworkflowstateforlog', 'edusign', array('id' => $student->id,
+                        'fullname' => fullname($student), 'state' => edusign_MARKING_WORKFLOW_STATE_INMARKING)),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
     }
 
-    public function test_submission_duplicated()
-    {
+    public function test_submission_duplicated() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -546,19 +534,18 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($student->id, $event->userid);
         $submission2->status = EDUSIGN_SUBMISSION_STATUS_DRAFT;
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'submissioncopied',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            $edusign->testable_format_submission_for_log($submission2),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'submissioncopied',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                $edusign->testable_format_submission_for_log($submission2),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
     }
 
-    public function test_submission_unlocked()
-    {
+    public function test_submission_unlocked() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -581,20 +568,19 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($edusign->get_instance()->id, $event->objectid);
         $this->assertEquals($student->id, $event->relateduserid);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'unlock submission',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('unlocksubmissionforstudent', 'edusign', array('id' => $student->id,
-                'fullname' => fullname($student))),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'unlock submission',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('unlocksubmissionforstudent', 'edusign', array('id' => $student->id,
+                        'fullname' => fullname($student))),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
     }
 
-    public function test_submission_graded()
-    {
+    public function test_submission_graded() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -622,12 +608,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($grade->id, $event->objectid);
         $this->assertEquals($student->id, $event->relateduserid);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'grade submission',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            $edusign->format_grade_for_log($grade),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'grade submission',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                $edusign->format_grade_for_log($grade),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
@@ -637,9 +623,9 @@ class edusign_events_testcase extends advanced_testcase
 
         $grade = $edusign->get_user_grade($student->id, false);
         $data = array(
-            'grademodified_' . $student->id => time(),
-            'gradeattempt_' . $student->id => $grade->attemptnumber,
-            'quickgrade_' . $student->id => '60.0'
+                'grademodified_' . $student->id => time(),
+                'gradeattempt_' . $student->id => $grade->attemptnumber,
+                'quickgrade_' . $student->id => '60.0'
         );
         $edusign->testable_process_save_quick_grades($data);
         $grade = $edusign->get_user_grade($student->id, false);
@@ -653,12 +639,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($grade->id, $event->objectid);
         $this->assertEquals($student->id, $event->relateduserid);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'grade submission',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            $edusign->format_grade_for_log($grade),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'grade submission',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                $edusign->format_grade_for_log($grade),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
@@ -679,12 +665,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($grade->id, $event->objectid);
         $this->assertEquals($student->id, $event->relateduserid);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'grade submission',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            $edusign->format_grade_for_log($grade),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'grade submission',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                $edusign->format_grade_for_log($grade),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $sink->close();
@@ -693,8 +679,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the submission_viewed event.
      */
-    public function test_submission_viewed()
-    {
+    public function test_submission_viewed() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -728,12 +713,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $this->assertEquals($submission->id, $event->objectid);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view submission',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('viewsubmissionforuser', 'edusign', $student->id),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view submission',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('viewsubmissionforuser', 'edusign', $student->id),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -742,8 +727,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the feedback_viewed event.
      */
-    public function test_feedback_viewed()
-    {
+    public function test_feedback_viewed() {
         global $DB, $PAGE;
 
         $this->resetAfterTest();
@@ -784,12 +768,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $this->assertEquals($gradeid, $event->objectid);
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view feedback',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('viewfeedbackforuser', 'edusign', $student->id),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view feedback',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('viewfeedbackforuser', 'edusign', $student->id),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -798,8 +782,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the grading_form_viewed event.
      */
-    public function test_grading_form_viewed()
-    {
+    public function test_grading_form_viewed() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -830,13 +813,13 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertInstanceOf('\mod_edusign\event\grading_form_viewed', $event);
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view grading form',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('viewgradingformforstudent', 'edusign', array('id' => $student->id,
-                'fullname' => fullname($student))),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view grading form',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('viewgradingformforstudent', 'edusign', array('id' => $student->id,
+                        'fullname' => fullname($student))),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -845,8 +828,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the grading_table_viewed event.
      */
-    public function test_grading_table_viewed()
-    {
+    public function test_grading_table_viewed() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -877,12 +859,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertInstanceOf('\mod_edusign\event\grading_table_viewed', $event);
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view submission grading table',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('viewsubmissiongradingtable', 'edusign'),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view submission grading table',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('viewsubmissiongradingtable', 'edusign'),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -891,8 +873,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the submission_form_viewed event.
      */
-    public function test_submission_form_viewed()
-    {
+    public function test_submission_form_viewed() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -918,12 +899,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertInstanceOf('\mod_edusign\event\submission_form_viewed', $event);
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view submit edusignment form',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('editsubmission', 'edusign'),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view submit edusignment form',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('editsubmission', 'edusign'),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -932,8 +913,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the submission_form_viewed event.
      */
-    public function test_submission_confirmation_form_viewed()
-    {
+    public function test_submission_confirmation_form_viewed() {
         global $PAGE;
 
         $this->resetAfterTest();
@@ -959,12 +939,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertInstanceOf('\mod_edusign\event\submission_confirmation_form_viewed', $event);
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view confirm submit edusignment form',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('viewownsubmissionform', 'edusign'),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view confirm submit edusignment form',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('viewownsubmissionform', 'edusign'),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -973,8 +953,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the reveal_identities_confirmation_page_viewed event.
      */
-    public function test_reveal_identities_confirmation_page_viewed()
-    {
+    public function test_reveal_identities_confirmation_page_viewed() {
         global $PAGE;
         $this->resetAfterTest();
 
@@ -998,12 +977,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertInstanceOf('\mod_edusign\event\reveal_identities_confirmation_page_viewed', $event);
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('viewrevealidentitiesconfirm', 'edusign'),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('viewrevealidentitiesconfirm', 'edusign'),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -1012,8 +991,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the statement_accepted event.
      */
-    public function test_statement_accepted()
-    {
+    public function test_statement_accepted() {
         // We want to be a student so we can submit edusignments.
         $this->resetAfterTest();
 
@@ -1042,16 +1020,16 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertInstanceOf('\mod_edusign\event\statement_accepted', $event);
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'submission statement accepted',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string(
-                'submissionstatementacceptedlog',
-                'mod_edusign',
-                fullname($student)
-            ),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'submission statement accepted',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string(
+                        'submissionstatementacceptedlog',
+                        'mod_edusign',
+                        fullname($student)
+                ),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -1068,9 +1046,9 @@ class edusign_events_testcase extends advanced_testcase
         // Create the data we want to pass to the save_submission function.
         $data = new stdClass();
         $data->onlinetext_editor = array(
-            'text' => 'Online text',
-            'format' => FORMAT_HTML,
-            'itemid' => file_get_unused_draft_itemid()
+                'text' => 'Online text',
+                'format' => FORMAT_HTML,
+                'itemid' => file_get_unused_draft_itemid()
         );
         $data->submissionstatement = 'We are the Borg. You will be assimilated. Resistance is futile. - do you agree
             to these terms?';
@@ -1091,8 +1069,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the batch_set_workflow_state_viewed event.
      */
-    public function test_batch_set_workflow_state_viewed()
-    {
+    public function test_batch_set_workflow_state_viewed() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1109,12 +1086,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertInstanceOf('\mod_edusign\event\batch_set_workflow_state_viewed', $event);
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view batch set marking workflow state',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('viewbatchsetmarkingworkflowstate', 'edusign'),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view batch set marking workflow state',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('viewbatchsetmarkingworkflowstate', 'edusign'),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -1123,8 +1100,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the batch_set_marker_allocation_viewed event.
      */
-    public function test_batch_set_marker_allocation_viewed()
-    {
+    public function test_batch_set_marker_allocation_viewed() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1141,12 +1117,12 @@ class edusign_events_testcase extends advanced_testcase
         $this->assertInstanceOf('\mod_edusign\event\batch_set_marker_allocation_viewed', $event);
         $this->assertEquals($edusign->get_context(), $event->get_context());
         $expected = array(
-            $edusign->get_course()->id,
-            'edusign',
-            'view batch set marker allocation',
-            'view.php?id=' . $edusign->get_course_module()->id,
-            get_string('viewbatchmarkingallocation', 'edusign'),
-            $edusign->get_course_module()->id
+                $edusign->get_course()->id,
+                'edusign',
+                'view batch set marker allocation',
+                'view.php?id=' . $edusign->get_course_module()->id,
+                get_string('viewbatchmarkingallocation', 'edusign'),
+                $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
         $this->assertEventContextNotUsed($event);
@@ -1158,20 +1134,19 @@ class edusign_events_testcase extends advanced_testcase
      * There is no external API for creating a user override, so the unit test will simply
      * create and trigger the event and ensure the event data is returned as expected.
      */
-    public function test_user_override_created()
-    {
+    public function test_user_override_created() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
         $edusign = $this->getDataGenerator()->get_plugin_generator('mod_edusign')->create_instance(['course' => $course->id]);
 
         $params = array(
-            'objectid' => 1,
-            'relateduserid' => 2,
-            'context' => context_module::instance($edusign->cmid),
-            'other' => array(
-                'edusignid' => $edusign->id
-            )
+                'objectid' => 1,
+                'relateduserid' => 2,
+                'context' => context_module::instance($edusign->cmid),
+                'other' => array(
+                        'edusignid' => $edusign->id
+                )
         );
         $event = \mod_edusign\event\user_override_created::create($params);
 
@@ -1193,20 +1168,19 @@ class edusign_events_testcase extends advanced_testcase
      * There is no external API for creating a group override, so the unit test will simply
      * create and trigger the event and ensure the event data is returned as expected.
      */
-    public function test_group_override_created()
-    {
+    public function test_group_override_created() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
         $edusign = $this->getDataGenerator()->get_plugin_generator('mod_edusign')->create_instance(['course' => $course->id]);
 
         $params = array(
-            'objectid' => 1,
-            'context' => context_module::instance($edusign->cmid),
-            'other' => array(
-                'edusignid' => $edusign->id,
-                'groupid' => 2
-            )
+                'objectid' => 1,
+                'context' => context_module::instance($edusign->cmid),
+                'other' => array(
+                        'edusignid' => $edusign->id,
+                        'groupid' => 2
+                )
         );
         $event = \mod_edusign\event\group_override_created::create($params);
 
@@ -1228,20 +1202,19 @@ class edusign_events_testcase extends advanced_testcase
      * There is no external API for updating a user override, so the unit test will simply
      * create and trigger the event and ensure the event data is returned as expected.
      */
-    public function test_user_override_updated()
-    {
+    public function test_user_override_updated() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
         $edusign = $this->getDataGenerator()->get_plugin_generator('mod_edusign')->create_instance(['course' => $course->id]);
 
         $params = array(
-            'objectid' => 1,
-            'relateduserid' => 2,
-            'context' => context_module::instance($edusign->cmid),
-            'other' => array(
-                'edusignid' => $edusign->id
-            )
+                'objectid' => 1,
+                'relateduserid' => 2,
+                'context' => context_module::instance($edusign->cmid),
+                'other' => array(
+                        'edusignid' => $edusign->id
+                )
         );
         $event = \mod_edusign\event\user_override_updated::create($params);
 
@@ -1263,20 +1236,19 @@ class edusign_events_testcase extends advanced_testcase
      * There is no external API for updating a group override, so the unit test will simply
      * create and trigger the event and ensure the event data is returned as expected.
      */
-    public function test_group_override_updated()
-    {
+    public function test_group_override_updated() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
         $edusign = $this->getDataGenerator()->get_plugin_generator('mod_edusign')->create_instance(['course' => $course->id]);
 
         $params = array(
-            'objectid' => 1,
-            'context' => context_module::instance($edusign->cmid),
-            'other' => array(
-                'edusignid' => $edusign->id,
-                'groupid' => 2
-            )
+                'objectid' => 1,
+                'context' => context_module::instance($edusign->cmid),
+                'other' => array(
+                        'edusignid' => $edusign->id,
+                        'groupid' => 2
+                )
         );
         $event = \mod_edusign\event\group_override_updated::create($params);
 
@@ -1295,8 +1267,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the user override deleted event.
      */
-    public function test_user_override_deleted()
-    {
+    public function test_user_override_deleted() {
         global $DB;
         $this->resetAfterTest();
 
@@ -1327,8 +1298,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test the group override deleted event.
      */
-    public function test_group_override_deleted()
-    {
+    public function test_group_override_deleted() {
         global $DB;
         $this->resetAfterTest();
 
@@ -1359,8 +1329,7 @@ class edusign_events_testcase extends advanced_testcase
     /**
      * Test that all events generated with blindmarking enabled are anonymous
      */
-    public function test_anonymous_events()
-    {
+    public function test_anonymous_events() {
         $this->resetAfterTest();
 
         $course = $this->getDataGenerator()->create_course();
@@ -1383,7 +1352,7 @@ class edusign_events_testcase extends advanced_testcase
         $events = $sink->get_events();
         $event = reset($events);
 
-        $this->assertTrue((bool)$event->anonymous);
+        $this->assertTrue((bool) $event->anonymous);
 
         $edusign->reveal_identities();
         $sink = $this->redirectEvents();
@@ -1392,6 +1361,6 @@ class edusign_events_testcase extends advanced_testcase
         $events = $sink->get_events();
         $event = reset($events);
 
-        $this->assertFalse((bool)$event->anonymous);
+        $this->assertFalse((bool) $event->anonymous);
     }
 }

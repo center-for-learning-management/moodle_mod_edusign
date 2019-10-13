@@ -50,6 +50,7 @@ abstract class base extends \core\event\base {
 
     /**
      * Set edusign instance for this event.
+     *
      * @param \edusign $edusign
      * @throws \coding_exception
      */
@@ -71,8 +72,8 @@ abstract class base extends \core\event\base {
      *
      * NOTE: to be used from observers only.
      *
-     * @throws \coding_exception
      * @return \edusign
+     * @throws \coding_exception
      */
     public function get_edusign() {
         if ($this->is_restored()) {
@@ -88,7 +89,6 @@ abstract class base extends \core\event\base {
         }
         return $this->edusign;
     }
-
 
     /**
      * Returns relevant URL.

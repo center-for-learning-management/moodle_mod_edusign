@@ -8,23 +8,23 @@ Feature: In an edusignment, students can upload files for assessment
   Scenario: Submit a file and update the submission with another file
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | Course 1 | C1        | 0        | 1         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "edusignment" to section "1" and I fill the form with:
-      | edusignment name | Test edusignment name |
-      | Description | Submit your online text |
-      | edusignsubmission_onlinetext_enabled | 0 |
-      | edusignsubmission_file_enabled | 1 |
-      | Maximum number of uploaded files | 2 |
+      | edusignment name                     | Test edusignment name   |
+      | Description                          | Submit your online text |
+      | edusignsubmission_onlinetext_enabled | 0                       |
+      | edusignsubmission_file_enabled       | 1                       |
+      | Maximum number of uploaded files     | 2                       |
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage

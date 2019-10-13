@@ -22,16 +22,15 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 require_once(dirname(__FILE__) . '/../../config.php');
-require_once($CFG->dirroot.'/mod/edusign/lib.php');
-require_once($CFG->dirroot.'/mod/edusign/locallib.php');
-require_once($CFG->dirroot.'/mod/edusign/override_form.php');
+require_once($CFG->dirroot . '/mod/edusign/lib.php');
+require_once($CFG->dirroot . '/mod/edusign/locallib.php');
+require_once($CFG->dirroot . '/mod/edusign/override_form.php');
 
 $overrideid = required_param('id', PARAM_INT);
 $confirm = optional_param('confirm', false, PARAM_BOOL);
 
-if (! $override = $DB->get_record('edusign_overrides', array('id' => $overrideid))) {
+if (!$override = $DB->get_record('edusign_overrides', array('id' => $overrideid))) {
     print_error('invalidoverrideid', 'edusign');
 }
 

@@ -23,7 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -46,58 +45,58 @@ class mod_edusign_upgradelib_testcase extends advanced_testcase {
      */
     public function edusignment_upgrade_provider() {
         return [
-            'upload' => [
-                'type' => 'upload',
-                'submissionplugins' => [
-                    'onlinetext' => true,
-                    'comments' => true,
-                    'file' => false,
+                'upload' => [
+                        'type' => 'upload',
+                        'submissionplugins' => [
+                                'onlinetext' => true,
+                                'comments' => true,
+                                'file' => false,
+                        ],
+                        'feedbackplugins' => [
+                                'comments' => false,
+                                'file' => false,
+                                'offline' => true,
+                        ],
                 ],
-                'feedbackplugins' => [
-                    'comments' => false,
-                    'file' => false,
-                    'offline' => true,
+                'uploadsingle' => [
+                        'type' => 'uploadsingle',
+                        'submissionplugins' => [
+                                'onlinetext' => true,
+                                'comments' => true,
+                                'file' => false,
+                        ],
+                        'feedbackplugins' => [
+                                'comments' => false,
+                                'file' => false,
+                                'offline' => true,
+                        ],
                 ],
-            ],
-            'uploadsingle' => [
-                'type' => 'uploadsingle',
-                'submissionplugins' => [
-                    'onlinetext' => true,
-                    'comments' => true,
-                    'file' => false,
+                'online' => [
+                        'type' => 'online',
+                        'submissionplugins' => [
+                                'onlinetext' => false,
+                                'comments' => true,
+                                'file' => true,
+                        ],
+                        'feedbackplugins' => [
+                                'comments' => false,
+                                'file' => true,
+                                'offline' => true,
+                        ],
                 ],
-                'feedbackplugins' => [
-                    'comments' => false,
-                    'file' => false,
-                    'offline' => true,
+                'offline' => [
+                        'type' => 'offline',
+                        'submissionplugins' => [
+                                'onlinetext' => true,
+                                'comments' => true,
+                                'file' => true,
+                        ],
+                        'feedbackplugins' => [
+                                'comments' => false,
+                                'file' => true,
+                                'offline' => true,
+                        ],
                 ],
-            ],
-            'online' => [
-                'type' => 'online',
-                'submissionplugins' => [
-                    'onlinetext' => false,
-                    'comments' => true,
-                    'file' => true,
-                ],
-                'feedbackplugins' => [
-                    'comments' => false,
-                    'file' => true,
-                    'offline' => true,
-                ],
-            ],
-            'offline' => [
-                'type' => 'offline',
-                'submissionplugins' => [
-                    'onlinetext' => true,
-                    'comments' => true,
-                    'file' => true,
-                ],
-                'feedbackplugins' => [
-                    'comments' => false,
-                    'file' => true,
-                    'offline' => true,
-                ],
-            ],
         ];
     }
 
@@ -105,8 +104,8 @@ class mod_edusign_upgradelib_testcase extends advanced_testcase {
      * Test assigment upgrade.
      *
      * @dataProvider edusignment_upgrade_provider
-     * @param   string  $type The type of edusignment
-     * @param   array   $plugins Which plugins shuld or shoudl not be enabled
+     * @param string $type The type of edusignment
+     * @param array $plugins Which plugins shuld or shoudl not be enabled
      */
     public function test_upgrade_edusignment($type, $plugins) {
         global $DB, $CFG;
@@ -128,7 +127,7 @@ class mod_edusign_upgradelib_testcase extends advanced_testcase {
         $edusignment = $generator->create_instance([
                 'course' => $course->id,
                 'edusignmenttype' => $type,
-            ]);
+        ]);
 
         // Run the upgrade.
         $this->setAdminUser();

@@ -44,20 +44,20 @@ class submission_status_updated extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @param \stdClass $submission
      * @return submission_status_updated
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_submission(\edusign $edusign, \stdClass $submission) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $submission->id,
-            'relateduserid' => ($edusign->get_instance()->teamsubmission) ? null : $submission->userid,
-            'other' => array(
-                'newstatus' => $submission->status
-            )
+                'context' => $edusign->get_context(),
+                'objectid' => $submission->id,
+                'relateduserid' => ($edusign->get_instance()->teamsubmission) ? null : $submission->userid,
+                'other' => array(
+                        'newstatus' => $submission->status
+                )
         );
         /** @var submission_status_updated $event */
         $event = self::create($data);
@@ -73,7 +73,7 @@ class submission_status_updated extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has updated the status of the submission with id '$this->objectid' for " .
-            "the edusignment with course module id '$this->contextinstanceid' to the status '{$this->other['newstatus']}'.";
+                "the edusignment with course module id '$this->contextinstanceid' to the status '{$this->other['newstatus']}'.";
     }
 
     /**

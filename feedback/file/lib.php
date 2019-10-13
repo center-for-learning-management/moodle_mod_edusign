@@ -36,12 +36,12 @@ defined('MOODLE_INTERNAL') || die();
  * @return bool false if file not found, does not return if found - just send the file
  */
 function edusignfeedback_file_pluginfile($course,
-                                        $cm,
-                                        context $context,
-                                        $filearea,
-                                        $args,
-                                        $forcedownload,
-                                        array $options=array()) {
+        $cm,
+        context $context,
+        $filearea,
+        $args,
+        $forcedownload,
+        array $options = array()) {
     global $USER, $DB, $CFG, $PAGE;
 
     if ($context->contextlevel != CONTEXT_MODULE) {
@@ -51,7 +51,7 @@ function edusignfeedback_file_pluginfile($course,
     require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 
     require_login($course, false, $cm);
-    $itemid = (int)array_shift($args);
+    $itemid = (int) array_shift($args);
     $record = $DB->get_record('edusign_grades', array('id' => $itemid), 'userid,edusignment', MUST_EXIST);
     $userid = $record->userid;
 

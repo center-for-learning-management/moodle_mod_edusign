@@ -57,10 +57,10 @@ trait mod_edusign_test_generator {
     /**
      * Add a user submission to the edusignment.
      *
-     * @param   \stdClass   $student The user to submit for
-     * @param   \edusign     $edusign The edusignment to submit to
-     * @param   string      $onlinetext The text tobe submitted
-     * @param   bool        $changeuser Whether to switch user to the user being submitted as.
+     * @param \stdClass $student The user to submit for
+     * @param \edusign $edusign The edusignment to submit to
+     * @param string $onlinetext The text tobe submitted
+     * @param bool $changeuser Whether to switch user to the user being submitted as.
      */
     protected function add_submission($student, $edusign, $onlinetext = null, $changeuser = true) {
         // Add a submission.
@@ -73,13 +73,13 @@ trait mod_edusign_test_generator {
         }
 
         $data = (object) [
-            'userid' => $student->id,
+                'userid' => $student->id,
 
-            'onlinetext_editor' => [
-                'itemid' => file_get_unused_draft_itemid(),
-                'text' => $onlinetext,
-                'format' => FORMAT_HTML,
-            ]
+                'onlinetext_editor' => [
+                        'itemid' => file_get_unused_draft_itemid(),
+                        'text' => $onlinetext,
+                        'format' => FORMAT_HTML,
+                ]
         ];
 
         $edusign->save_submission($data, $notices);
@@ -88,10 +88,10 @@ trait mod_edusign_test_generator {
     /**
      * Submit the edusignemnt for grading.
      *
-     * @param   \stdClass   $student The user to submit for
-     * @param   \edusign     $edusign The edusignment to submit to
-     * @param   array       $data Additional data to set
-     * @param   bool        $changeuser Whether to switch user to the user being submitted as.
+     * @param \stdClass $student The user to submit for
+     * @param \edusign $edusign The edusignment to submit to
+     * @param array $data Additional data to set
+     * @param bool $changeuser Whether to switch user to the user being submitted as.
      */
     public function submit_for_grading($student, $edusign, $data = [], $changeuser = true) {
         if ($changeuser) {
@@ -100,7 +100,7 @@ trait mod_edusign_test_generator {
 
         $data = (object) array_merge($data, [
                 'userid' => $student->id,
-            ]);
+        ]);
 
         $sink = $this->redirectMessages();
         $edusign->submit_for_grading($data, []);
@@ -112,11 +112,11 @@ trait mod_edusign_test_generator {
     /**
      * Mark the submission.
      *
-     * @param   \stdClass   $teacher The user to mark as
-     * @param   \edusign     $edusign The edusignment to mark
-     * @param   \stdClass   $student The user to grade
-     * @param   array       $data Additional data to set
-     * @param   bool        $changeuser Whether to switch user to the user being submitted as.
+     * @param \stdClass $teacher The user to mark as
+     * @param \edusign $edusign The edusignment to mark
+     * @param \stdClass $student The user to grade
+     * @param array $data Additional data to set
+     * @param bool $changeuser Whether to switch user to the user being submitted as.
      */
     protected function mark_submission($teacher, $edusign, $student, $grade = 50.0, $data = [], $attempt = 0) {
         global $DB;
@@ -125,13 +125,13 @@ trait mod_edusign_test_generator {
         $this->setUser($teacher);
         $data = (object) array_merge($data, [
                 'grade' => $grade,
-            ]);
+        ]);
 
         // Bump all timecreated and timemodified for this user back.
         // The old edusign_print_overview function includes submissions which have been graded where the grade modified
         // date matches the submission modified date.
         $DB->execute('UPDATE {edusign_submission} SET timecreated = timecreated - 1, timemodified = timemodified - 1 WHERE userid = :userid',
-            ['userid' => $student->id]);
+                ['userid' => $student->id]);
 
         $edusign->testable_apply_grade_to_user($data, $student->id, $attempt);
     }

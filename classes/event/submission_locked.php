@@ -37,6 +37,7 @@ defined('MOODLE_INTERNAL') || die();
 class submission_locked extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -44,17 +45,17 @@ class submission_locked extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @param \stdClass $user
      * @return submission_locked
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_user(\edusign $edusign, \stdClass $user) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $edusign->get_instance()->id,
-            'relateduserid' => $user->id,
+                'context' => $edusign->get_context(),
+                'objectid' => $edusign->get_instance()->id,
+                'relateduserid' => $user->id,
         );
         self::$preventcreatecall = false;
         /** @var submission_locked $event */
@@ -72,7 +73,7 @@ class submission_locked extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' locked the submission for the user with id '$this->relateduserid' for " .
-            "the edusignment with course module id '$this->contextinstanceid'.";
+                "the edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**

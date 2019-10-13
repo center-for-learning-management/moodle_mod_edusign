@@ -38,9 +38,9 @@ class edusignsubmission_online_privacy_testcase extends \mod_edusign\tests\mod_e
     /**
      * Convenience function for creating feedback data.
      *
-     * @param  object   $edusign         edusign object
-     * @param  stdClass $student        user object
-     * @param  string   $text           Submission text.
+     * @param object $edusign edusign object
+     * @param stdClass $student user object
+     * @param string $text Submission text.
      * @return array   Submission plugin object and the submission object.
      */
     protected function create_online_submission($edusign, $student, $text) {
@@ -50,9 +50,9 @@ class edusignsubmission_online_privacy_testcase extends \mod_edusign\tests\mod_e
         $submission = $edusign->get_user_submission($student->id, true);
         $data = new stdClass();
         $data->onlinetext_editor = array(
-            'itemid' => file_get_unused_draft_itemid(),
-            'text' => $text,
-            'format' => FORMAT_PLAIN
+                'itemid' => file_get_unused_draft_itemid(),
+                'text' => $text,
+                'format' => FORMAT_PLAIN
         );
 
         $submission = $edusign->get_user_submission($student->id, true);

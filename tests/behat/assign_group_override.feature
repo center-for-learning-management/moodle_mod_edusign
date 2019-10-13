@@ -6,32 +6,32 @@ Feature: edusign group override
 
   Background:
     Given the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Tina | Teacher1 | teacher1@example.com |
-      | student1 | Sam1 | Student1 | student1@example.com |
-      | student2 | Sam2 | Student2 | student2@example.com |
-      | student3 | Sam3 | Student3 | student3@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Tina      | Teacher1 | teacher1@example.com |
+      | student1 | Sam1      | Student1 | student1@example.com |
+      | student2 | Sam2      | Student2 | student2@example.com |
+      | student3 | Sam3      | Student3 | student3@example.com |
     And the following "courses" exist:
       | fullname | shortname | category |
-      | Course 1 | C1 | 0 |
+      | Course 1 | C1        | 0        |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
-      | student2 | C1 | student |
-      | student3 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
+      | student2 | C1     | student        |
+      | student3 | C1     | student        |
     And the following "groups" exist:
       | name    | course | idnumber |
       | Group 1 | C1     | G1       |
       | Group 2 | C1     | G2       |
     Given the following "group members" exist:
-      | user     | group   |
-      | student1 | G1 |
-      | student2 | G2 |
-      | student3 | G1 |
+      | user     | group |
+      | student1 | G1    |
+      | student2 | G2    |
+      | student3 | G1    |
     And the following "activities" exist:
-      | activity | name                 | intro                   | course | idnumber | edusignsubmission_onlinetext_enabled |
-      | edusign   | Test edusignment name | Submit your online text | C1     | edusign1  | 1                                   |
+      | activity | name                  | intro                   | course | idnumber | edusignsubmission_onlinetext_enabled |
+      | edusign  | Test edusignment name | Submit your online text | C1     | edusign1 | 1                                    |
 
   Scenario: Add, modify then delete a group override
     Given I log in as "teacher1"
@@ -41,12 +41,12 @@ Feature: edusign group override
     And I press "Add group override"
     And I set the following fields to these values:
       | Override group     | Group 1 |
-      | id_duedate_enabled | 1 |
-      | duedate[day]       | 1 |
+      | id_duedate_enabled | 1       |
+      | duedate[day]       | 1       |
       | duedate[month]     | January |
-      | duedate[year]      | 2020 |
-      | duedate[hour]      | 08 |
-      | duedate[minute]    | 00 |
+      | duedate[year]      | 2020    |
+      | duedate[hour]      | 08      |
+      | duedate[minute]    | 00      |
     And I press "Save"
     And I should see "Wednesday, 1 January 2020, 8:00"
     Then I click on "Edit" "link" in the "Group 1" "table_row"
@@ -66,18 +66,18 @@ Feature: edusign group override
     And I press "Add group override"
     And I set the following fields to these values:
       | Override group     | Group 1 |
-      | id_duedate_enabled | 1 |
-      | duedate[day]       | 1 |
+      | id_duedate_enabled | 1       |
+      | duedate[day]       | 1       |
       | duedate[month]     | January |
-      | duedate[year]      | 2020 |
-      | duedate[hour]      | 08 |
-      | duedate[minute]    | 00 |
+      | duedate[year]      | 2020    |
+      | duedate[hour]      | 08      |
+      | duedate[minute]    | 00      |
     And I press "Save"
     And I should see "Wednesday, 1 January 2020, 8:00"
     Then I click on "copy" "link"
     And I set the following fields to these values:
-      | Override group | Group 2  |
-      | duedate[year]  | 2030 |
+      | Override group | Group 2 |
+      | duedate[year]  | 2030    |
     And I press "Save"
     And I should see "Tuesday, 1 January 2030, 8:00"
     And I should see "Group 2"
@@ -88,25 +88,25 @@ Feature: edusign group override
     When I follow "Test edusignment name"
     And I navigate to "Edit settings" in current page administration
     And I set the following fields to these values:
-      | id_duedate_enabled | 1 |
-      | id_allowsubmissionsfromdate_enabled | 0 |
-      | id_cutoffdate_enabled | 0 |
-      | duedate[day]       | 1 |
-      | duedate[month]     | January |
-      | duedate[year]      | 2000 |
-      | duedate[hour]      | 08 |
-      | duedate[minute]    | 00 |
+      | id_duedate_enabled                  | 1       |
+      | id_allowsubmissionsfromdate_enabled | 0       |
+      | id_cutoffdate_enabled               | 0       |
+      | duedate[day]                        | 1       |
+      | duedate[month]                      | January |
+      | duedate[year]                       | 2000    |
+      | duedate[hour]                       | 08      |
+      | duedate[minute]                     | 00      |
     And I press "Save and display"
     And I navigate to "Group overrides" in current page administration
     And I press "Add group override"
     And I set the following fields to these values:
       | Override group     | Group 1 |
-      | id_duedate_enabled | 1 |
-      | duedate[day]       | 1 |
+      | id_duedate_enabled | 1       |
+      | duedate[day]       | 1       |
       | duedate[month]     | January |
-      | duedate[year]      | 2020 |
-      | duedate[hour]      | 08 |
-      | duedate[minute]    | 00 |
+      | duedate[year]      | 2020    |
+      | duedate[hour]      | 08      |
+      | duedate[minute]    | 00      |
     And I press "Save"
     And I should see "Wednesday, 1 January 2020, 8:00"
     And I log out
@@ -126,25 +126,25 @@ Feature: edusign group override
     When I follow "Test edusignment name"
     And I navigate to "Edit settings" in current page administration
     And I set the following fields to these values:
-      | id_duedate_enabled | 0 |
-      | id_allowsubmissionsfromdate_enabled | 0 |
-      | id_cutoffdate_enabled | 1 |
-      | cutoffdate[day]       | 1 |
-      | cutoffdate[month]     | January |
-      | cutoffdate[year]      | 2000 |
-      | cutoffdate[hour]      | 08 |
-      | cutoffdate[minute]    | 00 |
+      | id_duedate_enabled                  | 0       |
+      | id_allowsubmissionsfromdate_enabled | 0       |
+      | id_cutoffdate_enabled               | 1       |
+      | cutoffdate[day]                     | 1       |
+      | cutoffdate[month]                   | January |
+      | cutoffdate[year]                    | 2000    |
+      | cutoffdate[hour]                    | 08      |
+      | cutoffdate[minute]                  | 00      |
     And I press "Save and display"
     And I navigate to "Group overrides" in current page administration
     And I press "Add group override"
     And I set the following fields to these values:
-      | Override group     | Group 1 |
-      | id_cutoffdate_enabled | 1 |
-      | cutoffdate[day]       | 1 |
+      | Override group        | Group 1 |
+      | id_cutoffdate_enabled | 1       |
+      | cutoffdate[day]       | 1       |
       | cutoffdate[month]     | January |
-      | cutoffdate[year]      | 2020 |
-      | cutoffdate[hour]      | 08 |
-      | cutoffdate[minute]    | 00 |
+      | cutoffdate[year]      | 2020    |
+      | cutoffdate[hour]      | 08      |
+      | cutoffdate[minute]    | 00      |
     And I press "Save"
     And I should see "Wednesday, 1 January 2020, 8:00"
     And I log out
@@ -164,25 +164,25 @@ Feature: edusign group override
     When I follow "Test edusignment name"
     And I navigate to "Edit settings" in current page administration
     And I set the following fields to these values:
-      | id_duedate_enabled | 0 |
-      | id_allowsubmissionsfromdate_enabled | 1 |
-      | id_cutoffdate_enabled | 0 |
-      | allowsubmissionsfromdate[day]       | 1 |
+      | id_duedate_enabled                  | 0       |
+      | id_allowsubmissionsfromdate_enabled | 1       |
+      | id_cutoffdate_enabled               | 0       |
+      | allowsubmissionsfromdate[day]       | 1       |
       | allowsubmissionsfromdate[month]     | January |
-      | allowsubmissionsfromdate[year]      | 2020 |
-      | allowsubmissionsfromdate[hour]      | 08 |
-      | allowsubmissionsfromdate[minute]    | 00 |
+      | allowsubmissionsfromdate[year]      | 2020    |
+      | allowsubmissionsfromdate[hour]      | 08      |
+      | allowsubmissionsfromdate[minute]    | 00      |
     And I press "Save and display"
     And I navigate to "Group overrides" in current page administration
     And I press "Add group override"
     And I set the following fields to these values:
-      | Override group       | Group 1 |
-      | id_allowsubmissionsfromdate_enabled | 1 |
-      | allowsubmissionsfromdate[day]       | 1 |
+      | Override group                      | Group 1 |
+      | id_allowsubmissionsfromdate_enabled | 1       |
+      | allowsubmissionsfromdate[day]       | 1       |
       | allowsubmissionsfromdate[month]     | January |
-      | allowsubmissionsfromdate[year]      | 2015 |
-      | allowsubmissionsfromdate[hour]      | 08 |
-      | allowsubmissionsfromdate[minute]    | 00 |
+      | allowsubmissionsfromdate[year]      | 2015    |
+      | allowsubmissionsfromdate[hour]      | 08      |
+      | allowsubmissionsfromdate[minute]    | 00      |
     And I press "Save"
     And I should see "Thursday, 1 January 2015, 8:00"
     And I log out
@@ -204,38 +204,38 @@ Feature: edusign group override
     When I follow "Test edusignment name"
     And I navigate to "Edit settings" in current page administration
     And I set the following fields to these values:
-      | id_duedate_enabled | 0 |
-      | id_allowsubmissionsfromdate_enabled | 1 |
-      | id_cutoffdate_enabled | 0 |
-      | allowsubmissionsfromdate[day]       | 1 |
+      | id_duedate_enabled                  | 0       |
+      | id_allowsubmissionsfromdate_enabled | 1       |
+      | id_cutoffdate_enabled               | 0       |
+      | allowsubmissionsfromdate[day]       | 1       |
       | allowsubmissionsfromdate[month]     | January |
-      | allowsubmissionsfromdate[year]      | 2030 |
-      | allowsubmissionsfromdate[hour]      | 08 |
-      | allowsubmissionsfromdate[minute]    | 00 |
+      | allowsubmissionsfromdate[year]      | 2030    |
+      | allowsubmissionsfromdate[hour]      | 08      |
+      | allowsubmissionsfromdate[minute]    | 00      |
     And I press "Save and display"
     And I navigate to "Group overrides" in current page administration
     And I press "Add group override"
     And I set the following fields to these values:
-      | Override group       | Group 1 |
-      | id_allowsubmissionsfromdate_enabled | 1 |
-      | allowsubmissionsfromdate[day]       | 1 |
+      | Override group                      | Group 1 |
+      | id_allowsubmissionsfromdate_enabled | 1       |
+      | allowsubmissionsfromdate[day]       | 1       |
       | allowsubmissionsfromdate[month]     | January |
-      | allowsubmissionsfromdate[year]      | 2020 |
-      | allowsubmissionsfromdate[hour]      | 08 |
-      | allowsubmissionsfromdate[minute]    | 00 |
+      | allowsubmissionsfromdate[year]      | 2020    |
+      | allowsubmissionsfromdate[hour]      | 08      |
+      | allowsubmissionsfromdate[minute]    | 00      |
     And I press "Save"
     And I should see "Wednesday, 1 January 2020, 8:00"
     And I follow "Test edusignment name"
     And I navigate to "User overrides" in current page administration
     And I press "Add user override"
     And I set the following fields to these values:
-      | Override user        | Student1 |
-      | id_allowsubmissionsfromdate_enabled | 1 |
-      | allowsubmissionsfromdate[day]       | 1 |
-      | allowsubmissionsfromdate[month]     | January |
-      | allowsubmissionsfromdate[year]      | 2021 |
-      | allowsubmissionsfromdate[hour]      | 08 |
-      | allowsubmissionsfromdate[minute]    | 00 |
+      | Override user                       | Student1 |
+      | id_allowsubmissionsfromdate_enabled | 1        |
+      | allowsubmissionsfromdate[day]       | 1        |
+      | allowsubmissionsfromdate[month]     | January  |
+      | allowsubmissionsfromdate[year]      | 2021     |
+      | allowsubmissionsfromdate[hour]      | 08       |
+      | allowsubmissionsfromdate[minute]    | 00       |
     And I press "Save"
     And I should see "Friday, 1 January 2021, 8:00"
     And I log out
@@ -259,8 +259,8 @@ Feature: edusign group override
       | capability                  | permission | role           | contextlevel | reference |
       | moodle/site:accessallgroups | Prevent    | editingteacher | Course       | C1        |
     And the following "activities" exist:
-      | activity | name         | intro                    | course | idnumber | groupmode |
-      | edusign   | edusignment 2 | edusignment 2 description | C1     | edusign2  | 1         |
+      | activity | name          | intro                     | course | idnumber | groupmode |
+      | edusign  | edusignment 2 | edusignment 2 description | C1     | edusign2 | 1         |
     When I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "edusignment 2"
@@ -269,13 +269,13 @@ Feature: edusign group override
     And the "Add group override" "button" should be disabled
 
   Scenario: A teacher without accessallgroups permission should only be able to add group override for groups that he/she is a member of,
-        when the activity's group mode is "separate groups"
+  when the activity's group mode is "separate groups"
     Given the following "permission overrides" exist:
       | capability                  | permission | role           | contextlevel | reference |
       | moodle/site:accessallgroups | Prevent    | editingteacher | Course       | C1        |
     And the following "activities" exist:
-      | activity | name         | intro                    | course | idnumber | groupmode |
-      | edusign   | edusignment 2 | edusignment 2 description | C1     | edusign2  | 1         |
+      | activity | name          | intro                     | course | idnumber | groupmode |
+      | edusign  | edusignment 2 | edusignment 2 description | C1     | edusign2 | 1         |
     And the following "group members" exist:
       | user     | group |
       | teacher1 | G1    |
@@ -288,13 +288,13 @@ Feature: edusign group override
     And the "Override group" select box should not contain "Group 2"
 
   Scenario: A teacher without accessallgroups permission should only be able to see the group overrides for groups that he/she is a member of,
-        when the activity's group mode is "separate groups"
+  when the activity's group mode is "separate groups"
     Given the following "permission overrides" exist:
       | capability                  | permission | role           | contextlevel | reference |
       | moodle/site:accessallgroups | Prevent    | editingteacher | Course       | C1        |
     And the following "activities" exist:
-      | activity | name         | intro                    | course | idnumber | groupmode |
-      | edusign   | edusignment 2 | edusignment 2 description | C1     | edusign2  | 1         |
+      | activity | name          | intro                     | course | idnumber | groupmode |
+      | edusign  | edusignment 2 | edusignment 2 description | C1     | edusign2 | 1         |
     And the following "group members" exist:
       | user     | group |
       | teacher1 | G1    |

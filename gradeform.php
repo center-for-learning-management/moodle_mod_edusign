@@ -24,8 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 require_once('HTML/QuickForm/input.php');
 
@@ -70,6 +69,7 @@ class mod_edusign_grade_form extends moodleform {
 
     /**
      * Perform minimal validation on the grade form
+     *
      * @param array $data
      * @param array $files
      */
@@ -95,7 +95,7 @@ class mod_edusign_grade_form extends moodleform {
             // This is a scale.
             if ($scale = $DB->get_record('scale', array('id' => -($instance->grade)))) {
                 $scaleoptions = make_menu_from_list($scale->scale);
-                if ((int)$data['grade'] !== -1 && !array_key_exists((int)$data['grade'], $scaleoptions)) {
+                if ((int) $data['grade'] !== -1 && !array_key_exists((int) $data['grade'], $scaleoptions)) {
                     $errors['grade'] = get_string('invalidgradeforscale', 'edusign');
                 }
             }

@@ -23,10 +23,10 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-
 /**
  * Code run after the edusignsubmission_signing module database tables have been created.
  * Moves the plugin to the top of the list (of 3)
+ *
  * @return bool
  */
 function xmldb_edusignsubmission_signing_install() {

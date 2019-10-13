@@ -7,26 +7,26 @@ Feature: Submissions are unlocked when a new attempt is given
   Background:
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | Course 1 | C1        | 0        | 1         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
 
   @javascript
   Scenario: A locked submission should unlock when a new attempt is automatically given.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "edusignment" to section "1" and I fill the form with:
-      | edusignment name | Test edusignment name |
-      | Description | Submit your online text |
-      | edusignsubmission_onlinetext_enabled | 1 |
-      | Attempts reopened | Automatically until pass |
-      | Grade to pass | 50 |
+      | edusignment name                     | Test edusignment name    |
+      | Description                          | Submit your online text  |
+      | edusignsubmission_onlinetext_enabled | 1                        |
+      | Attempts reopened                    | Automatically until pass |
+      | Grade to pass                        | 50                       |
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
@@ -56,10 +56,10 @@ Feature: Submissions are unlocked when a new attempt is given
     And I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "edusignment" to section "1" and I fill the form with:
-      | edusignment name | Test edusignment name |
-      | Description | Submit your online text |
-      | edusignsubmission_onlinetext_enabled | 1 |
-      | Attempts reopened | Manually |
+      | edusignment name                     | Test edusignment name   |
+      | Description                          | Submit your online text |
+      | edusignsubmission_onlinetext_enabled | 1                       |
+      | Attempts reopened                    | Manually                |
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage

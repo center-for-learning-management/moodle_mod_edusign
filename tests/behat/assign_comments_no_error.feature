@@ -15,7 +15,7 @@ Feature: Switch role does not cause an error message in edusignsubmission_commen
     And I am on "Course 1" course homepage
     And I turn editing mode on
     And I add a "edusignment" to section "1" and I fill the form with:
-      | edusignment name           | Test edusignment              |
+      | edusignment name          | Test edusignment             |
       | Description               | This is the description text |
       | Students submit in groups | Yes                          |
 

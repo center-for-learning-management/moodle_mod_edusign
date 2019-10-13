@@ -37,6 +37,7 @@ class restore_edusignfeedback_file_subplugin extends restore_subplugin {
 
     /**
      * Returns the paths to be handled by the subplugin at edusignment level
+     *
      * @return array
      */
     protected function define_grade_subplugin_structure() {
@@ -53,12 +54,13 @@ class restore_edusignfeedback_file_subplugin extends restore_subplugin {
 
     /**
      * Processes one feedback_file element
+     *
      * @param mixed $data
      */
     public function process_edusignfeedback_file_grade($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $data->edusignment = $this->get_new_parentid('edusign');
         $oldgradeid = $data->grade;
         // The mapping is set in the restore for the core edusign activity

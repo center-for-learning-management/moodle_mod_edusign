@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @since      3.1
  */
-define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function($, notification, ajax, templates) {
+define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function ($, notification, ajax, templates) {
 
     /**
      * UserInfo class.
@@ -31,7 +31,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function(
      * @class UserInfo
      * @param {String} selector The selector for the page region containing the user navigation.
      */
-    var UserInfo = function(selector) {
+    var UserInfo = function (selector) {
         this._regionSelector = selector;
         this._region = $(selector);
         this._userCache = {};
@@ -58,7 +58,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function(
      * @method _getedusignmentId
      * @return {Integer} edusignment id
      */
-    UserInfo.prototype._getedusignmentId = function() {
+    UserInfo.prototype._getedusignmentId = function () {
         return this._region.attr('data-edusignmentid');
     };
 
@@ -70,7 +70,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function(
      * @param {Event} event
      * @param {Number} userid
      */
-    UserInfo.prototype._refreshUserInfo = function(event, userid) {
+    UserInfo.prototype._refreshUserInfo = function (event, userid) {
         var promise = $.Deferred();
 
         // Put the current user ID in the DOM so yui can access it.
@@ -83,18 +83,18 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function(
         this._lastUserId = userid;
 
         // First insert the loading template.
-        templates.render('mod_edusign/loading', {}).done(function(html, js) {
+        templates.render('mod_edusign/loading', {}).done(function (html, js) {
             // Update the page.
-            this._region.fadeOut("fast", function() {
+            this._region.fadeOut("fast", function () {
                 templates.replaceNodeContents(this._region, html, js);
                 this._region.fadeIn("fast");
             }.bind(this));
 
             if (userid < 0) {
                 // Render the template.
-                templates.render('mod_edusign/grading_navigation_no_users', {}).done(function(html, js) {
+                templates.render('mod_edusign/grading_navigation_no_users', {}).done(function (html, js) {
                     // Update the page.
-                    this._region.fadeOut("fast", function() {
+                    this._region.fadeOut("fast", function () {
                         templates.replaceNodeContents(this._region, html, js);
                         this._region.fadeIn("fast");
                     }.bind(this));
@@ -116,7 +116,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function(
                     }
                 }]);
 
-                requests[0].done(function(participant) {
+                requests[0].done(function (participant) {
                     if (!participant.hasOwnProperty('id')) {
                         promise.reject('No users');
                     } else {
@@ -126,7 +126,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function(
                 }.bind(this)).fail(notification.exception);
             }
 
-            promise.done(function(context) {
+            promise.done(function (context) {
                 var identityfields = $('[data-showuseridentity]').data('showuseridentity').split(','),
                     identity = [];
                 // Render the template.
@@ -134,7 +134,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function(
 
                 if (context.user) {
                     // Build a string for the visible identity fields listed in showuseridentity config setting.
-                    $.each(identityfields, function(i, k) {
+                    $.each(identityfields, function (i, k) {
                         if (typeof context.user[k] !== 'undefined' && context.user[k] !== '') {
                             context.hasidentity = true;
                             identity.push(context.user[k]);
@@ -148,24 +148,24 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates'], function(
                     }
                 }
 
-                templates.render('mod_edusign/grading_navigation_user_summary', context).done(function(html, js) {
+                templates.render('mod_edusign/grading_navigation_user_summary', context).done(function (html, js) {
                     // Update the page.
-                    this._region.fadeOut("fast", function() {
+                    this._region.fadeOut("fast", function () {
                         templates.replaceNodeContents(this._region, html, js);
                         this._region.fadeIn("fast");
                     }.bind(this));
                 }.bind(this)).fail(notification.exception);
-            }.bind(this)).fail(function() {
+            }.bind(this)).fail(function () {
                 // Render the template.
-                templates.render('mod_edusign/grading_navigation_no_users', {}).done(function(html, js) {
+                templates.render('mod_edusign/grading_navigation_no_users', {}).done(function (html, js) {
                     // Update the page.
-                    this._region.fadeOut("fast", function() {
+                    this._region.fadeOut("fast", function () {
                         templates.replaceNodeContents(this._region, html, js);
                         this._region.fadeIn("fast");
                     }.bind(this));
                 }.bind(this)).fail(notification.exception);
             }
-            .bind(this));
+                .bind(this));
         }.bind(this)).fail(notification.exception);
     };
 

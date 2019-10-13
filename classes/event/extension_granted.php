@@ -37,6 +37,7 @@ defined('MOODLE_INTERNAL') || die();
 class extension_granted extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -44,17 +45,17 @@ class extension_granted extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @param int $userid
      * @return extension_granted
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_edusign(\edusign $edusign, $userid) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $edusign->get_instance()->id,
-            'relateduserid' => $userid,
+                'context' => $edusign->get_context(),
+                'objectid' => $edusign->get_instance()->id,
+                'relateduserid' => $userid,
         );
         self::$preventcreatecall = false;
         /** @var extension_granted $event */
@@ -71,7 +72,7 @@ class extension_granted extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has granted an extension for the user with id '$this->relateduserid' " .
-            "for the edusignment with course module id '$this->contextinstanceid'.";
+                "for the edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**
@@ -107,8 +108,8 @@ class extension_granted extends base {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         if (self::$preventcreatecall) {

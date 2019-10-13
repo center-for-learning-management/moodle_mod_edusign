@@ -46,8 +46,8 @@ class backup_edusignsubmission_signing_subplugin extends backup_subplugin {
         $subplugin = $this->get_subplugin_element();
         $subpluginwrapper = new backup_nested_element($this->get_recommended_name());
         $subpluginelement = new backup_nested_element('submission_signing',
-                                                      null,
-                                                      array('signing', 'onlineformat', 'submission'));
+                null,
+                array('signing', 'onlineformat', 'submission'));
 
         // Connect XML elements into the tree.
         $subplugin->add_child($subpluginwrapper);
@@ -55,11 +55,11 @@ class backup_edusignsubmission_signing_subplugin extends backup_subplugin {
 
         // Set source to populate the data.
         $subpluginelement->set_source_table('edusignsubmission_signing',
-                                          array('submission' => backup::VAR_PARENTID));
+                array('submission' => backup::VAR_PARENTID));
 
         $subpluginelement->annotate_files('edusignsubmission_signing',
-                                          'submissions_signing',
-                                          'submission');
+                'submissions_signing',
+                'submission');
         return $subplugin;
     }
 

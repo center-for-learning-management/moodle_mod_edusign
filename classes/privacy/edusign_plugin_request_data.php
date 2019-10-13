@@ -24,6 +24,7 @@
  *
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace mod_edusign\privacy;
 
 defined('MOODLE_INTERNAL') || die();
@@ -65,7 +66,7 @@ class edusign_plugin_request_data {
      *
      * @param \context $context Context object.
      * @param \stdClass $pluginobject The grade object.
-     * @param array  $subcontext Directory / file location.
+     * @param array $subcontext Directory / file location.
      * @param \stdClass $user The user object.
      * @param \edusign $edusign The edusign object.
      */

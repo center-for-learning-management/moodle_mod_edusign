@@ -35,8 +35,7 @@ use \mod_edusign\output\grading_app;
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_edusign_renderer extends plugin_renderer_base
-{
+class mod_edusign_renderer extends plugin_renderer_base {
 
     /**
      * Rendering edusignment files
@@ -47,8 +46,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param string $component
      * @return string
      */
-    public function edusign_files(context $context, $userid, $filearea, $component)
-    {
+    public function edusign_files(context $context, $userid, $filearea, $component) {
         return $this->render(new edusign_files($context, $userid, $filearea, $component));
     }
 
@@ -58,11 +56,10 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_files $tree
      * @return string
      */
-    public function render_edusign_files(edusign_files $tree)
-    {
+    public function render_edusign_files(edusign_files $tree) {
         $this->htmlid = html_writer::random_id('edusign_files_tree');
         $this->page->requires->js_init_call('M.mod_edusign.init_tree', array(true, $this->htmlid));
-        $html = '<div id="'.$this->htmlid.'">';
+        $html = '<div id="' . $this->htmlid . '">';
         $html .= $this->htmllize_tree($tree, $tree->dir);
         $html .= '</div>';
 
@@ -81,8 +78,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param string $second The second column text
      * @return void
      */
-    private function add_table_row_tuple(html_table $table, $first, $second)
-    {
+    private function add_table_row_tuple(html_table $table, $first, $second) {
         $row = new html_table_row();
         $cell1 = new html_table_cell($first);
         $cell2 = new html_table_cell($second);
@@ -92,11 +88,11 @@ class mod_edusign_renderer extends plugin_renderer_base
 
     /**
      * Render a grading message notification
+     *
      * @param edusign_gradingmessage $result The result to render
      * @return string
      */
-    public function render_edusign_gradingmessage(edusign_gradingmessage $result)
-    {
+    public function render_edusign_gradingmessage(edusign_gradingmessage $result) {
         $urlparams = array('id' => $result->coursemoduleid, 'action' => 'grading');
         if (!empty($result->page)) {
             $urlparams['page'] = $result->page;
@@ -113,11 +109,11 @@ class mod_edusign_renderer extends plugin_renderer_base
 
     /**
      * Render the generic form
+     *
      * @param edusign_form $form The form to render
      * @return string
      */
-    public function render_edusign_form(edusign_form $form)
-    {
+    public function render_edusign_form(edusign_form $form) {
         $o = '';
         if ($form->jsinitfunction) {
             $this->page->requires->js_init_call($form->jsinitfunction, array());
@@ -134,8 +130,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_user_summary $summary The user summary to render
      * @return string
      */
-    public function render_edusign_user_summary(edusign_user_summary $summary)
-    {
+    public function render_edusign_user_summary(edusign_user_summary $summary) {
         $o = '';
         $supendedclass = '';
         $suspendedicon = '';
@@ -150,9 +145,9 @@ class mod_edusign_renderer extends plugin_renderer_base
             $suspendedicon = ' ' . $this->pix_icon('i/enrolmentsuspended', $suspendedstring);
         }
         $o .= $this->output->container_start('usersummary');
-        $o .= $this->output->box_start('boxaligncenter usersummarysection'.$supendedclass);
+        $o .= $this->output->box_start('boxaligncenter usersummarysection' . $supendedclass);
         if ($summary->blindmarking) {
-            $o .= get_string('hiddenuser', 'edusign') . $summary->uniqueidforuser.$suspendedicon;
+            $o .= get_string('hiddenuser', 'edusign') . $summary->uniqueidforuser . $suspendedicon;
         } else {
             $o .= $this->output->user_picture($summary->user);
             $o .= $this->output->spacer(array('width' => 30));
@@ -181,8 +176,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_submit_for_grading_page $page
      * @return string
      */
-    public function render_edusign_submit_for_grading_page($page)
-    {
+    public function render_edusign_submit_for_grading_page($page) {
         $o = '';
 
         $o .= $this->output->container_start('submitforgrading');
@@ -213,8 +207,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      *
      * @return void
      */
-    public function render_footer()
-    {
+    public function render_footer() {
         return $this->output->footer();
     }
 
@@ -224,8 +217,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_header $header
      * @return string
      */
-    public function render_edusign_header(edusign_header $header)
-    {
+    public function render_edusign_header(edusign_header $header) {
         $o = '';
 
         if ($header->subpage) {
@@ -258,8 +250,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_plugin_header $header
      * @return string
      */
-    public function render_edusign_plugin_header(edusign_plugin_header $header)
-    {
+    public function render_edusign_plugin_header(edusign_plugin_header $header) {
         $o = $header->plugin->view_header();
         return $o;
     }
@@ -270,8 +261,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_grading_summary $summary
      * @return string
      */
-    public function render_edusign_grading_summary(edusign_grading_summary $summary)
-    {
+    public function render_edusign_grading_summary(edusign_grading_summary $summary) {
         // Create a table for the data.
         $o = '';
         $o .= $this->output->container_start('gradingsummary');
@@ -286,39 +276,39 @@ class mod_edusign_renderer extends plugin_renderer_base
             }
 
             $this->add_table_row_tuple(
-                $t,
-                get_string('numberofteams', 'edusign'),
-                $summary->participantcount
+                    $t,
+                    get_string('numberofteams', 'edusign'),
+                    $summary->participantcount
             );
         } else {
             $this->add_table_row_tuple(
-                $t,
-                get_string('numberofparticipants', 'edusign'),
-                $summary->participantcount
+                    $t,
+                    get_string('numberofparticipants', 'edusign'),
+                    $summary->participantcount
             );
         }
 
         // Drafts count and dont show drafts count when using offline edusignment.
         if ($summary->submissiondraftsenabled && $summary->submissionsenabled) {
             $this->add_table_row_tuple(
-                $t,
-                get_string('numberofdraftsubmissions', 'edusign'),
-                $summary->submissiondraftscount
+                    $t,
+                    get_string('numberofdraftsubmissions', 'edusign'),
+                    $summary->submissiondraftscount
             );
         }
 
         // Submitted for grading.
         if ($summary->submissionsenabled) {
             $this->add_table_row_tuple(
-                $t,
-                get_string('numberofsubmittededusignments', 'edusign'),
-                $summary->submissionssubmittedcount
+                    $t,
+                    get_string('numberofsubmittededusignments', 'edusign'),
+                    $summary->submissionssubmittedcount
             );
             if (!$summary->teamsubmission) {
                 $this->add_table_row_tuple(
-                    $t,
-                    get_string('numberofsubmissionsneedgrading', 'edusign'),
-                    $summary->submissionsneedgradingcount
+                        $t,
+                        get_string('numberofsubmissionsneedgrading', 'edusign'),
+                        $summary->submissionsneedgradingcount
                 );
             }
         }
@@ -328,9 +318,9 @@ class mod_edusign_renderer extends plugin_renderer_base
             // Due date.
             $duedate = $summary->duedate;
             $this->add_table_row_tuple(
-                $t,
-                get_string('duedate', 'edusign'),
-                userdate($duedate)
+                    $t,
+                    get_string('duedate', 'edusign'),
+                    userdate($duedate)
             );
 
             // Time remaining.
@@ -385,8 +375,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_feedback_status $status
      * @return string
      */
-    public function render_edusign_feedback_status(edusign_feedback_status $status)
-    {
+    public function render_edusign_feedback_status(edusign_feedback_status $status) {
         global $DB, $CFG;
         $o = '';
 
@@ -416,8 +405,8 @@ class mod_edusign_renderer extends plugin_renderer_base
             $row = new html_table_row();
             $cell1 = new html_table_cell(get_string('gradedby', 'edusign'));
             $userdescription = $this->output->user_picture($status->grader) .
-                               $this->output->spacer(array('width' => 30)) .
-                               fullname($status->grader, $status->canviewfullnames);
+                    $this->output->spacer(array('width' => 30)) .
+                    fullname($status->grader, $status->canviewfullnames);
             $cell2 = new html_table_cell($userdescription);
             $row->cells = array($cell1, $cell2);
             $t->data[] = $row;
@@ -433,12 +422,12 @@ class mod_edusign_renderer extends plugin_renderer_base
                 $cell1 = new html_table_cell($plugin->get_name());
                 $displaymode = edusign_feedback_plugin_feedback::SUMMARY;
                 $pluginfeedback = new edusign_feedback_plugin_feedback(
-                    $plugin,
-                    $status->grade,
-                    $displaymode,
-                    $status->coursemoduleid,
-                    $status->returnaction,
-                    $status->returnparams
+                        $plugin,
+                        $status->grade,
+                        $displaymode,
+                        $status->coursemoduleid,
+                        $status->returnaction,
+                        $status->returnparams
                 );
                 $cell2 = new html_table_cell($this->render($pluginfeedback));
                 $row->cells = array($cell1, $cell2);
@@ -459,8 +448,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_submission_status_compact $status
      * @return string
      */
-    public function render_edusign_submission_status_compact(edusign_submission_status_compact $status)
-    {
+    public function render_edusign_submission_status_compact(edusign_submission_status_compact $status) {
         $o = '';
         $o .= $this->output->container_start('submissionstatustable');
         $o .= $this->output->heading(get_string('submission', 'edusign'), 3);
@@ -470,10 +458,10 @@ class mod_edusign_renderer extends plugin_renderer_base
             $group = $status->submissiongroup;
             if ($group) {
                 $team = format_string($group->name, false, $status->context);
-            } elseif ($status->preventsubmissionnotingroup) {
+            } else if ($status->preventsubmissionnotingroup) {
                 if (count($status->usergroups) == 0) {
                     $team = '<span class="alert alert-error">' . get_string('noteam', 'edusign') . '</span>';
-                } elseif (count($status->usergroups) > 1) {
+                } else if (count($status->usergroups) > 1) {
                     $team = '<span class="alert alert-error">' . get_string('multipleteams', 'edusign') . '</span>';
                 }
             } else {
@@ -497,7 +485,7 @@ class mod_edusign_renderer extends plugin_renderer_base
             $group = $status->submissiongroup;
             if (!$group && $status->preventsubmissionnotingroup) {
                 $o .= $this->output->container(get_string('nosubmission', 'edusign'), 'submissionstatus');
-            } elseif ($status->teamsubmission && $status->teamsubmission->status != edusign_SUBMISSION_STATUS_NEW) {
+            } else if ($status->teamsubmission && $status->teamsubmission->status != edusign_SUBMISSION_STATUS_NEW) {
                 $teamstatus = $status->teamsubmission->status;
                 $submissionsummary = get_string('submissionstatus_' . $teamstatus, 'edusign');
                 $groupid = 0;
@@ -541,14 +529,14 @@ class mod_edusign_renderer extends plugin_renderer_base
         $statusstr = '';
         $classname = 'gradingstatus';
         if ($status->gradingstatus == edusign_GRADING_STATUS_GRADED ||
-            $status->gradingstatus == edusign_GRADING_STATUS_NOT_GRADED) {
+                $status->gradingstatus == edusign_GRADING_STATUS_NOT_GRADED) {
             $statusstr = get_string($status->gradingstatus, 'edusign');
         } else {
             $gradingstatus = 'markingworkflowstate' . $status->gradingstatus;
             $statusstr = get_string($gradingstatus, 'edusign');
         }
         if ($status->gradingstatus == edusign_GRADING_STATUS_GRADED ||
-            $status->gradingstatus == edusign_MARKING_WORKFLOW_STATE_RELEASED) {
+                $status->gradingstatus == edusign_MARKING_WORKFLOW_STATE_RELEASED) {
             $classname = 'submissiongraded';
         } else {
             $classname = 'submissionnotgraded';
@@ -577,16 +565,16 @@ class mod_edusign_renderer extends plugin_renderer_base
                 } else {
                     if ($submission->timemodified > $duedate) {
                         $remaining = get_string(
-                            'submittedlate',
-                            'edusign',
-                            format_time($submission->timemodified - $duedate)
+                                'submittedlate',
+                                'edusign',
+                                format_time($submission->timemodified - $duedate)
                         );
                         $classname = 'latesubmission';
                     } else {
                         $remaining = get_string(
-                            'submittedearly',
-                            'edusign',
-                            format_time($submission->timemodified - $duedate)
+                                'submittedearly',
+                                'edusign',
+                                format_time($submission->timemodified - $duedate)
                         );
                         $classname = 'earlysubmission';
                     }
@@ -616,18 +604,18 @@ class mod_edusign_renderer extends plugin_renderer_base
                 foreach ($status->submissionplugins as $plugin) {
                     $pluginshowsummary = !$plugin->is_empty($submission) || !$plugin->allow_submissions();
                     if ($plugin->is_enabled() &&
-                        $plugin->is_visible() &&
-                        $plugin->has_user_summary() &&
-                        $pluginshowsummary
+                            $plugin->is_visible() &&
+                            $plugin->has_user_summary() &&
+                            $pluginshowsummary
                     ) {
                         $displaymode = edusign_submission_plugin_submission::SUMMARY;
                         $pluginsubmission = new edusign_submission_plugin_submission(
-                            $plugin,
-                            $submission,
-                            $displaymode,
-                            $status->coursemoduleid,
-                            $status->returnaction,
-                            $status->returnparams
+                                $plugin,
+                                $submission,
+                                $displaymode,
+                                $status->coursemoduleid,
+                                $status->returnaction,
+                                $status->returnparams
                         );
                         $plugincomponent = $plugin->get_subtype() . '_' . $plugin->get_type();
                         $o .= $this->output->container($this->render($pluginsubmission), 'edusignsubmission ' . $plugincomponent);
@@ -646,8 +634,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_submission_status $status
      * @return string
      */
-    public function render_edusign_submission_status(edusign_submission_status $status)
-    {
+    public function render_edusign_submission_status(edusign_submission_status $status) {
         $o = '';
         $o .= $this->output->container_start('submissionstatustable');
         $o .= $this->output->heading(get_string('submissionstatusheading', 'edusign'), 3);
@@ -676,19 +663,19 @@ class mod_edusign_renderer extends plugin_renderer_base
             $group = $status->submissiongroup;
             if ($group) {
                 $cell2 = new html_table_cell(format_string($group->name, false, $status->context));
-            } elseif ($status->preventsubmissionnotingroup) {
+            } else if ($status->preventsubmissionnotingroup) {
                 if (count($status->usergroups) == 0) {
                     $notification = new \core\output\notification(get_string('noteam', 'edusign'), 'error');
                     $notification->set_show_closebutton(false);
                     $cell2 = new html_table_cell(
-                        $this->output->render($notification)
+                            $this->output->render($notification)
                     );
                     $warningmsg = $this->output->notification(get_string('noteam_desc', 'edusign'), 'error');
-                } elseif (count($status->usergroups) > 1) {
+                } else if (count($status->usergroups) > 1) {
                     $notification = new \core\output\notification(get_string('multipleteams', 'edusign'), 'error');
                     $notification->set_show_closebutton(false);
                     $cell2 = new html_table_cell(
-                        $this->output->render($notification)
+                            $this->output->render($notification)
                     );
                     $warningmsg = $this->output->notification(get_string('multipleteams_desc', 'edusign'), 'error');
                 }
@@ -718,7 +705,7 @@ class mod_edusign_renderer extends plugin_renderer_base
                 $message = get_string('currentattempt', 'edusign', $currentattempt);
             } else {
                 $message = get_string('currentattemptof', 'edusign', array('attemptnumber' => $currentattempt,
-                                                                          'maxattempts' => $maxattempts));
+                        'maxattempts' => $maxattempts));
             }
             $cell2 = new html_table_cell($message);
             $row->cells = array($cell1, $cell2);
@@ -747,7 +734,7 @@ class mod_edusign_renderer extends plugin_renderer_base
             $group = $status->submissiongroup;
             if (!$group && $status->preventsubmissionnotingroup) {
                 $cell2 = new html_table_cell(get_string('nosubmission', 'edusign'));
-            } elseif ($status->teamsubmission && $status->teamsubmission->status != edusign_SUBMISSION_STATUS_NEW) {
+            } else if ($status->teamsubmission && $status->teamsubmission->status != edusign_SUBMISSION_STATUS_NEW) {
                 $teamstatus = $status->teamsubmission->status;
                 $submissionsummary = get_string('submissionstatus_' . $teamstatus, 'edusign');
                 $groupid = 0;
@@ -802,14 +789,14 @@ class mod_edusign_renderer extends plugin_renderer_base
         $cell1 = new html_table_cell(get_string('gradingstatus', 'edusign'));
 
         if ($status->gradingstatus == edusign_GRADING_STATUS_GRADED ||
-            $status->gradingstatus == edusign_GRADING_STATUS_NOT_GRADED) {
+                $status->gradingstatus == edusign_GRADING_STATUS_NOT_GRADED) {
             $cell2 = new html_table_cell(get_string($status->gradingstatus, 'edusign'));
         } else {
             $gradingstatus = 'markingworkflowstate' . $status->gradingstatus;
             $cell2 = new html_table_cell(get_string($gradingstatus, 'edusign'));
         }
         if ($status->gradingstatus == edusign_GRADING_STATUS_GRADED ||
-            $status->gradingstatus == edusign_MARKING_WORKFLOW_STATE_RELEASED) {
+                $status->gradingstatus == edusign_MARKING_WORKFLOW_STATE_RELEASED) {
             $cell2->attributes = array('class' => 'submissiongraded');
         } else {
             $cell2->attributes = array('class' => 'submissionnotgraded');
@@ -864,17 +851,17 @@ class mod_edusign_renderer extends plugin_renderer_base
                 } else {
                     if ($submission->timemodified > $duedate) {
                         $latestr = get_string(
-                            'submittedlate',
-                            'edusign',
-                            format_time($submission->timemodified - $duedate)
+                                'submittedlate',
+                                'edusign',
+                                format_time($submission->timemodified - $duedate)
                         );
                         $cell2 = new html_table_cell($latestr);
                         $cell2->attributes = array('class' => 'latesubmission');
                     } else {
                         $earlystr = get_string(
-                            'submittedearly',
-                            'edusign',
-                            format_time($submission->timemodified - $duedate)
+                                'submittedearly',
+                                'edusign',
+                                format_time($submission->timemodified - $duedate)
                         );
                         $cell2 = new html_table_cell($earlystr);
                         $cell2->attributes = array('class' => 'earlysubmission');
@@ -929,20 +916,20 @@ class mod_edusign_renderer extends plugin_renderer_base
                 foreach ($status->submissionplugins as $plugin) {
                     $pluginshowsummary = !$plugin->is_empty($submission) || !$plugin->allow_submissions();
                     if ($plugin->is_enabled() &&
-                        $plugin->is_visible() &&
-                        $plugin->has_user_summary() &&
-                        $pluginshowsummary
+                            $plugin->is_visible() &&
+                            $plugin->has_user_summary() &&
+                            $pluginshowsummary
                     ) {
                         $row = new html_table_row();
                         $cell1 = new html_table_cell($plugin->get_name());
                         $displaymode = edusign_submission_plugin_submission::SUMMARY;
                         $pluginsubmission = new edusign_submission_plugin_submission(
-                            $plugin,
-                            $submission,
-                            $displaymode,
-                            $status->coursemoduleid,
-                            $status->returnaction,
-                            $status->returnparams
+                                $plugin,
+                                $submission,
+                                $displaymode,
+                                $status->coursemoduleid,
+                                $status->returnaction,
+                                $status->returnparams
                         );
                         $cell2 = new html_table_cell($this->render($pluginsubmission));
                         $row->cells = array($cell1, $cell2);
@@ -963,23 +950,23 @@ class mod_edusign_renderer extends plugin_renderer_base
                     $o .= $this->output->box_start('generalbox submissionaction');
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'editsubmission');
                     $o .= $this->output->single_button(
-                        new moodle_url('/mod/edusign/view.php', $urlparams),
-                        get_string('addsubmission', 'edusign'),
-                        'get'
+                            new moodle_url('/mod/edusign/view.php', $urlparams),
+                            get_string('addsubmission', 'edusign'),
+                            'get'
                     );
                     $o .= $this->output->box_start('boxaligncenter submithelp');
                     $o .= get_string('addsubmission_help', 'edusign');
                     $o .= $this->output->box_end();
                     $o .= $this->output->box_end();
-                } elseif ($submission->status == edusign_SUBMISSION_STATUS_REOPENED) {
+                } else if ($submission->status == edusign_SUBMISSION_STATUS_REOPENED) {
                     $o .= $this->output->box_start('generalbox submissionaction');
                     $urlparams = array('id' => $status->coursemoduleid,
-                                       'action' => 'editprevioussubmission',
-                                       'sesskey' => sesskey());
+                            'action' => 'editprevioussubmission',
+                            'sesskey' => sesskey());
                     $o .= $this->output->single_button(
-                        new moodle_url('/mod/edusign/view.php', $urlparams),
-                        get_string('addnewattemptfromprevious', 'edusign'),
-                        'get'
+                            new moodle_url('/mod/edusign/view.php', $urlparams),
+                            get_string('addnewattemptfromprevious', 'edusign'),
+                            'get'
                     );
                     $o .= $this->output->box_start('boxaligncenter submithelp');
                     $o .= get_string('addnewattemptfromprevious_help', 'edusign');
@@ -988,9 +975,9 @@ class mod_edusign_renderer extends plugin_renderer_base
                     $o .= $this->output->box_start('generalbox submissionaction');
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'editsubmission');
                     $o .= $this->output->single_button(
-                        new moodle_url('/mod/edusign/view.php', $urlparams),
-                        get_string('addnewattempt', 'edusign'),
-                        'get'
+                            new moodle_url('/mod/edusign/view.php', $urlparams),
+                            get_string('addnewattempt', 'edusign'),
+                            'get'
                     );
                     $o .= $this->output->box_start('boxaligncenter submithelp');
                     $o .= get_string('addnewattempt_help', 'edusign');
@@ -1000,9 +987,9 @@ class mod_edusign_renderer extends plugin_renderer_base
                     $o .= $this->output->box_start('generalbox submissionaction');
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'editsubmission');
                     $o .= $this->output->single_button(
-                        new moodle_url('/mod/edusign/view.php', $urlparams),
-                        get_string('editsubmission', 'edusign'),
-                        'get'
+                            new moodle_url('/mod/edusign/view.php', $urlparams),
+                            get_string('editsubmission', 'edusign'),
+                            'get'
                     );
                     $o .= $this->output->box_start('boxaligncenter submithelp');
                     $o .= get_string('editsubmission_help', 'edusign');
@@ -1015,9 +1002,9 @@ class mod_edusign_renderer extends plugin_renderer_base
                 $urlparams = array('id' => $status->coursemoduleid, 'action' => 'submit');
                 $o .= $this->output->box_start('generalbox submissionaction');
                 $o .= $this->output->single_button(
-                    new moodle_url('/mod/edusign/view.php', $urlparams),
-                    get_string('submitedusignment', 'edusign'),
-                    'get'
+                        new moodle_url('/mod/edusign/view.php', $urlparams),
+                        get_string('submitedusignment', 'edusign'),
+                        'get'
                 );
                 $o .= $this->output->box_start('boxaligncenter submithelp');
                 $o .= get_string('submitedusignment_help', 'edusign');
@@ -1036,8 +1023,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_attempt_history_chooser $history
      * @return string
      */
-    public function render_edusign_attempt_history_chooser(edusign_attempt_history_chooser $history)
-    {
+    public function render_edusign_attempt_history_chooser(edusign_attempt_history_chooser $history) {
         $o = '';
 
         $context = $history->export_for_template($this);
@@ -1052,8 +1038,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_attempt_history $history
      * @return string
      */
-    public function render_edusign_attempt_history(edusign_attempt_history $history)
-    {
+    public function render_edusign_attempt_history(edusign_attempt_history $history) {
         $o = '';
 
         $submittedstr = get_string('submitted', 'edusign');
@@ -1095,7 +1080,7 @@ class mod_edusign_renderer extends plugin_renderer_base
             }
 
             $attemptsummaryparams = array('attemptnumber' => $submission->attemptnumber + 1,
-                                          'submissionsummary' => $submissionsummary);
+                    'submissionsummary' => $submissionsummary);
             $o .= $this->heading(get_string('attemptheading', 'edusign', $attemptsummaryparams), 4);
 
             $t = new html_table();
@@ -1113,12 +1098,12 @@ class mod_edusign_renderer extends plugin_renderer_base
                             $pluginshowsummary) {
                         $cell1 = new html_table_cell($plugin->get_name());
                         $pluginsubmission = new edusign_submission_plugin_submission(
-                            $plugin,
-                            $submission,
-                            edusign_submission_plugin_submission::SUMMARY,
-                            $history->coursemoduleid,
-                            $history->returnaction,
-                            $history->returnparams
+                                $plugin,
+                                $submission,
+                                edusign_submission_plugin_submission::SUMMARY,
+                                $history->coursemoduleid,
+                                $history->returnaction,
+                                $history->returnparams
                         );
                         $cell2 = new html_table_cell($this->render($pluginsubmission));
 
@@ -1135,17 +1120,17 @@ class mod_edusign_renderer extends plugin_renderer_base
                     // Edit previous feedback.
                     $returnparams = http_build_query($history->returnparams);
                     $urlparams = array('id' => $history->coursemoduleid,
-                                   'rownum' => $history->rownum,
-                                   'useridlistid' => $history->useridlistid,
-                                   'attemptnumber' => $grade->attemptnumber,
-                                   'action' => 'grade',
-                                   'returnaction' => $history->returnaction,
-                                   'returnparams' => $returnparams);
+                            'rownum' => $history->rownum,
+                            'useridlistid' => $history->useridlistid,
+                            'attemptnumber' => $grade->attemptnumber,
+                            'action' => 'grade',
+                            'returnaction' => $history->returnaction,
+                            'returnparams' => $returnparams);
                     $url = new moodle_url('/mod/edusign/view.php', $urlparams);
                     $icon = new pix_icon(
-                        'gradefeedback',
-                        get_string('editattemptfeedback', 'edusign', $grade->attemptnumber + 1),
-                        'mod_edusign'
+                            'gradefeedback',
+                            get_string('editattemptfeedback', 'edusign', $grade->attemptnumber + 1),
+                            'mod_edusign'
                     );
                     $title .= $this->output->action_icon($url, $icon);
                 }
@@ -1168,24 +1153,24 @@ class mod_edusign_renderer extends plugin_renderer_base
                 if (!empty($grade->grader) && is_object($grade->grader)) {
                     $cell1 = new html_table_cell($gradedbystr);
                     $cell2 = new html_table_cell($this->output->user_picture($grade->grader) .
-                                                 $this->output->spacer(array('width' => 30)) . fullname($grade->grader));
+                            $this->output->spacer(array('width' => 30)) . fullname($grade->grader));
                     $t->data[] = new html_table_row(array($cell1, $cell2));
                 }
 
                 // Feedback from plugins.
                 foreach ($history->feedbackplugins as $plugin) {
                     if ($plugin->is_enabled() &&
-                        $plugin->is_visible() &&
-                        $plugin->has_user_summary() &&
-                        !$plugin->is_empty($grade)) {
+                            $plugin->is_visible() &&
+                            $plugin->has_user_summary() &&
+                            !$plugin->is_empty($grade)) {
                         $cell1 = new html_table_cell($plugin->get_name());
                         $pluginfeedback = new edusign_feedback_plugin_feedback(
-                            $plugin,
-                            $grade,
-                            edusign_feedback_plugin_feedback::SUMMARY,
-                            $history->coursemoduleid,
-                            $history->returnaction,
-                            $history->returnparams
+                                $plugin,
+                                $grade,
+                                edusign_feedback_plugin_feedback::SUMMARY,
+                                $history->coursemoduleid,
+                                $history->returnaction,
+                                $history->returnparams
                         );
                         $cell2 = new html_table_cell($this->render($pluginfeedback));
                         $t->data[] = new html_table_row(array($cell1, $cell2));
@@ -1209,22 +1194,21 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_submission_plugin_submission $submissionplugin
      * @return string
      */
-    public function render_edusign_submission_plugin_submission(edusign_submission_plugin_submission $submissionplugin)
-    {
+    public function render_edusign_submission_plugin_submission(edusign_submission_plugin_submission $submissionplugin) {
         $o = '';
 
         if ($submissionplugin->view == edusign_submission_plugin_submission::SUMMARY) {
             $showviewlink = false;
             $summary = $submissionplugin->plugin->view_summary(
-                $submissionplugin->submission,
-                $showviewlink
+                    $submissionplugin->submission,
+                    $showviewlink
             );
 
             $classsuffix = $submissionplugin->plugin->get_subtype() .
-                           '_' .
-                           $submissionplugin->plugin->get_type() .
-                           '_' .
-                           $submissionplugin->submission->id;
+                    '_' .
+                    $submissionplugin->plugin->get_type() .
+                    '_' .
+                    $submissionplugin->submission->id;
 
             $o .= $this->output->box_start('boxaligncenter plugincontentsummary summary_' . $classsuffix);
 
@@ -1238,8 +1222,8 @@ class mod_edusign_renderer extends plugin_renderer_base
                 $o .= $this->output->pix_icon('t/switch_plus', $expandstr, null, $options);
 
                 $jsparams = array($submissionplugin->plugin->get_subtype(),
-                                  $submissionplugin->plugin->get_type(),
-                                  $submissionplugin->submission->id);
+                        $submissionplugin->plugin->get_type(),
+                        $submissionplugin->submission->id);
 
                 $this->page->requires->js_init_call('M.mod_edusign.init_plugin_summary', $jsparams);
 
@@ -1247,11 +1231,11 @@ class mod_edusign_renderer extends plugin_renderer_base
                 $returnparams = http_build_query($submissionplugin->returnparams);
                 $link .= '<noscript>';
                 $urlparams = array('id' => $submissionplugin->coursemoduleid,
-                                   'sid' => $submissionplugin->submission->id,
-                                   'plugin' => $submissionplugin->plugin->get_type(),
-                                   'action' => $action,
-                                   'returnaction' => $submissionplugin->returnaction,
-                                   'returnparams' => $returnparams);
+                        'sid' => $submissionplugin->submission->id,
+                        'plugin' => $submissionplugin->plugin->get_type(),
+                        'action' => $action,
+                        'returnaction' => $submissionplugin->returnaction,
+                        'returnparams' => $returnparams);
                 $url = new moodle_url('/mod/edusign/view.php', $urlparams);
                 $link .= $this->output->action_link($url, $icon);
                 $link .= '</noscript>';
@@ -1265,15 +1249,15 @@ class mod_edusign_renderer extends plugin_renderer_base
                 $o .= $this->output->box_start('boxaligncenter hidefull full_' . $classsuffix);
                 $classes = 'expandsummaryicon contract_' . $classsuffix;
                 $o .= $this->output->pix_icon(
-                    't/switch_minus',
-                    get_string('viewsummary', 'edusign'),
-                    null,
-                    array('class' => $classes)
+                        't/switch_minus',
+                        get_string('viewsummary', 'edusign'),
+                        null,
+                        array('class' => $classes)
                 );
                 $o .= $submissionplugin->plugin->view($submissionplugin->submission);
                 $o .= $this->output->box_end();
             }
-        } elseif ($submissionplugin->view == edusign_submission_plugin_submission::FULL) {
+        } else if ($submissionplugin->view == edusign_submission_plugin_submission::FULL) {
             $o .= $this->output->box_start('boxaligncenter submissionfull');
             $o .= $submissionplugin->plugin->view($submissionplugin->submission);
             $o .= $this->output->box_end();
@@ -1288,8 +1272,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_grading_table $table
      * @return string
      */
-    public function render_edusign_grading_table(edusign_grading_table $table)
-    {
+    public function render_edusign_grading_table(edusign_grading_table $table) {
         $o = '';
         $o .= $this->output->box_start('boxaligncenter gradingtable');
 
@@ -1307,8 +1290,8 @@ class mod_edusign_renderer extends plugin_renderer_base
         foreach ($table->plugingradingbatchoperations as $plugin => $operations) {
             foreach ($operations as $operation => $description) {
                 $this->page->requires->string_for_js(
-                    'batchoperationconfirm' . $operation,
-                    'edusignfeedback_' . $plugin
+                        'batchoperationconfirm' . $operation,
+                        'edusignfeedback_' . $plugin
                 );
             }
         }
@@ -1324,8 +1307,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_feedback_plugin_feedback $feedbackplugin
      * @return string
      */
-    public function render_edusign_feedback_plugin_feedback(edusign_feedback_plugin_feedback $feedbackplugin)
-    {
+    public function render_edusign_feedback_plugin_feedback(edusign_feedback_plugin_feedback $feedbackplugin) {
         $o = '';
 
         if ($feedbackplugin->view == edusign_feedback_plugin_feedback::SUMMARY) {
@@ -1333,10 +1315,10 @@ class mod_edusign_renderer extends plugin_renderer_base
             $summary = $feedbackplugin->plugin->view_summary($feedbackplugin->grade, $showviewlink);
 
             $classsuffix = $feedbackplugin->plugin->get_subtype() .
-                           '_' .
-                           $feedbackplugin->plugin->get_type() .
-                           '_' .
-                           $feedbackplugin->grade->id;
+                    '_' .
+                    $feedbackplugin->plugin->get_type() .
+                    '_' .
+                    $feedbackplugin->grade->id;
             $o .= $this->output->box_start('boxaligncenter plugincontentsummary summary_' . $classsuffix);
 
             $link = '';
@@ -1349,16 +1331,16 @@ class mod_edusign_renderer extends plugin_renderer_base
                 $o .= $this->output->pix_icon('t/switch_plus', $expandstr, null, $options);
 
                 $jsparams = array($feedbackplugin->plugin->get_subtype(),
-                                  $feedbackplugin->plugin->get_type(),
-                                  $feedbackplugin->grade->id);
+                        $feedbackplugin->plugin->get_type(),
+                        $feedbackplugin->grade->id);
                 $this->page->requires->js_init_call('M.mod_edusign.init_plugin_summary', $jsparams);
 
                 $urlparams = array('id' => $feedbackplugin->coursemoduleid,
-                                   'gid' => $feedbackplugin->grade->id,
-                                   'plugin' => $feedbackplugin->plugin->get_type(),
-                                   'action' => 'viewplugin' . $feedbackplugin->plugin->get_subtype(),
-                                   'returnaction' => $feedbackplugin->returnaction,
-                                   'returnparams' => http_build_query($feedbackplugin->returnparams));
+                        'gid' => $feedbackplugin->grade->id,
+                        'plugin' => $feedbackplugin->plugin->get_type(),
+                        'action' => 'viewplugin' . $feedbackplugin->plugin->get_subtype(),
+                        'returnaction' => $feedbackplugin->returnaction,
+                        'returnparams' => http_build_query($feedbackplugin->returnparams));
                 $url = new moodle_url('/mod/edusign/view.php', $urlparams);
                 $link .= '<noscript>';
                 $link .= $this->output->action_link($url, $icon);
@@ -1373,15 +1355,15 @@ class mod_edusign_renderer extends plugin_renderer_base
                 $o .= $this->output->box_start('boxaligncenter hidefull full_' . $classsuffix);
                 $classes = 'expandsummaryicon contract_' . $classsuffix;
                 $o .= $this->output->pix_icon(
-                    't/switch_minus',
-                    get_string('viewsummary', 'edusign'),
-                    null,
-                    array('class' => $classes)
+                        't/switch_minus',
+                        get_string('viewsummary', 'edusign'),
+                        null,
+                        array('class' => $classes)
                 );
                 $o .= $feedbackplugin->plugin->view($feedbackplugin->grade);
                 $o .= $this->output->box_end();
             }
-        } elseif ($feedbackplugin->view == edusign_feedback_plugin_feedback::FULL) {
+        } else if ($feedbackplugin->view == edusign_feedback_plugin_feedback::FULL) {
             $o .= $this->output->box_start('boxaligncenter feedbackfull');
             $o .= $feedbackplugin->plugin->view($feedbackplugin->grade);
             $o .= $this->output->box_end();
@@ -1396,23 +1378,22 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param edusign_course_index_summary $indexsummary
      * @return string
      */
-    public function render_edusign_course_index_summary(edusign_course_index_summary $indexsummary)
-    {
+    public function render_edusign_course_index_summary(edusign_course_index_summary $indexsummary) {
         $o = '';
 
         $strplural = get_string('modulenameplural', 'edusign');
-        $strsectionname  = $indexsummary->courseformatname;
+        $strsectionname = $indexsummary->courseformatname;
         $strduedate = get_string('duedate', 'edusign');
         $strsubmission = get_string('submission', 'edusign');
         $strgrade = get_string('grade');
 
         $table = new html_table();
         if ($indexsummary->usesections) {
-            $table->head  = array ($strsectionname, $strplural, $strduedate, $strsubmission, $strgrade);
-            $table->align = array ('left', 'left', 'center', 'right', 'right');
+            $table->head = array($strsectionname, $strplural, $strduedate, $strsubmission, $strgrade);
+            $table->align = array('left', 'left', 'center', 'right', 'right');
         } else {
-            $table->head  = array ($strplural, $strduedate, $strsubmission, $strgrade);
-            $table->align = array ('left', 'left', 'center', 'right');
+            $table->head = array($strplural, $strduedate, $strsubmission, $strgrade);
+            $table->align = array('left', 'left', 'center', 'right');
         }
         $table->data = array();
 
@@ -1420,8 +1401,8 @@ class mod_edusign_renderer extends plugin_renderer_base
         foreach ($indexsummary->edusignments as $info) {
             $params = array('id' => $info['cmid']);
             $link = html_writer::link(
-                new moodle_url('/mod/edusign/view.php', $params),
-                $info['cmname']
+                    new moodle_url('/mod/edusign/view.php', $params),
+                    $info['cmname']
             );
             $due = $info['timedue'] ? userdate($info['timedue']) : '-';
 
@@ -1451,8 +1432,6 @@ class mod_edusign_renderer extends plugin_renderer_base
         return $o;
     }
 
-
-
     /**
      * Internal function - creates htmls structure suitable for YUI tree.
      *
@@ -1460,8 +1439,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param array $dir
      * @return string
      */
-    protected function htmllize_tree(edusign_files $tree, $dir)
-    {
+    protected function htmllize_tree(edusign_files $tree, $dir) {
         global $CFG;
         $yuiconfig = array();
         $yuiconfig['type'] = 'html';
@@ -1473,40 +1451,40 @@ class mod_edusign_renderer extends plugin_renderer_base
         $result = '<ul>';
         foreach ($dir['subdirs'] as $subdir) {
             $image = $this->output->pix_icon(
-                file_folder_icon(),
-                $subdir['dirname'],
-                'moodle',
-                array('class' => 'icon')
+                    file_folder_icon(),
+                    $subdir['dirname'],
+                    'moodle',
+                    array('class' => 'icon')
             );
             $result .= '<li yuiConfig=\'' . json_encode($yuiconfig) . '\'>' .
-                       '<div>' . $image . ' ' . s($subdir['dirname']) . '</div> ' .
-                       $this->htmllize_tree($tree, $subdir) .
-                       '</li>';
+                    '<div>' . $image . ' ' . s($subdir['dirname']) . '</div> ' .
+                    $this->htmllize_tree($tree, $subdir) .
+                    '</li>';
         }
 
         foreach ($dir['files'] as $file) {
             $filename = $file->get_filename();
             if ($CFG->enableplagiarism) {
-                require_once($CFG->libdir.'/plagiarismlib.php');
+                require_once($CFG->libdir . '/plagiarismlib.php');
                 $plagiarismlinks = plagiarism_get_links(array('userid' => $file->get_userid(),
-                                                             'file' => $file,
-                                                             'cmid' => $tree->cm->id,
-                                                             'course' => $tree->course));
+                        'file' => $file,
+                        'cmid' => $tree->cm->id,
+                        'course' => $tree->course));
             } else {
                 $plagiarismlinks = '';
             }
             $image = $this->output->pix_icon(
-                file_file_icon($file),
-                $filename,
-                'moodle',
-                array('class' => 'icon')
+                    file_file_icon($file),
+                    $filename,
+                    'moodle',
+                    array('class' => 'icon')
             );
             $result .= '<li yuiConfig=\'' . json_encode($yuiconfig) . '\'>' .
-                       '<div>' . $image . ' ' .
-                                 $file->fileurl . ' ' .
-                                 $plagiarismlinks . ' ' .
-                                 $file->portfoliobutton . '</div>' .
-                       '</li>';
+                    '<div>' . $image . ' ' .
+                    $file->fileurl . ' ' .
+                    $plagiarismlinks . ' ' .
+                    $file->portfoliobutton . '</div>' .
+                    '</li>';
         }
 
         $result .= '</ul>';
@@ -1523,8 +1501,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      *                             (e.g. downloads would not enable this)
      * @return string HTML
      */
-    protected function flexible_table(flexible_table $table, $rowsperpage, $displaylinks)
-    {
+    protected function flexible_table(flexible_table $table, $rowsperpage, $displaylinks) {
 
         $o = '';
         ob_start();
@@ -1541,8 +1518,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      * @param moodleform $mform
      * @return string HTML
      */
-    protected function moodleform(moodleform $mform)
-    {
+    protected function moodleform(moodleform $mform) {
 
         $o = '';
         ob_start();
@@ -1558,8 +1534,7 @@ class mod_edusign_renderer extends plugin_renderer_base
      *
      * @param grading_app $app - All the data to render the grading app.
      */
-    public function render_grading_app(grading_app $app)
-    {
+    public function render_grading_app(grading_app $app) {
         $context = $app->export_for_template($this);
         return $this->render_from_template('mod_edusign/grading_app', $context);
     }

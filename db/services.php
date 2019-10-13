@@ -16,6 +16,7 @@
 
 /**
  * Web service for mod edusign
+ *
  * @package    mod_edusign
  * @subpackage db
  * @since      Moodle 2.4
@@ -26,30 +27,30 @@
 $functions = array(
 
         'mod_edusign_copy_previous_attempt' => array(
-            'classname'     => 'mod_edusign_external',
-            'methodname'    => 'copy_previous_attempt',
-            'classpath'     => 'mod/edusign/externallib.php',
-            'description'   => 'Copy a students previous attempt to a new attempt.',
-            'type'          => 'write',
-            'capabilities'  => 'mod/edusign:view, mod/edusign:submit'
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'copy_previous_attempt',
+                'classpath' => 'mod/edusign/externallib.php',
+                'description' => 'Copy a students previous attempt to a new attempt.',
+                'type' => 'write',
+                'capabilities' => 'mod/edusign:view, mod/edusign:submit'
         ),
 
         'mod_edusign_get_grades' => array(
-                'classname'   => 'mod_edusign_external',
-                'methodname'  => 'get_grades',
-                'classpath'   => 'mod/edusign/externallib.php',
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'get_grades',
+                'classpath' => 'mod/edusign/externallib.php',
                 'description' => 'Returns grades from the edusignment',
-                'type'        => 'read',
-                'services'    => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'type' => 'read',
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
         'mod_edusign_get_edusignments' => array(
-                'classname'   => 'mod_edusign_external',
-                'methodname'  => 'get_edusignments',
-                'classpath'   => 'mod/edusign/externallib.php',
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'get_edusignments',
+                'classpath' => 'mod/edusign/externallib.php',
                 'description' => 'Returns the courses and edusignments for the users capability',
-                'type'        => 'read',
-                'services'    => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'type' => 'read',
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
         'mod_edusign_get_submissions' => array(
@@ -71,13 +72,13 @@ $functions = array(
         ),
 
         'mod_edusign_set_user_flags' => array(
-                'classname'   => 'mod_edusign_external',
-                'methodname'  => 'set_user_flags',
-                'classpath'   => 'mod/edusign/externallib.php',
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'set_user_flags',
+                'classpath' => 'mod/edusign/externallib.php',
                 'description' => 'Creates or updates user flags',
-                'type'        => 'write',
+                'type' => 'write',
                 'capabilities' => 'mod/edusign:grade',
-                'services'    => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
         'mod_edusign_get_user_mappings' => array(
@@ -171,74 +172,74 @@ $functions = array(
         ),
 
         'mod_edusign_view_grading_table' => array(
-                'classname'     => 'mod_edusign_external',
-                'methodname'    => 'view_grading_table',
-                'classpath'     => 'mod/edusign/externallib.php',
-                'description'   => 'Trigger the grading_table_viewed event.',
-                'type'          => 'write',
-                'capabilities'  => 'mod/edusign:view, mod/edusign:viewgrades',
-                'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'view_grading_table',
+                'classpath' => 'mod/edusign/externallib.php',
+                'description' => 'Trigger the grading_table_viewed event.',
+                'type' => 'write',
+                'capabilities' => 'mod/edusign:view, mod/edusign:viewgrades',
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
         'mod_edusign_view_submission_status' => array(
-            'classname'     => 'mod_edusign_external',
-            'methodname'    => 'view_submission_status',
-            'classpath'     => 'mod/edusign/externallib.php',
-            'description'   => 'Trigger the submission status viewed event.',
-            'type'          => 'write',
-            'capabilities'  => 'mod/edusign:view',
-            'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'view_submission_status',
+                'classpath' => 'mod/edusign/externallib.php',
+                'description' => 'Trigger the submission status viewed event.',
+                'type' => 'write',
+                'capabilities' => 'mod/edusign:view',
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
         'mod_edusign_get_submission_status' => array(
-            'classname'     => 'mod_edusign_external',
-            'methodname'    => 'get_submission_status',
-            'classpath'     => 'mod/edusign/externallib.php',
-            'description'   => 'Returns information about an edusignment submission status for a given user.',
-            'type'          => 'read',
-            'capabilities'  => 'mod/edusign:view',
-            'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'get_submission_status',
+                'classpath' => 'mod/edusign/externallib.php',
+                'description' => 'Returns information about an edusignment submission status for a given user.',
+                'type' => 'read',
+                'capabilities' => 'mod/edusign:view',
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
         'mod_edusign_list_participants' => array(
-                'classname'     => 'mod_edusign_external',
-                'methodname'    => 'list_participants',
-                'classpath'     => 'mod/edusign/externallib.php',
-                'description'   => 'List the participants for a single edusignment, with some summary info about their submissions.',
-                'type'          => 'read',
-                'ajax'          => true,
-                'capabilities'  => 'mod/edusign:view, mod/edusign:viewgrades',
-                'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'list_participants',
+                'classpath' => 'mod/edusign/externallib.php',
+                'description' => 'List the participants for a single edusignment, with some summary info about their submissions.',
+                'type' => 'read',
+                'ajax' => true,
+                'capabilities' => 'mod/edusign:view, mod/edusign:viewgrades',
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
         'mod_edusign_submit_grading_form' => array(
-                'classname'     => 'mod_edusign_external',
-                'methodname'    => 'submit_grading_form',
-                'classpath'     => 'mod/edusign/externallib.php',
-                'description'   => 'Submit the grading form data via ajax',
-                'type'          => 'write',
-                'ajax'          => true,
-                'capabilities'  => 'mod/edusign:grade',
-                'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'submit_grading_form',
+                'classpath' => 'mod/edusign/externallib.php',
+                'description' => 'Submit the grading form data via ajax',
+                'type' => 'write',
+                'ajax' => true,
+                'capabilities' => 'mod/edusign:grade',
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
         'mod_edusign_get_participant' => array(
-                'classname'     => 'mod_edusign_external',
-                'methodname'    => 'get_participant',
-                'classpath'     => 'mod/edusign/externallib.php',
-                'description'   => 'Get a participant for an edusignment, with some summary info about their submissions.',
-                'type'          => 'read',
-                'ajax'          => true,
-                'capabilities'  => 'mod/edusign:view, mod/edusign:viewgrades',
-                'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'get_participant',
+                'classpath' => 'mod/edusign/externallib.php',
+                'description' => 'Get a participant for an edusignment, with some summary info about their submissions.',
+                'type' => 'read',
+                'ajax' => true,
+                'capabilities' => 'mod/edusign:view, mod/edusign:viewgrades',
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
         'mod_edusign_view_edusign' => array(
-            'classname'     => 'mod_edusign_external',
-            'methodname'    => 'view_edusign',
-            'classpath'     => 'mod/edusign/externallib.php',
-            'description'   => 'Update the module completion status.',
-            'type'          => 'write',
-            'capabilities'  => 'mod/edusign:view',
-            'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+                'classname' => 'mod_edusign_external',
+                'methodname' => 'view_edusign',
+                'classpath' => 'mod/edusign/externallib.php',
+                'description' => 'Update the module completion status.',
+                'type' => 'write',
+                'capabilities' => 'mod/edusign:view',
+                'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
 );

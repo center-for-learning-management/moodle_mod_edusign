@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @since      3.1
  */
-define(['jquery'], function($) {
+define(['jquery'], function ($) {
 
     return /** @alias module:mod_edusign/grading_form_change_checker */ {
         /**
@@ -31,7 +31,7 @@ define(['jquery'], function($) {
          * @method saveFormState
          * @param {String} selector The selector for the form element.
          */
-        saveFormState: function(selector) {
+        saveFormState: function (selector) {
             $(selector).trigger('save-form-state');
             var data = $(selector).serialize();
             $(selector).data('saved-form-state', data);
@@ -44,7 +44,7 @@ define(['jquery'], function($) {
          * @param {String} selector The selector for the form element.
          * @return {Boolean} True if there are changes to the form data.
          */
-        checkFormForChanges: function(selector) {
+        checkFormForChanges: function (selector) {
 
             $(selector).trigger('save-form-state');
 

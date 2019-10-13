@@ -43,6 +43,7 @@ defined('MOODLE_INTERNAL') || die();
 class submission_status_viewed extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -55,10 +56,10 @@ class submission_status_viewed extends base {
      */
     public static function create_from_edusign(\edusign $edusign) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'other' => array(
-                'edusignid' => $edusign->get_instance()->id,
-            ),
+                'context' => $edusign->get_context(),
+                'other' => array(
+                        'edusignid' => $edusign->get_instance()->id,
+                ),
         );
         self::$preventcreatecall = false;
         /** @var submission_status_viewed $event */
@@ -94,7 +95,7 @@ class submission_status_viewed extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has viewed the submission status page for the edusignment with " .
-            "course module id '$this->contextinstanceid'.";
+                "course module id '$this->contextinstanceid'.";
     }
 
     /**
@@ -110,8 +111,8 @@ class submission_status_viewed extends base {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         if (self::$preventcreatecall) {

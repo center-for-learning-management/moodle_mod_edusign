@@ -24,6 +24,7 @@
  *
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace mod_edusign\privacy;
 
 use core_privacy\local\request\userlist;
@@ -32,14 +33,13 @@ defined('MOODLE_INTERNAL') || die();
 
 interface edusignsubmission_user_provider extends
         \core_privacy\local\request\plugin\subplugin_provider,
-        \core_privacy\local\request\shared_userlist_provider
-    {
+        \core_privacy\local\request\shared_userlist_provider {
 
     /**
      * If you have tables that contain userids and you can generate entries in your tables without creating an
      * entry in the edusign_submission table then please fill in this method.
      *
-     * @param  userlist $userlist The userlist object
+     * @param userlist $userlist The userlist object
      */
     public static function get_userids_from_context(userlist $userlist);
 
@@ -50,7 +50,8 @@ interface edusignsubmission_user_provider extends
      * - edusign object
      * - submission ids (pluginids)
      * - user ids
-     * @param  edusign_plugin_request_data $deletedata A class that contains the relevant information required for deletion.
+     *
+     * @param edusign_plugin_request_data $deletedata A class that contains the relevant information required for deletion.
      */
     public static function delete_submissions(edusign_plugin_request_data $deletedata);
 

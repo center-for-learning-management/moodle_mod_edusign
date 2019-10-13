@@ -7,21 +7,21 @@ Feature: In an edusignment, teachers can provide feedback comments on student su
   Background:
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 0 |
+      | Course 1 | C1        | 0        | 0         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | teacher |
-      | student1 | C1 | student |
+      | user     | course | role    |
+      | teacher1 | C1     | teacher |
+      | student1 | C1     | student |
 
   @javascript
   Scenario: Teachers should be able to add and remove feedback comments via the quick grading interface
     Given the following "activities" exist:
-      | activity | course | idnumber | name             | edusignsubmission_onlinetext_enabled | edusignfeedback_comments_enabled |
-      | edusign   | C1     | edusign1  | Test edusignment1 | 1                                   | 1                               |
+      | activity | course | idnumber | name              | edusignsubmission_onlinetext_enabled | edusignfeedback_comments_enabled |
+      | edusign  | C1     | edusign1 | Test edusignment1 | 1                                    | 1                                |
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test edusignment1"

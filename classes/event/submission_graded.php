@@ -37,6 +37,7 @@ defined('MOODLE_INTERNAL') || die();
 class submission_graded extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -44,17 +45,17 @@ class submission_graded extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @param \stdClass $grade
      * @return submission_graded
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_grade(\edusign $edusign, \stdClass $grade) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $grade->id,
-            'relateduserid' => $grade->userid
+                'context' => $edusign->get_context(),
+                'objectid' => $grade->id,
+                'relateduserid' => $grade->userid
         );
         self::$preventcreatecall = false;
         /** @var submission_graded $event */
@@ -72,7 +73,7 @@ class submission_graded extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has graded the submission '$this->objectid' for the user with " .
-            "id '$this->relateduserid' for the edusignment with course module id '$this->contextinstanceid'.";
+                "id '$this->relateduserid' for the edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**
@@ -109,8 +110,8 @@ class submission_graded extends base {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         if (self::$preventcreatecall) {

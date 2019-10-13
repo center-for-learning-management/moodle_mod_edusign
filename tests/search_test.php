@@ -70,17 +70,17 @@ class mod_edusign_search_testcase extends advanced_testcase {
 
         // Attach the main file. We put them in the draft area, create_module will move them.
         $filerecord = array(
-            'contextid' => $context->id,
-            'component' => 'mod_edusign',
-            'filearea'  => edusign_INTROATTACHMENT_FILEAREA,
-            'itemid'    => 0,
-            'filepath'  => '/'
+                'contextid' => $context->id,
+                'component' => 'mod_edusign',
+                'filearea' => edusign_INTROATTACHMENT_FILEAREA,
+                'itemid' => 0,
+                'filepath' => '/'
         );
 
         // Attach 4 files.
         for ($i = 1; $i <= 4; $i++) {
-            $filerecord['filename'] = 'myfile'.$i;
-            $fs->create_file_from_string($filerecord, 'Test edusign file '.$i);
+            $filerecord['filename'] = 'myfile' . $i;
+            $fs->create_file_from_string($filerecord, 'Test edusign file ' . $i);
         }
 
         // And a fifth in a sub-folder.
@@ -110,7 +110,7 @@ class mod_edusign_search_testcase extends advanced_testcase {
             sort($filenames);
 
             for ($i = 1; $i <= 5; $i++) {
-                $this->assertEquals('myfile'.$i, $filenames[($i - 1)]);
+                $this->assertEquals('myfile' . $i, $filenames[($i - 1)]);
             }
 
             $nrecords++;

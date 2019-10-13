@@ -58,8 +58,8 @@ class mod_edusignfeedback_privacy_legacy_polyfill_test extends advanced_testcase
         $contextlist = new \core_privacy\local\request\contextlist();
         $mock = $this->createMock(test_edusignfeedback_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_get_context_for_userid_within_feedback', [$userid, $contextlist]);
+                ->method('get_return_value')
+                ->with('_get_context_for_userid_within_feedback', [$userid, $contextlist]);
         test_legacy_polyfill_feedback_provider::$mock = $mock;
         test_legacy_polyfill_feedback_provider::get_context_for_userid_within_feedback($userid, $contextlist);
     }
@@ -73,8 +73,8 @@ class mod_edusignfeedback_privacy_legacy_polyfill_test extends advanced_testcase
         $useridlist = new \mod_edusign\privacy\useridlist($teacherid, $edusignid);
         $mock = $this->createMock(test_edusignfeedback_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_get_student_user_ids', [$useridlist]);
+                ->method('get_return_value')
+                ->with('_get_student_user_ids', [$useridlist]);
         test_legacy_polyfill_feedback_provider::$mock = $mock;
         test_legacy_polyfill_feedback_provider::get_student_user_ids($useridlist);
     }
@@ -88,11 +88,11 @@ class mod_edusignfeedback_privacy_legacy_polyfill_test extends advanced_testcase
         $edusign = $this->create_instance(['course' => $course]);
         $context = context_system::instance();
         $subplugin = new edusign_feedback_comments($edusign, 'comments');
-        $requestdata = new \mod_edusign\privacy\edusign_plugin_request_data($context,$edusign);
+        $requestdata = new \mod_edusign\privacy\edusign_plugin_request_data($context, $edusign);
         $mock = $this->createMock(test_edusignfeedback_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_export_feedback_user_data', [$requestdata]);
+                ->method('get_return_value')
+                ->with('_export_feedback_user_data', [$requestdata]);
         test_legacy_polyfill_feedback_provider::$mock = $mock;
         test_legacy_polyfill_feedback_provider::export_feedback_user_data($requestdata);
     }
@@ -106,11 +106,11 @@ class mod_edusignfeedback_privacy_legacy_polyfill_test extends advanced_testcase
         $edusign = $this->create_instance(['course' => $course]);
         $context = context_system::instance();
         $subplugin = new edusign_feedback_comments($edusign, 'comments');
-        $requestdata = new \mod_edusign\privacy\edusign_plugin_request_data($context,$edusign);
+        $requestdata = new \mod_edusign\privacy\edusign_plugin_request_data($context, $edusign);
         $mock = $this->createMock(test_edusignfeedback_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_delete_feedback_for_context', [$requestdata]);
+                ->method('get_return_value')
+                ->with('_delete_feedback_for_context', [$requestdata]);
         test_legacy_polyfill_feedback_provider::$mock = $mock;
         test_legacy_polyfill_feedback_provider::delete_feedback_for_context($requestdata);
     }
@@ -124,15 +124,16 @@ class mod_edusignfeedback_privacy_legacy_polyfill_test extends advanced_testcase
         $edusign = $this->create_instance(['course' => $course]);
         $context = context_system::instance();
         $subplugin = new edusign_feedback_comments($edusign, 'comments');
-        $requestdata = new \mod_edusign\privacy\edusign_plugin_request_data($context,$edusign);
+        $requestdata = new \mod_edusign\privacy\edusign_plugin_request_data($context, $edusign);
         $mock = $this->createMock(test_edusignfeedback_legacy_polyfill_mock_wrapper::class);
         $mock->expects($this->once())
-            ->method('get_return_value')
-            ->with('_delete_feedback_for_grade', [$requestdata]);
+                ->method('get_return_value')
+                ->with('_delete_feedback_for_grade', [$requestdata]);
         test_legacy_polyfill_feedback_provider::$mock = $mock;
         test_legacy_polyfill_feedback_provider::delete_feedback_for_grade($requestdata);
     }
 }
+
 /**
  * Legacy polyfill test class for the edusignfeedback_provider.
  *
@@ -142,7 +143,7 @@ class mod_edusignfeedback_privacy_legacy_polyfill_test extends advanced_testcase
 class test_legacy_polyfill_feedback_provider implements \mod_edusign\privacy\edusignfeedback_provider {
     use \mod_edusign\privacy\feedback_legacy_polyfill;
     /**
-     * @var test_legacy_polyfill_feedback_provider $mock.
+     * @var test_legacy_polyfill_feedback_provider $mock .
      */
     public static $mock = null;
 
@@ -151,8 +152,8 @@ class test_legacy_polyfill_feedback_provider implements \mod_edusign\privacy\edu
      * NOTE if your subplugin must have an entry in the edusign_grade table to work, then this
      * method can be empty.
      *
-     * @param  int $userid The user ID to get context IDs for.
-     * @param  contextlist $contextlist Use add_from_sql with this object to add your context IDs.
+     * @param int $userid The user ID to get context IDs for.
+     * @param contextlist $contextlist Use add_from_sql with this object to add your context IDs.
      */
     public static function _get_context_for_userid_within_feedback(int $userid,
             \core_privacy\local\request\contextlist $contextlist) {
@@ -164,7 +165,7 @@ class test_legacy_polyfill_feedback_provider implements \mod_edusign\privacy\edu
      * your plugin to work then there is no need to fill in this method. If you filled in get_context_for_userid_within_feedback()
      * then you probably have to fill this in as well.
      *
-     * @param  useridlist $useridlist A list of user IDs of students graded by this user.
+     * @param useridlist $useridlist A list of user IDs of students graded by this user.
      */
     public static function _get_student_user_ids(\mod_edusign\privacy\useridlist $useridlist) {
         static::$mock->get_return_value(__FUNCTION__, func_get_args());
@@ -178,7 +179,7 @@ class test_legacy_polyfill_feedback_provider implements \mod_edusign\privacy\edu
      * - current path (subcontext)
      * - user object
      *
-     * @param  edusign_plugin_request_data $exportdata Contains data to help export the user information.
+     * @param edusign_plugin_request_data $exportdata Contains data to help export the user information.
      */
     public static function _export_feedback_user_data(\mod_edusign\privacy\edusign_plugin_request_data $exportdata) {
         static::$mock->get_return_value(__FUNCTION__, func_get_args());
@@ -190,7 +191,7 @@ class test_legacy_polyfill_feedback_provider implements \mod_edusign\privacy\edu
      * - context
      * - edusign object
      *
-     * @param  edusign_plugin_request_data $requestdata Data useful for deleting user data from this sub-plugin.
+     * @param edusign_plugin_request_data $requestdata Data useful for deleting user data from this sub-plugin.
      */
     public static function _delete_feedback_for_context(\mod_edusign\privacy\edusign_plugin_request_data $requestdata) {
         static::$mock->get_return_value(__FUNCTION__, func_get_args());
@@ -204,12 +205,13 @@ class test_legacy_polyfill_feedback_provider implements \mod_edusign\privacy\edu
      * - user object
      * - edusign object
      *
-     * @param  edusign_plugin_request_data $requestdata Data useful for deleting user data.
+     * @param edusign_plugin_request_data $requestdata Data useful for deleting user data.
      */
     public static function _delete_feedback_for_grade(\mod_edusign\privacy\edusign_plugin_request_data $requestdata) {
         static::$mock->get_return_value(__FUNCTION__, func_get_args());
     }
 }
+
 /**
  * Called inside the polyfill methods in the test polyfill provider, allowing us to ensure these are called with correct params.
  *

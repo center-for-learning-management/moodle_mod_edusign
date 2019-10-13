@@ -21,6 +21,7 @@
  * @copyright  2016 Ilya Tregubov
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace mod_edusign\event;
 
 defined('MOODLE_INTERNAL') || die();
@@ -66,7 +67,7 @@ class user_override_created extends \core\event\base {
      */
     public function get_description() {
         return "The user with id '$this->userid' created the override with id '$this->objectid' for the edusign with " .
-            "course module id '$this->contextinstanceid' for the user with id '{$this->relateduserid}'.";
+                "course module id '$this->contextinstanceid' for the user with id '{$this->relateduserid}'.";
     }
 
     /**
@@ -81,8 +82,8 @@ class user_override_created extends \core\event\base {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         parent::validate_data();

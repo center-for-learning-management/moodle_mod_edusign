@@ -22,12 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot . '/mod/edusign/mod_form.php');
-
 
 /**
  * Form for editing settings overrides.
@@ -60,6 +58,7 @@ class edusign_override_form extends moodleform {
 
     /**
      * Constructor.
+     *
      * @param moodle_url $submiturl the form action URL.
      * @param object $cm course module object.
      * @param object $edusign the edusign settings object.
@@ -180,7 +179,7 @@ class edusign_override_form extends moodleform {
                 $canviewemail = in_array('email', get_extra_user_fields($this->context));
                 foreach ($users as $id => $user) {
                     if (empty($invalidusers[$id]) || (!empty($override) &&
-                            $id == $override->userid)) {
+                                    $id == $override->userid)) {
                         if ($canviewemail) {
                             $userchoices[$id] = fullname($user) . ', ' . $user->email;
                         } else {
@@ -204,7 +203,7 @@ class edusign_override_form extends moodleform {
         $extensionmax = 0;
         foreach ($users as $value) {
             $extension = $DB->get_record('edusign_user_flags', array('edusignment' => $this->edusign->get_instance()->id,
-                'userid' => $value));
+                    'userid' => $value));
             if ($extension) {
                 if ($extensionmax < $extension->extensionduedate) {
                     $extensionmax = $extension->extensionduedate;
@@ -218,7 +217,7 @@ class edusign_override_form extends moodleform {
 
         // Open and close dates.
         $mform->addElement('date_time_selector', 'allowsubmissionsfromdate',
-            get_string('allowsubmissionsfromdate', 'edusign'), array('optional' => true));
+                get_string('allowsubmissionsfromdate', 'edusign'), array('optional' => true));
         $mform->setDefault('allowsubmissionsfromdate', $this->edusign->get_instance()->allowsubmissionsfromdate);
 
         $mform->addElement('date_time_selector', 'duedate', get_string('duedate', 'edusign'), array('optional' => true));
@@ -229,7 +228,7 @@ class edusign_override_form extends moodleform {
 
         if (isset($this->edusign->get_instance()->extensionduedate)) {
             $mform->addElement('static', 'extensionduedate', get_string('extensionduedate', 'edusign'),
-                userdate($this->edusign->get_instance()->extensionduedate));
+                    userdate($this->edusign->get_instance()->extensionduedate));
         }
 
         // Submit buttons.
@@ -287,7 +286,7 @@ class edusign_override_form extends moodleform {
         }
 
         if (!empty($data['cutoffdate']) && !empty($data['duedate'])) {
-            if ($data['cutoffdate'] < $data['duedate'] ) {
+            if ($data['cutoffdate'] < $data['duedate']) {
                 $errors['cutoffdate'] = get_string('cutoffdatevalidation', 'edusign');
             }
         }

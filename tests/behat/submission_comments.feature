@@ -7,20 +7,20 @@ Feature: In an edusignment, students can comment in their submissions
   Background:
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | Course 1 | C1        | 0        | 1         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
 
   Scenario: Student comments an edusignment submission
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | edusignsubmission_onlinetext_enabled |
-      | edusign   | C1     | edusign1  | Test edusignment name | Test edusignment description | 1 |
+      | activity | course | idnumber | name                  | intro                        | edusignsubmission_onlinetext_enabled |
+      | edusign  | C1     | edusign1 | Test edusignment name | Test edusignment description | 1                                    |
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test edusignment name"
@@ -47,15 +47,15 @@ Feature: In an edusignment, students can comment in their submissions
 
   Scenario: Teacher can comment on an offline edusignment
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | edusignsubmission_onlinetext_enabled | edusignmentsubmission_file_enabled | edusignfeedback_comments_enabled |
-      | edusign   | C1     | edusign1  | Test edusignment name | Test edusignment description | 0 | 0 | 1 |
+      | activity | course | idnumber | name                  | intro                        | edusignsubmission_onlinetext_enabled | edusignmentsubmission_file_enabled | edusignfeedback_comments_enabled |
+      | edusign  | C1     | edusign1 | Test edusignment name | Test edusignment description | 0                                    | 0                                  | 1                                |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Test edusignment name"
     And I navigate to "View all submissions" in current page administration
     And I click on "Grade" "link" in the "Student 1" "table_row"
     When I set the following fields to these values:
-      | Grade out of 100 | 50 |
+      | Grade out of 100  | 50                       |
       | Feedback comments | I'm the teacher feedback |
     And I press "Save changes"
     And I press "Ok"
@@ -67,8 +67,8 @@ Feature: In an edusignment, students can comment in their submissions
 
   Scenario: Teacher can comment on edusignments with a zero grade
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | edusignsubmission_onlinetext_enabled | edusignmentsubmission_file_enabled | edusignfeedback_comments_enabled |
-      | edusign   | C1     | edusign1  | Test edusignment name | Test edusignment description | 0 | 0 | 1 |
+      | activity | course | idnumber | name                  | intro                        | edusignsubmission_onlinetext_enabled | edusignmentsubmission_file_enabled | edusignfeedback_comments_enabled |
+      | edusign  | C1     | edusign1 | Test edusignment name | Test edusignment description | 0                                    | 0                                  | 1                                |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Test edusignment name"

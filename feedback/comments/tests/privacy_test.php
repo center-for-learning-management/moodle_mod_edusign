@@ -39,11 +39,11 @@ class edusignfeedback_comments_privacy_testcase extends \mod_edusign\tests\mod_e
     /**
      * Convenience function for creating feedback data.
      *
-     * @param  object   $edusign         edusign object
-     * @param  stdClass $student        user object
-     * @param  stdClass $teacher        user object
-     * @param  string   $submissiontext Submission text
-     * @param  string   $feedbacktext   Feedback text
+     * @param object $edusign edusign object
+     * @param stdClass $student user object
+     * @param stdClass $teacher user object
+     * @param string $submissiontext Submission text
+     * @param string $feedbacktext Feedback text
      * @return array   Feedback plugin object and the grade object.
      */
     protected function create_feedback($edusign, $student, $teacher, $submissiontext, $feedbacktext) {
@@ -52,7 +52,7 @@ class edusignfeedback_comments_privacy_testcase extends \mod_edusign\tests\mod_e
         $submission->userid = $student->id;
         $submission->timecreated = time();
         $submission->onlinetext_editor = ['text' => $submissiontext,
-                                         'format' => FORMAT_MOODLE];
+                'format' => FORMAT_MOODLE];
 
         $this->setUser($student);
         $notices = [];
@@ -65,8 +65,8 @@ class edusignfeedback_comments_privacy_testcase extends \mod_edusign\tests\mod_e
         $plugin = $edusign->get_feedback_plugin_by_type('comments');
         $feedbackdata = new \stdClass();
         $feedbackdata->edusignfeedbackcomments_editor = [
-            'text' => $feedbacktext,
-            'format' => 1
+                'text' => $feedbacktext,
+                'format' => 1
         ];
 
         $plugin->save($grade, $feedbackdata);

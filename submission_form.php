@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-
 require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 

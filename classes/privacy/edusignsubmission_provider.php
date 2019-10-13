@@ -24,6 +24,7 @@
  *
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace mod_edusign\privacy;
 
 use core_privacy\local\request\contextlist;
@@ -47,7 +48,7 @@ interface edusignsubmission_provider extends \core_privacy\local\request\plugin\
      * the sql query in \mod_edusign\privacy\provider::find_grader_info() Then you need to provide some sql to retrive those
      * student IDs. This is highly likely if you had to fill in get_context_for_userid_within_submission above.
      *
-     * @param  useridlist $useridlist A user ID list object that you can append your user IDs to.
+     * @param useridlist $useridlist A user ID list object that you can append your user IDs to.
      */
     public static function get_student_user_ids(useridlist $useridlist);
 
@@ -60,7 +61,7 @@ interface edusignsubmission_provider extends \core_privacy\local\request\plugin\
      * - current path (subcontext)
      * - user object
      *
-     * @param  edusign_plugin_request_data $exportdata Information to use to export user data for this sub-plugin.
+     * @param edusign_plugin_request_data $exportdata Information to use to export user data for this sub-plugin.
      */
     public static function export_submission_user_data(edusign_plugin_request_data $exportdata);
 
@@ -82,7 +83,7 @@ interface edusignsubmission_provider extends \core_privacy\local\request\plugin\
      * - user object
      * - edusign object
      *
-     * @param  edusign_plugin_request_data $exportdata Details about the user and context to focus the deletion.
+     * @param edusign_plugin_request_data $exportdata Details about the user and context to focus the deletion.
      */
     public static function delete_submission_for_userid(edusign_plugin_request_data $exportdata);
 }

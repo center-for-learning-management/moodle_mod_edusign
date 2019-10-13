@@ -50,14 +50,14 @@ class mod_edusign_restore_date_testcase extends restore_date_testcase {
         $grade = $edusignobj->get_user_grade($USER->id, true);
 
         // User override.
-        $override = (object)[
-            'edusignid' => $edusign->id,
-            'groupid' => 0,
-            'userid' => $USER->id,
-            'sortorder' => 1,
-            'allowsubmissionsfromdate' => 100,
-            'duedate' => 200,
-            'cutoffdate' => 300
+        $override = (object) [
+                'edusignid' => $edusign->id,
+                'groupid' => 0,
+                'userid' => $USER->id,
+                'sortorder' => 1,
+                'allowsubmissionsfromdate' => 100,
+                'duedate' => 200,
+                'cutoffdate' => 300
         ];
         $DB->insert_record('edusign_overrides', $override);
 

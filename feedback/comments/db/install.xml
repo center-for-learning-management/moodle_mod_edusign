@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <XMLDB PATH="mod/edusign/feedback/comments/db" VERSION="20120423" COMMENT="XMLDB file for Moodle mod/edusign/feedback/comments"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
 >
-  <TABLES>
-    <TABLE NAME="edusignfeedback_comments" COMMENT="Text feedback for submitted edusignments">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="edusignment" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-        <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-        <FIELD NAME="commenttext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The feedback text"/>
-        <FIELD NAME="commentformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The feedback text format"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="The unique id for this feedback"/>
-        <KEY NAME="edusignment" TYPE="foreign" FIELDS="edusignment" REFTABLE="edusign" REFFIELDS="id" COMMENT="The edusignment instance this feedback relates to."/>
-        <KEY NAME="grade" TYPE="foreign" FIELDS="grade" REFTABLE="edusign_grades" REFFIELDS="id" COMMENT="The grade instance this feedback relates to."/>
-      </KEYS>
-    </TABLE>
-  </TABLES>
+    <TABLES>
+        <TABLE NAME="edusignfeedback_comments" COMMENT="Text feedback for submitted edusignments">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="edusignment" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="commenttext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The feedback text"/>
+                <FIELD NAME="commentformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The feedback text format"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="The unique id for this feedback"/>
+                <KEY NAME="edusignment" TYPE="foreign" FIELDS="edusignment" REFTABLE="edusign" REFFIELDS="id" COMMENT="The edusignment instance this feedback relates to."/>
+                <KEY NAME="grade" TYPE="foreign" FIELDS="grade" REFTABLE="edusign_grades" REFFIELDS="id" COMMENT="The grade instance this feedback relates to."/>
+            </KEYS>
+        </TABLE>
+    </TABLES>
 </XMLDB>

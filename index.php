@@ -23,7 +23,7 @@
  */
 
 require_once("../../config.php");
-require_once($CFG->dirroot.'/mod/edusign/locallib.php');
+require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 // For this type of page this is the course id.
 $id = required_param('id', PARAM_INT);
 

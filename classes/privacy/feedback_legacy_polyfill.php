@@ -21,6 +21,7 @@
  * @copyright 2018 Adrian Greeve <adrian@moodle.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace mod_edusign\privacy;
 
 use core_privacy\local\request\contextlist;
@@ -40,8 +41,8 @@ trait feedback_legacy_polyfill {
      * NOTE if your subplugin must have an entry in the edusign_grade table to work, then this
      * method can be empty.
      *
-     * @param  int $userid The user ID to get context IDs for.
-     * @param  \core_privacy\local\request\contextlist $contextlist Use add_from_sql with this object to add your context IDs.
+     * @param int $userid The user ID to get context IDs for.
+     * @param \core_privacy\local\request\contextlist $contextlist Use add_from_sql with this object to add your context IDs.
      */
     public static function get_context_for_userid_within_feedback(int $userid, contextlist $contextlist) {
         return static::_get_context_for_userid_within_feedback($userid, $contextlist);
@@ -52,7 +53,7 @@ trait feedback_legacy_polyfill {
      * your plugin to work then there is no need to fill in this method. If you filled in get_context_for_userid_within_feedback()
      * then you probably have to fill this in as well.
      *
-     * @param  useridlist $useridlist A list of user IDs of students graded by this user.
+     * @param useridlist $useridlist A list of user IDs of students graded by this user.
      */
     public static function get_student_user_ids(useridlist $useridlist) {
         return static::_get_student_user_ids($useridlist);
@@ -66,7 +67,7 @@ trait feedback_legacy_polyfill {
      * - current path (subcontext)
      * - user object
      *
-     * @param  edusign_plugin_request_data $exportdata Contains data to help export the user information.
+     * @param edusign_plugin_request_data $exportdata Contains data to help export the user information.
      */
     public static function export_feedback_user_data(edusign_plugin_request_data $exportdata) {
         return static::_export_feedback_user_data($exportdata);
@@ -78,7 +79,7 @@ trait feedback_legacy_polyfill {
      * - context
      * - edusign object
      *
-     * @param  edusign_plugin_request_data $requestdata Data useful for deleting user data from this sub-plugin.
+     * @param edusign_plugin_request_data $requestdata Data useful for deleting user data from this sub-plugin.
      */
     public static function delete_feedback_for_context(edusign_plugin_request_data $requestdata) {
         return static::_delete_feedback_for_context($requestdata);
@@ -92,7 +93,7 @@ trait feedback_legacy_polyfill {
      * - user object
      * - edusign object
      *
-     * @param  edusign_plugin_request_data $requestdata Data useful for deleting user data.
+     * @param edusign_plugin_request_data $requestdata Data useful for deleting user data.
      */
     public static function delete_feedback_for_grade(edusign_plugin_request_data $requestdata) {
         return static::_delete_feedback_for_grade($requestdata);

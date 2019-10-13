@@ -7,27 +7,27 @@ Feature: Prevent or allow edusignment submission changes
   Background:
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | Course 1 | C1        | 0        | 1         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
-      | student2 | Student | 2 | student2@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
+      | student2 | Student   | 2        | student2@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
-      | student2 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
+      | student2 | C1     | student        |
 
   @javascript
   Scenario: Preventing changes and allowing them again
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "edusignment" to section "1" and I fill the form with:
-      | edusignment name | Test edusignment name |
-      | Description | Submit your online text |
-      | edusignsubmission_onlinetext_enabled | 1 |
-      | edusignsubmission_file_enabled | 0 |
+      | edusignment name                     | Test edusignment name   |
+      | Description                          | Submit your online text |
+      | edusignsubmission_onlinetext_enabled | 1                       |
+      | edusignsubmission_file_enabled       | 0                       |
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
@@ -76,8 +76,8 @@ Feature: Prevent or allow edusignment submission changes
   @javascript @_alert
   Scenario: Preventing changes and allowing them again (batch action)
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled |
-      | edusign   | C1     | edusign1  | Test edusignment name | Test edusignment description | 1                                   | 0                             |
+      | activity | course | idnumber | name                  | intro                        | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled |
+      | edusign  | C1     | edusign1 | Test edusignment name | Test edusignment description | 1                                    | 0                              |
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test edusignment name"

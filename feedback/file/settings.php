@@ -23,6 +23,6 @@
  */
 
 $settings->add(new admin_setting_configcheckbox('edusignfeedback_file/default',
-                   new lang_string('default', 'edusignfeedback_file'),
-                   new lang_string('default_help', 'edusignfeedback_file'), 0));
+        new lang_string('default', 'edusignfeedback_file'),
+        new lang_string('default_help', 'edusignfeedback_file'), 0));
 

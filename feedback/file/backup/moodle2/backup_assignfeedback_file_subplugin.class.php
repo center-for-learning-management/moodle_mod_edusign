@@ -36,6 +36,7 @@ class backup_edusignfeedback_file_subplugin extends backup_subplugin {
 
     /**
      * Returns the subplugin information to attach to feedback element
+     *
      * @return backup_subplugin_element
      */
     protected function define_grade_subplugin_structure() {

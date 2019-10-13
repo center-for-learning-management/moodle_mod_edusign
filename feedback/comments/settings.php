@@ -23,12 +23,12 @@
  */
 
 $settings->add(new admin_setting_configcheckbox('edusignfeedback_comments/default',
-                   new lang_string('default', 'edusignfeedback_comments'),
-                   new lang_string('default_help', 'edusignfeedback_comments'), 1));
+        new lang_string('default', 'edusignfeedback_comments'),
+        new lang_string('default_help', 'edusignfeedback_comments'), 1));
 
 $setting = new admin_setting_configcheckbox('edusignfeedback_comments/inline',
-                   new lang_string('commentinlinedefault', 'edusignfeedback_comments'),
-                   new lang_string('commentinlinedefault_help', 'edusignfeedback_comments'), 0);
+        new lang_string('commentinlinedefault', 'edusignfeedback_comments'),
+        new lang_string('commentinlinedefault_help', 'edusignfeedback_comments'), 0);
 
 $setting->set_advanced_flag_options(admin_setting_flag::ENABLED, false);
 $setting->set_locked_flag_options(admin_setting_flag::ENABLED, false);

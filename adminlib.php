@@ -47,8 +47,8 @@ class edusign_admin_page_manage_edusign_plugins extends admin_externalpage {
         $this->subtype = $subtype;
         $url = new moodle_url('/mod/edusign/adminmanageplugins.php', array('subtype' => $subtype));
         parent::__construct('manage' . $subtype . 'plugins',
-                            get_string('manage' . $subtype . 'plugins', 'edusign'),
-                            $url);
+                get_string('manage' . $subtype . 'plugins', 'edusign'),
+                $url);
     }
 
     /**
@@ -66,14 +66,14 @@ class edusign_admin_page_manage_edusign_plugins extends admin_externalpage {
 
         foreach (core_component::get_plugin_list($this->subtype) as $name => $notused) {
             if (strpos(core_text::strtolower(get_string('pluginname', $this->subtype . '_' . $name)),
-                    $query) !== false) {
+                            $query) !== false) {
                 $found = true;
                 break;
             }
         }
         if ($found) {
             $result = new stdClass();
-            $result->page     = $this;
+            $result->page = $this;
             $result->settings = array();
             return array($this->name => $result);
         } else {
@@ -81,7 +81,6 @@ class edusign_admin_page_manage_edusign_plugins extends admin_externalpage {
         }
     }
 }
-
 
 /**
  * Class that handles the display and configuration of the list of submission plugins.
@@ -101,13 +100,13 @@ class edusign_plugin_manager {
 
     /**
      * Constructor for this edusignment plugin manager
+     *
      * @param string $subtype - either edusignsubmission or edusignfeedback
      */
     public function __construct($subtype) {
         $this->pageurl = new moodle_url('/mod/edusign/adminmanageplugins.php', array('subtype' => $subtype));
         $this->subtype = $subtype;
     }
-
 
     /**
      * Return a list of plugins sorted by the order defined in the admin interface
@@ -134,7 +133,6 @@ class edusign_plugin_manager {
         return $result;
     }
 
-
     /**
      * Util function for writing an action icon link
      *
@@ -150,7 +148,7 @@ class edusign_plugin_manager {
         $url = $this->pageurl;
 
         if ($action === 'delete') {
-            $url = core_plugin_manager::instance()->get_uninstall_url($this->subtype.'_'.$plugin, 'manage');
+            $url = core_plugin_manager::instance()->get_uninstall_url($this->subtype . '_' . $plugin, 'manage');
             if (!$url) {
                 return '&nbsp;';
             }
@@ -158,9 +156,9 @@ class edusign_plugin_manager {
         }
 
         return $OUTPUT->action_icon(new moodle_url($url,
-                array('action' => $action, 'plugin' => $plugin, 'sesskey' => sesskey())),
-                new pix_icon($icon, $alt, 'moodle', array('title' => $alt)),
-                null, array('title' => $alt)) . ' ';
+                        array('action' => $action, 'plugin' => $plugin, 'sesskey' => sesskey())),
+                        new pix_icon($icon, $alt, 'moodle', array('title' => $alt)),
+                        null, array('title' => $alt)) . ' ';
     }
 
     /**
@@ -325,7 +323,6 @@ class edusign_plugin_manager {
         return 'view';
     }
 
-
     /**
      * Show this plugin.
      *
@@ -337,7 +334,6 @@ class edusign_plugin_manager {
         core_plugin_manager::reset_caches();
         return 'view';
     }
-
 
     /**
      * This is the entry point for this controller class.

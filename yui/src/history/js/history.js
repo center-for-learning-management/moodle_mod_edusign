@@ -7,7 +7,7 @@ var CSS = {
         PANEL: 'mod-edusign-history-panel'
     },
     COUNT = 0,
-    TOGGLE = function() {
+    TOGGLE = function () {
         var id = this.get('for'),
             panel = Y.one('#' + id);
         if (this.hasClass(CSS.OPEN)) {
@@ -21,7 +21,7 @@ var CSS = {
             panel.show();
         }
     },
-    HISTORY = function() {
+    HISTORY = function () {
         var link = null,
             panel = null,
             wrapper = null,
@@ -29,7 +29,7 @@ var CSS = {
 
         // Loop through all the children of this container and turn
         // every odd node to a link to open/close the following panel.
-        this.get('children').each(function() {
+        this.get('children').each(function () {
             if (link) {
                 COUNT++;
                 // First convert the link to an anchor.

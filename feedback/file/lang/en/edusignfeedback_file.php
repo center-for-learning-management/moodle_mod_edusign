@@ -31,11 +31,13 @@ $string['countfiles'] = '{$a} files';
 $string['default'] = 'Enabled by default';
 $string['default_help'] = 'If set, this feedback method will be enabled by default for all new edusignments.';
 $string['enabled'] = 'File feedback';
-$string['enabled_help'] = 'If enabled, the teacher will be able to upload files with feedback when marking the edusignments. These files may be, but are not limited to marked up student submissions, documents with comments or spoken audio feedback. ';
+$string['enabled_help'] =
+        'If enabled, the teacher will be able to upload files with feedback when marking the edusignments. These files may be, but are not limited to marked up student submissions, documents with comments or spoken audio feedback. ';
 $string['feedbackzip'] = 'Zip file with feedback files';
 $string['feedbackfileadded'] = 'New feedback file "{$a->filename}" for student "{$a->student}"';
 $string['feedbackfileupdated'] = 'Modified feedback file "{$a->filename}" for student "{$a->student}"';
-$string['feedbackzip_help'] = 'A zip file containing a list of feedback files for one or more students. Feedback files will be edusigned to students based on the participant id which should be the second part of each filename immediately after the users full name. This naming convention is used when downloading submissions so you can download all submissions, add comments to a few files and then rezip and upload all of the files. Files with no changes will be ignored.';
+$string['feedbackzip_help'] =
+        'A zip file containing a list of feedback files for one or more students. Feedback files will be edusigned to students based on the participant id which should be the second part of each filename immediately after the users full name. This naming convention is used when downloading submissions so you can download all submissions, add comments to a few files and then rezip and upload all of the files. Files with no changes will be ignored.';
 $string['file'] = 'Feedback files';
 $string['privacy:metadata:filepurpose'] = 'Feedback files from the teacher for the student.';
 $string['privacy:path'] = 'Feedback files';

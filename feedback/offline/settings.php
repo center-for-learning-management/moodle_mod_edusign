@@ -23,6 +23,6 @@
  */
 
 $settings->add(new admin_setting_configcheckbox('edusignfeedback_offline/default',
-                   new lang_string('default', 'edusignfeedback_offline'),
-                   new lang_string('default_help', 'edusignfeedback_offline'), 0));
+        new lang_string('default', 'edusignfeedback_offline'),
+        new lang_string('default_help', 'edusignfeedback_offline'), 0));
 

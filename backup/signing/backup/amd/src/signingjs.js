@@ -1,7 +1,7 @@
-define(['jquery'], function($) { 
+define(['jquery'], function ($) {
     return {
-        init: function() {
- 		$('.myCanvas').css('background','blue');	
+        init: function () {
+            $('.myCanvas').css('background', 'blue');
         }
     };
 });

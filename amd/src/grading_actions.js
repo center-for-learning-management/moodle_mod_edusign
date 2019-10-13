@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @since      3.1
  */
-define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
+define(['jquery', 'mod_edusign/grading_events'], function ($, GradingEvents) {
 
     /**
      * GradingActions class.
@@ -31,7 +31,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      * @class GradingActions
      * @param {String} selector The selector for the page region containing the actions panel.
      */
-    var GradingActions = function(selector) {
+    var GradingActions = function (selector) {
         this._regionSelector = selector;
         this._region = $(selector);
 
@@ -55,7 +55,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      * @param {Event} event
      * @param {Integer} userid
      */
-    GradingActions.prototype._showActionsForm = function(event, userid) {
+    GradingActions.prototype._showActionsForm = function (event, userid) {
         var form = this._region.find('[data-region=grading-actions-form]');
 
         if (userid != this._lastUserId && userid > 0) {
@@ -76,7 +76,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      * @private
      * @param {String} action
      */
-    GradingActions.prototype._trigger = function(action) {
+    GradingActions.prototype._trigger = function (action) {
         $(document).trigger(action);
     };
 
@@ -86,7 +86,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      * @method getReviewPanelElement
      * @return {jQuery}
      */
-    GradingActions.prototype.getReviewPanelElement = function() {
+    GradingActions.prototype.getReviewPanelElement = function () {
         return $('[data-region="review-panel"]');
     };
 
@@ -96,7 +96,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      * @method hasReviewPanelElement
      * @return {bool}
      */
-    GradingActions.prototype.hasReviewPanelElement = function() {
+    GradingActions.prototype.hasReviewPanelElement = function () {
         return this.getReviewPanelElement().length > 0;
     };
 
@@ -106,7 +106,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      * @method getCollapseGradePanelButton
      * @return {jQuery}
      */
-    GradingActions.prototype.getCollapseGradePanelButton = function() {
+    GradingActions.prototype.getCollapseGradePanelButton = function () {
         return $('[data-region="grade-actions"] .collapse-grade-panel');
     };
 
@@ -116,7 +116,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      * @method getCollapseReviewPanelButton
      * @return {jQuery}
      */
-    GradingActions.prototype.getCollapseReviewPanelButton = function() {
+    GradingActions.prototype.getCollapseReviewPanelButton = function () {
         return $('[data-region="grade-actions"] .collapse-review-panel');
     };
 
@@ -126,7 +126,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      * @method getExpandAllPanelsButton
      * @return {jQuery}
      */
-    GradingActions.prototype.getExpandAllPanelsButton = function() {
+    GradingActions.prototype.getExpandAllPanelsButton = function () {
         return $('[data-region="grade-actions"] .collapse-none');
     };
 
@@ -135,7 +135,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      *
      * @method resetLayoutButtons
      */
-    GradingActions.prototype.resetLayoutButtons = function() {
+    GradingActions.prototype.resetLayoutButtons = function () {
         this.getCollapseGradePanelButton().removeClass('active');
         this.getCollapseReviewPanelButton().removeClass('active');
         this.getExpandAllPanelsButton().removeClass('active');
@@ -146,7 +146,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      *
      * @method collapseReviewPanel
      */
-    GradingActions.prototype.collapseReviewPanel = function() {
+    GradingActions.prototype.collapseReviewPanel = function () {
         $(document).trigger(GradingEvents.COLLAPSE_REVIEW_PANEL);
         $(document).trigger(GradingEvents.EXPAND_GRADE_PANEL);
         this.resetLayoutButtons();
@@ -158,7 +158,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      *
      * @method collapseGradePanel
      */
-    GradingActions.prototype.collapseGradePanel = function() {
+    GradingActions.prototype.collapseGradePanel = function () {
         $(document).trigger(GradingEvents.COLLAPSE_GRADE_PANEL);
         $(document).trigger(GradingEvents.EXPAND_REVIEW_PANEL);
         this.resetLayoutButtons();
@@ -170,7 +170,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      *
      * @method expandAllPanels
      */
-    GradingActions.prototype.expandAllPanels = function() {
+    GradingActions.prototype.expandAllPanels = function () {
         $(document).trigger(GradingEvents.EXPAND_GRADE_PANEL);
         $(document).trigger(GradingEvents.EXPAND_REVIEW_PANEL);
         this.resetLayoutButtons();
@@ -182,16 +182,16 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
      *
      * @method registerEventListeners
      */
-    GradingActions.prototype.registerEventListeners = function() {
+    GradingActions.prototype.registerEventListeners = function () {
         // Don't need layout controls if there is no review panel.
         if (this.hasReviewPanelElement()) {
             var collapseReviewPanelButton = this.getCollapseReviewPanelButton();
-            collapseReviewPanelButton.click(function(e) {
+            collapseReviewPanelButton.click(function (e) {
                 this.collapseReviewPanel();
                 e.preventDefault();
             }.bind(this));
 
-            collapseReviewPanelButton.keydown(function(e) {
+            collapseReviewPanelButton.keydown(function (e) {
                 if (!e.metaKey && !e.shiftKey && !e.altKey && !e.ctrlKey) {
                     if (e.keyCode === 13 || e.keyCode === 32) {
                         this.collapseReviewPanel();
@@ -201,12 +201,12 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
             }.bind(this));
 
             var collapseGradePanelButton = this.getCollapseGradePanelButton();
-            collapseGradePanelButton.click(function(e) {
+            collapseGradePanelButton.click(function (e) {
                 this.collapseGradePanel();
                 e.preventDefault();
             }.bind(this));
 
-            collapseGradePanelButton.keydown(function(e) {
+            collapseGradePanelButton.keydown(function (e) {
                 if (!e.metaKey && !e.shiftKey && !e.altKey && !e.ctrlKey) {
                     if (e.keyCode === 13 || e.keyCode === 32) {
                         this.collapseGradePanel();
@@ -216,12 +216,12 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
             }.bind(this));
 
             var expandAllPanelsButton = this.getExpandAllPanelsButton();
-            expandAllPanelsButton.click(function(e) {
+            expandAllPanelsButton.click(function (e) {
                 this.expandAllPanels();
                 e.preventDefault();
             }.bind(this));
 
-            expandAllPanelsButton.keydown(function(e) {
+            expandAllPanelsButton.keydown(function (e) {
                 if (!e.metaKey && !e.shiftKey && !e.altKey && !e.ctrlKey) {
                     if (e.keyCode === 13 || e.keyCode === 32) {
                         this.expandAllPanels();
@@ -236,7 +236,7 @@ define(['jquery', 'mod_edusign/grading_events'], function($, GradingEvents) {
         this._region.find('[name="savechanges"]').on('click', this._trigger.bind(this, 'save-changes'));
         this._region.find('[name="saveandshownext"]').on('click', this._trigger.bind(this, 'save-and-show-next'));
         this._region.find('[name="resetbutton"]').on('click', this._trigger.bind(this, 'reset'));
-        this._region.find('form').on('submit', function(e) {
+        this._region.find('form').on('submit', function (e) {
             e.preventDefault();
         });
     };

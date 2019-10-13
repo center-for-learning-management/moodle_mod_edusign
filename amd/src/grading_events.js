@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @since      3.1
  */
-define(function() {
+define(function () {
     return {
         COLLAPSE_REVIEW_PANEL: 'grading:collapse-review-panel',
         EXPAND_REVIEW_PANEL: 'grading:expand-review-panel',

@@ -1,17 +1,17 @@
 M.mod_edusign = {};
 
-M.mod_edusign.init_tree = function(Y, expand_all, htmlid) {
-    var treeElement = Y.one('#'+htmlid);
+M.mod_edusign.init_tree = function (Y, expand_all, htmlid) {
+    var treeElement = Y.one('#' + htmlid);
     if (treeElement) {
-        Y.use('yui2-treeview', 'node-event-simulate', function(Y) {
+        Y.use('yui2-treeview', 'node-event-simulate', function (Y) {
             var tree = new Y.YUI2.widget.TreeView(htmlid);
 
-            tree.subscribe("clickEvent", function(node, event) {
+            tree.subscribe("clickEvent", function (node, event) {
                 // We want normal clicking which redirects to url.
                 return false;
             });
 
-            tree.subscribe("enterKeyPressed", function(node) {
+            tree.subscribe("enterKeyPressed", function (node) {
                 // We want keyboard activation to trigger a click on the first link.
                 Y.one(node.getContentEl()).one('a').simulate('click');
                 return false;
@@ -25,11 +25,11 @@ M.mod_edusign.init_tree = function(Y, expand_all, htmlid) {
     }
 };
 
-M.mod_edusign.init_grading_table = function(Y) {
-    Y.use('node', function(Y) {
+M.mod_edusign.init_grading_table = function (Y) {
+    Y.use('node', function (Y) {
         checkboxes = Y.all('td.c0 input');
-        checkboxes.each(function(node) {
-            node.on('change', function(e) {
+        checkboxes.each(function (node) {
+            node.on('change', function (e) {
                 rowelement = e.currentTarget.get('parentNode').get('parentNode');
                 if (e.currentTarget.get('checked')) {
                     rowelement.removeClass('unselectedrow');
@@ -52,10 +52,10 @@ M.mod_edusign.init_grading_table = function(Y) {
 
         var selectall = Y.one('th.c0 input');
         if (selectall) {
-            selectall.on('change', function(e) {
+            selectall.on('change', function (e) {
                 if (e.currentTarget.get('checked')) {
                     checkboxes = Y.all('td.c0 input[type="checkbox"]');
-                    checkboxes.each(function(node) {
+                    checkboxes.each(function (node) {
                         rowelement = node.get('parentNode').get('parentNode');
                         node.set('checked', true);
                         rowelement.removeClass('unselectedrow');
@@ -63,7 +63,7 @@ M.mod_edusign.init_grading_table = function(Y) {
                     });
                 } else {
                     checkboxes = Y.all('td.c0 input[type="checkbox"]');
-                    checkboxes.each(function(node) {
+                    checkboxes.each(function (node) {
                         rowelement = node.get('parentNode').get('parentNode');
                         node.set('checked', false);
                         rowelement.removeClass('selectedrow');
@@ -75,10 +75,10 @@ M.mod_edusign.init_grading_table = function(Y) {
 
         var batchform = Y.one('form.gradingbatchoperationsform');
         if (batchform) {
-            batchform.on('submit', function(e) {
+            batchform.on('submit', function (e) {
                 checkboxes = Y.all('td.c0 input');
                 var selectedusers = [];
-                checkboxes.each(function(node) {
+                checkboxes.each(function (node) {
                     if (node.get('checked')) {
                         selectedusers[selectedusers.length] = node.get('value');
                     }
@@ -109,65 +109,65 @@ M.mod_edusign.init_grading_table = function(Y) {
         }
 
         var quickgrade = Y.all('.gradingtable .quickgrade');
-        quickgrade.each(function(quick) {
-            quick.on('change', function(e) {
+        quickgrade.each(function (quick) {
+            quick.on('change', function (e) {
                 this.get('parentNode').addClass('quickgrademodified');
             });
         });
     });
 };
 
-M.mod_edusign.init_grading_options = function(Y) {
-    Y.use('node', function(Y) {
+M.mod_edusign.init_grading_options = function (Y) {
+    Y.use('node', function (Y) {
         var paginationelement = Y.one('#id_perpage');
-        paginationelement.on('change', function(e) {
+        paginationelement.on('change', function (e) {
             Y.one('form.gradingoptionsform').submit();
         });
         var filterelement = Y.one('#id_filter');
         if (filterelement) {
-            filterelement.on('change', function(e) {
+            filterelement.on('change', function (e) {
                 Y.one('form.gradingoptionsform').submit();
             });
         }
         var markerfilterelement = Y.one('#id_markerfilter');
         if (markerfilterelement) {
-            markerfilterelement.on('change', function(e) {
+            markerfilterelement.on('change', function (e) {
                 Y.one('form.gradingoptionsform').submit();
             });
         }
         var workflowfilterelement = Y.one('#id_workflowfilter');
         if (workflowfilterelement) {
-            workflowfilterelement.on('change', function(e) {
+            workflowfilterelement.on('change', function (e) {
                 Y.one('form.gradingoptionsform').submit();
             });
         }
         var quickgradingelement = Y.one('#id_quickgrading');
         if (quickgradingelement) {
-            quickgradingelement.on('change', function(e) {
+            quickgradingelement.on('change', function (e) {
                 Y.one('form.gradingoptionsform').submit();
             });
         }
         var showonlyactiveenrolelement = Y.one('#id_showonlyactiveenrol');
         if (showonlyactiveenrolelement) {
-            showonlyactiveenrolelement.on('change', function(e) {
-            Y.one('form.gradingoptionsform').submit();
+            showonlyactiveenrolelement.on('change', function (e) {
+                Y.one('form.gradingoptionsform').submit();
             });
         }
         var downloadasfolderselement = Y.one('#id_downloadasfolders');
         if (downloadasfolderselement) {
-            downloadasfolderselement.on('change', function(e) {
+            downloadasfolderselement.on('change', function (e) {
                 Y.one('form.gradingoptionsform').submit();
             });
         }
     });
 };
 
-M.mod_edusign.init_plugin_summary = function(Y, subtype, type, submissionid) {
+M.mod_edusign.init_plugin_summary = function (Y, subtype, type, submissionid) {
     suffix = subtype + '_' + type + '_' + submissionid;
     classname = 'contract_' + suffix;
     contract = Y.one('.' + classname);
     if (contract) {
-        contract.on('click', function(e) {
+        contract.on('click', function (e) {
             img = e.target;
             imgclasses = img.getAttribute('class').split(' ');
             for (i = 0; i < imgclasses.length; i++) {
@@ -197,7 +197,7 @@ M.mod_edusign.init_plugin_summary = function(Y, subtype, type, submissionid) {
         full.toggleClass('hidefull');
     }
     if (expand) {
-        expand.on('click', function(e) {
+        expand.on('click', function (e) {
             img = e.target;
             imgclasses = img.getAttribute('class').split(' ');
             for (i = 0; i < imgclasses.length; i++) {

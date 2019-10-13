@@ -37,6 +37,7 @@ defined('MOODLE_INTERNAL') || die();
 class statement_accepted extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -44,16 +45,16 @@ class statement_accepted extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @param \stdClass $submission
      * @return statement_accepted
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_submission(\edusign $edusign, \stdClass $submission) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $submission->id
+                'context' => $edusign->get_context(),
+                'objectid' => $submission->id
         );
         self::$preventcreatecall = false;
         /** @var statement_accepted $event */
@@ -71,7 +72,7 @@ class statement_accepted extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has accepted the statement of the submission with id '$this->objectid' " .
-            "for the edusignment with course module id '$this->contextinstanceid'.";
+                "for the edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**
@@ -109,8 +110,8 @@ class statement_accepted extends base {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         if (self::$preventcreatecall) {

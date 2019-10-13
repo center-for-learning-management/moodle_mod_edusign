@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 
 /**
  * Upload feedback zip
@@ -46,10 +46,10 @@ class edusignfeedback_file_upload_zip_form extends moodleform {
         $mform->addElement('header', 'uploadzip', get_string('uploadzip', 'edusignfeedback_file'));
 
         $fileoptions = array('subdirs' => 0,
-                                'maxbytes' => $COURSE->maxbytes,
-                                'accepted_types' => 'zip',
-                                'maxfiles' => 1,
-                                'return_types' => FILE_INTERNAL);
+                'maxbytes' => $COURSE->maxbytes,
+                'accepted_types' => 'zip',
+                'maxfiles' => 1,
+                'return_types' => FILE_INTERNAL);
 
         $mform->addElement('filepicker', 'feedbackzip', get_string('uploadafile'), null, $fileoptions);
         $mform->addRule('feedbackzip', get_string('uploadnofilefound'), 'required', null, 'client');

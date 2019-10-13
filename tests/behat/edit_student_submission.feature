@@ -7,20 +7,20 @@ Feature: In an edusignment, the administrator can edit students' submissions
   Scenario: Editing a student's submission
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | Course 1 | C1        | 0        | 1         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | student1 | C1 | student |
+      | user     | course | role    |
+      | student1 | C1     | student |
     When I log in as "admin"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "edusignment" to section "1" and I fill the form with:
-      | edusignment name | Test edusignment name |
-      | Description | Submit your online text |
-      | edusignsubmission_onlinetext_enabled | 1 |
-      | groupmode | No groups |
+      | edusignment name                     | Test edusignment name   |
+      | Description                          | Submit your online text |
+      | edusignsubmission_onlinetext_enabled | 1                       |
+      | groupmode                            | No groups               |
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage

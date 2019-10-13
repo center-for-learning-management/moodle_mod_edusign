@@ -50,7 +50,7 @@ class edusignfeedback_comments_testcase extends advanced_testcase {
         $edusign = $this->create_instance($course, [
                 'edusignsubmission_onlinetext_enabled' => 1,
                 'edusignfeedback_comments_enabled' => 1,
-            ]);
+        ]);
 
         // Create an online text submission.
         $this->add_submission($student, $edusign);
@@ -60,10 +60,10 @@ class edusignfeedback_comments_testcase extends advanced_testcase {
         // Create formdata.
         $grade = $edusign->get_user_grade($student->id, true);
         $data = (object) [
-            'edusignfeedbackcomments_editor' => [
-                'text' => '<p>first comment for this test</p>',
-                'format' => 1,
-            ]
+                'edusignfeedbackcomments_editor' => [
+                        'text' => '<p>first comment for this test</p>',
+                        'format' => 1,
+                ]
         ];
 
         // This is the first time that we are submitting feedback, so it is modified.
@@ -80,7 +80,7 @@ class edusignfeedback_comments_testcase extends advanced_testcase {
         $data->edusignfeedbackcomments_editor = [
                 'text' => '<p>Altered comment for this test</p>',
                 'format' => 1,
-            ];
+        ];
         $this->assertTrue($plugin->is_feedback_modified($grade, $data));
     }
 }

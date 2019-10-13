@@ -21,16 +21,17 @@
  * @copyright 2013 Petr Skoda {@link http://skodak.org}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace mod_edusign\plugininfo;
 
 use core\plugininfo\base, core_plugin_manager, moodle_url;
 
 defined('MOODLE_INTERNAL') || die();
 
-
 class edusignfeedback extends base {
     /**
      * Finds all enabled plugins, the result may include missing plugins.
+     *
      * @return array|null of enabled plugins $pluginname=>$pluginname, null means unknown
      */
     public static function get_enabled_plugins() {
@@ -42,7 +43,7 @@ class edusignfeedback extends base {
         }
         $installed = array();
         foreach ($plugins as $plugin => $version) {
-            $installed[] = 'edusignfeedback_'.$plugin;
+            $installed[] = 'edusignfeedback_' . $plugin;
         }
 
         list($installed, $params) = $DB->get_in_or_equal($installed, SQL_PARAMS_NAMED);
@@ -69,6 +70,7 @@ class edusignfeedback extends base {
 
     /**
      * Return URL used for management of plugins of this type.
+     *
      * @return moodle_url
      */
     public static function get_manage_url() {
@@ -77,6 +79,7 @@ class edusignfeedback extends base {
 
     /**
      * Pre-uninstall hook.
+     *
      * @private
      */
     public function uninstall_cleanup() {

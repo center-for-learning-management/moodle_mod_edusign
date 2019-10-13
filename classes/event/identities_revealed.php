@@ -37,6 +37,7 @@ defined('MOODLE_INTERNAL') || die();
 class identities_revealed extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -44,15 +45,15 @@ class identities_revealed extends base {
     /**
      * Create instance of event.
      *
-     * @since Moodle 2.7
-     *
      * @param \edusign $edusign
      * @return identities_revealed
+     * @since Moodle 2.7
+     *
      */
     public static function create_from_edusign(\edusign $edusign) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'objectid' => $edusign->get_instance()->id
+                'context' => $edusign->get_context(),
+                'objectid' => $edusign->get_instance()->id
         );
         self::$preventcreatecall = false;
         /** @var identities_revealed $event */
@@ -69,7 +70,7 @@ class identities_revealed extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' has revealed identities in the edusignment with course module " .
-            "id '$this->contextinstanceid'.";
+                "id '$this->contextinstanceid'.";
     }
 
     /**
@@ -105,8 +106,8 @@ class identities_revealed extends base {
     /**
      * Custom validation.
      *
-     * @throws \coding_exception
      * @return void
+     * @throws \coding_exception
      */
     protected function validate_data() {
         if (self::$preventcreatecall) {

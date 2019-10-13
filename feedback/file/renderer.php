@@ -46,8 +46,8 @@ class edusignfeedback_file_renderer extends plugin_renderer_base {
         $o .= $this->container(get_string('filesadded', 'edusignfeedback_file', $summary->feedbackfilesadded));
 
         $url = new moodle_url('view.php',
-                              array('id' => $summary->cmid,
-                                    'action' => 'grading'));
+                array('id' => $summary->cmid,
+                        'action' => 'grading'));
         $o .= $this->continue_button($url);
         return $o;
     }

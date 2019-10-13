@@ -36,6 +36,7 @@ class restore_edusignsubmission_signing_subplugin extends restore_subplugin {
 
     /**
      * Returns array the paths to be handled by the subplugin at edusignment level
+     *
      * @return array
      */
     protected function define_submission_subplugin_structure() {
@@ -59,7 +60,7 @@ class restore_edusignsubmission_signing_subplugin extends restore_subplugin {
     public function process_edusignsubmission_signing_submission($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $data->edusignment = $this->get_new_parentid('edusign');
         $oldsubmissionid = $data->submission;
         // The mapping is set in the restore for the core edusign activity

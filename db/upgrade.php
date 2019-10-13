@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * upgrade this edusignment instance - this function could be skipped but it will be needed later
+ *
  * @param int $oldversion The old version of the edusign module
  * @return bool
  */
@@ -70,16 +71,16 @@ function xmldb_edusign_upgrade($oldversion) {
     if ($oldversion < 2017021500) {
         // Fix event types of edusign events.
         $params = [
-            'modulename' => 'edusign',
-            'eventtype' => 'close'
+                'modulename' => 'edusign',
+                'eventtype' => 'close'
         ];
         $select = "modulename = :modulename AND eventtype = :eventtype";
         $DB->set_field_select('event', 'eventtype', 'due', $select, $params);
 
         // Delete 'open' events.
         $params = [
-            'modulename' => 'edusign',
-            'eventtype' => 'open'
+                'modulename' => 'edusign',
+                'eventtype' => 'open'
         ];
         $DB->delete_records('event', $params);
 
@@ -116,8 +117,8 @@ function xmldb_edusign_upgrade($oldversion) {
 
         // Update query params.
         $params = [
-            'weeksecs' => WEEKSECS,
-            'timelimit' => $timelimit->getTimestamp()
+                'weeksecs' => WEEKSECS,
+                'timelimit' => $timelimit->getTimestamp()
         ];
 
         // Execute DB update for edusign instances.
@@ -153,7 +154,7 @@ function xmldb_edusign_upgrade($oldversion) {
     }
 
     if ($oldversion < 2017061205) {
-        require_once($CFG->dirroot.'/mod/edusign/upgradelib.php');
+        require_once($CFG->dirroot . '/mod/edusign/upgradelib.php');
         $brokenedusigns = get_edusignments_with_rescaled_null_grades();
 
         // Set config value.

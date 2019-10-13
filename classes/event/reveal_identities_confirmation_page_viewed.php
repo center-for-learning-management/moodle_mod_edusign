@@ -43,6 +43,7 @@ defined('MOODLE_INTERNAL') || die();
 class reveal_identities_confirmation_page_viewed extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -55,10 +56,10 @@ class reveal_identities_confirmation_page_viewed extends base {
      */
     public static function create_from_edusign(\edusign $edusign) {
         $data = array(
-            'context' => $edusign->get_context(),
-            'other' => array(
-                'edusignid' => $edusign->get_instance()->id,
-            ),
+                'context' => $edusign->get_context(),
+                'other' => array(
+                        'edusignid' => $edusign->get_instance()->id,
+                ),
         );
         self::$preventcreatecall = false;
         /** @var reveal_identities_confirmation_page_viewed $event */
@@ -92,9 +93,8 @@ class reveal_identities_confirmation_page_viewed extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' viewed the confirmation page for revealing identities for the " .
-            "edusignment with course module id '$this->contextinstanceid'.";
+                "edusignment with course module id '$this->contextinstanceid'.";
     }
-
 
     /**
      * Return legacy data for add_to_log().

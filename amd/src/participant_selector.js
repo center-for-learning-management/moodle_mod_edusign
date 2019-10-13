@@ -20,7 +20,7 @@
  * @copyright  2015 Damyon Wiese <damyon@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['core/ajax', 'jquery', 'core/templates'], function(ajax, $, templates) {
+define(['core/ajax', 'jquery', 'core/templates'], function (ajax, $, templates) {
 
 
     return /** @alias module:mod_edusign/participants_selector */ {
@@ -34,7 +34,7 @@ define(['core/ajax', 'jquery', 'core/templates'], function(ajax, $, templates) {
          * @param {Array} data
          * @return {Array}
          */
-        processResults: function(selector, data) {
+        processResults: function (selector, data) {
             return data;
         },
 
@@ -47,25 +47,25 @@ define(['core/ajax', 'jquery', 'core/templates'], function(ajax, $, templates) {
          * @param {Function} success Success handler
          * @param {Function} failure Failure handler
          */
-        transport: function(selector, query, success, failure) {
+        transport: function (selector, query, success, failure) {
             var edusignmentid = $(selector).attr('data-edusignmentid');
             var groupid = $(selector).attr('data-groupid');
             var filters = $('[data-region="configure-filters"] input[type="checkbox"]');
             var filterstrings = [];
 
-            filters.each(function(index, element) {
+            filters.each(function (index, element) {
                 filterstrings[$(element).attr('name')] = $(element).prop('checked');
             });
 
             ajax.call([{
                 methodname: 'mod_edusign_list_participants',
                 args: {edusignid: edusignmentid, groupid: groupid, filter: query, limit: 30, includeenrolments: false}
-            }])[0].then(function(results) {
+            }])[0].then(function (results) {
                 var promises = [];
                 var identityfields = $('[data-showuseridentity]').data('showuseridentity').split(',');
 
                 // We got the results, now we loop over them and render each one from a template.
-                $.each(results, function(index, user) {
+                $.each(results, function (index, user) {
                     var ctx = user,
                         identity = [],
                         show = true;
@@ -83,21 +83,21 @@ define(['core/ajax', 'jquery', 'core/templates'], function(ajax, $, templates) {
                         show = false;
                     }
                     if (show) {
-                        $.each(identityfields, function(i, k) {
+                        $.each(identityfields, function (i, k) {
                             if (typeof user[k] !== 'undefined' && user[k] !== '') {
                                 ctx.hasidentity = true;
                                 identity.push(user[k]);
                             }
                         });
                         ctx.identity = identity.join(', ');
-                        promises.push(templates.render('mod_edusign/list_participant_user_summary', ctx).then(function(html) {
+                        promises.push(templates.render('mod_edusign/list_participant_user_summary', ctx).then(function (html) {
                             return {value: user.id, label: html};
                         }));
                     }
                 });
                 // Do the dance for $.when()
                 return $.when.apply($, promises);
-            }).then(function() {
+            }).then(function () {
                 var users = [];
 
                 // Determine if we've been passed any arguments..

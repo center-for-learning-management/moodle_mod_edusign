@@ -48,11 +48,11 @@ class edusignsubmission_signing_events_testcase extends advanced_testcase {
 
         $submission = $edusign->get_user_submission($student->id, true);
         $data = (object) [
-            'signing_editor' => [
-                'itemid' => file_get_unused_draft_itemid(),
-                'text' => 'Submission text',
-                'format' => FORMAT_PLAIN,
-            ],
+                'signing_editor' => [
+                        'itemid' => file_get_unused_draft_itemid(),
+                        'text' => 'Submission text',
+                        'format' => FORMAT_PLAIN,
+                ],
         ];
 
         $sink = $this->redirectEvents();
@@ -94,11 +94,11 @@ class edusignsubmission_signing_events_testcase extends advanced_testcase {
 
         $submission = $edusign->get_user_submission($student->id, true);
         $data = (object) [
-            'signing_editor' => [
-                'itemid' => file_get_unused_draft_itemid(),
-                'text' => 'Submission text',
-                'format' => FORMAT_PLAIN,
-            ],
+                'signing_editor' => [
+                        'itemid' => file_get_unused_draft_itemid(),
+                        'text' => 'Submission text',
+                        'format' => FORMAT_PLAIN,
+                ],
         ];
 
         $sink = $this->redirectEvents();
@@ -133,11 +133,11 @@ class edusignsubmission_signing_events_testcase extends advanced_testcase {
 
         $submission = $edusign->get_user_submission($student->id, true);
         $data = (object) [
-            'signing_editor' => [
-                'itemid' => file_get_unused_draft_itemid(),
-                'text' => 'Submission text',
-                'format' => FORMAT_PLAIN,
-            ],
+                'signing_editor' => [
+                        'itemid' => file_get_unused_draft_itemid(),
+                        'text' => 'Submission text',
+                        'format' => FORMAT_PLAIN,
+                ],
         ];
 
         $sink = $this->redirectEvents();

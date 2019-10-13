@@ -7,31 +7,31 @@ Feature: Grant an extension to an offline student
   Background:
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | Course 1 | C1        | 0        | 1         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
-      | student2 | Student | 2 | student2@example.com |
-      | student3 | Student | 3 | student3@example.com |
-      | student4 | Student | 4 | student4@example.com |
-      | student5 | Student | 5 | student5@example.com |
-      | student6 | Student | 6 | student6@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
+      | student2 | Student   | 2        | student2@example.com |
+      | student3 | Student   | 3        | student3@example.com |
+      | student4 | Student   | 4        | student4@example.com |
+      | student5 | Student   | 5        | student5@example.com |
+      | student6 | Student   | 6        | student6@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
-      | student2 | C1 | student |
-      | student3 | C1 | student |
-      | student4 | C1 | student |
-      | student5 | C1 | student |
-      | student6 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
+      | student2 | C1     | student        |
+      | student3 | C1     | student        |
+      | student4 | C1     | student        |
+      | student5 | C1     | student        |
+      | student6 | C1     | student        |
 
   @javascript
   Scenario: Granting an extension to an offline edusignment
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled | duedate    |
-      | edusign   | C1     | edusign1  | Test edusignment name | Test edusignment description | 0                                   | 0                             | 1388534400 |
+      | activity | course | idnumber | name                  | intro                        | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled | duedate    |
+      | edusign  | C1     | edusign1 | Test edusignment name | Test edusignment description | 0                                    | 0                              | 1388534400 |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Test edusignment name"
@@ -51,8 +51,8 @@ Feature: Grant an extension to an offline student
   @javascript @_alert
   Scenario: Granting extensions to an offline edusignment (batch action)
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled | duedate    |
-      | edusign   | C1     | edusign1  | Test edusignment name | Test edusignment description | 0                                   | 0                             | 1388534400 |
+      | activity | course | idnumber | name                  | intro                        | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled | duedate    |
+      | edusign  | C1     | edusign1 | Test edusignment name | Test edusignment description | 0                                    | 0                              | 1388534400 |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Test edusignment name"
@@ -83,8 +83,8 @@ Feature: Grant an extension to an offline student
   @javascript
   Scenario: Validating that extension date is after due date
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled | allowsubmissionsfromdate    | duedate    |
-      | edusign   | C1     | edusign1  | Test edusignment name | Test edusignment description | 0                                   | 0                             | 1388534400                  | 1388620800 |
+      | activity | course | idnumber | name                  | intro                        | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled | allowsubmissionsfromdate | duedate    |
+      | edusign  | C1     | edusign1 | Test edusignment name | Test edusignment description | 0                                    | 0                              | 1388534400               | 1388620800 |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Test edusignment name"
@@ -105,8 +105,8 @@ Feature: Grant an extension to an offline student
   @javascript @_alert
   Scenario: Granting extensions to an offline edusignment (batch action)
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled | allowsubmissionsfromdate    | duedate    |
-      | edusign   | C1     | edusign1  | Test edusignment name | Test edusignment description | 0                                   | 0                             | 1388534400                  | 1388620800 |
+      | activity | course | idnumber | name                  | intro                        | edusignsubmission_onlinetext_enabled | edusignsubmission_file_enabled | allowsubmissionsfromdate | duedate    |
+      | edusign  | C1     | edusign1 | Test edusignment name | Test edusignment description | 0                                    | 0                              | 1388534400               | 1388620800 |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Test edusignment name"

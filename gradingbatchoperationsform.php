@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 
 /**
@@ -34,13 +34,11 @@ require_once($CFG->dirroot . '/mod/edusign/locallib.php');
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_edusign_grading_batch_operations_form extends moodleform
-{
+class mod_edusign_grading_batch_operations_form extends moodleform {
     /**
      * Define this form - called by the parent constructor.
      */
-    public function definition()
-    {
+    public function definition() {
         $mform = $this->_form;
         $instance = $this->_customdata;
 

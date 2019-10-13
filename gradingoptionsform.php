@@ -24,8 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 
 /**
@@ -58,10 +57,10 @@ class mod_edusign_grading_options_form extends moodleform {
         }
         $mform->addElement('select', 'perpage', get_string('edusignmentsperpage', 'edusign'), $options, $dirtyclass);
         $options = array('' => get_string('filternone', 'edusign'),
-                         edusign_FILTER_NOT_SUBMITTED => get_string('filternotsubmitted', 'edusign'),
-                         edusign_FILTER_SUBMITTED => get_string('filtersubmitted', 'edusign'),
-                         edusign_FILTER_REQUIRE_GRADING => get_string('filterrequiregrading', 'edusign'),
-                         edusign_FILTER_GRANTED_EXTENSION => get_string('filtergrantedextension', 'edusign'));
+                edusign_FILTER_NOT_SUBMITTED => get_string('filternotsubmitted', 'edusign'),
+                edusign_FILTER_SUBMITTED => get_string('filtersubmitted', 'edusign'),
+                edusign_FILTER_REQUIRE_GRADING => get_string('filterrequiregrading', 'edusign'),
+                edusign_FILTER_GRANTED_EXTENSION => get_string('filtergrantedextension', 'edusign'));
         if ($instance['submissionsenabled']) {
             $mform->addElement('select', 'filter', get_string('filter', 'edusign'), $options, $dirtyclass);
         }

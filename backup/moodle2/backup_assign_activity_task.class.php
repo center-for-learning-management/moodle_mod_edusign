@@ -52,6 +52,7 @@ class backup_edusign_activity_task extends backup_activity_task {
     /**
      * Code the transformations to perform in the activity in
      * order to get transportable (encoded) links
+     *
      * @param string $content
      * @return string
      */
@@ -60,10 +61,10 @@ class backup_edusign_activity_task extends backup_activity_task {
 
         $base = preg_quote($CFG->wwwroot, "/");
 
-        $search = "/(".$base."\/mod\/edusign\/index.php\?id\=)([0-9]+)/";
+        $search = "/(" . $base . "\/mod\/edusign\/index.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@edusignINDEX*$2@$', $content);
 
-        $search = "/(".$base."\/mod\/edusign\/view.php\?id\=)([0-9]+)/";
+        $search = "/(" . $base . "\/mod\/edusign\/view.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@edusignVIEWBYID*$2@$', $content);
 
         return $content;

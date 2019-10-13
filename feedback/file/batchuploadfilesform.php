@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot . '/mod/edusign/feedback/file/locallib.php');
 
 /**
@@ -45,21 +45,21 @@ class edusignfeedback_file_batch_upload_files_form extends moodleform {
         $params = $this->_customdata;
 
         $mform->addElement('header', 'batchuploadfilesforusers', get_string('batchuploadfilesforusers', 'edusignfeedback_file',
-            count($params['users'])));
+                count($params['users'])));
         $mform->addElement('static', 'userslist', get_string('selectedusers', 'edusignfeedback_file'), $params['usershtml']);
 
         $data = new stdClass();
         $fileoptions = array('subdirs' => 1,
-                                'maxbytes' => $COURSE->maxbytes,
-                                'accepted_types' => '*',
-                                'return_types' => FILE_INTERNAL);
+                'maxbytes' => $COURSE->maxbytes,
+                'accepted_types' => '*',
+                'return_types' => FILE_INTERNAL);
 
         $data = file_prepare_standard_filemanager($data,
-                                                  'files',
-                                                  $fileoptions,
-                                                  $params['context'],
-                                                  'edusignfeedback_file',
-                                                  edusignFEEDBACK_FILE_BATCH_FILEAREA, $USER->id);
+                'files',
+                $fileoptions,
+                $params['context'],
+                'edusignfeedback_file',
+                edusignFEEDBACK_FILE_BATCH_FILEAREA, $USER->id);
 
         $mform->addElement('filemanager', 'files_filemanager', '', null, $fileoptions);
 

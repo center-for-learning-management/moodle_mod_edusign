@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Set the initial order for the feedback comments plugin (top)
+ *
  * @return bool
  */
 function xmldb_edusignfeedback_comments_install() {

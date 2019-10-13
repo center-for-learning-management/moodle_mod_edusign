@@ -43,6 +43,7 @@ defined('MOODLE_INTERNAL') || die();
 class grading_form_viewed extends base {
     /**
      * Flag for prevention of direct create() call.
+     *
      * @var bool
      */
     protected static $preventcreatecall = true;
@@ -56,11 +57,11 @@ class grading_form_viewed extends base {
      */
     public static function create_from_user(\edusign $edusign, \stdClass $user) {
         $data = array(
-            'relateduserid' => $user->id,
-            'context' => $edusign->get_context(),
-            'other' => array(
-                'edusignid' => $edusign->get_instance()->id,
-            ),
+                'relateduserid' => $user->id,
+                'context' => $edusign->get_context(),
+                'other' => array(
+                        'edusignid' => $edusign->get_instance()->id,
+                ),
         );
         self::$preventcreatecall = false;
         /** @var grading_form_viewed $event */
@@ -95,7 +96,7 @@ class grading_form_viewed extends base {
      */
     public function get_description() {
         return "The user with id '$this->userid' viewed the grading form for the user with id '$this->relateduserid' " .
-            "for the edusignment with course module id '$this->contextinstanceid'.";
+                "for the edusignment with course module id '$this->contextinstanceid'.";
     }
 
     /**
@@ -106,7 +107,7 @@ class grading_form_viewed extends base {
     protected function get_legacy_logdata() {
         $user = $this->get_record_snapshot('user', $this->relateduserid);
         $msg = get_string('viewgradingformforstudent', 'edusign',
-            array('id' => $user->id, 'fullname' => fullname($user)));
+                array('id' => $user->id, 'fullname' => fullname($user)));
         $this->set_legacy_logdata('view grading form', $msg);
         return parent::get_legacy_logdata();
     }
