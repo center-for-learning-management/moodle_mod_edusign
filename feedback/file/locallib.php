@@ -96,7 +96,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
         }
         if (isset($filekey)) {
             $draftareainfo = file_get_draft_area_info($data->$filekey);
-            $filecount = $this->count_files($grade->id, edusignFEEDBACK_FILE_FILEAREA);
+            $filecount = $this->count_files($grade->id, EDUSIGNFEEDBACK_FILE_FILEAREA);
             if ($filecount != $draftareainfo['filecount']) {
                 return true;
             } else {
@@ -107,7 +107,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                 $files = $fs->get_area_files(
                         $this->edusignment->get_context()->id,
                         'edusignfeedback_file',
-                        edusignFEEDBACK_FILE_FILEAREA,
+                        EDUSIGNFEEDBACK_FILE_FILEAREA,
                         $grade->id,
                         'id',
                         false
@@ -224,7 +224,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                 $fileoptions,
                 $this->edusignment->get_context(),
                 'edusignfeedback_file',
-                edusignFEEDBACK_FILE_FILEAREA,
+                EDUSIGNFEEDBACK_FILE_FILEAREA,
                 $gradeid
         );
         $mform->addElement('filemanager', $elementname . '_filemanager', $this->get_name(), null, $fileoptions);
@@ -265,11 +265,11 @@ class edusign_feedback_file extends edusign_feedback_plugin {
 
         $filefeedback = $this->get_file_feedback($grade->id);
         if ($filefeedback) {
-            $filefeedback->numfiles = $this->count_files($grade->id, edusignFEEDBACK_FILE_FILEAREA);
+            $filefeedback->numfiles = $this->count_files($grade->id, EDUSIGNFEEDBACK_FILE_FILEAREA);
             return $DB->update_record('edusignfeedback_file', $filefeedback);
         } else {
             $filefeedback = new stdClass();
-            $filefeedback->numfiles = $this->count_files($grade->id, edusignFEEDBACK_FILE_FILEAREA);
+            $filefeedback->numfiles = $this->count_files($grade->id, EDUSIGNFEEDBACK_FILE_FILEAREA);
             $filefeedback->grade = $grade->id;
             $filefeedback->edusignment = $this->edusignment->get_instance()->id;
             return $DB->insert_record('edusignfeedback_file', $filefeedback) > 0;
@@ -299,7 +299,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                 $fileoptions,
                 $this->edusignment->get_context(),
                 'edusignfeedback_file',
-                edusignFEEDBACK_FILE_FILEAREA,
+                EDUSIGNFEEDBACK_FILE_FILEAREA,
                 $grade->id
         );
 
@@ -315,15 +315,15 @@ class edusign_feedback_file extends edusign_feedback_plugin {
      */
     public function view_summary(stdClass $grade, & $showviewlink) {
 
-        $count = $this->count_files($grade->id, edusignFEEDBACK_FILE_FILEAREA);
+        $count = $this->count_files($grade->id, EDUSIGNFEEDBACK_FILE_FILEAREA);
 
         // Show a view all link if the number of files is over this limit.
-        $showviewlink = $count > edusignFEEDBACK_FILE_MAXSUMMARYFILES;
+        $showviewlink = $count > EDUSIGNFEEDBACK_FILE_MAXSUMMARYFILES;
 
-        if ($count <= edusignFEEDBACK_FILE_MAXSUMMARYFILES) {
+        if ($count <= EDUSIGNFEEDBACK_FILE_MAXSUMMARYFILES) {
             return $this->edusignment->render_area_files(
                     'edusignfeedback_file',
-                    edusignFEEDBACK_FILE_FILEAREA,
+                    EDUSIGNFEEDBACK_FILE_FILEAREA,
                     $grade->id
             );
         } else {
@@ -340,7 +340,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
     public function view(stdClass $grade) {
         return $this->edusignment->render_area_files(
                 'edusignfeedback_file',
-                edusignFEEDBACK_FILE_FILEAREA,
+                EDUSIGNFEEDBACK_FILE_FILEAREA,
                 $grade->id
         );
     }
@@ -367,7 +367,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
      * @param stdClass $grade
      */
     public function is_empty(stdClass $grade) {
-        return $this->count_files($grade->id, edusignFEEDBACK_FILE_FILEAREA) == 0;
+        return $this->count_files($grade->id, EDUSIGNFEEDBACK_FILE_FILEAREA) == 0;
     }
 
     /**
@@ -376,7 +376,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
      * @return array - An array of fileareas (keys) and descriptions (values)
      */
     public function get_file_areas() {
-        return array(edusignFEEDBACK_FILE_FILEAREA => $this->get_name());
+        return array(EDUSIGNFEEDBACK_FILE_FILEAREA => $this->get_name());
     }
 
     /**
@@ -434,13 +434,13 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                 $oldsubmission->id,
                 $this->edusignment->get_context()->id,
                 'edusignfeedback_file',
-                edusignFEEDBACK_FILE_FILEAREA,
+                EDUSIGNFEEDBACK_FILE_FILEAREA,
                 $grade->id
         );
 
         // Now count them!
         $filefeedback = new stdClass();
-        $filefeedback->numfiles = $this->count_files($grade->id, edusignFEEDBACK_FILE_FILEAREA);
+        $filefeedback->numfiles = $this->count_files($grade->id, EDUSIGNFEEDBACK_FILE_FILEAREA);
         $filefeedback->grade = $grade->id;
         $filefeedback->edusignment = $this->edusignment->get_instance()->id;
         if (!$DB->insert_record('edusignfeedback_file', $filefeedback) > 0) {
@@ -481,8 +481,8 @@ class edusign_feedback_file extends edusign_feedback_plugin {
 
         $usercount = 0;
         foreach ($users as $userid) {
-            if ($usercount >= edusignFEEDBACK_FILE_MAXSUMMARYUSERS) {
-                $moreuserscount = count($users) - edusignFEEDBACK_FILE_MAXSUMMARYUSERS;
+            if ($usercount >= EDUSIGNFEEDBACK_FILE_MAXSUMMARYUSERS) {
+                $moreuserscount = count($users) - EDUSIGNFEEDBACK_FILE_MAXSUMMARYUSERS;
                 $usershtml .= get_string('moreusers', 'edusignfeedback_file', $moreuserscount);
                 break;
             }
@@ -522,7 +522,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                     $this->get_file_options(),
                     $this->edusignment->get_context(),
                     'edusignfeedback_file',
-                    edusignFEEDBACK_FILE_BATCH_FILEAREA,
+                    EDUSIGNFEEDBACK_FILE_BATCH_FILEAREA,
                     $USER->id
             );
             $fs = get_file_storage();
@@ -536,11 +536,11 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                         $fs,
                         $this->edusignment->get_context()->id,
                         'edusignfeedback_file',
-                        edusignFEEDBACK_FILE_BATCH_FILEAREA,
+                        EDUSIGNFEEDBACK_FILE_BATCH_FILEAREA,
                         $USER->id,
                         $this->edusignment->get_context()->id,
                         'edusignfeedback_file',
-                        edusignFEEDBACK_FILE_FILEAREA,
+                        EDUSIGNFEEDBACK_FILE_FILEAREA,
                         $grade->id
                 );
 
@@ -548,14 +548,14 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                 if ($filefeedback) {
                     $filefeedback->numfiles = $this->count_files(
                             $grade->id,
-                            edusignFEEDBACK_FILE_FILEAREA
+                            EDUSIGNFEEDBACK_FILE_FILEAREA
                     );
                     $DB->update_record('edusignfeedback_file', $filefeedback);
                 } else {
                     $filefeedback = new stdClass();
                     $filefeedback->numfiles = $this->count_files(
                             $grade->id,
-                            edusignFEEDBACK_FILE_FILEAREA
+                            EDUSIGNFEEDBACK_FILE_FILEAREA
                     );
                     $filefeedback->grade = $grade->id;
                     $filefeedback->edusignment = $this->edusignment->get_instance()->id;
@@ -567,7 +567,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
             $fs->delete_area_files(
                     $this->edusignment->get_context()->id,
                     'edusignfeedback_file',
-                    edusignFEEDBACK_FILE_BATCH_FILEAREA,
+                    EDUSIGNFEEDBACK_FILE_BATCH_FILEAREA,
                     $USER->id
             );
 
@@ -662,7 +662,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                         'feedbackzip',
                         $contextid,
                         'edusignfeedback_file',
-                        edusignFEEDBACK_FILE_IMPORT_FILEAREA,
+                        EDUSIGNFEEDBACK_FILE_IMPORT_FILEAREA,
                         $USER->id,
                         '/',
                         'import.zip',

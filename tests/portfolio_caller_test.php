@@ -62,7 +62,7 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
         $dummy = (object) array(
                 'contextid' => $context->id,
                 'component' => 'edusignsubmission_file',
-                'filearea' => edusignSUBMISSION_FILE_FILEAREA,
+                'filearea' => EDUSIGNSUBMISSION_FILE_FILEAREA,
                 'itemid' => $submission->id,
                 'filepath' => '/',
                 'filename' => 'myedusignmnent.pdf'
@@ -80,7 +80,7 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
                 array(
                         'cmid' => $cm->id,
                         'sid' => $submission->id,
-                        'area' => edusignSUBMISSION_FILE_FILEAREA,
+                        'area' => EDUSIGNSUBMISSION_FILE_FILEAREA,
                         'component' => 'edusignsubmission_file',
                 )
         );
@@ -112,7 +112,7 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
         $dummy = (object) array(
                 'contextid' => $context->id,
                 'component' => 'edusignsubmission_file',
-                'filearea' => edusignSUBMISSION_FILE_FILEAREA,
+                'filearea' => EDUSIGNSUBMISSION_FILE_FILEAREA,
                 'itemid' => $submission->id,
                 'filepath' => '/',
                 'filename' => 'myedusignmnent.pdf'
@@ -161,7 +161,7 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
         $dummy = (object) array(
                 'contextid' => $context->id,
                 'component' => 'edusignsubmission_file',
-                'filearea' => edusignSUBMISSION_FILE_FILEAREA,
+                'filearea' => EDUSIGNSUBMISSION_FILE_FILEAREA,
                 'itemid' => $submission->id,
                 'filepath' => '/',
                 'filename' => 'myedusignmnent.pdf'
@@ -179,7 +179,7 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
                 array(
                         'cmid' => $cm->id,
                         'sid' => $submission->id,
-                        'area' => edusignSUBMISSION_FILE_FILEAREA,
+                        'area' => EDUSIGNSUBMISSION_FILE_FILEAREA,
                         'component' => 'edusignsubmission_file',
                 )
         );
@@ -218,7 +218,7 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
         $dummy = (object) array(
                 'contextid' => $context->id,
                 'component' => 'edusignsubmission_file',
-                'filearea' => edusignSUBMISSION_FILE_FILEAREA,
+                'filearea' => EDUSIGNSUBMISSION_FILE_FILEAREA,
                 'itemid' => $submission->id,
                 'filepath' => '/',
                 'filename' => 'myedusignmnent.pdf'
@@ -241,7 +241,7 @@ class mod_edusign_portfolio_caller_testcase extends advanced_testcase {
                 array(
                         'cmid' => $cm->id,
                         'sid' => $submission->id,
-                        'area' => edusignSUBMISSION_FILE_FILEAREA,
+                        'area' => EDUSIGNSUBMISSION_FILE_FILEAREA,
                         'component' => 'edusignsubmission_file',
                 )
         );

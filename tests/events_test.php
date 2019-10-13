@@ -423,7 +423,7 @@ class edusign_events_testcase extends advanced_testcase {
 
         // Test process_set_batch_marking_workflow_state.
         $sink = $this->redirectEvents();
-        $edusign->testable_process_set_batch_marking_workflow_state($student->id, edusign_MARKING_WORKFLOW_STATE_INREVIEW);
+        $edusign->testable_process_set_batch_marking_workflow_state($student->id, EDUSIGN_MARKING_WORKFLOW_STATE_INREVIEW);
 
         $events = $sink->get_events();
         $this->assertCount(1, $events);
@@ -433,14 +433,14 @@ class edusign_events_testcase extends advanced_testcase {
         $this->assertEquals($edusign->get_instance()->id, $event->objectid);
         $this->assertEquals($student->id, $event->relateduserid);
         $this->assertEquals($teacher->id, $event->userid);
-        $this->assertEquals(edusign_MARKING_WORKFLOW_STATE_INREVIEW, $event->other['newstate']);
+        $this->assertEquals(EDUSIGN_MARKING_WORKFLOW_STATE_INREVIEW, $event->other['newstate']);
         $expected = array(
                 $edusign->get_course()->id,
                 'edusign',
                 'set marking workflow state',
                 'view.php?id=' . $edusign->get_course_module()->id,
                 get_string('setmarkingworkflowstateforlog', 'edusign', array('id' => $student->id,
-                        'fullname' => fullname($student), 'state' => edusign_MARKING_WORKFLOW_STATE_INREVIEW)),
+                        'fullname' => fullname($student), 'state' => EDUSIGN_MARKING_WORKFLOW_STATE_INREVIEW)),
                 $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
@@ -461,14 +461,14 @@ class edusign_events_testcase extends advanced_testcase {
         $this->assertEquals($edusign->get_instance()->id, $event->objectid);
         $this->assertEquals($student->id, $event->relateduserid);
         $this->assertEquals($teacher->id, $event->userid);
-        $this->assertEquals(edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE, $event->other['newstate']);
+        $this->assertEquals(EDUSIGN_MARKING_WORKFLOW_STATE_READYFORRELEASE, $event->other['newstate']);
         $expected = array(
                 $edusign->get_course()->id,
                 'edusign',
                 'set marking workflow state',
                 'view.php?id=' . $edusign->get_course_module()->id,
                 get_string('setmarkingworkflowstateforlog', 'edusign', array('id' => $student->id,
-                        'fullname' => fullname($student), 'state' => edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE)),
+                        'fullname' => fullname($student), 'state' => EDUSIGN_MARKING_WORKFLOW_STATE_READYFORRELEASE)),
                 $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
@@ -493,14 +493,14 @@ class edusign_events_testcase extends advanced_testcase {
         $this->assertEquals($edusign->get_instance()->id, $event->objectid);
         $this->assertEquals($student->id, $event->relateduserid);
         $this->assertEquals($teacher->id, $event->userid);
-        $this->assertEquals(edusign_MARKING_WORKFLOW_STATE_INMARKING, $event->other['newstate']);
+        $this->assertEquals(EDUSIGN_MARKING_WORKFLOW_STATE_INMARKING, $event->other['newstate']);
         $expected = array(
                 $edusign->get_course()->id,
                 'edusign',
                 'set marking workflow state',
                 'view.php?id=' . $edusign->get_course_module()->id,
                 get_string('setmarkingworkflowstateforlog', 'edusign', array('id' => $student->id,
-                        'fullname' => fullname($student), 'state' => edusign_MARKING_WORKFLOW_STATE_INMARKING)),
+                        'fullname' => fullname($student), 'state' => EDUSIGN_MARKING_WORKFLOW_STATE_INMARKING)),
                 $edusign->get_course_module()->id
         );
         $this->assertEventLegacyLogData($expected, $event);
@@ -518,7 +518,7 @@ class edusign_events_testcase extends advanced_testcase {
         $edusign = $this->create_instance($course);
         $submission1 = $edusign->get_user_submission($student->id, true, 0);
         $submission2 = $edusign->get_user_submission($student->id, true, 1);
-        $submission2->status = edusign_SUBMISSION_STATUS_REOPENED;
+        $submission2->status = EDUSIGN_SUBMISSION_STATUS_REOPENED;
         $edusign->testable_update_submission($submission2, $student->id, time(), $edusign->get_instance()->teamsubmission);
 
         $sink = $this->redirectEvents();

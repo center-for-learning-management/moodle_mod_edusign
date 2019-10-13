@@ -474,7 +474,7 @@ class mod_edusign_external extends external_api {
                                 false);
 
                         $edusignment['introattachments'] = external_util::get_area_files($context->id, 'mod_edusign',
-                                edusign_INTROATTACHMENT_FILEAREA, 0);
+                                EDUSIGN_INTROATTACHMENT_FILEAREA, 0);
                     }
 
                     if ($module->requiresubmissionstatement) {

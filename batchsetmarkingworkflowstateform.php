@@ -52,7 +52,7 @@ class mod_edusign_batch_set_marking_workflow_state_form extends moodleform {
         // Don't allow notification to be sent until in "Released" state.
         $mform->addElement('selectyesno', 'sendstudentnotifications', get_string('sendstudentnotifications', 'edusign'));
         $mform->setDefault('sendstudentnotifications', 0);
-        $mform->disabledIf('sendstudentnotifications', 'markingworkflowstate', 'neq', edusign_MARKING_WORKFLOW_STATE_RELEASED);
+        $mform->disabledIf('sendstudentnotifications', 'markingworkflowstate', 'neq', EDUSIGN_MARKING_WORKFLOW_STATE_RELEASED);
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
@@ -77,7 +77,7 @@ class mod_edusign_batch_set_marking_workflow_state_form extends moodleform {
         // As the implementation of this feature exists currently, no user will see a validation
         // failure from this form, but this check ensures the form won't validate if someone
         // manipulates the 'sendstudentnotifications' field's disabled attribute client-side.
-        if (!empty($data['sendstudentnotifications']) && $data['markingworkflowstate'] != edusign_MARKING_WORKFLOW_STATE_RELEASED) {
+        if (!empty($data['sendstudentnotifications']) && $data['markingworkflowstate'] != EDUSIGN_MARKING_WORKFLOW_STATE_RELEASED) {
             $errors['sendstudentnotifications'] = get_string('studentnotificationworkflowstateerror', 'edusign');
         }
 

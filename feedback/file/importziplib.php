@@ -145,7 +145,7 @@ class edusignfeedback_file_zip_importer {
 
         return $fs->delete_area_files($contextid,
                 'edusignfeedback_file',
-                edusignFEEDBACK_FILE_IMPORT_FILEAREA,
+                EDUSIGNFEEDBACK_FILE_IMPORT_FILEAREA,
                 $USER->id);
     }
 
@@ -167,12 +167,12 @@ class edusignfeedback_file_zip_importer {
         raise_memory_limit(MEMORY_EXTRA);
 
         $packer = get_file_packer('application/zip');
-        core_php_time_limit::raise(edusignFEEDBACK_FILE_MAXFILEUNZIPTIME);
+        core_php_time_limit::raise(EDUSIGNFEEDBACK_FILE_MAXFILEUNZIPTIME);
 
         return $packer->extract_to_storage($zipfile,
                 $contextid,
                 'edusignfeedback_file',
-                edusignFEEDBACK_FILE_IMPORT_FILEAREA,
+                EDUSIGNFEEDBACK_FILE_IMPORT_FILEAREA,
                 $USER->id,
                 'import');
 
@@ -190,7 +190,7 @@ class edusignfeedback_file_zip_importer {
         $fs = get_file_storage();
         $files = $fs->get_directory_files($contextid,
                 'edusignfeedback_file',
-                edusignFEEDBACK_FILE_IMPORT_FILEAREA,
+                EDUSIGNFEEDBACK_FILE_IMPORT_FILEAREA,
                 $USER->id,
                 '/import/', true); // Get files recursive (all levels).
 
@@ -209,7 +209,7 @@ class edusignfeedback_file_zip_importer {
     public function import_zip_files($edusignment, $fileplugin) {
         global $CFG, $PAGE, $DB;
 
-        core_php_time_limit::raise(edusignFEEDBACK_FILE_MAXFILEUNZIPTIME);
+        core_php_time_limit::raise(EDUSIGNFEEDBACK_FILE_MAXFILEUNZIPTIME);
         $packer = get_file_packer('application/zip');
 
         $feedbackfilesupdated = 0;
@@ -255,7 +255,7 @@ class edusignfeedback_file_zip_importer {
 
                     if ($oldfile = $fs->get_file($contextid,
                             'edusignfeedback_file',
-                            edusignFEEDBACK_FILE_FILEAREA,
+                            EDUSIGNFEEDBACK_FILE_FILEAREA,
                             $grade->id,
                             $dirname,
                             $basename)) {
@@ -267,7 +267,7 @@ class edusignfeedback_file_zip_importer {
                         $newfilerecord = new stdClass();
                         $newfilerecord->contextid = $contextid;
                         $newfilerecord->component = 'edusignfeedback_file';
-                        $newfilerecord->filearea = edusignFEEDBACK_FILE_FILEAREA;
+                        $newfilerecord->filearea = EDUSIGNFEEDBACK_FILE_FILEAREA;
                         $newfilerecord->filename = $basename;
                         $newfilerecord->filepath = $dirnamewslash;
                         $newfilerecord->itemid = $grade->id;

@@ -184,7 +184,7 @@ class provider implements
         $fs->delete_area_files(
             $deletedata->get_context()->id,
             'edusignsubmission_signing',
-            edusignSUBMISSION_signing_FILEAREA,
+            EDUSIGNSUBMISSION_SIGNING_FILEAREA,
             $submissionid
         );
 

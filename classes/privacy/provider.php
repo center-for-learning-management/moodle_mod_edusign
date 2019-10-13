@@ -195,13 +195,13 @@ class provider implements
 
         manager::plugintype_class_callback(
                 'edusignfeedback',
-                self::edusignFEEDBACK_INTERFACE,
+                self::EDUSIGNFEEDBACK_INTERFACE,
                 'get_context_for_userid_within_feedback',
                 [$userid, $contextlist]
         );
         manager::plugintype_class_callback(
                 'edusignsubmission',
-                self::edusignSUBMISSION_INTERFACE,
+                self::EDUSIGNSUBMISSION_INTERFACE,
                 'get_context_for_userid_within_submission',
                 [$userid, $contextlist]
         );
@@ -275,13 +275,13 @@ class provider implements
 
         manager::plugintype_class_callback(
                 'edusignsubmission',
-                self::edusignSUBMISSION_USER_INTERFACE,
+                self::EDUSIGNSUBMISSION_USER_INTERFACE,
                 'get_userids_from_context',
                 [$userlist]
         );
         manager::plugintype_class_callback(
                 'edusignfeedback',
-                self::edusignFEEDBACK_USER_INTERFACE,
+                self::EDUSIGNFEEDBACK_USER_INTERFACE,
                 'get_userids_from_context',
                 [$userlist]
         );
@@ -351,14 +351,14 @@ class provider implements
                 $requestdata = new edusign_plugin_request_data($context, $edusign);
                 manager::plugintype_class_callback(
                         'edusignsubmission',
-                        self::edusignSUBMISSION_INTERFACE,
+                        self::EDUSIGNSUBMISSION_INTERFACE,
                         'delete_submission_for_context',
                         [$requestdata]
                 );
                 $requestdata = new edusign_plugin_request_data($context, $edusign);
                 manager::plugintype_class_callback(
                         'edusignfeedback',
-                        self::edusignFEEDBACK_INTERFACE,
+                        self::EDUSIGNFEEDBACK_INTERFACE,
                         'delete_feedback_for_context',
                         [$requestdata]
                 );
@@ -403,7 +403,7 @@ class provider implements
                 $requestdata = new edusign_plugin_request_data($context, $edusign, $submission, [], $user);
                 manager::plugintype_class_callback(
                         'edusignsubmission',
-                        self::edusignSUBMISSION_INTERFACE,
+                        self::EDUSIGNSUBMISSION_INTERFACE,
                         'delete_submission_for_userid',
                         [$requestdata]
                 );
@@ -416,7 +416,7 @@ class provider implements
                 $requestdata = new edusign_plugin_request_data($context, $edusign, $grade, [], $user);
                 manager::plugintype_class_callback(
                         'edusignfeedback',
-                        self::edusignFEEDBACK_INTERFACE,
+                        self::EDUSIGNFEEDBACK_INTERFACE,
                         'delete_feedback_for_grade',
                         [$requestdata]
                 );
@@ -456,13 +456,13 @@ class provider implements
         $requestdata->populate_submissions_and_grades();
         manager::plugintype_class_callback(
                 'edusignsubmission',
-                self::edusignSUBMISSION_USER_INTERFACE,
+                self::EDUSIGNSUBMISSION_USER_INTERFACE,
                 'delete_submissions',
                 [$requestdata]
         );
         manager::plugintype_class_callback(
                 'edusignfeedback',
-                self::edusignFEEDBACK_USER_INTERFACE,
+                self::EDUSIGNFEEDBACK_USER_INTERFACE,
                 'delete_feedback_for_grades',
                 [$requestdata]
         );
@@ -549,11 +549,11 @@ class provider implements
         // Call sub-plugins to see if they have information not already collected.
         manager::plugintype_class_callback(
                 'edusignsubmission',
-                self::edusignSUBMISSION_INTERFACE,
+                self::EDUSIGNSUBMISSION_INTERFACE,
                 'get_student_user_ids',
                 [$useridlist]
         );
-        manager::plugintype_class_callback('edusignfeedback', self::edusignFEEDBACK_INTERFACE, 'get_student_user_ids',
+        manager::plugintype_class_callback('edusignfeedback', self::EDUSIGNFEEDBACK_INTERFACE, 'get_student_user_ids',
                 [$useridlist]);
 
         $userids = $useridlist->get_userids();
@@ -716,7 +716,7 @@ class provider implements
             $params = new edusign_plugin_request_data($context, $edusign, $submission, $submissionpath, $teacher);
             manager::plugintype_class_callback(
                     'edusignsubmission',
-                    self::edusignSUBMISSION_INTERFACE,
+                    self::EDUSIGNSUBMISSION_INTERFACE,
                     'export_submission_user_data',
                     [$params]
             );
@@ -728,7 +728,7 @@ class provider implements
                 $params = new edusign_plugin_request_data($context, $edusign, $grade, $submissionpath, $teacher);
                 manager::plugintype_class_callback(
                         'edusignfeedback',
-                        self::edusignFEEDBACK_INTERFACE,
+                        self::EDUSIGNFEEDBACK_INTERFACE,
                         'export_feedback_user_data',
                         [$params]
                 );

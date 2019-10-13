@@ -59,7 +59,7 @@ class edusignfeedback_file_batch_upload_files_form extends moodleform {
                 $fileoptions,
                 $params['context'],
                 'edusignfeedback_file',
-                edusignFEEDBACK_FILE_BATCH_FILEAREA, $USER->id);
+                EDUSIGNFEEDBACK_FILE_BATCH_FILEAREA, $USER->id);
 
         $mform->addElement('filemanager', 'files_filemanager', '', null, $fileoptions);
 

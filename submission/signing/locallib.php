@@ -165,7 +165,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
                 $editoroptions,
                 $this->edusignment->get_context(),
                 'edusignsubmission_signing',
-                edusignSUBMISSION_signing_FILEAREA,
+                EDUSIGNSUBMISSION_SIGNING_FILEAREA,
                 $submissionid
         );
 
@@ -216,7 +216,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
         $files = $fs->get_area_files(
                 $this->edusignment->get_context()->id,
                 'edusignsubmission_signing',
-                edusignSUBMISSION_SIGNING_FILEAREA,
+                EDUSIGNSUBMISSION_SIGNING_FILEAREA,
                 $submission->id,
                 'id',
                 false
@@ -350,7 +350,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
         if ($signingsubmission) {
             // This contains the shortened version of the text plus an optional 'Export to portfolio' button.
             $text = $this->edusignment->render_editor_content(
-                    edusignSUBMISSION_SIGNING_FILEAREA,
+                    EDUSIGNSUBMISSION_SIGNING_FILEAREA,
                     $signingsubmission->submission,
                     $this->get_type(),
                     'signing',
@@ -397,7 +397,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
             $fsfiles = $fs->get_area_files(
                     $this->edusignment->get_context()->id,
                     'edusignsubmission_signing',
-                    edusignSUBMISSION_SIGNING_FILEAREA,
+                    EDUSIGNSUBMISSION_SIGNING_FILEAREA,
                     $submission->id,
                     'timemodified',
                     false
@@ -426,7 +426,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
         if ($signingsubmission) {
             // Render for portfolio API.
             $result .= $this->edusignment->render_editor_content(
-                    edusignSUBMISSION_SIGNING_FILEAREA,
+                    EDUSIGNSUBMISSION_SIGNING_FILEAREA,
                     $signingsubmission->submission,
                     $this->get_type(),
                     'signing',
@@ -513,7 +513,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
                 $oldsubmission->id,
                 $this->edusignment->get_context()->id,
                 'edusignsubmission_signing',
-                edusignSUBMISSION_SIGNING_FILEAREA,
+                EDUSIGNSUBMISSION_SIGNING_FILEAREA,
                 $submission->id
         );
         return true;
@@ -609,7 +609,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
      * @return array - An array of fileareas (keys) and descriptions (values)
      */
     public function get_file_areas() {
-        return array(edusignSUBMISSION_SIGNING_FILEAREA => $this->get_name());
+        return array(EDUSIGNSUBMISSION_SIGNING_FILEAREA => $this->get_name());
     }
 
     /**
@@ -628,7 +628,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
         $files = $fs->get_area_files(
                 $contextid,
                 'edusignsubmission_signing',
-                edusignSUBMISSION_SIGNING_FILEAREA,
+                EDUSIGNSUBMISSION_SIGNING_FILEAREA,
                 $sourcesubmission->id,
                 'id',
                 false

@@ -72,7 +72,7 @@ class mod_edusign_search_testcase extends advanced_testcase {
         $filerecord = array(
                 'contextid' => $context->id,
                 'component' => 'mod_edusign',
-                'filearea' => edusign_INTROATTACHMENT_FILEAREA,
+                'filearea' => EDUSIGN_INTROATTACHMENT_FILEAREA,
                 'itemid' => 0,
                 'filepath' => '/'
         );

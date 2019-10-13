@@ -214,7 +214,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         )));
 
         // Render the table with the requires grading filter.
-        $gradingtable = new edusign_grading_table($edusign, 1, edusign_FILTER_REQUIRE_GRADING, 0, true);
+        $gradingtable = new edusign_grading_table($edusign, 1, EDUSIGN_FILTER_REQUIRE_GRADING, 0, true);
         $output = $edusign->get_renderer()->render($gradingtable);
 
         // Test that the filter function does not throw errors for edusignments with no grade.
@@ -375,7 +375,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         // Simulate a student viewing the edusignment without submitting.
         $this->setUser($student);
         $submission = $edusign->get_user_submission($student->id, true);
-        $submission->status = edusign_SUBMISSION_STATUS_NEW;
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
         $edusign->testable_update_submission($submission, $student->id, true, false);
         $submittedtime = time();
 
@@ -1274,10 +1274,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $this->assertEquals(0, $edusign->count_submissions());
         $this->assertEquals(1, $edusign->count_submissions(true));
         $this->assertEquals(0, $edusign->count_submissions_need_grading());
-        $this->assertEquals(1, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_NEW));
+        $this->assertEquals(1, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_NEW));
         $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_DRAFT));
         $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_SUBMITTED));
-        $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_REOPENED));
+        $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_REOPENED));
     }
 
     public function test_count_submissions_draft() {
@@ -1298,10 +1298,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $this->assertEquals(1, $edusign->count_submissions());
         $this->assertEquals(1, $edusign->count_submissions(true));
         $this->assertEquals(0, $edusign->count_submissions_need_grading());
-        $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_NEW));
+        $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_NEW));
         $this->assertEquals(1, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_DRAFT));
         $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_SUBMITTED));
-        $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_REOPENED));
+        $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_REOPENED));
     }
 
     public function test_count_submissions_submitted() {
@@ -1324,10 +1324,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $this->assertEquals(1, $edusign->count_submissions());
         $this->assertEquals(1, $edusign->count_submissions(true));
         $this->assertEquals(1, $edusign->count_submissions_need_grading());
-        $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_NEW));
+        $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_NEW));
         $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_DRAFT));
         $this->assertEquals(1, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_SUBMITTED));
-        $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_REOPENED));
+        $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_REOPENED));
     }
 
     public function test_count_submissions_graded() {
@@ -1350,10 +1350,10 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $this->assertEquals(1, $edusign->count_submissions());
         $this->assertEquals(1, $edusign->count_submissions(true));
         $this->assertEquals(0, $edusign->count_submissions_need_grading());
-        $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_NEW));
+        $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_NEW));
         $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_DRAFT));
         $this->assertEquals(1, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_SUBMITTED));
-        $this->assertEquals(0, $edusign->count_submissions_with_status(edusign_SUBMISSION_STATUS_REOPENED));
+        $this->assertEquals(0, $edusign->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_REOPENED));
     }
 
     public function test_count_submissions_graded_group() {
@@ -1629,7 +1629,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $this->submit_for_grading($student, $edusign);
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
                 'sendstudentnotifications' => 1,
-                'workflowstate' => edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE,
+                'workflowstate' => EDUSIGN_MARKING_WORKFLOW_STATE_READYFORRELEASE,
         ]);
 
         cron_setup_user();
@@ -1642,7 +1642,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         // Transition to the released state.
         $this->setUser($teacher);
         $submission = $edusign->get_user_submission($student->id, true);
-        $submission->workflowstate = edusign_MARKING_WORKFLOW_STATE_RELEASED;
+        $submission->workflowstate = EDUSIGN_MARKING_WORKFLOW_STATE_RELEASED;
         $edusign->testable_apply_grade_to_user($submission, $student->id, 0);
 
         // Now run cron and see that one message was sent.
@@ -2509,7 +2509,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
 
         $edusign = $this->create_instance($course, [
-                'attemptreopenmethod' => edusign_ATTEMPT_REOPEN_METHOD_UNTILPASS,
+                'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS,
                 'maxattempts' => 3,
                 'submissiondrafts' => 1,
                 'edusignsubmission_onlinetext_enabled' => 1,
@@ -2583,7 +2583,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
 
         $edusign = $this->create_instance($course, [
-                'attemptreopenmethod' => edusign_ATTEMPT_REOPEN_METHOD_UNTILPASS,
+                'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS,
                 'maxattempts' => 3,
                 'submissiondrafts' => 1,
                 'edusignsubmission_onlinetext_enabled' => 1,
@@ -2626,7 +2626,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
         $teacher = $this->getDataGenerator()->create_and_enrol($course, 'teacher');
 
         $edusign = $this->create_instance($course, [
-                'attemptreopenmethod' => edusign_ATTEMPT_REOPEN_METHOD_UNTILPASS,
+                'attemptreopenmethod' => EDUSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS,
                 'maxattempts' => 3,
                 'submissiondrafts' => 1,
                 'edusignsubmission_onlinetext_enabled' => 1,
@@ -2679,7 +2679,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
 
         // Mark the submission and set to notmarked.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
-                'workflowstate' => edusign_MARKING_WORKFLOW_STATE_NOTMARKED,
+                'workflowstate' => EDUSIGN_MARKING_WORKFLOW_STATE_NOTMARKED,
         ]);
 
         // Check the student can't see the grade.
@@ -2693,7 +2693,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
 
         // Mark the submission and set to inmarking.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
-                'workflowstate' => edusign_MARKING_WORKFLOW_STATE_INMARKING,
+                'workflowstate' => EDUSIGN_MARKING_WORKFLOW_STATE_INMARKING,
         ]);
 
         // Check the student can't see the grade.
@@ -2721,7 +2721,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
 
         // Mark the submission and set to inreview.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
-                'workflowstate' => edusign_MARKING_WORKFLOW_STATE_INREVIEW,
+                'workflowstate' => EDUSIGN_MARKING_WORKFLOW_STATE_INREVIEW,
         ]);
 
         // Check the student can't see the grade.
@@ -2735,7 +2735,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
 
         // Mark the submission and set to readyforrelease.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
-                'workflowstate' => edusign_MARKING_WORKFLOW_STATE_READYFORRELEASE,
+                'workflowstate' => EDUSIGN_MARKING_WORKFLOW_STATE_READYFORRELEASE,
         ]);
 
         // Check the student can't see the grade.
@@ -2749,7 +2749,7 @@ class mod_edusign_locallib_testcase extends advanced_testcase {
 
         // Mark the submission and set to released.
         $this->mark_submission($teacher, $edusign, $student, 50.0, [
-                'workflowstate' => edusign_MARKING_WORKFLOW_STATE_RELEASED,
+                'workflowstate' => EDUSIGN_MARKING_WORKFLOW_STATE_RELEASED,
         ]);
 
         // Check the student can see the grade.
@@ -3801,7 +3801,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
                         'count' => 1,
                 ],
                 'Negative one exactly is not errant' => [
-                        'grade' => edusign_GRADE_NOT_SET,
+                        'grade' => EDUSIGN_GRADE_NOT_SET,
                         'count' => 0,
                 ],
                 'Positive grade is not errant' => [
@@ -3872,7 +3872,7 @@ Anchor link 2:<a title=\"bananas\" href=\"../logo-240x60.gif\">Link text</a>
                         'gradebookvalue' => null,
                 ],
                 'Negative one exactly is not errant, but shouldn\'t be pushed to gradebook' => [
-                        'grade' => edusign_GRADE_NOT_SET,
+                        'grade' => EDUSIGN_GRADE_NOT_SET,
                         'gradebookvalue' => null,
                 ],
                 'Positive grade is not errant' => [

@@ -92,7 +92,7 @@ class edusignfeedback_file_import_zip_form extends moodleform implements rendera
                     if ($grade) {
                         $exists = $fs->file_exists($contextid,
                                 'edusignfeedback_file',
-                                edusignFEEDBACK_FILE_FILEAREA,
+                                EDUSIGNFEEDBACK_FILE_FILEAREA,
                                 $grade->id,
                                 $path['dirname'],
                                 $path['basename']);

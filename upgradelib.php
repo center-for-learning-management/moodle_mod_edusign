@@ -57,7 +57,7 @@ class edusign_upgrade_manager {
         global $DB, $CFG, $USER;
         // Steps to upgrade an edusignment.
 
-        core_php_time_limit::raise(edusign_MAX_UPGRADE_TIME_SECS);
+        core_php_time_limit::raise(EDUSIGN_MAX_UPGRADE_TIME_SECS);
 
         // Get the module details.
         $oldmodule = $DB->get_record('modules', array('name' => 'edusignment'), '*', MUST_EXIST);

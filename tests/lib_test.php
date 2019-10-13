@@ -488,7 +488,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $this->setAdminUser();
 
         // Create a calendar event.
-        $event = $this->create_action_event($course, $edusign, edusign_EVENT_TYPE_DUE);
+        $event = $this->create_action_event($course, $edusign, EDUSIGN_EVENT_TYPE_DUE);
 
         // Now, log out.
         $this->setUser();
@@ -801,7 +801,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
      *
      * @param \stdClass $course The course the edusignment is in
      * @param edusign $edusign The edusignment to create an event for
-     * @param string $eventtype The event type. eg. edusign_EVENT_TYPE_DUE.
+     * @param string $eventtype The event type. eg. EDUSIGN_EVENT_TYPE_DUE.
      * @return bool|calendar_event
      */
     private function create_action_event($course, $edusign, $eventtype) {
@@ -869,7 +869,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $data = ['grade' => 50];
         $edusign->testable_apply_grade_to_user((object) $data, $student->id, 0);
 
-        // Try getting another students grade. This will give a grade of edusign_GRADE_NOT_SET (-1).
+        // Try getting another students grade. This will give a grade of EDUSIGN_GRADE_NOT_SET (-1).
         $edusign->get_user_grade($otherstudent->id, true);
 
         // Rescale.
@@ -879,7 +879,7 @@ class mod_edusign_lib_testcase extends advanced_testcase {
         $studentgrade = $edusign->get_user_grade($student->id, true);
         $otherstudentgrade = $edusign->get_user_grade($otherstudent->id, true);
 
-        // Make sure the real grade is scaled, but the edusign_GRADE_NOT_SET stays the same.
+        // Make sure the real grade is scaled, but the EDUSIGN_GRADE_NOT_SET stays the same.
         $this->assertEquals($studentgrade->grade, 5);
         $this->assertEquals($otherstudentgrade->grade, EDUSIGN_GRADE_NOT_SET);
     }

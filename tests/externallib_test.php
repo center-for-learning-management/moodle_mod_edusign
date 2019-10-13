@@ -75,7 +75,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $submission = new stdClass();
         $submission->edusignment = $edusign->id;
         $submission->userid = $student->id;
-        $submission->status = edusign_SUBMISSION_STATUS_NEW;
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
         $submission->latest = 0;
         $submission->attemptnumber = 0;
         $submission->groupid = 0;
@@ -96,7 +96,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         $submission = new stdClass();
         $submission->edusignment = $edusign->id;
         $submission->userid = $student->id;
-        $submission->status = edusign_SUBMISSION_STATUS_NEW;
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
         $submission->latest = 1;
         $submission->attemptnumber = 1;
         $submission->groupid = 0;
@@ -201,7 +201,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
         ));
 
         // Add a file as edusignment attachment.
-        $filerecord = array('component' => 'mod_edusign', 'filearea' => edusign_INTROATTACHMENT_FILEAREA,
+        $filerecord = array('component' => 'mod_edusign', 'filearea' => EDUSIGN_INTROATTACHMENT_FILEAREA,
                 'contextid' => $context->id, 'itemid' => 0,
                 'filename' => 'introattachment.txt', 'filepath' => '/');
         $fs = get_file_storage();
@@ -2027,7 +2027,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
                 FORMAT_HTML,
                 $edusign->get_context()->id,
                 'edusignsubmission_onlinetext',
-                edusignSUBMISSION_ONLINETEXT_FILEAREA,
+                EDUSIGNSUBMISSION_ONLINETEXT_FILEAREA,
                 $studentsubmission->id
         );
 
@@ -2214,7 +2214,7 @@ class mod_edusign_external_testcase extends externallib_advanced_testcase {
                 FORMAT_HTML,
                 $edusign->get_context()->id,
                 'edusignsubmission_onlinetext',
-                edusignSUBMISSION_ONLINETEXT_FILEAREA,
+                EDUSIGNSUBMISSION_ONLINETEXT_FILEAREA,
                 $studentsubmission->id
         );
 

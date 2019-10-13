@@ -325,7 +325,7 @@ function edusign_update_events($edusign, $override = null) {
         $event->timeduration = 0;
         $event->timesort = $event->timestart + $event->timeduration;
         $event->visible = instance_is_visible('edusign', $edusigninstance);
-        $event->eventtype = edusign_EVENT_TYPE_DUE;
+        $event->eventtype = EDUSIGN_EVENT_TYPE_DUE;
         $event->priority = null;
 
         // Determine the event name and priority.
@@ -805,7 +805,7 @@ function edusign_get_mysubmission_details_for_print_overview(
     if (!$submission ||
             !$submission->status ||
             $submission->status == EDUSIGN_SUBMISSION_STATUS_DRAFT ||
-            $submission->status == edusign_SUBMISSION_STATUS_NEW
+            $submission->status == EDUSIGN_SUBMISSION_STATUS_NEW
     ) {
         $submitdetails .= $strnotsubmittedyet;
     } else {
@@ -817,12 +817,12 @@ function edusign_get_mysubmission_details_for_print_overview(
         if ($workflowstate) {
             $gradingstatus = 'markingworkflowstate' . $workflowstate;
         } else {
-            $gradingstatus = 'markingworkflowstate' . edusign_MARKING_WORKFLOW_STATE_NOTMARKED;
+            $gradingstatus = 'markingworkflowstate' . EDUSIGN_MARKING_WORKFLOW_STATE_NOTMARKED;
         }
     } else if (!empty($submission->grade) && $submission->grade !== null && $submission->grade >= 0) {
-        $gradingstatus = edusign_GRADING_STATUS_GRADED;
+        $gradingstatus = EDUSIGN_GRADING_STATUS_GRADED;
     } else {
-        $gradingstatus = edusign_GRADING_STATUS_NOT_GRADED;
+        $gradingstatus = EDUSIGN_GRADING_STATUS_NOT_GRADED;
     }
     $submitdetails .= ', ' . get_string($gradingstatus, 'edusign');
     $submitdetails .= '</div>';
@@ -1466,7 +1466,7 @@ function edusign_get_file_areas($course, $cm, $context) {
     global $CFG;
     require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 
-    $areas = array(edusign_INTROATTACHMENT_FILEAREA => get_string('introattachments', 'mod_edusign'));
+    $areas = array(EDUSIGN_INTROATTACHMENT_FILEAREA => get_string('introattachments', 'mod_edusign'));
 
     $edusignment = new edusign($context, $cm, $course);
     foreach ($edusignment->get_submission_plugins() as $plugin) {
@@ -1530,7 +1530,7 @@ function edusign_get_file_info(
 
     // Need to find where this belongs to.
     $edusignment = new edusign($context, $cm, $course);
-    if ($filearea === edusign_INTROATTACHMENT_FILEAREA) {
+    if ($filearea === EDUSIGN_INTROATTACHMENT_FILEAREA) {
         if (!has_capability('moodle/course:managefiles', $context)) {
             // Students can not peak here!
             return null;
@@ -1761,7 +1761,7 @@ function edusign_pluginfile(
     require_once($CFG->dirroot . '/mod/edusign/locallib.php');
     $edusign = new edusign($context, $cm, $course);
 
-    if ($filearea !== edusign_INTROATTACHMENT_FILEAREA) {
+    if ($filearea !== EDUSIGN_INTROATTACHMENT_FILEAREA) {
         return false;
     }
     if (!$edusign->show_intro()) {
@@ -1831,7 +1831,7 @@ function edusign_check_updates_since(cm_info $cm, $from, $filter = array()) {
     require_once($CFG->dirroot . '/mod/edusign/locallib.php');
 
     $updates = new stdClass();
-    $updates = course_check_module_updates_since($cm, $from, array(edusign_INTROATTACHMENT_FILEAREA), $filter);
+    $updates = course_check_module_updates_since($cm, $from, array(EDUSIGN_INTROATTACHMENT_FILEAREA), $filter);
 
     // Check if there is a new submission by the user or new grades.
     $select = 'edusignment = :id AND userid = :userid AND (timecreated > :since1 OR timemodified > :since2)';
@@ -1887,7 +1887,7 @@ function edusign_check_updates_since(cm_info $cm, $from, $filter = array()) {
  * Is the event visible?
  *
  * This is used to determine global visibility of an event in all places throughout Moodle. For example,
- * the edusign_EVENT_TYPE_GRADINGDUE event will not be shown to students on their calendar.
+ * the EDUSIGN_EVENT_TYPE_GRADINGDUE event will not be shown to students on their calendar.
  *
  * @param calendar_event $event
  * @param int $userid User id to use for all capability checks, etc. Set to 0 for current user (default).
@@ -1907,7 +1907,7 @@ function mod_edusign_core_calendar_is_event_visible(calendar_event $event, $user
 
     $edusign = new edusign($context, $cm, null);
 
-    if ($event->eventtype == edusign_EVENT_TYPE_GRADINGDUE) {
+    if ($event->eventtype == EDUSIGN_EVENT_TYPE_GRADINGDUE) {
         return $edusign->can_grade($userid);
     } else {
         return true;
@@ -1947,7 +1947,7 @@ function mod_edusign_core_calendar_provide_event_action(
     // Apply overrides.
     $edusign->update_effective_access($userid);
 
-    if ($event->eventtype == edusign_EVENT_TYPE_GRADINGDUE) {
+    if ($event->eventtype == EDUSIGN_EVENT_TYPE_GRADINGDUE) {
         $name = get_string('grade');
         $url = new \moodle_url('/mod/edusign/view.php', [
                 'id' => $cm->id,
@@ -2000,7 +2000,7 @@ function mod_edusign_core_calendar_provide_event_action(
 function mod_edusign_core_calendar_event_action_shows_item_count(calendar_event $event, $itemcount = 0) {
     // List of event types where the action event's item count should be shown.
     $eventtypesshowingitemcount = [
-            edusign_EVENT_TYPE_GRADINGDUE
+            EDUSIGN_EVENT_TYPE_GRADINGDUE
     ];
     // For mod_edusign, item count should be shown if the event type is 'gradingdue' and there is one or more item count.
     return in_array($event->eventtype, $eventtypesshowingitemcount) && $itemcount > 0;
@@ -2067,7 +2067,7 @@ function mod_edusign_core_calendar_event_timestart_updated(\calendar_event $even
         return;
     }
 
-    if (!in_array($event->eventtype, [edusign_EVENT_TYPE_DUE, edusign_EVENT_TYPE_GRADINGDUE])) {
+    if (!in_array($event->eventtype, [EDUSIGN_EVENT_TYPE_DUE, EDUSIGN_EVENT_TYPE_GRADINGDUE])) {
         return;
     }
 
@@ -2086,7 +2086,7 @@ function mod_edusign_core_calendar_event_timestart_updated(\calendar_event $even
     $edusign = new edusign($context, $coursemodule, null);
     $edusign->set_instance($instance);
 
-    if ($event->eventtype == edusign_EVENT_TYPE_DUE) {
+    if ($event->eventtype == EDUSIGN_EVENT_TYPE_DUE) {
         // This check is in here because due date events are currently
         // the only events that can be overridden, so we can save a DB
         // query if we don't bother checking other events.
@@ -2101,7 +2101,7 @@ function mod_edusign_core_calendar_event_timestart_updated(\calendar_event $even
             $instance->duedate = $newduedate;
             $modified = true;
         }
-    } else if ($event->eventtype == edusign_EVENT_TYPE_GRADINGDUE) {
+    } else if ($event->eventtype == EDUSIGN_EVENT_TYPE_GRADINGDUE) {
         $newduedate = $event->timestart;
 
         if ($newduedate != $instance->gradingduedate) {

@@ -471,7 +471,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
         }
 
         if (!$status->teamsubmissionenabled) {
-            if ($status->submission && $status->submission->status != edusign_SUBMISSION_STATUS_NEW) {
+            if ($status->submission && $status->submission->status != EDUSIGN_SUBMISSION_STATUS_NEW) {
                 $statusstr = get_string('submissionstatus_' . $status->submission->status, 'edusign');
                 $o .= $this->output->container($statusstr, 'submissionstatus' . $status->submission->status);
             } else {
@@ -485,7 +485,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
             $group = $status->submissiongroup;
             if (!$group && $status->preventsubmissionnotingroup) {
                 $o .= $this->output->container(get_string('nosubmission', 'edusign'), 'submissionstatus');
-            } else if ($status->teamsubmission && $status->teamsubmission->status != edusign_SUBMISSION_STATUS_NEW) {
+            } else if ($status->teamsubmission && $status->teamsubmission->status != EDUSIGN_SUBMISSION_STATUS_NEW) {
                 $teamstatus = $status->teamsubmission->status;
                 $submissionsummary = get_string('submissionstatus_' . $teamstatus, 'edusign');
                 $groupid = 0;
@@ -528,15 +528,15 @@ class mod_edusign_renderer extends plugin_renderer_base {
         // Grading status.
         $statusstr = '';
         $classname = 'gradingstatus';
-        if ($status->gradingstatus == edusign_GRADING_STATUS_GRADED ||
-                $status->gradingstatus == edusign_GRADING_STATUS_NOT_GRADED) {
+        if ($status->gradingstatus == EDUSIGN_GRADING_STATUS_GRADED ||
+                $status->gradingstatus == EDUSIGN_GRADING_STATUS_NOT_GRADED) {
             $statusstr = get_string($status->gradingstatus, 'edusign');
         } else {
             $gradingstatus = 'markingworkflowstate' . $status->gradingstatus;
             $statusstr = get_string($gradingstatus, 'edusign');
         }
-        if ($status->gradingstatus == edusign_GRADING_STATUS_GRADED ||
-                $status->gradingstatus == edusign_MARKING_WORKFLOW_STATE_RELEASED) {
+        if ($status->gradingstatus == EDUSIGN_GRADING_STATUS_GRADED ||
+                $status->gradingstatus == EDUSIGN_MARKING_WORKFLOW_STATE_RELEASED) {
             $classname = 'submissiongraded';
         } else {
             $classname = 'submissionnotgraded';
@@ -686,7 +686,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
             $t->data[] = $row;
         }
 
-        if ($status->attemptreopenmethod != edusign_ATTEMPT_REOPEN_METHOD_NONE) {
+        if ($status->attemptreopenmethod != EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE) {
             $currentattempt = 1;
             if (!$status->teamsubmissionenabled) {
                 if ($status->submission) {
@@ -715,7 +715,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
         $row = new html_table_row();
         $cell1 = new html_table_cell(get_string('submissionstatus', 'edusign'));
         if (!$status->teamsubmissionenabled) {
-            if ($status->submission && $status->submission->status != edusign_SUBMISSION_STATUS_NEW) {
+            if ($status->submission && $status->submission->status != EDUSIGN_SUBMISSION_STATUS_NEW) {
                 $statusstr = get_string('submissionstatus_' . $status->submission->status, 'edusign');
                 $cell2 = new html_table_cell($statusstr);
                 $cell2->attributes = array('class' => 'submissionstatus' . $status->submission->status);
@@ -734,7 +734,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
             $group = $status->submissiongroup;
             if (!$group && $status->preventsubmissionnotingroup) {
                 $cell2 = new html_table_cell(get_string('nosubmission', 'edusign'));
-            } else if ($status->teamsubmission && $status->teamsubmission->status != edusign_SUBMISSION_STATUS_NEW) {
+            } else if ($status->teamsubmission && $status->teamsubmission->status != EDUSIGN_SUBMISSION_STATUS_NEW) {
                 $teamstatus = $status->teamsubmission->status;
                 $submissionsummary = get_string('submissionstatus_' . $teamstatus, 'edusign');
                 $groupid = 0;
@@ -788,15 +788,15 @@ class mod_edusign_renderer extends plugin_renderer_base {
         $row = new html_table_row();
         $cell1 = new html_table_cell(get_string('gradingstatus', 'edusign'));
 
-        if ($status->gradingstatus == edusign_GRADING_STATUS_GRADED ||
-                $status->gradingstatus == edusign_GRADING_STATUS_NOT_GRADED) {
+        if ($status->gradingstatus == EDUSIGN_GRADING_STATUS_GRADED ||
+                $status->gradingstatus == EDUSIGN_GRADING_STATUS_NOT_GRADED) {
             $cell2 = new html_table_cell(get_string($status->gradingstatus, 'edusign'));
         } else {
             $gradingstatus = 'markingworkflowstate' . $status->gradingstatus;
             $cell2 = new html_table_cell(get_string($gradingstatus, 'edusign'));
         }
-        if ($status->gradingstatus == edusign_GRADING_STATUS_GRADED ||
-                $status->gradingstatus == edusign_MARKING_WORKFLOW_STATE_RELEASED) {
+        if ($status->gradingstatus == EDUSIGN_GRADING_STATUS_GRADED ||
+                $status->gradingstatus == EDUSIGN_MARKING_WORKFLOW_STATE_RELEASED) {
             $cell2->attributes = array('class' => 'submissiongraded');
         } else {
             $cell2->attributes = array('class' => 'submissionnotgraded');
@@ -903,7 +903,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
             $row = new html_table_row();
             $cell1 = new html_table_cell(get_string('timemodified', 'edusign'));
 
-            if ($submission->status != edusign_SUBMISSION_STATUS_NEW) {
+            if ($submission->status != EDUSIGN_SUBMISSION_STATUS_NEW) {
                 $cell2 = new html_table_cell(userdate($submission->timemodified));
             } else {
                 $cell2 = new html_table_cell('-');
@@ -946,7 +946,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
         // Links.
         if ($status->view == edusign_submission_status::STUDENT_VIEW) {
             if ($status->canedit) {
-                if (!$submission || $submission->status == edusign_SUBMISSION_STATUS_NEW) {
+                if (!$submission || $submission->status == EDUSIGN_SUBMISSION_STATUS_NEW) {
                     $o .= $this->output->box_start('generalbox submissionaction');
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'editsubmission');
                     $o .= $this->output->single_button(
@@ -958,7 +958,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
                     $o .= get_string('addsubmission_help', 'edusign');
                     $o .= $this->output->box_end();
                     $o .= $this->output->box_end();
-                } else if ($submission->status == edusign_SUBMISSION_STATUS_REOPENED) {
+                } else if ($submission->status == EDUSIGN_SUBMISSION_STATUS_REOPENED) {
                     $o .= $this->output->box_start('generalbox submissionaction');
                     $urlparams = array('id' => $status->coursemoduleid,
                             'action' => 'editprevioussubmission',
@@ -1064,7 +1064,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
             $grade = null;
             foreach ($history->grades as $onegrade) {
                 if ($onegrade->attemptnumber == $submission->attemptnumber) {
-                    if ($onegrade->grade != edusign_GRADE_NOT_SET) {
+                    if ($onegrade->grade != EDUSIGN_GRADE_NOT_SET) {
                         $grade = $onegrade;
                     }
                     break;
