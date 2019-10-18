@@ -608,23 +608,10 @@ class edusign_submission_signing extends edusign_submission_plugin
      */
     public function submission_is_empty(stdClass $data)
     {
+        var_dump($data->signing);
         if (!isset($data->signing)) {
-            return false;
+            return true;
         }
-        $wordcount = 0;
-        $hasinsertedresources = false;
-
-        if (isset($data->signing_editor['text'])) {
-            $wordcount = count_words(trim((string) $data->signing_editor['text']));
-            // Check if the online text submission contains video, audio or image elements
-            // that can be ignored and stripped by count_words().
-            $hasinsertedresources = preg_match(
-                '/<\s*((video|audio)[^>]*>(.*?)<\s*\/\s*(video|audio)>)|(img[^>]*>(.*?))/',
-                trim((string) $data->signing_editor['text'])
-            );
-        }
-
-        //return $wordcount == 0 && !$hasinsertedresources;
         return false;
     }
 

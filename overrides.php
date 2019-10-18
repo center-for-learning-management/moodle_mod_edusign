@@ -70,7 +70,7 @@ if ($action == 'movegroupoverride') {
     $dir = required_param('dir', PARAM_ALPHA);
 
     if (confirm_sesskey()) {
-        move_group_override($id, $dir, $edusign->id);
+        move_group_override_edusign($id, $dir, $edusign->id);
     }
     redirect($redirect);
 }
@@ -127,7 +127,7 @@ if ($groupmode) {
               ORDER BY ' . $sort;
 
         $overrides = $DB->get_records_sql($sql, $params);
-    } else if ($groups) {
+    } elseif ($groups) {
         list($insql, $inparams) = $DB->get_in_or_equal(array_keys($groups), SQL_PARAMS_NAMED);
         $params += $inparams;
 
@@ -161,7 +161,6 @@ $overrideediturl = new moodle_url('/mod/edusign/overrideedit.php');
 $hasinactive = false; // Whether there are any inactive overrides.
 
 foreach ($overrides as $override) {
-
     $fields = array();
     $values = array();
     $active = true;
@@ -171,7 +170,7 @@ foreach ($overrides as $override) {
         if (!is_enrolled($context, $override->userid)) {
             // User not enrolled.
             $active = false;
-        } else if (!\core_availability\info_module::is_user_visible($cm, $override->userid)) {
+        } elseif (!\core_availability\info_module::is_user_visible($cm, $override->userid)) {
             // User cannot access the module.
             $active = false;
         }
@@ -180,8 +179,10 @@ foreach ($overrides as $override) {
     // Format allowsubmissionsfromdate.
     if (isset($override->allowsubmissionsfromdate)) {
         $fields[] = get_string('open', 'edusign');
-        $values[] = $override->allowsubmissionsfromdate > 0 ? userdate($override->allowsubmissionsfromdate) : get_string('noopen',
-                'edusign');
+        $values[] = $override->allowsubmissionsfromdate > 0 ? userdate($override->allowsubmissionsfromdate) : get_string(
+            'noopen',
+            'edusign'
+        );
     }
 
     // Format duedate.
@@ -205,20 +206,26 @@ foreach ($overrides as $override) {
         $iconstr = '<a title="' . get_string('edit') . '" href="' . $editurlstr . '">' .
                 $OUTPUT->pix_icon('t/edit', get_string('edit')) . '</a> ';
         // Duplicate.
-        $copyurlstr = $overrideediturl->out(true,
-                array('id' => $override->id, 'action' => 'duplicate'));
+        $copyurlstr = $overrideediturl->out(
+            true,
+            array('id' => $override->id, 'action' => 'duplicate')
+        );
         $iconstr .= '<a title="' . get_string('copy') . '" href="' . $copyurlstr . '">' .
                 $OUTPUT->pix_icon('t/copy', get_string('copy')) . '</a> ';
     }
     // Delete.
-    $deleteurlstr = $overridedeleteurl->out(true,
-            array('id' => $override->id, 'sesskey' => sesskey()));
+    $deleteurlstr = $overridedeleteurl->out(
+        true,
+        array('id' => $override->id, 'sesskey' => sesskey())
+    );
     $iconstr .= '<a title="' . get_string('delete') . '" href="' . $deleteurlstr . '">' .
             $OUTPUT->pix_icon('t/delete', get_string('delete')) . '</a> ';
 
     if ($groupmode) {
-        $usergroupstr = '<a href="' . $groupurl->out(true,
-                        array('group' => $override->groupid)) . '" >' . $override->name . '</a>';
+        $usergroupstr = '<a href="' . $groupurl->out(
+            true,
+            array('group' => $override->groupid)
+        ) . '" >' . $override->name . '</a>';
 
         // Move up.
         if ($override->sortorder > 1) {
@@ -237,11 +244,14 @@ foreach ($overrides as $override) {
         } else {
             $iconstr .= $OUTPUT->spacer() . ' ';
         }
-
     } else {
-        $usergroupstr = html_writer::link($userurl->out(false,
-                array('id' => $override->userid, 'course' => $course->id)),
-                fullname($override));
+        $usergroupstr = html_writer::link(
+            $userurl->out(
+                false,
+                array('id' => $override->userid, 'course' => $course->id)
+            ),
+            fullname($override)
+        );
     }
 
     $class = '';
@@ -294,16 +304,22 @@ if ($groupmode) {
         echo $OUTPUT->notification(get_string('groupsnone', 'edusign'), 'error');
         $options['disabled'] = true;
     }
-    echo $OUTPUT->single_button($overrideediturl->out(true,
-            array('action' => 'addgroup', 'cmid' => $cm->id)),
-            get_string('addnewgroupoverride', 'edusign'), 'post', $options);
+    echo $OUTPUT->single_button(
+        $overrideediturl->out(
+            true,
+            array('action' => 'addgroup', 'cmid' => $cm->id)
+        ),
+        get_string('addnewgroupoverride', 'edusign'),
+        'post',
+        $options
+    );
 } else {
     $users = array();
     // See if there are any users in the edusign.
     if ($accessallgroups) {
         $users = get_enrolled_users($context, '', 0, 'u.id');
         $nousermessage = get_string('usersnone', 'edusign');
-    } else if ($groups) {
+    } elseif ($groups) {
         $enrolledjoin = get_enrolled_join($context, 'u.id');
         list($ingroupsql, $ingroupparams) = $DB->get_in_or_equal(array_keys($groups), SQL_PARAMS_NAMED);
         $params = $enrolledjoin->params + $ingroupparams;
@@ -327,9 +343,15 @@ if ($groupmode) {
         echo $OUTPUT->notification($nousermessage, 'error');
         $options['disabled'] = true;
     }
-    echo $OUTPUT->single_button($overrideediturl->out(true,
-            array('action' => 'adduser', 'cmid' => $cm->id)),
-            get_string('addnewuseroverride', 'edusign'), 'get', $options);
+    echo $OUTPUT->single_button(
+        $overrideediturl->out(
+            true,
+            array('action' => 'adduser', 'cmid' => $cm->id)
+        ),
+        get_string('addnewuseroverride', 'edusign'),
+        'get',
+        $options
+    );
 }
 echo html_writer::end_tag('div');
 echo html_writer::end_tag('div');
