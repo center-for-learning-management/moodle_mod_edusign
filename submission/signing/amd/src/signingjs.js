@@ -22,44 +22,75 @@ function initialize() {
     canvas.width = rect.width;
     canvas.height = rect.height;
     mousePressed = false;
-    $('#clearCanvas').bind('click', function () {
-        clearCanvas(canvas, ctx);
+    canvas.addEventListener("touchstart", function (e) {
+        mousePos = getTouchPos(canvas, e);
+        var touch = e.touches[0];
+        var mouseEvent = new MouseEvent("mousedown", {
+            clientX: touch.clientX,
+            clientY: touch.clientY
+        });
+        canvas.dispatchEvent(mouseEvent);
+    }, false);
+    canvas.addEventListener("touchend", function (e) {
+      var mouseEvent = new MouseEvent("mouseup", {});
+      canvas.dispatchEvent(mouseEvent);
+  }, false);
+    canvas.addEventListener("touchmove", function (e) {
+      var touch = e.touches[0];
+      var mouseEvent = new MouseEvent("mousemove", {
+        clientX: touch.clientX,
+        clientY: touch.clientY
     });
-    $('#id_submitbutton').click(function () {
+      canvas.dispatchEvent(mouseEvent);
+  }, false);
+
+// Get the position of a touch relative to the canvas
+function getTouchPos(canvasDom, touchEvent) {
+  var rect = canvasDom.getBoundingClientRect();
+  return {
+    x: touchEvent.touches[0].clientX - rect.left,
+    y: touchEvent.touches[0].clientY - rect.top
+};
+}
+
+$('#clearCanvas').bind('click', function () {
+    clearCanvas(canvas, ctx);
+});
+$('#id_submitbutton').click(function () {
         var data = $('#canvas')[0].toDataURL(); // Change here
         $('[name="signing"]').val(data);
     });
-    $('#canvas').mousedown(function (e) {
-        mousePressed = true;
-        Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, false);
-    });
+$('#canvas').mousedown(function (e) {
+    mousePressed = true;
+    Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, false);
+});
 
-    $('#canvas').mousemove(function (e) {
-        if (mousePressed) {
-            Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, true);
-        }
-    });
+$('#canvas').mousemove(function (e) {
+    if (mousePressed) {
+        Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, true);
+    }
+});
 
-    $('#canvas').mouseup(function (e) {
-        mousePressed = false;
-    });
-    $('#canvas').mouseleave(function (e) {
-        mousePressed = false;
-    });
+$('#canvas').mouseup(function (e) {
+    mousePressed = false;
+});
+$('#canvas').mouseleave(function (e) {
+    mousePressed = false;
+});
 
-    $(window).resize(function () {
-        var dataURL = canvas.toDataURL();
-        console.log(dataURL);
-        var rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
+$(window).resize(function () {
+    var dataURL = canvas.toDataURL();
+    console.log(dataURL);
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
         /*var image = new Image
 image.src = dataURL;
 image.onload = function(){
    ctx.drawImage(image,10,10)
- }*/
+}*/
 
-    });
+});
 }
 
 function Draw(x, y, isDown) {

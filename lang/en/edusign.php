@@ -29,8 +29,7 @@ $string['addattempt'] = 'Allow another attempt';
 $string['addnewattempt'] = 'Add a new attempt';
 $string['addnewattempt_help'] = 'This will create a new blank submission for you to work on.';
 $string['addnewattemptfromprevious'] = 'Add a new attempt based on previous submission';
-$string['addnewattemptfromprevious_help'] =
-        'This will copy the contents of your previous submission to a new submission for you to work on.';
+$string['addnewattemptfromprevious_help'] = 'This will copy the contents of your previous submission to a new submission for you to work on.';
 $string['addnewgroupoverride'] = 'Add group override';
 $string['addnewuseroverride'] = 'Add user override';
 $string['allocatedmarker'] = 'Allocated Marker';
@@ -38,14 +37,11 @@ $string['allocatedmarker_help'] = 'Marker allocated to this submission';
 $string['allowsubmissions'] = 'Allow the user to continue making submissions to this edusignment.';
 $string['allowsubmissionsshort'] = 'Allow submission changes';
 $string['allowsubmissionsfromdate'] = 'Allow submissions from';
-$string['allowsubmissionsfromdate_help'] =
-        'If enabled, students will not be able to submit before this date. If disabled, students will be able to start submitting right away.';
+$string['allowsubmissionsfromdate_help'] = 'If enabled, students will not be able to submit before this date. If disabled, students will be able to start submitting right away.';
 $string['allowsubmissionsfromdatesummary'] = 'This edusignment will accept submissions from <strong>{$a}</strong>';
-$string['allowsubmissionsanddescriptionfromdatesummary'] =
-        'The edusignment details and submission form will be available from <strong>{$a}</strong>';
+$string['allowsubmissionsanddescriptionfromdatesummary'] = 'The edusignment details and submission form will be available from <strong>{$a}</strong>';
 $string['alwaysshowdescription'] = 'Always show description';
-$string['alwaysshowdescription_help'] =
-        'If disabled, the edusignment Description above will only become visible to students at the "Allow submissions from" date.';
+$string['alwaysshowdescription_help'] = 'If disabled, the edusignment Description above will only become visible to students at the "Allow submissions from" date.';
 $string['applytoteam'] = 'Apply grades and feedback to entire group';
 $string['edusign:addinstance'] = 'Add a new edusignment';
 $string['edusign:exportownsubmission'] = 'Export own submission';
@@ -87,8 +83,7 @@ $string['attempthistory'] = 'Previous attempts';
 $string['attemptnumber'] = 'Attempt number';
 $string['attemptsettings'] = 'Attempt settings';
 $string['attemptreopenmethod'] = 'Attempts reopened';
-$string['attemptreopenmethod_help'] =
-        'Determines how student submission attempts are reopened. The available options are: <ul><li>Never - The student submission cannot be reopened.</li><li>Manually - The student submission can be reopened by a teacher.</li><li>Automatically until pass - The student submission is automatically reopened until the student achieves the grade to pass value set in the Gradebook (Gradebook setup section) for this edusignment.</li></ul>';
+$string['attemptreopenmethod_help'] = 'Determines how student submission attempts are reopened. The available options are: <ul><li>Never - The student submission cannot be reopened.</li><li>Manually - The student submission can be reopened by a teacher.</li><li>Automatically until pass - The student submission is automatically reopened until the student achieves the grade to pass value set in the Gradebook (Gradebook setup section) for this edusignment.</li></ul>';
 $string['attemptreopenmethod_manual'] = 'Manually';
 $string['attemptreopenmethod_none'] = 'Never';
 $string['attemptreopenmethod_untilpass'] = 'Automatically until pass';
@@ -110,8 +105,7 @@ $string['batchsetallocatedmarker'] = 'Set allocated marker for {$a} selected use
 $string['batchsetmarkingworkflowstateforusers'] = 'Set marking workflow state for {$a} selected user(s).';
 $string['blindmarking'] = 'Blind marking';
 $string['blindmarkingenabledwarning'] = 'Blind marking is enabled for this activity.';
-$string['blindmarking_help'] =
-        'Blind marking hides the identity of students from markers. Blind marking settings will be locked once a submission or grade has been made in relation to this edusignment.';
+$string['blindmarking_help'] = 'Blind marking hides the identity of students from markers. Blind marking settings will be locked once a submission or grade has been made in relation to this edusignment.';
 $string['calendardue'] = '{$a} is due';
 $string['calendargradingdue'] = '{$a} is due to be graded';
 $string['changeuser'] = 'Change user';
@@ -126,8 +120,7 @@ $string['comment'] = 'Comment';
 $string['completionsubmit'] = 'Student must submit to this activity to complete it';
 $string['conversionexception'] = 'Could not convert edusignment. Exception was: {$a}.';
 $string['configshowrecentsubmissions'] = 'Everyone can see notifications of submissions in recent activity reports.';
-$string['confirmsubmission'] =
-        'Are you sure you want to submit your work for grading? You will not be able to make any more changes.';
+$string['confirmsubmission'] = 'Are you sure you want to submit your work for grading? You will not be able to make any more changes.';
 $string['confirmsubmissionheading'] = 'Confirm submission';
 $string['confirmbatchgradingoperation'] = 'Are you sure you want to {$a->operation} for {$a->count} students?';
 $string['couldnotconvertgrade'] = 'Could not convert edusignment grade for user {$a}.';
@@ -153,13 +146,11 @@ $string['disabled'] = 'Disabled';
 $string['downloadall'] = 'Download all submissions';
 $string['download all submissions'] = 'Download all submissions in a zip file.';
 $string['downloadasfolders'] = 'Download submissions in folders';
-$string['downloadasfolders_help'] =
-        'edusignment submissions may be downloaded in folders. Each submission is then put in a separate folder, with the folder structure kept for any subfolders, and files are not renamed.';
+$string['downloadasfolders_help'] = 'edusignment submissions may be downloaded in folders. Each submission is then put in a separate folder, with the folder structure kept for any subfolders, and files are not renamed.';
 $string['downloadselectedsubmissions'] = 'Download selected submissions';
 $string['duedate'] = 'Due date';
 $string['duedatecolon'] = 'Due date: {$a}';
-$string['duedate_help'] =
-        'This is when the edusignment is due. Submissions will still be allowed after this date, but any edusignments submitted after this date will be marked as late. Set an edusignment cut-off date to prevent submissions after a certain date.';
+$string['duedate_help'] = 'This is when the edusignment is due. Submissions will still be allowed after this date, but any edusignments submitted after this date will be marked as late. Set an edusignment cut-off date to prevent submissions after a certain date.';
 $string['duedateno'] = 'No due date';
 $string['duplicateoverride'] = 'Duplicate override';
 $string['submissionempty'] = 'Nothing was submitted';
@@ -169,8 +160,7 @@ $string['duedatereached'] = 'The due date for this edusignment has now passed';
 $string['duedatevalidation'] = 'Due date cannot be earlier than the allow submissions from date.';
 $string['editattemptfeedback'] = 'Edit the grade and feedback for attempt number {$a}.';
 $string['editonline'] = 'Edit online';
-$string['editingpreviousfeedbackwarning'] =
-        'You are editing the feedback for a previous attempt. This is attempt {$a->attemptnumber} out of {$a->totalattempts}.';
+$string['editingpreviousfeedbackwarning'] = 'You are editing the feedback for a previous attempt. This is attempt {$a->attemptnumber} out of {$a->totalattempts}.';
 $string['editoverride'] = 'Edit override';
 $string['editsubmission'] = 'Edit submission';
 $string['editsubmissionother'] = 'Edit submission for {$a}';
@@ -210,8 +200,7 @@ $string['expandreviewpanel'] = 'Expand review panel';
 $string['extensionduedate'] = 'Extension due date';
 $string['extensionnotafterduedate'] = 'Extension date must be after the due date';
 $string['extensionnotafterfromdate'] = 'Extension date must be after the allow submissions from date';
-$string['fixrescalednullgrades'] =
-        'This edusignment contains some erroneous grades. You can <a href="{$a->link}">automatically fix these grades</a>. This may affect course totals.';
+$string['fixrescalednullgrades'] = 'This edusignment contains some erroneous grades. You can <a href="{$a->link}">automatically fix these grades</a>. This may affect course totals.';
 $string['fixrescalednullgradesconfirm'] =
         'Are you sure you want to fix erroneous grades? All affected grades will be removed. This may affect course totals.';
 $string['fixrescalednullgradesdone'] = 'Grades fixed.';
@@ -231,8 +220,7 @@ $string['grantextension'] = 'Grant extension';
 $string['grantextensionforusers'] = 'Grant extension for {$a} students';
 $string['groupsubmissionsettings'] = 'Group submission settings';
 $string['errornosubmissions'] = 'There are no submissions to download';
-$string['errorquickgradingvsadvancedgrading'] =
-        'The grades were not saved because this edusignment is currently using advanced grading';
+$string['errorquickgradingvsadvancedgrading'] = 'The grades were not saved because this edusignment is currently using advanced grading';
 $string['errorrecordmodified'] =
         'The grades were not saved because someone has modified one or more records more recently than when you loaded the page.';
 $string['feedback'] = 'Feedback';
@@ -272,8 +260,7 @@ $string['gradestudent'] = 'Grade student: (id={$a->id}, fullname={$a->fullname})
 $string['grading'] = 'Grading';
 $string['gradingchangessaved'] = 'The grade changes were saved';
 $string['gradingduedate'] = 'Remind me to grade by';
-$string['gradingduedate_help'] =
-        'The expected date that marking of the submissions should be completed by. This date is used to prioritise dashboard notifications for teachers.';
+$string['gradingduedate_help'] = 'The expected date that marking of the submissions should be completed by. This date is used to prioritise dashboard notifications for teachers.';
 $string['gradingdueduedatevalidation'] = 'Remind me to grade by date cannot be earlier than the due date.';
 $string['gradingduefromdatevalidation'] = 'Remind me to grade by date cannot be earlier than the allow submissions from date.';
 $string['gradechangessaveddetail'] = 'The changes to the grade and feedback were saved';
@@ -289,15 +276,12 @@ $string['hideshow'] = 'Hide/Show';
 $string['hiddenuser'] = 'Participant ';
 $string['inactiveoverridehelp'] = '* Student does not have the correct group or role to attempt the edusignment';
 $string['indicator:cognitivedepth'] = 'edusignment cognitive';
-$string['indicator:cognitivedepth_help'] =
-        'This indicator is based on the cognitive depth reached by the student in an edusignment activity.';
+$string['indicator:cognitivedepth_help'] = 'This indicator is based on the cognitive depth reached by the student in an edusignment activity.';
 $string['indicator:socialbreadth'] = 'edusignment social';
-$string['indicator:socialbreadth_help'] =
-        'This indicator is based on the social breadth reached by the student in an edusignment activity.';
+$string['indicator:socialbreadth_help'] = 'This indicator is based on the social breadth reached by the student in an edusignment activity.';
 $string['instructionfiles'] = 'Instruction files';
 $string['introattachments'] = 'Additional files';
-$string['introattachments_help'] =
-        'Additional files for use in the edusignment, such as answer templates, may be added. Download links for the files will then be displayed on the edusignment page under the description.';
+$string['introattachments_help'] = 'Additional files for use in the edusignment, such as answer templates, may be added. Download links for the files will then be displayed on the edusignment page under the description.';
 $string['invalidgradeforscale'] = 'The grade supplied was not valid for the current scale';
 $string['invalidfloatforgrade'] = 'The grade provided could not be understood: {$a}';
 $string['invalidoverrideid'] = 'Invalid override id';

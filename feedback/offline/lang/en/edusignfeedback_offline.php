@@ -34,16 +34,12 @@ $string['graderecentlymodified'] = 'The grade has been modified in Moodle more r
 $string['gradelockedingradebook'] = 'The grade has been locked in the gradebook for {$a}';
 $string['gradeupdate'] = 'Set grade for {$a->student} to {$a->grade}';
 $string['ignoremodified'] = 'Allow updating records that have been modified more recently in Moodle than in the spreadsheet.';
-$string['ignoremodified_help'] =
-        'When the grading worksheet is downloaded from Moodle it contains the last modified date for each of the grades. If any of the grades are updated in Moodle after this worksheet is downloaded, by default Moodle will refuse to overwrite this updated information when importing the grades. By selecting this option Moodle will disable this safety check and it may be possible for multiple markers to overwrite each others grades.';
+$string['ignoremodified_help'] = 'When the grading worksheet is downloaded from Moodle it contains the last modified date for each of the grades. If any of the grades are updated in Moodle after this worksheet is downloaded, by default Moodle will refuse to overwrite this updated information when importing the grades. By selecting this option Moodle will disable this safety check and it may be possible for multiple markers to overwrite each others grades.';
 $string['importgrades'] = 'Confirm changes in grading worksheet';
-$string['invalidgradeimport'] =
-        'Moodle could not read the uploaded worksheet. Make sure it is saved in comma separated value format (.csv) and try again.';
+$string['invalidgradeimport'] = 'Moodle could not read the uploaded worksheet. Make sure it is saved in comma separated value format (.csv) and try again.';
 $string['gradesfile'] = 'Grading worksheet (csv format)';
-$string['gradesfile_help'] =
-        'Grading worksheet with modified grades. This file must be a CSV file with UTF-8 encoding that has been downloaded from the edusignment, with columns for student grade and identifier.';
-$string['privacy:nullproviderreason'] =
-        'This plugin has no database to store user information. It only uses APIs in mod_edusign to help with displaying the grading interface.';
+$string['gradesfile_help'] = 'Grading worksheet with modified grades. This file must be a CSV file with UTF-8 encoding that has been downloaded from the edusignment, with columns for student grade and identifier.';
+$string['privacy:nullproviderreason'] = 'This plugin has no database to store user information. It only uses APIs in mod_edusign to help with displaying the grading interface.';
 $string['nochanges'] = 'No modified grades found in uploaded worksheet';
 $string['offlinegradingworksheet'] = 'Grades';
 $string['pluginname'] = 'Offline grading worksheet';

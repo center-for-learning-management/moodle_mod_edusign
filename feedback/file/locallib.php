@@ -668,13 +668,13 @@ class edusign_feedback_file extends edusign_feedback_plugin {
                         'import.zip',
                         true
                 ))) {
-            $importer->extract_files_from_zip($zipfile, $contextid);
+                    $importer->extract_files_from_zip($zipfile, $contextid);
 
-            $params = array('edusignment' => $this->edusignment, 'importer' => $importer);
+                    $params = array('edusignment' => $this->edusignment, 'importer' => $importer);
 
-            $mform = new edusignfeedback_file_import_zip_form(null, $params);
+                    $mform = new edusignfeedback_file_import_zip_form(null, $params);
 
-            $header = new edusign_header(
+                    $header = new edusign_header(
                     $this->edusignment->get_instance(),
                     $this->edusignment->get_context(),
                     false,

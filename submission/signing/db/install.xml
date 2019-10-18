@@ -10,6 +10,8 @@
                 <FIELD NAME="edusignment" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="submission" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="signing" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The text for this online text submission."/>
+                <FIELD NAME="onlineformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The format for this online text submission."/>
+      </FIELDS>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="The unique id for this signing submission."/>
