@@ -1,3 +1,6 @@
 {
-  "name": "moodle-edusignmentsubmission-signing"
+  "name": "moodle-edusignmentsubmission-signing",
+  "dependencies": {
+    "grunt": "^1.0.4"
+  }
 }
