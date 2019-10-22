@@ -15,43 +15,23 @@ define(['jquery'], function ($) {
 });
 
 
+
 function initialize() {
-    canvas = document.getElementById('canvas');
-    ctx = canvas.getContext("2d");
-    var rect = canvas.getBoundingClientRect();
+
+var canvas = document.getElementById('canvas'),
+    ctx = canvas.getContext('2d');
+var rect = canvas.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
-    mousePressed = false;
-    canvas.addEventListener("touchstart", function (e) {
-        mousePos = getTouchPos(canvas, e);
-        var touch = e.touches[0];
-        var mouseEvent = new MouseEvent("mousedown", {
-            clientX: touch.clientX,
-            clientY: touch.clientY
-        });
-        canvas.dispatchEvent(mouseEvent);
-    }, false);
-    canvas.addEventListener("touchend", function (e) {
-      var mouseEvent = new MouseEvent("mouseup", {});
-      canvas.dispatchEvent(mouseEvent);
-  }, false);
-    canvas.addEventListener("touchmove", function (e) {
-      var touch = e.touches[0];
-      var mouseEvent = new MouseEvent("mousemove", {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-    });
-      canvas.dispatchEvent(mouseEvent);
-  }, false);
+// setup lines styles .. 
+ctx.strokeStyle = "#000";
+ctx.lineWidth = 1;
 
-// Get the position of a touch relative to the canvas
-function getTouchPos(canvasDom, touchEvent) {
-  var rect = canvasDom.getBoundingClientRect();
-  return {
-    x: touchEvent.touches[0].clientX - rect.left,
-    y: touchEvent.touches[0].clientY - rect.top
-};
-}
+// some variables we'll need .. 
+var drawing = false;
+var mousePos = {x:0, y:0};
+var lastPos = mousePos;
+var isMobile = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
 $('#clearCanvas').bind('click', function () {
     clearCanvas(canvas, ctx);
@@ -60,55 +40,96 @@ $('#id_submitbutton').click(function () {
         var data = $('#canvas')[0].toDataURL(); // Change here
         $('[name="signing"]').val(data);
     });
-$('#canvas').mousedown(function (e) {
-    mousePressed = true;
-    Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, false);
+// mouse/touch events ..
+canvas.addEventListener((isMobile ? 'touchstart' : 'mousedown'), function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    drawing = true;
+    lastPos = getMousePos(canvas, e);
+    mousePos = lastPos;
+});
+canvas.addEventListener((isMobile ? 'touchmove' : 'mousemove'), function(e) {
+    e.preventDefault();
+   e.stopPropagation();
+    mousePos = getMousePos(canvas, e);
+});
+canvas.addEventListener((isMobile ? 'touchend' : 'mouseup'), function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    drawing = false;
 });
 
-$('#canvas').mousemove(function (e) {
-    if (mousePressed) {
-        Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, true);
+document.body.addEventListener("touchstart", function (e) {
+  if (e.target == canvas) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}, false);
+document.body.addEventListener("touchend", function (e) {
+  if (e.target == canvas) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}, false);
+document.body.addEventListener("touchmove", function (e) {
+  if (e.target == canvas) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}, false);
+
+
+
+// helper functions .. 
+function getMousePos(canvasDom, touchOrMouseEvent) {
+    var rect = canvasDom.getBoundingClientRect();
+    return {
+        x: (isMobile ? touchOrMouseEvent.touches[0].clientX : touchOrMouseEvent.clientX) - rect.left,
+        y: (isMobile ? touchOrMouseEvent.touches[0].clientY : touchOrMouseEvent.clientY) - rect.top
+    };
+};
+
+// drawing .. 
+window.requestAnimFrame = (function(callback) {
+    return  window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function(callback) {
+                window.setTimeout(callback, 1000/60);
+            };
+})();
+
+function renderCanvas() {
+    if (drawing) {
+        ctx.moveTo(lastPos.x, lastPos.y);
+        ctx.lineTo(mousePos.x, mousePos.y);
+        ctx.stroke();
+        lastPos = mousePos;
     }
-});
+};
 
-$('#canvas').mouseup(function (e) {
-    mousePressed = false;
-});
-$('#canvas').mouseleave(function (e) {
-    mousePressed = false;
-});
+(function drawLoop() {
+    requestAnimFrame(drawLoop);
+    renderCanvas();
+})();
 
 $(window).resize(function () {
-    var dataURL = canvas.toDataURL();
-    console.log(dataURL);
+    var W = canvas.width, H = canvas.height;
+    var temp = ctx.getImageData(0,0,W,H);
     var rect = canvas.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
-        /*var image = new Image
-image.src = dataURL;
-image.onload = function(){
-   ctx.drawImage(image,10,10)
-}*/
-
+     W = canvas.width, H = canvas.height
+    ctx.putImageData(temp,0,0);
 });
-}
 
-function Draw(x, y, isDown) {
-    if (isDown) {
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.lineJoin = "round";
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(x, y);
-        ctx.closePath();
-        ctx.stroke();
-    }
-    lastX = x;
-    lastY = y;
-}
+
 
 function clearCanvas(canvas, ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width = canvas.width;
 }
 
 function downloadCanvas(canvas) {
@@ -122,4 +143,5 @@ function save() {
       console.log("true");
     }
     $('#signing_text').val("this.href");
+}
 }
