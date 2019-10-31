@@ -78,7 +78,7 @@ $string['edusignmentmailsmall'] = 'Guten Tag,
 Ihr E-Learning-Team';
 $string['edusignmentname'] = 'Name der eduSign Abgabe';
 $string['edusignmentplugins'] = 'Aufgabentypen';
-$string['edusignmentsperpage'] = 'Aufgaben pro Seite';
+$string['edusignmentsperpage'] = 'Unterschriften pro Seite';
 $string['edusignment:receivegradernotifications'] = 'Systemnachrichten zur Bewertungsabgabe empfangen';
 $string['edusignment:releasegrades'] = 'Bewertung veröffentlichen';
 $string['edusignment:revealidentities'] = 'Teilnehmeridentität anzeigen';
