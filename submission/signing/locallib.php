@@ -67,7 +67,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param MoodleQuickForm $mform The form to add elements to
      * @return void
      */
-    public function get_settings(MoodleQuickForm $mform)
+    /*public function get_settings(MoodleQuickForm $mform)
     {
         global $CFG, $COURSE;
 
@@ -112,7 +112,7 @@ class edusign_submission_signing extends edusign_submission_plugin
             'edusignsubmission_signing_enabled',
             'notchecked'
         );
-    }
+    }*/
 
     /**
      * Save the settings for signing submission plugin
@@ -183,7 +183,8 @@ class edusign_submission_signing extends edusign_submission_plugin
 
         $mform->addElement(
             'html',
-            "<div class='form-group row'><div class='col-md-3'>Unterschrift</div><div class='col-md-9'><canvas id='canvas' class='form-control' height='250px' width='1000px'></canvas><a class='btn btn-secondary' id='clearCanvas'  role='button'>Reset</a></div></div>"
+            "<div class='form-group row'><div class='col-md-3'>Unterschrift</div><div class='col-md-9'><canvas id='canvas' class='form-control' height='250px' width='1000px'></canvas>
+            <canvas id='blank' style='display:none'></canvas><a class='btn btn-secondary' id='clearCanvas'  role='button'>Reset</a></div></div>"
         );
         // $mform->addElement('filepicker', 'userfile', get_string('file'), null,
         // array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
@@ -608,7 +609,6 @@ class edusign_submission_signing extends edusign_submission_plugin
      */
     public function submission_is_empty(stdClass $data)
     {
-        var_dump($data->signing);
         if (!isset($data->signing)) {
             return true;
         }

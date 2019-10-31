@@ -18,7 +18,7 @@ define(['jquery'], function ($) {
 
 function initialize() {
 
-var canvas = document.getElementById('canvas'),
+    canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 var rect = canvas.getBoundingClientRect();
     canvas.width = rect.width;
@@ -139,9 +139,13 @@ function downloadCanvas(canvas) {
 
 function save() {
     this.href = canvas.toDataURL();
-    if(isCanvasBlank(canvas)){
-      console.log("true");
+    
+    if(this.href == document.getElementById('blank').toDataURL()){
+
+    $('#signing_text').val("");
     }
+    else{
     $('#signing_text').val("this.href");
+    }
 }
 }
