@@ -201,8 +201,7 @@ $string['extensionduedate'] = 'Extension due date';
 $string['extensionnotafterduedate'] = 'Extension date must be after the due date';
 $string['extensionnotafterfromdate'] = 'Extension date must be after the allow submissions from date';
 $string['fixrescalednullgrades'] = 'This edusignment contains some erroneous grades. You can <a href="{$a->link}">automatically fix these grades</a>. This may affect course totals.';
-$string['fixrescalednullgradesconfirm'] =
-        'Are you sure you want to fix erroneous grades? All affected grades will be removed. This may affect course totals.';
+$string['fixrescalednullgradesconfirm'] = 'Are you sure you want to fix erroneous grades? All affected grades will be removed. This may affect course totals.';
 $string['fixrescalednullgradesdone'] = 'Grades fixed.';
 $string['gradecanbechanged'] = 'Grade can be changed';
 $string['gradersubmissionupdatedtext'] = '{$a->username} has updated their edusignment submission
@@ -221,8 +220,7 @@ $string['grantextensionforusers'] = 'Grant extension for {$a} students';
 $string['groupsubmissionsettings'] = 'Group submission settings';
 $string['errornosubmissions'] = 'There are no submissions to download';
 $string['errorquickgradingvsadvancedgrading'] = 'The grades were not saved because this edusignment is currently using advanced grading';
-$string['errorrecordmodified'] =
-        'The grades were not saved because someone has modified one or more records more recently than when you loaded the page.';
+$string['errorrecordmodified'] = 'The grades were not saved because someone has modified one or more records more recently than when you loaded the page.';
 $string['feedback'] = 'Feedback';
 $string['feedbackavailabletext'] = '{$a->username} has posted some feedback on your
 edusignment submission for \'{$a->edusignment}\'
@@ -300,8 +298,7 @@ $string['markerfilternomarker'] = 'No marker';
 $string['markingallocation'] = 'Use marking allocation';
 $string['markingallocation_help'] = 'If enabled together with marking workflow, markers can be allocated to particular students.';
 $string['markingworkflow'] = 'Use marking workflow';
-$string['markingworkflow_help'] =
-        'If enabled, marks will go through a series of workflow stages before being released to students. This allows for multiple rounds of marking and allows marks to be released to all students at the same time.';
+$string['markingworkflow_help'] = 'If enabled, marks will go through a series of workflow stages before being released to students. This allows for multiple rounds of marking and allows marks to be released to all students at the same time.';
 $string['markingworkflowstate'] = 'Marking workflow state';
 $string['markingworkflowstate_help'] = 'Possible workflow states may include (depending on your permissions):
 
@@ -318,13 +315,11 @@ $string['markingworkflowstatereadyforreview'] = 'Marking completed';
 $string['markingworkflowstatereadyforrelease'] = 'Ready for release';
 $string['markingworkflowstatereleased'] = 'Released';
 $string['maxattempts'] = 'Maximum attempts';
-$string['maxattempts_help'] =
-        'The maximum number of submission attempts that can be made by a student. After this number has been reached, the submission can no longer be reopened.';
+$string['maxattempts_help'] = 'The maximum number of submission attempts that can be made by a student. After this number has been reached, the submission can no longer be reopened.';
 $string['maxgrade'] = 'Maximum grade';
 $string['maxgrade'] = 'Maximum Grade';
 $string['maxperpage'] = 'Maximum edusignments per page';
-$string['maxperpage_help'] =
-        'The maximum number of edusignments a grader can show in the edusignment grading page. Useful to prevent timeouts on courses with very large enrolments.';
+$string['maxperpage_help'] = 'The maximum number of edusignments a grader can show in the edusignment grading page. Useful to prevent timeouts on courses with very large enrolments.';
 $string['messageprovider:edusign_notification'] = 'edusignment notifications';
 $string['modulename'] = 'edusignment';
 $string['modulename_help'] = 'The edusignment activity module enables a teacher to communicate tasks, collect work and provide grades and feedback.
@@ -336,8 +331,7 @@ $string['modulename_link'] = 'mod/edusignment/view';
 $string['modulenameplural'] = 'edusignments';
 $string['moreusers'] = '{$a} more...';
 $string['multipleteams'] = 'Member of more than one group';
-$string['multipleteams_desc'] =
-        'The edusignment requires submission in groups. You are a member of more than one group. To be able to submit you must be a member of only one group. Please contact your teacher to change your group membership.';
+$string['multipleteams_desc'] = 'The edusignment requires submission in groups. You are a member of more than one group. To be able to submit you must be a member of only one group. Please contact your teacher to change your group membership.';
 $string['multipleteamsgrader'] = 'Member of more than one group, so unable to make submissions.';
 $string['mysubmission'] = 'My submission: ';
 $string['newsubmissions'] = 'edusignments submitted';
@@ -356,8 +350,7 @@ $string['nosavebutnext'] = 'Next';
 $string['nosubmission'] = 'Nothing has been submitted for this edusignment';
 $string['nosubmissionsacceptedafter'] = 'No submissions accepted after ';
 $string['noteam'] = 'Not a member of any group';
-$string['noteam_desc'] =
-        'This edusignment requires submission in groups. You are not a member of any group, so you cannot create a submission. Please contact your teacher to be added to a group.';
+$string['noteam_desc'] = 'This edusignment requires submission in groups. You are not a member of any group, so you cannot create a submission. Please contact your teacher to be added to a group.';
 $string['noteamgrader'] = 'Not a member of any group, so unable to make submissions.';
 $string['notgraded'] = 'Not graded';
 $string['notgradedyet'] = 'Not graded yet';
@@ -390,19 +383,16 @@ $string['participant'] = 'Participant';
 $string['pluginadministration'] = 'edusignment administration';
 $string['pluginname'] = 'edusignment';
 $string['preventsubmissionnotingroup'] = 'Require group to make submission';
-$string['preventsubmissionnotingroup_help'] =
-        'If enabled, users who are not members of a group will be unable to make submissions.';
+$string['preventsubmissionnotingroup_help'] = 'If enabled, users who are not members of a group will be unable to make submissions.';
 $string['preventsubmissions'] = 'Prevent the user from making any more submissions to this edusignment.';
 $string['preventsubmissionsshort'] = 'Prevent submission changes';
 $string['previous'] = 'Previous';
 $string['privacy:attemptpath'] = 'attempt {$a}';
 $string['privacy:blindmarkingidentifier'] = 'The identifier used for blind marking';
 $string['privacy:gradepath'] = 'grade';
-$string['privacy:metadata:edusigndownloadasfolders'] =
-        'A user preference for whether multiple file submissions should be downloaded into folders';
+$string['privacy:metadata:edusigndownloadasfolders'] = 'A user preference for whether multiple file submissions should be downloaded into folders';
 $string['privacy:metadata:edusignfeedbackpluginsummary'] = 'Feedback data for the edusignment.';
-$string['privacy:metadata:edusignfilter'] =
-        'Filter options such as \'Submitted\', \'Not submitted\', \'Requires grading\', and \'Granted extension\'';
+$string['privacy:metadata:edusignfilter'] = 'Filter options such as \'Submitted\', \'Not submitted\', \'Requires grading\', and \'Granted extension\'';
 $string['privacy:metadata:edusigngrades'] = 'Stores user grades for the edusignment';
 $string['privacy:metadata:edusignmarkerfilter'] = 'Filter the edusign summary by the edusigned marker.';
 $string['privacy:metadata:edusignmentid'] = 'edusignment ID';
@@ -415,8 +405,7 @@ $string['privacy:metadata:edusignsubmissionpluginsummary'] = 'Submission data fo
 $string['privacy:metadata:edusignuserflags'] = 'Stores user meta data such as extension dates';
 $string['privacy:metadata:edusignusermapping'] = 'The mapping for blind marking';
 $string['privacy:metadata:edusignworkflowfilter'] = 'Filter by the different workflow stages.';
-$string['privacy:metadata:grade'] =
-        'The numerical grade for this edusignment submission. Can be determined by scales/advancedgradingforms etc but will always be converted back to a floating point number.';
+$string['privacy:metadata:grade'] = 'The numerical grade for this edusignment submission. Can be determined by scales/advancedgradingforms etc but will always be converted back to a floating point number.';
 $string['privacy:metadata:grader'] = 'The user ID of the person grading.';
 $string['privacy:metadata:groupid'] = 'Group ID that the user is a member of.';
 $string['privacy:metadata:latest'] = 'Greatly simplifies queries wanting to know information about only the latest attempt.';
@@ -427,22 +416,17 @@ $string['privacy:studentpath'] = 'studentsubmissions';
 $string['quickgrading'] = 'Quick grading';
 $string['quickgradingresult'] = 'Quick grading';
 $string['quickgradingchangessaved'] = 'The grade changes were saved';
-$string['quickgrading_help'] =
-        'Quick grading allows you to edusign grades (and outcomes) directly in the submissions table. Quick grading is not compatible with advanced grading and is not recommended when there are multiple markers.';
+$string['quickgrading_help'] = 'Quick grading allows you to edusign grades (and outcomes) directly in the submissions table. Quick grading is not compatible with advanced grading and is not recommended when there are multiple markers.';
 $string['removeallgroupoverrides'] = 'Delete all group overrides';
 $string['removealluseroverrides'] = 'Delete all user overrides';
-$string['reopenuntilpassincompatiblewithblindmarking'] =
-        'Reopen until pass option is incompatible with blind marking, because the grades are not released to the gradebook until the student identities are revealed.';
+$string['reopenuntilpassincompatiblewithblindmarking'] = 'Reopen until pass option is incompatible with blind marking, because the grades are not released to the gradebook until the student identities are revealed.';
 $string['requiresubmissionstatement'] = 'Require that students accept the submission statement';
-$string['requiresubmissionstatement_help'] =
-        'Require that students accept the submission statement for all submissions to this edusignment.';
+$string['requiresubmissionstatement_help'] = 'Require that students accept the submission statement for all submissions to this edusignment.';
 $string['requireallteammemberssubmit'] = 'Require all group members submit';
-$string['requireallteammemberssubmit_help'] =
-        'If enabled, all members of the student group must click the submit button for this edusignment before the group submission will be considered as submitted. If disabled, the group submission will be considered as submitted as soon as any member of the student group clicks the submit button.';
+$string['requireallteammemberssubmit_help'] = 'If enabled, all members of the student group must click the submit button for this edusignment before the group submission will be considered as submitted. If disabled, the group submission will be considered as submitted as soon as any member of the student group clicks the submit button.';
 $string['recordid'] = 'Identifier';
 $string['revealidentities'] = 'Reveal student identities';
-$string['revealidentitiesconfirm'] =
-        'Are you sure you want to reveal student identities for this edusignment? This operation cannot be undone. Once the student identities have been revealed, the marks will be released to the gradebook.';
+$string['revealidentitiesconfirm'] = 'Are you sure you want to reveal student identities for this edusignment? This operation cannot be undone. Once the student identities have been revealed, the marks will be released to the gradebook.';
 $string['reverttodefaults'] = 'Revert to edusignment defaults';
 $string['reverttodraftforstudent'] = 'Revert submission to draft for student: (id={$a->id}, fullname={$a->fullname}).';
 $string['reverttodraft'] = 'Revert the submission to draft status.';
@@ -463,21 +447,17 @@ $string['sendstudentnotificationsdefault_help'] = 'Set the default value for the
 $string['sendstudentnotifications'] = 'Notify students';
 $string['sendstudentnotifications_help'] = 'If enabled, students receive a message about the updated grade or feedback.';
 $string['sendnotifications'] = 'Notify graders about submissions';
-$string['sendnotifications_help'] =
-        'If enabled, graders (usually teachers) receive a message whenever a student submits an edusignment, early, on time and late. Message methods are configurable.';
+$string['sendnotifications_help'] = 'If enabled, graders (usually teachers) receive a message whenever a student submits an edusignment, early, on time and late. Message methods are configurable.';
 $string['selectlink'] = 'Select...';
 $string['selectuser'] = 'Select {$a}';
 $string['sendlatenotifications'] = 'Notify graders about late submissions';
-$string['sendlatenotifications_help'] =
-        'If enabled, graders (usually teachers) receive a message whenever a student submits an edusignment late. Message methods are configurable.';
+$string['sendlatenotifications_help'] = 'If enabled, graders (usually teachers) receive a message whenever a student submits an edusignment late. Message methods are configurable.';
 $string['sendsubmissionreceipts'] = 'Send submission receipt to students';
-$string['sendsubmissionreceipts_help'] =
-        'This switch will enable submission receipts for students. Students will receive a notification every time they successfully submit an edusignment';
+$string['sendsubmissionreceipts_help'] = 'This switch will enable submission receipts for students. Students will receive a notification every time they successfully submit an edusignment';
 $string['setmarkingallocation'] = 'Set allocated marker';
 $string['setmarkingworkflowstate'] = 'Set marking workflow state';
 $string['selectedusers'] = 'Selected users';
-$string['setmarkingworkflowstateforlog'] =
-        'Set marking workflow state : (id={$a->id}, fullname={$a->fullname}, state={$a->state}). ';
+$string['setmarkingworkflowstateforlog'] = 'Set marking workflow state : (id={$a->id}, fullname={$a->fullname}, state={$a->state}). ';
 $string['setmarkerallocationforlog'] = 'Set marking allocation : (id={$a->id}, fullname={$a->fullname}, marker={$a->marker}). ';
 $string['settings'] = 'edusignment settings';
 $string['showrecentsubmissions'] = 'Show recent submissions';
@@ -494,8 +474,7 @@ edusignment submission for \'<i>{$a->edusignment}</i>\'.</p>
 <p>You can see the status of your <a href="{$a->url}">edusignment submission</a>.</p>';
 $string['submissioncopiedsmall'] = 'You have copied your previous edusignment submission for {$a->edusignment}';
 $string['submissiondrafts'] = 'Require students to click the submit button';
-$string['submissiondrafts_help'] =
-        'If enabled, students will have to click a Submit button to declare their submission as final. This allows students to keep a draft version of the submission on the system. If this setting is changed from "No" to "Yes" after students have already submitted those submissions will be regarded as final.';
+$string['submissiondrafts_help'] = 'If enabled, students will have to click a Submit button to declare their submission as final. This allows students to keep a draft version of the submission on the system. If this setting is changed from "No" to "Yes" after students have already submitted those submissions will be regarded as final.';
 $string['submissioneditable'] = 'Student can edit this submission';
 $string['submissionlog'] = 'Student: {$a->fullname}, Status: {$a->status}';
 $string['submissionnotcopiedinvalidstatus'] = 'The submission was not copied because it has been edited since it was reopened.';
@@ -531,8 +510,7 @@ $string['submissionsclosed'] = 'Submissions closed';
 $string['submissionsettings'] = 'Submission settings';
 $string['submissionstatement'] = 'Submission statement';
 $string['submissionstatement_help'] = 'edusignment submission confirmation statement';
-$string['submissionstatementdefault'] =
-        'This edusignment is my own work, except where I have acknowledged the use of the works of other people.';
+$string['submissionstatementdefault'] = 'This edusignment is my own work, except where I have acknowledged the use of the works of other people.';
 $string['submissionstatementacceptedlog'] = 'Submission statement accepted by user {$a}';
 $string['submissionstatus_draft'] = 'Draft (not submitted)';
 $string['submissionstatusheading'] = 'Submission status';
@@ -560,32 +538,27 @@ $string['subplugintype_edusignfeedback'] = 'Feedback plugin';
 $string['subplugintype_edusignfeedback_plural'] = 'Feedback plugins';
 $string['teamname'] = 'Team: {$a}';
 $string['teamsubmission'] = 'Students submit in groups';
-$string['teamsubmission_help'] =
-        'If enabled students will be divided into groups based on the default set of groups or a custom grouping. A group submission will be shared among group members and all members of the group will see each others changes to the submission.';
+$string['teamsubmission_help'] = 'If enabled students will be divided into groups based on the default set of groups or a custom grouping. A group submission will be shared among group members and all members of the group will see each others changes to the submission.';
 $string['teamsubmissiongroupingid'] = 'Grouping for student groups';
-$string['teamsubmissiongroupingid_help'] =
-        'This is the grouping that the edusignment will use to find groups for student groups. If not set - the default set of groups will be used.';
+$string['teamsubmissiongroupingid_help'] = 'This is the grouping that the edusignment will use to find groups for student groups. If not set - the default set of groups will be used.';
 $string['textinstructions'] = 'edusignment instructions';
 $string['timemodified'] = 'Last modified';
 $string['timeremaining'] = 'Time remaining';
 $string['timeremainingcolon'] = 'Time remaining: {$a}';
 $string['togglezoom'] = 'Zoom in/out of region';
-$string['ungroupedusers'] =
-        'The setting \'Require group to make submission\' is enabled and some users are either not a member of any group, or are a member of more than one group, so are unable to make submissions.';
+$string['ungroupedusers'] = 'The setting \'Require group to make submission\' is enabled and some users are either not a member of any group, or are a member of more than one group, so are unable to make submissions.';
 $string['unlocksubmissionforstudent'] = 'Allow submissions for student: (id={$a->id}, fullname={$a->fullname}).';
 $string['unlocksubmissions'] = 'Unlock submissions';
 $string['unlimitedattempts'] = 'Unlimited';
 $string['unlimitedattemptsallowed'] = 'Unlimited attempts allowed.';
 $string['unlimitedpages'] = 'Unlimited';
 $string['unsavedchanges'] = 'Unsaved changes';
-$string['unsavedchangesquestion'] =
-        'There are unsaved changes to grades or feedback. Do you want to save the changes and continue?';
+$string['unsavedchangesquestion'] = 'There are unsaved changes to grades or feedback. Do you want to save the changes and continue?';
 $string['updategrade'] = 'Update grade';
 $string['updatetable'] = 'Save and update table';
 $string['upgradenotimplemented'] = 'Upgrade not implemented in plugin ({$a->type} {$a->subtype})';
 $string['userextensiondate'] = 'Extension granted until: {$a}';
-$string['useridlistnotcached'] =
-        'The grade changes were NOT saved, as it was not possible to determine which submission they were for.';
+$string['useridlistnotcached'] = 'The grade changes were NOT saved, as it was not possible to determine which submission they were for.';
 $string['useroverrides'] = 'User overrides';
 $string['useroverridesdeleted'] = 'User overrides deleted';
 $string['usersnone'] = 'No students have access to this edusignment.';
@@ -613,5 +586,4 @@ $string['workflowfilter'] = 'Workflow filter';
 $string['xofy'] = '{$a->x} of {$a->y}';
 
 // Deprecated since Moodle 3.2.
-$string['changegradewarning'] =
-        'This edusignment has graded submissions and changing the grade will not automatically re-calculate existing submission grades. You must re-grade all existing submissions, if you wish to change the grade.';
+$string['changegradewarning'] = 'This edusignment has graded submissions and changing the grade will not automatically re-calculate existing submission grades. You must re-grade all existing submissions, if you wish to change the grade.';

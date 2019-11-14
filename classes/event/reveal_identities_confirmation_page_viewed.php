@@ -113,7 +113,8 @@ class reveal_identities_confirmation_page_viewed extends base {
      */
     protected function validate_data() {
         if (self::$preventcreatecall) {
-            throw new \coding_exception('cannot call reveal_identities_confirmation_page_viewed::create() directly, use reveal_identities_confirmation_page_viewed::create_from_grade() instead.');
+            throw new \coding_exception('cannot call reveal_identities_confirmation_page_viewed::create() directly, 
+            use reveal_identities_confirmation_page_viewed::create_from_grade() instead.');
         }
 
         parent::validate_data();

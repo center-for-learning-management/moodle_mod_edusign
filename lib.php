@@ -812,8 +812,8 @@ function edusign_get_mysubmission_details_for_print_overview(
         $submitdetails .= get_string('submissionstatus_' . $submission->status, 'edusign');
     }
     if ($edusignment->markingworkflow) {
-        $workflowstate = $DB->get_field('edusign_user_flags', 'workflowstate', array('edusignment' =>
-                $edusignment->id, 'userid' => $USER->id));
+        $workflowstate = $DB->get_field('edusign_user_flags', 'workflowstate', array('edusignment' => $edusignment->id,
+            'userid' => $USER->id));
         if ($workflowstate) {
             $gradingstatus = 'markingworkflowstate' . $workflowstate;
         } else {

@@ -115,7 +115,8 @@ class submission_confirmation_form_viewed extends base {
      */
     protected function validate_data() {
         if (self::$preventcreatecall) {
-            throw new \coding_exception('cannot call submission_confirmation_form_viewed::create() directly, use submission_confirmation_form_viewed::create_from_edusign() instead.');
+            throw new \coding_exception('cannot call submission_confirmation_form_viewed::create() directly,
+             use submission_confirmation_form_viewed::create_from_edusign() instead.');
         }
 
         parent::validate_data();

@@ -322,8 +322,7 @@ class provider implements
             if ($edusign->is_blind_marking()) {
                 $uniqueid = $edusign->get_uniqueid_for_user_static($edusign->get_instance()->id, $contextlist->get_user()->id);
                 if ($uniqueid) {
-                    writer::with_context($context)
-                            ->export_metadata(
+                    writer::with_context($context)->export_metadata(
                                     [get_string('blindmarking', 'mod_edusign')],
                                     'blindmarkingid',
                                     $uniqueid,
@@ -603,8 +602,8 @@ class provider implements
                 'grade' => $grade->grade,
                 'attemptnumber' => ($grade->attemptnumber + 1)
         ];
-        writer::with_context($context)
-                ->export_data(array_merge($currentpath, [get_string('privacy:gradepath', 'mod_edusign')]), $gradedata);
+        writer::with_context($context)->export_data(array_merge($currentpath, [get_string('privacy:gradepath',
+            'mod_edusign')]), $gradedata);
     }
 
     /**
@@ -623,8 +622,8 @@ class provider implements
                 'attemptnumber' => ($submission->attemptnumber + 1),
                 'latest' => transform::yesno($submission->latest)
         ];
-        writer::with_context($context)
-                ->export_data(array_merge($currentpath, [get_string('privacy:submissionpath', 'mod_edusign')]), $submissiondata);
+        writer::with_context($context)->export_data(array_merge($currentpath, [get_string('privacy:submissionpath',
+            'mod_edusign')]), $submissiondata);
     }
 
     /**

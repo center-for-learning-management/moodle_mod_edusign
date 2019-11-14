@@ -102,8 +102,8 @@ class provider implements
         if ($filefeedback) {
             $fileareas = $plugin->get_file_areas();
             foreach ($fileareas as $filearea => $notused) {
-                \core_privacy\local\request\writer::with_context($exportdata->get_context())
-                        ->export_area_files($currentpath, 'edusignfeedback_file', $filearea, $gradeid);
+                \core_privacy\local\request\writer::with_context($exportdata->get_context())->export_area_files($currentpath,
+                    'edusignfeedback_file', $filearea, $gradeid);
             }
         }
     }
