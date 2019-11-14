@@ -623,7 +623,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
         require_once($CFG->dirroot . '/mod/edusign/feedback/file/importzipform.php');
 
         $formparams = array('context' => $this->edusignment->get_context(),
-                'cm' => $this->edusignment->get_course_module()->id);
+            'cm' => $this->edusignment->get_course_module()->id);
         $mform = new edusignfeedback_file_upload_zip_form(null, $formparams);
 
         $o = '';
@@ -638,7 +638,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
         if ($mform->is_cancelled()) {
             $importer->delete_import_files($contextid);
             $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                    'action' => 'grading');
+                'action' => 'grading');
             $url = new moodle_url('view.php', $urlparams);
             redirect($url);
             return;
@@ -649,7 +649,7 @@ class edusign_feedback_file extends edusign_feedback_plugin {
             if ($mform->is_cancelled()) {
                 $importer->delete_import_files($contextid);
                 $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-                        'action' => 'grading');
+                    'action' => 'grading');
                 $url = new moodle_url('view.php', $urlparams);
                 redirect($url);
                 return;
@@ -658,39 +658,39 @@ class edusign_feedback_file extends edusign_feedback_plugin {
             $o .= $importer->import_zip_files($this->edusignment, $this);
             $importer->delete_import_files($contextid);
         } else if (($data = $mform->get_data()) &&
-                ($zipfile = $mform->save_stored_file(
-                        'feedbackzip',
-                        $contextid,
-                        'edusignfeedback_file',
-                        EDUSIGNFEEDBACK_FILE_IMPORT_FILEAREA,
-                        $USER->id,
-                        '/',
-                        'import.zip',
-                        true
-                ))) {
-                    $importer->extract_files_from_zip($zipfile, $contextid);
+            ($zipfile = $mform->save_stored_file(
+                'feedbackzip',
+                $contextid,
+                'edusignfeedback_file',
+                EDUSIGNFEEDBACK_FILE_IMPORT_FILEAREA,
+                $USER->id,
+                '/',
+                'import.zip',
+                true
+            ))) {
+            $importer->extract_files_from_zip($zipfile, $contextid);
 
-                    $params = array('edusignment' => $this->edusignment, 'importer' => $importer);
+            $params = array('edusignment' => $this->edusignment, 'importer' => $importer);
 
-                    $mform = new edusignfeedback_file_import_zip_form(null, $params);
+            $mform = new edusignfeedback_file_import_zip_form(null, $params);
 
-                    $header = new edusign_header(
-                    $this->edusignment->get_instance(),
-                    $this->edusignment->get_context(),
-                    false,
-                    $this->edusignment->get_course_module()->id,
-                    get_string('confirmuploadzip', 'edusignfeedback_file')
+            $header = new edusign_header(
+                $this->edusignment->get_instance(),
+                $this->edusignment->get_context(),
+                false,
+                $this->edusignment->get_course_module()->id,
+                get_string('confirmuploadzip', 'edusignfeedback_file')
             );
             $o .= $renderer->render($header);
             $o .= $renderer->render(new edusign_form('confirmimportzip', $mform));
             $o .= $renderer->render_footer();
         } else {
             $header = new edusign_header(
-                    $this->edusignment->get_instance(),
-                    $this->edusignment->get_context(),
-                    false,
-                    $this->edusignment->get_course_module()->id,
-                    get_string('uploadzip', 'edusignfeedback_file')
+                $this->edusignment->get_instance(),
+                $this->edusignment->get_context(),
+                false,
+                $this->edusignment->get_course_module()->id,
+                get_string('uploadzip', 'edusignfeedback_file')
             );
             $o .= $renderer->render($header);
             $o .= $renderer->render(new edusign_form('uploadfeedbackzip', $mform));

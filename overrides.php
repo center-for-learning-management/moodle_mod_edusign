@@ -127,7 +127,7 @@ if ($groupmode) {
               ORDER BY ' . $sort;
 
         $overrides = $DB->get_records_sql($sql, $params);
-    } elseif ($groups) {
+    } else if ($groups) {
         list($insql, $inparams) = $DB->get_in_or_equal(array_keys($groups), SQL_PARAMS_NAMED);
         $params += $inparams;
 
@@ -170,7 +170,7 @@ foreach ($overrides as $override) {
         if (!is_enrolled($context, $override->userid)) {
             // User not enrolled.
             $active = false;
-        } elseif (!\core_availability\info_module::is_user_visible($cm, $override->userid)) {
+        } else if (!\core_availability\info_module::is_user_visible($cm, $override->userid)) {
             // User cannot access the module.
             $active = false;
         }
@@ -319,7 +319,7 @@ if ($groupmode) {
     if ($accessallgroups) {
         $users = get_enrolled_users($context, '', 0, 'u.id');
         $nousermessage = get_string('usersnone', 'edusign');
-    } elseif ($groups) {
+    } else if ($groups) {
         $enrolledjoin = get_enrolled_join($context, 'u.id');
         list($ingroupsql, $ingroupparams) = $DB->get_in_or_equal(array_keys($groups), SQL_PARAMS_NAMED);
         $params = $enrolledjoin->params + $ingroupparams;

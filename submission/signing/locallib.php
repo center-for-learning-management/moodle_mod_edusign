@@ -35,16 +35,14 @@ define('EDUSIGNSUBMISSION_SIGNING_FILEAREA', 'submissions_signing');
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class edusign_submission_signing extends edusign_submission_plugin
-{
+class edusign_submission_signing extends edusign_submission_plugin {
 
     /**
      * Get the name of the online text submission plugin
      *
      * @return string
      */
-    public function get_name()
-    {
+    public function get_name() {
         return get_string('signing', 'edusignsubmission_signing');
     }
 
@@ -54,8 +52,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param int $submissionid
      * @return mixed
      */
-    private function get_signing_submission($submissionid)
-    {
+    private function get_signing_submission($submissionid) {
         global $DB;
 
         return $DB->get_record('edusignsubmission_signing', array('submission' => $submissionid));
@@ -67,7 +64,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param MoodleQuickForm $mform The form to add elements to
      * @return void
      */
-    public function get_settings(MoodleQuickForm $mform)
+    /*public function get_settings(MoodleQuickForm $mform)
     {
         global $CFG, $COURSE;
 
@@ -112,7 +109,7 @@ class edusign_submission_signing extends edusign_submission_plugin
             'edusignsubmission_signing_enabled',
             'notchecked'
         );
-    }
+    }*/
 
     /**
      * Save the settings for signing submission plugin
@@ -120,8 +117,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param stdClass $data
      * @return bool
      */
-    public function save_settings(stdClass $data)
-    {
+    public function save_settings(stdClass $data) {
         if (empty($data->edusignsubmission_signing_wordlimit) || empty($data->edusignsubmission_signing_wordlimit_enabled)) {
             $wordlimit = 0;
             $wordlimitenabled = 0;
@@ -144,15 +140,12 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param stdClass $data
      * @return true if elements were added to the form
      */
-    public function get_form_elements($submission, MoodleQuickForm $mform, stdClass $data)
-    {
+    public function get_form_elements($submission, MoodleQuickForm $mform, stdClass $data) {
         global $PAGE;
         $elements = array();
 
         $editoroptions = $this->get_edit_options();
         $submissionid = $submission ? $submission->id : 0;
-
-
 
         if (!isset($data->signing)) {
             $data->signing = '';
@@ -178,12 +171,14 @@ class edusign_submission_signing extends edusign_submission_plugin
         );
 
         $mform->addElement('hidden', 'signing', 'Data/Base64', 'wrap="virtual" rows="1" cols="1"');
-        $mform->addElement('html', "<div class='form-group row'><div class='col-md-12'><div class='alert alert-warning'>Bitte benützen Sie für die bessere Usability ein Touchpad</div></div></div>");
+        $mform->addElement('html',
+            "<div class='form-group row'><div class='col-md-12'><div class='alert alert-warning'>Bitte benützen Sie für die bessere Usability ein Touchpad</div></div></div>");
         $mform->setType('signing', PARAM_RAW);
 
         $mform->addElement(
             'html',
-            "<div class='form-group row'><div class='col-md-3'>Unterschrift</div><div class='col-md-9'><canvas id='canvas' class='form-control' height='250px' width='1000px'></canvas><a class='btn btn-secondary' id='clearCanvas'  role='button'>Reset</a></div></div>"
+            "<div class='form-group row'><div class='col-md-3'>Unterschrift</div><div class='col-md-9'><canvas id='canvas' class='form-control' height='250px' width='1000px'></canvas>
+            <canvas id='blank' style='display:none'></canvas><a class='btn btn-secondary' id='clearCanvas'  role='button'>Reset</a></div></div>"
         );
         // $mform->addElement('filepicker', 'userfile', get_string('file'), null,
         // array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
@@ -197,15 +192,14 @@ class edusign_submission_signing extends edusign_submission_plugin
      *
      * @return array
      */
-    private function get_edit_options()
-    {
+    private function get_edit_options() {
         $editoroptions = array(
-                'noclean' => false,
-                'maxfiles' => EDITOR_UNLIMITED_FILES,
-                'maxbytes' => $this->edusignment->get_course()->maxbytes,
-                'context' => $this->edusignment->get_context(),
-                'return_types' => (FILE_INTERNAL | FILE_EXTERNAL | FILE_CONTROLLED_LINK),
-                'removeorphaneddrafts' => true // Whether or not to remove any draft files which aren't referenced in the text.
+            'noclean' => false,
+            'maxfiles' => EDITOR_UNLIMITED_FILES,
+            'maxbytes' => $this->edusignment->get_course()->maxbytes,
+            'context' => $this->edusignment->get_context(),
+            'return_types' => (FILE_INTERNAL | FILE_EXTERNAL | FILE_CONTROLLED_LINK),
+            'removeorphaneddrafts' => true // Whether or not to remove any draft files which aren't referenced in the text.
         );
         return $editoroptions;
     }
@@ -218,8 +212,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param stdClass $data
      * @return bool
      */
-    public function save(stdClass $submission, stdClass $data)
-    {
+    public function save(stdClass $submission, stdClass $data) {
         global $USER, $DB;
         $editoroptions = $this->get_edit_options();
         $signingsubmission = $this->get_signing_submission($submission->id);
@@ -235,16 +228,16 @@ class edusign_submission_signing extends edusign_submission_plugin
         );
 
         $params = array(
-                'context' => context_module::instance($this->edusignment->get_course_module()->id),
-                'courseid' => $this->edusignment->get_course()->id,
-                'objectid' => $submission->id,
-                'other' => array(
-                        'pathnamehashes' => array_keys($files),
-                        'content' => $data->signing,
-                        'format' => PARAM_RAW,
-                )
+            'context' => context_module::instance($this->edusignment->get_course_module()->id),
+            'courseid' => $this->edusignment->get_course()->id,
+            'objectid' => $submission->id,
+            'other' => array(
+                'pathnamehashes' => array_keys($files),
+                'content' => $data->signing,
+                'format' => PARAM_RAW,
+            )
         );
-     
+
         if (!empty($submission->userid) && ($submission->userid != $USER->id)) {
             $params['relateduserid'] = $submission->userid;
         }
@@ -271,10 +264,10 @@ class edusign_submission_signing extends edusign_submission_plugin
         unset($params['objectid']);
         unset($params['other']);
         $params['other'] = array(
-                'submissionid' => $submission->id,
-                'submissionattempt' => $submission->attemptnumber,
-                'submissionstatus' => $submission->status,
-                'signingwordcount' => $count,
+            'submissionid' => $submission->id,
+            'submissionattempt' => $submission->attemptnumber,
+            'submissionstatus' => $submission->status,
+            'signingwordcount' => $count,
         );
 
         if ($signingsubmission) {
@@ -306,8 +299,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      *
      * @return array An array of field names and descriptions. (name=>description, ...)
      */
-    public function get_editor_fields()
-    {
+    public function get_editor_fields() {
         return array('signing' => get_string('pluginname', 'edusignsubmission_signing'));
     }
 
@@ -318,8 +310,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param int $submissionid
      * @return string
      */
-    public function get_editor_text($name, $submissionid)
-    {
+    public function get_editor_text($name, $submissionid) {
         if ($name == 'signing') {
             $signingsubmission = $this->get_signing_submission($submissionid);
             if ($signingsubmission) {
@@ -337,8 +328,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param int $submissionid
      * @return int
      */
-    public function get_editor_format($name, $submissionid)
-    {
+    public function get_editor_format($name, $submissionid) {
         if ($name == 'signing') {
             $signingsubmission = $this->get_signing_submission($submissionid);
             if ($signingsubmission) {
@@ -356,8 +346,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param bool $showviewlink - If the summary has been truncated set this to true
      * @return string
      */
-    public function view_summary(stdClass $submission, & $showviewlink)
-    {
+    public function view_summary(stdClass $submission, & $showviewlink) {
         global $CFG;
 
         $signingsubmission = $this->get_signing_submission($submission->id);
@@ -391,8 +380,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param stdClass $user - This is the user record for this submission
      * @return array - return an array of files indexed by filename
      */
-    public function get_files(stdClass $submission, stdClass $user)
-    {
+    public function get_files(stdClass $submission, stdClass $user) {
         global $DB;
 
         $files = array();
@@ -435,8 +423,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param stdClass $submission
      * @return string
      */
-    public function view(stdClass $submission)
-    {
+    public function view(stdClass $submission) {
         global $CFG;
         $result = '';
 
@@ -465,8 +452,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param int $version old edusignment version
      * @return bool True if upgrade is possible
      */
-    public function can_upgrade($type, $version)
-    {
+    public function can_upgrade($type, $version) {
         if ($type == 'online' && $version >= 2011112900) {
             return true;
         }
@@ -481,8 +467,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param string $log record log events here
      * @return bool Was it a success?
      */
-    public function upgrade_settings(context $oldcontext, stdClass $oldedusignment, & $log)
-    {
+    public function upgrade_settings(context $oldcontext, stdClass $oldedusignment, & $log) {
         // No settings to upgrade.
         return true;
     }
@@ -546,8 +531,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param stdClass $submission The new submission
      * @return string
      */
-    public function format_for_log(stdClass $submission)
-    {
+    public function format_for_log(stdClass $submission) {
         // Format the info for each submission plugin (will be logged).
         $signingsubmission = $this->get_signing_submission($submission->id);
         $signingloginfo = '';
@@ -565,8 +549,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      *
      * @return bool
      */
-    public function delete_instance()
-    {
+    public function delete_instance() {
         global $DB;
         $DB->delete_records(
             'edusignsubmission_signing',
@@ -582,8 +565,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param stdClass $submission
      * @return wordcount
      */
-    public function is_empty(stdClass $submission)
-    {
+    public function is_empty(stdClass $submission) {
         $signingsubmission = $this->get_signing_submission($submission->id);
         $wordcount = 0;
         $hasinsertedresources = false;
@@ -606,9 +588,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param stdClass $data The submission data
      * @return bool
      */
-    public function submission_is_empty(stdClass $data)
-    {
-        var_dump($data->signing);
+    public function submission_is_empty(stdClass $data) {
         if (!isset($data->signing)) {
             return true;
         }
@@ -620,8 +600,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      *
      * @return array - An array of fileareas (keys) and descriptions (values)
      */
-    public function get_file_areas()
-    {
+    public function get_file_areas() {
         return array(EDUSIGNSUBMISSION_SIGNING_FILEAREA => $this->get_name());
     }
 
@@ -632,8 +611,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param stdClass $sourcesubmission
      * @param stdClass $destsubmission
      */
-    public function copy_submission(stdClass $sourcesubmission, stdClass $destsubmission)
-    {
+    public function copy_submission(stdClass $sourcesubmission, stdClass $destsubmission) {
         global $DB;
 
         // Copy the files across (attached via the text editor).
@@ -667,11 +645,10 @@ class edusign_submission_signing extends edusign_submission_plugin
      *
      * @return external_description|null
      */
-    public function get_external_parameters()
-    {
+    public function get_external_parameters() {
         $editorparams = array('text' => new external_value(PARAM_RAW, 'The text for this submission.'),
-                'format' => new external_value(PARAM_INT, 'The format for this submission'),
-                'itemid' => new external_value(PARAM_INT, 'The draft area id for files attached to the submission'));
+            'format' => new external_value(PARAM_INT, 'The format for this submission'),
+            'itemid' => new external_value(PARAM_INT, 'The draft area id for files attached to the submission'));
         $editorstructure = new external_single_structure($editorparams, 'Editor structure', VALUE_OPTIONAL);
         return array('signing_editor' => $editorstructure);
     }
@@ -682,8 +659,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @param string $submissiontext signing submission text from editor
      * @return string Error message if limit is enabled and exceeded, otherwise null
      */
-    public function check_word_count($submissiontext)
-    {
+    public function check_word_count($submissiontext) {
         global $OUTPUT;
 
         $wordlimitenabled = $this->get_config('wordlimitenabled');
@@ -713,8 +689,7 @@ class edusign_submission_signing extends edusign_submission_plugin
      * @return array the list of settings
      * @since Moodle 3.2
      */
-    public function get_config_for_external()
-    {
+    public function get_config_for_external() {
         return (array) $this->get_config();
     }
 }

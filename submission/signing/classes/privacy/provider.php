@@ -43,8 +43,7 @@ use \mod_edusign\privacy\edusign_plugin_request_data;
 class provider implements
     \core_privacy\local\metadata\provider,
     \mod_edusign\privacy\edusignsubmission_provider,
-    \mod_edusign\privacy\edusignsubmission_user_provider
-{
+    \mod_edusign\privacy\edusignsubmission_user_provider {
 
     /**
      * Return meta data about this plugin.
@@ -52,12 +51,11 @@ class provider implements
      * @param collection $collection A list of information to add to.
      * @return collection Return the collection after adding to it.
      */
-    public static function get_metadata(collection $collection): collection
-    {
+    public static function get_metadata(collection $collection): collection {
         $detail = [
-                'edusignment' => 'privacy:metadata:edusignmentid',
-                'submission' => 'privacy:metadata:submissionpurpose',
-                'signing' => 'privacy:metadata:textpurpose'
+            'edusignment' => 'privacy:metadata:edusignmentid',
+            'submission' => 'privacy:metadata:submissionpurpose',
+            'signing' => 'privacy:metadata:textpurpose'
         ];
         $collection->add_database_table('edusignsubmission_signing', $detail, 'privacy:metadata:tablepurpose');
         $collection->link_subsystem('core_files', 'privacy:metadata:filepurpose');
@@ -70,8 +68,7 @@ class provider implements
      * @param int $userid The user ID that we are finding contexts for.
      * @param contextlist $contextlist A context list to add sql and params to for contexts.
      */
-    public static function get_context_for_userid_within_submission(int $userid, contextlist $contextlist)
-    {
+    public static function get_context_for_userid_within_submission(int $userid, contextlist $contextlist) {
         // This is already fetched from mod_edusign.
     }
 
@@ -80,8 +77,7 @@ class provider implements
      *
      * @param \mod_edusign\privacy\useridlist $useridlist An object for obtaining user IDs of students.
      */
-    public static function get_student_user_ids(\mod_edusign\privacy\useridlist $useridlist)
-    {
+    public static function get_student_user_ids(\mod_edusign\privacy\useridlist $useridlist) {
         // No need.
     }
 
@@ -91,8 +87,7 @@ class provider implements
      *
      * @param \core_privacy\local\request\userlist $userlist The userlist object
      */
-    public static function get_userids_from_context(\core_privacy\local\request\userlist $userlist)
-    {
+    public static function get_userids_from_context(\core_privacy\local\request\userlist $userlist) {
         // Not required.
     }
 
@@ -102,8 +97,7 @@ class provider implements
      * @param edusign_plugin_request_data $exportdata Data used to determine which context and user to export and other useful
      * information to help with exporting.
      */
-    public static function export_submission_user_data(edusign_plugin_request_data $exportdata)
-    {
+    public static function export_submission_user_data(edusign_plugin_request_data $exportdata) {
         // We currently don't show submissions to teachers when exporting their data.
         if ($exportdata->get_user() != null) {
             return null;
@@ -126,19 +120,19 @@ class provider implements
                 $editortext
             );
             writer::with_context($context)
-                    ->export_area_files($currentpath, 'edusignsubmission_signing', 'submissions_signing', $submission->id)
-                    // Add the text to the exporter.
-                    ->export_data($currentpath, $submissiontext);
+                ->export_area_files($currentpath, 'edusignsubmission_signing', 'submissions_signing', $submission->id)
+                // Add the text to the exporter.
+                ->export_data($currentpath, $submissiontext);
 
             // Handle plagiarism data.
             $coursecontext = $context->get_course_context();
             $userid = $submission->userid;
             \core_plagiarism\privacy\provider::export_plagiarism_user_data($userid, $context, $currentpath, [
-                    'cmid' => $context->instanceid,
-                    'course' => $coursecontext->instanceid,
-                    'userid' => $userid,
-                    'content' => $editortext,
-                    'edusignment' => $submission->edusignment
+                'cmid' => $context->instanceid,
+                'course' => $coursecontext->instanceid,
+                'userid' => $userid,
+                'content' => $editortext,
+                'edusignment' => $submission->edusignment
             ]);
         }
     }
@@ -148,8 +142,7 @@ class provider implements
      *
      * @param edusign_plugin_request_data $requestdata Data useful for deleting user data from this sub-plugin.
      */
-    public static function delete_submission_for_context(edusign_plugin_request_data $requestdata)
-    {
+    public static function delete_submission_for_context(edusign_plugin_request_data $requestdata) {
         global $DB;
 
         \core_plagiarism\privacy\provider::delete_plagiarism_for_context($requestdata->get_context());
@@ -171,8 +164,7 @@ class provider implements
      *
      * @param edusign_plugin_request_data $deletedata Details about the user and context to focus the deletion.
      */
-    public static function delete_submission_for_userid(edusign_plugin_request_data $deletedata)
-    {
+    public static function delete_submission_for_userid(edusign_plugin_request_data $deletedata) {
         global $DB;
 
         \core_plagiarism\privacy\provider::delete_plagiarism_for_user($deletedata->get_user()->id, $deletedata->get_context());
@@ -190,7 +182,7 @@ class provider implements
 
         // Delete the records in the table.
         $DB->delete_records('edusignsubmission_signing', ['edusignment' => $deletedata->get_edusignid(),
-                'submission' => $submissionid]);
+            'submission' => $submissionid]);
     }
 
     /**
@@ -203,8 +195,7 @@ class provider implements
      *
      * @param edusign_plugin_request_data $deletedata A class that contains the relevant information required for deletion.
      */
-    public static function delete_submissions(edusign_plugin_request_data $deletedata)
-    {
+    public static function delete_submissions(edusign_plugin_request_data $deletedata) {
         global $DB;
 
         \core_plagiarism\privacy\provider::delete_plagiarism_for_users($deletedata->get_userids(), $deletedata->get_context());
