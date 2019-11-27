@@ -328,12 +328,12 @@ class edusign_grading_table extends table_sql implements renderable {
         $headers = array();
 
         // Select.
-        if (!$this->is_downloading() && $this->hasgrade) {
+        /* if (!$this->is_downloading() && $this->hasgrade) {
             $columns[] = 'select';
             $headers[] = get_string('select') .
                 '<div class="selectall"><label class="accesshide" for="selectall">' . get_string('selectall') . '</label>
                     <input type="checkbox" id="selectall" name="selectall" title="' . get_string('selectall') . '"/></div>';
-        }
+        }*/
 
         // User picture.
         if ($this->hasviewblind || !$this->edusignment->is_blind_marking()) {
@@ -399,7 +399,7 @@ class edusign_grading_table extends table_sql implements renderable {
             $headers[] = get_string('marker', 'edusign');
         }
         // Grade.
-        $columns[] = 'grade';
+        /*$columns[] = 'grade';
         $headers[] = get_string('grade');
         if ($this->is_downloading()) {
             $gradetype = $this->edusignment->get_instance()->grade;
@@ -426,7 +426,7 @@ class edusign_grading_table extends table_sql implements renderable {
             $columns[] = 'userid';
             $headers[] = get_string('edit');
         }
-
+        */
         // Submission plugins.
         if ($edusignment->is_any_submission_plugin_enabled()) {
             $columns[] = 'timesubmitted';
@@ -454,11 +454,12 @@ class edusign_grading_table extends table_sql implements renderable {
         }
 
         // Time marked.
+        /*
         $columns[] = 'timemarked';
         $headers[] = get_string('lastmodifiedgrade', 'edusign');
-
+        */
         // Feedback plugins.
-        foreach ($this->edusignment->get_feedback_plugins() as $plugin) {
+        /*foreach ($this->edusignment->get_feedback_plugins() as $plugin) {
             if ($this->is_downloading()) {
                 if ($plugin->is_visible() && $plugin->is_enabled()) {
                     foreach ($plugin->get_editor_fields() as $field => $description) {
@@ -473,15 +474,14 @@ class edusign_grading_table extends table_sql implements renderable {
                 $this->plugincache[$index] = array($plugin);
                 $columns[] = $index;
                 $headers[] = $plugin->get_name();
-            }
-        }
+            }*/
 
         // Exclude 'Final grade' column in downloaded grading worksheets.
-        if (!$this->is_downloading()) {
+        /*if (!$this->is_downloading()) {
             // Final grade.
             $columns[] = 'finalgrade';
             $headers[] = get_string('finalgrade', 'grades');
-        }
+        }*/
 
         // Load the grading info for all users.
         $this->gradinginfo = grade_get_grades(

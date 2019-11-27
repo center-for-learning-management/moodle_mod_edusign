@@ -281,7 +281,7 @@ $string['invalidfloatforgrade'] = 'Die eingegebene Bewertung \'{$a}\' scheint ni
 $string['invalidgradeforscale'] = 'Die eingegebene Bewertung ist bei der gewählten Bewertungsskala nicht vorgesehen.';
 $string['invalidoverrideid'] = 'Ungültige Überschreibungs-ID';
 $string['lastmodifiedgrade'] = 'Zuletzt geändert (Bewertung)';
-$string['lastmodifiedsubmission'] = 'Zuletzt geändert (Abgabe)';
+$string['lastmodifiedsubmission'] = 'unterschrieben am';
 $string['latesubmissions'] = 'Verspätete Abgaben';
 $string['latesubmissionsaccepted'] = 'Erlaubt bis {$a}';
 $string['loading'] = 'Laden...';
@@ -453,6 +453,7 @@ $string['setmarkingworkflowstate'] = 'Bewertungsworkflowstatus festlegen';
 $string['setmarkingworkflowstateforlog'] = 'Bewertungsworkflow-Status gesetzt: (id={$a->id}, Name={$a->fullname}, Status={$a->state}).';
 $string['settings'] = 'Einstellungen';
 $string['showrecentsubmissions'] = 'Neue Abgaben anzeigen';
+$string['signings'] = 'Unterschriften';
 $string['status'] = 'Status';
 $string['studentnotificationworkflowstateerror'] = 'Der Status für den Ablauf muss \'Freigegeben\' sein, um Teilnehmer/innen zu benachrichtigen.';
 $string['submission'] = 'Abgabe';

@@ -366,7 +366,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
 
             // The actual submission text.
             $signing = trim($signingsubmission->signing);
-            $text = "<img src='" . strip_tags($signing) . "'>";
+            $text = "<img class='signing' src='" . strip_tags($signing) . "'>";
 
             return $text;
         }
@@ -439,7 +439,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
                 'edusignsubmission_signing'
             );
 
-            $result = "<img src='" . strip_tags($result) . "'>";
+            $result = "<img class='signing' src='" . strip_tags($result) . "'>";
         }
 
         return $result;

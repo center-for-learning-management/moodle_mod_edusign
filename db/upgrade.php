@@ -166,6 +166,14 @@ function xmldb_edusign_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2017061205, 'edusign');
     }
 
+    if ($oldversion < 2019051405)  {
+        $sql = "ALTER TABLE edusign
+               ALTER COLUMN gradingduedate INT(10) NULL";
+
+        $DB->execute($sql);
+
+    }
+
     // Automatically generated Moodle v3.4.0 release upgrade line.
     // Put any upgrade step following this.
 

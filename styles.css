@@ -1,5 +1,9 @@
 /* stylelint-disable max-line-length */
 /* FIXME: MDL-55370: remove this stylelint disable */
+.path-mod-edusign .signing {
+    max-width:150px;
+}
+
 .path-mod-edusign div.gradingnavigation div {
     float: left;
     margin-left: 2em;
@@ -1211,6 +1215,7 @@
 .path-mod-edusign [data-region="grade-panel"] .mform .fitem_fcheckbox .felement {
     padding: 6px;
 }
+
 
 /** End of CSS to make forms vertical in the grading panel (taken from theme/bootstrapbase/less/moodle/forms.less). */
 

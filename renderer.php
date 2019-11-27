@@ -304,13 +304,13 @@ class mod_edusign_renderer extends plugin_renderer_base {
                     get_string('numberofsubmittededusignments', 'edusign'),
                     $summary->submissionssubmittedcount
             );
-            if (!$summary->teamsubmission) {
+            /* if (!$summary->teamsubmission) {
                 $this->add_table_row_tuple(
                         $t,
                         get_string('numberofsubmissionsneedgrading', 'edusign'),
                         $summary->submissionsneedgradingcount
                 );
-            }
+            }*/
         }
 
         $time = time();
@@ -355,11 +355,11 @@ class mod_edusign_renderer extends plugin_renderer_base {
         $urlparams = array('id' => $summary->coursemoduleid, 'action' => 'grading');
         $url = new moodle_url('/mod/edusign/view.php', $urlparams);
         $o .= '<a href="' . $url . '" class="btn btn-secondary">' . get_string('viewgrading', 'mod_edusign') . '</a> ';
-        if ($summary->cangrade) {
+        /*if ($summary->cangrade) {
             $urlparams = array('id' => $summary->coursemoduleid, 'action' => 'grader');
             $url = new moodle_url('/mod/edusign/view.php', $urlparams);
             $o .= '<a href="' . $url . '" class="btn btn-primary">' . get_string('grade') . '</a>';
-        }
+        }*/
         $o .= $this->output->container_end();
 
         // Close the container and insert a spacer.
@@ -686,7 +686,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
             $t->data[] = $row;
         }
 
-        if ($status->attemptreopenmethod != EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE) {
+       /* if ($status->attemptreopenmethod != EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE) {
             $currentattempt = 1;
             if (!$status->teamsubmissionenabled) {
                 if ($status->submission) {
@@ -710,7 +710,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
             $cell2 = new html_table_cell($message);
             $row->cells = array($cell1, $cell2);
             $t->data[] = $row;
-        }
+        } */
 
         $row = new html_table_row();
         $cell1 = new html_table_cell(get_string('submissionstatus', 'edusign'));
@@ -785,6 +785,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
         }
 
         // Grading status.
+        /*
         $row = new html_table_row();
         $cell1 = new html_table_cell(get_string('gradingstatus', 'edusign'));
 
@@ -803,7 +804,7 @@ class mod_edusign_renderer extends plugin_renderer_base {
         }
         $row->cells = array($cell1, $cell2);
         $t->data[] = $row;
-
+        */
         $submission = $status->teamsubmission ? $status->teamsubmission : $status->submission;
         $duedate = $status->duedate;
         if ($duedate > 0) {

@@ -100,8 +100,9 @@ class mod_edusign_mod_form extends moodleform_mod {
         $mform->addHelpButton('cutoffdate', 'cutoffdate', 'edusign');
 
         $name = get_string('gradingduedate', 'edusign');
-        $mform->addElement('date_time_selector', 'gradingduedate', $name, array('optional' => true));
-        $mform->addHelpButton('gradingduedate', 'gradingduedate', 'edusign');
+        $mform->addElement('hidden', 'gradingduedate', $name);
+        $mform->setType('gradingduedate', PARAM_BOOL);
+        $mform->setDefault('gradingduedate', false);
 
         $name = get_string('alwaysshowdescription', 'edusign');
         $mform->addElement('checkbox', 'alwaysshowdescription', $name);
@@ -123,13 +124,13 @@ class mod_edusign_mod_form extends moodleform_mod {
                 'requiresubmissionstatement',
                 'edusign'
         );
-        $mform->setType('requiresubmissionstatement', PARAM_BOOL);
+       /* $mform->setType('requiresubmissionstatement', PARAM_BOOL);
 
         $options = array(
                 EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE => get_string('attemptreopenmethod_none', 'mod_edusign'),
                 EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL => get_string('attemptreopenmethod_manual', 'mod_edusign'),
                 EDUSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS => get_string('attemptreopenmethod_untilpass', 'mod_edusign')
-        );
+        );*/
         $mform->addElement('select', 'attemptreopenmethod', get_string('attemptreopenmethod', 'mod_edusign'), $options);
         $mform->addHelpButton('attemptreopenmethod', 'attemptreopenmethod', 'mod_edusign');
 
@@ -218,6 +219,9 @@ class mod_edusign_mod_form extends moodleform_mod {
         $mform->disabledIf('markingallocation', 'markingworkflow', 'eq', 0);
 
         $this->standard_coursemodule_elements();
+        $mform->addElement('hidden', 'grade');
+        $mform->setType('grade', PARAM_INT);
+        $mform->setDefault('grade', 0);
         $this->apply_admin_defaults();
 
         $this->add_action_buttons();

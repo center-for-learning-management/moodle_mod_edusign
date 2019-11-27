@@ -54,12 +54,12 @@ class mod_edusign_quick_grading_form extends moodleform {
         $mform->setType('lastpage', PARAM_INT);
 
         // Skip notifications option.
-        $mform->addElement('selectyesno', 'sendstudentnotifications', get_string('sendstudentnotifications', 'edusign'));
-        $mform->setDefault('sendstudentnotifications', $instance['sendstudentnotifications']);
+        //$mform->addElement('selectyesno', 'sendstudentnotifications', get_string('sendstudentnotifications', 'edusign'));
+        //$mform->setDefault('sendstudentnotifications', $instance['sendstudentnotifications']);
 
         // Buttons.
-        $savemessage = get_string('saveallquickgradingchanges', 'edusign');
-        $mform->addElement('submit', 'savequickgrades', $savemessage);
+       // $savemessage = get_string('saveallquickgradingchanges', 'edusign');
+      //  $mform->addElement('submit', 'savequickgrades', $savemessage);
     }
 }
 

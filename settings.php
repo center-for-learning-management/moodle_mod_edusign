@@ -123,7 +123,7 @@ if ($ADMIN->fulltree) {
     $setting->set_advanced_flag_options(admin_setting_flag::ENABLED, false);
     $settings->add($setting);
 
-    $name = new lang_string('cutoffdate', 'mod_edusign');
+    /*$name = new lang_string('cutoffdate', 'mod_edusign');
     $description = new lang_string('cutoffdate_help', 'mod_edusign');
     $setting = new admin_setting_configduration('edusign/cutoffdate',
             $name,
@@ -133,7 +133,7 @@ if ($ADMIN->fulltree) {
     $setting->set_advanced_flag_options(admin_setting_flag::ENABLED, false);
     $settings->add($setting);
 
-    $name = new lang_string('gradingduedate', 'mod_edusign');
+    /*delete $name = new lang_string('gradingduedate', 'mod_edusign');
     $description = new lang_string('gradingduedate_help', 'mod_edusign');
     $setting = new admin_setting_configduration('edusign/gradingduedate',
             $name,
@@ -141,7 +141,7 @@ if ($ADMIN->fulltree) {
             1209600);
     $setting->set_enabled_flag_options(admin_setting_flag::ENABLED, true);
     $setting->set_advanced_flag_options(admin_setting_flag::ENABLED, false);
-    $settings->add($setting);
+    $settings->add($setting);*/
 
     $name = new lang_string('submissiondrafts', 'mod_edusign');
     $description = new lang_string('submissiondrafts_help', 'mod_edusign');

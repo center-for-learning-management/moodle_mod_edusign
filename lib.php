@@ -392,7 +392,7 @@ function edusign_supports($feature) {
         case FEATURE_COMPLETION_HAS_RULES:
             return true;
         case FEATURE_GRADE_HAS_GRADE:
-            return true;
+            return false;
         case FEATURE_GRADE_OUTCOMES:
             return true;
         case FEATURE_BACKUP_MOODLE2:
@@ -402,7 +402,7 @@ function edusign_supports($feature) {
         case FEATURE_ADVANCED_GRADING:
             return true;
         case FEATURE_PLAGIARISM:
-            return true;
+            return false;
         case FEATURE_COMMENT:
             return true;
 
