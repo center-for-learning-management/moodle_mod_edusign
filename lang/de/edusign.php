@@ -250,7 +250,7 @@ Die Abgabe ist auf der Website verfügbar
 {$a->url}';
 $string['gradestudent'] = 'Bewertung für Teilnehmer/in: (id={$a->id}, Name={$a->fullname}).';
 $string['gradeuser'] = 'Bewertung {$a}';
-$string['grading'] = 'Wird bewertet';
+$string['grading'] = 'Unterschriften';
 $string['gradingchangessaved'] = 'Die geänderten Bewertungen wurden gespeichert.';
 $string['gradingduedate'] = 'An Bewertung erinnern';
 $string['gradingduedate_help'] = 'Dieser voraussichtliche Termin markiert den Abschluss der Abgabe. Das Datum wird verwendet, um Benachrichtigungen für Trainer/innen im Dashboard zu priorisieren.';

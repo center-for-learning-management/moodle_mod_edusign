@@ -1,5 +1,11 @@
 /* stylelint-disable max-line-length */
 /* FIXME: MDL-55370: remove this stylelint disable */
+@media screen and (max-width: 768px) {
+    .path-mod-edusign .usability {
+        display:none;
+    }
+}
+
 .path-mod-edusign .signing {
     max-width:150px;
 }

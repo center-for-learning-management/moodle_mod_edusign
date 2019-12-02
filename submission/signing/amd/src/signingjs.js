@@ -1,19 +1,18 @@
-define(['jquery'], function ($) {
+define(['jquery'], function($) {
     var mousePressed;
     var lastX, lastY;
     var ctx;
     var canvas;
     return {
-        init: function () {
+        init: function() {
             initialize();
         },
-        save: function () {
+        save: function() {
             initialize();
         }
 
     };
 });
-
 
 
 function initialize() {
@@ -23,24 +22,25 @@ function initialize() {
 var rect = canvas.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
-// setup lines styles .. 
-ctx.strokeStyle = "#000";
-ctx.lineWidth = 1;
+// Setup lines styles .. 
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 1;
+    clearCanvas(canvas, ctx);
 
-// some variables we'll need .. 
+// Some variables we'll need .. 
 var drawing = false;
-var mousePos = {x:0, y:0};
+var mousePos = {x: 0, y: 0};
 var lastPos = mousePos;
 var isMobile = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
-$('#clearCanvas').bind('click', function () {
+$('#clearCanvas').bind('click', function() {
     clearCanvas(canvas, ctx);
 });
-$('#id_submitbutton').click(function () {
+$('#id_submitbutton').click(function() {
         var data = $('#canvas')[0].toDataURL(); // Change here
         $('[name="signing"]').val(data);
     });
-// mouse/touch events ..
+// Mouse/touch events ..
 canvas.addEventListener((isMobile ? 'touchstart' : 'mousedown'), function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -59,19 +59,19 @@ canvas.addEventListener((isMobile ? 'touchend' : 'mouseup'), function(e) {
     drawing = false;
 });
 
-document.body.addEventListener("touchstart", function (e) {
+document.body.addEventListener("touchstart", function(e) {
   if (e.target == canvas) {
     e.preventDefault();
     e.stopPropagation();
   }
 }, false);
-document.body.addEventListener("touchend", function (e) {
+document.body.addEventListener("touchend", function(e) {
   if (e.target == canvas) {
     e.preventDefault();
     e.stopPropagation();
   }
 }, false);
-document.body.addEventListener("touchmove", function (e) {
+document.body.addEventListener("touchmove", function(e) {
   if (e.target == canvas) {
     e.preventDefault();
     e.stopPropagation();
@@ -79,25 +79,24 @@ document.body.addEventListener("touchmove", function (e) {
 }, false);
 
 
-
-// helper functions .. 
+// Helper functions .. 
 function getMousePos(canvasDom, touchOrMouseEvent) {
     var rect = canvasDom.getBoundingClientRect();
     return {
         x: (isMobile ? touchOrMouseEvent.touches[0].clientX : touchOrMouseEvent.clientX) - rect.left,
         y: (isMobile ? touchOrMouseEvent.touches[0].clientY : touchOrMouseEvent.clientY) - rect.top
     };
-};
+}
 
-// drawing .. 
+// Drawing .. 
 window.requestAnimFrame = (function(callback) {
-    return  window.requestAnimationFrame ||
+    return window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             window.oRequestAnimationFrame ||
             window.msRequestAnimationFrame ||
             function(callback) {
-                window.setTimeout(callback, 1000/60);
+                window.setTimeout(callback, 1000 / 60);
             };
 })();
 
@@ -106,25 +105,30 @@ function renderCanvas() {
         ctx.moveTo(lastPos.x, lastPos.y);
         ctx.lineTo(mousePos.x, mousePos.y);
         ctx.stroke();
+        if ((lastPos.x == mousePos.x) && (lastPos.y == mousePos.y)) {
+            ctx.moveTo(lastPos.x, lastPos.y);
+            ctx.arc(lastPos.x, lastPos.y, 0.5, 0, 2 * Math.PI, false);
+        }
         lastPos = mousePos;
+
     }
-};
+}
 
 (function drawLoop() {
     requestAnimFrame(drawLoop);
     renderCanvas();
 })();
 
-$(window).resize(function () {
-    var W = canvas.width, H = canvas.height;
-    var temp = ctx.getImageData(0,0,W,H);
+$(window).resize(function() {
+    var W = canvas.width,
+H = canvas.height;
+    var temp = ctx.getImageData(0, 0, W, H);
     var rect = canvas.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
-     W = canvas.width, H = canvas.height
-    ctx.putImageData(temp,0,0);
+     W = canvas.width, H = canvas.height;
+    ctx.putImageData(temp, 0, 0);
 });
-
 
 
 function clearCanvas(canvas, ctx) {
@@ -139,12 +143,11 @@ function downloadCanvas(canvas) {
 
 function save() {
     this.href = canvas.toDataURL();
-    
-    if(this.href == document.getElementById('blank').toDataURL()){
+
+    if (this.href == document.getElementById('blank').toDataURL()) {
 
     $('#signing_text').val("");
-    }
-    else{
+    } else {
     $('#signing_text').val("this.href");
     }
 }

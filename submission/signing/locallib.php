@@ -172,17 +172,17 @@ class edusign_submission_signing extends edusign_submission_plugin {
 
         $mform->addElement('hidden', 'signing', 'Data/Base64', 'wrap="virtual" rows="1" cols="1"');
         $mform->addElement('html',
-            "<div class='form-group row'><div class='col-md-12'><div class='alert alert-warning'>Bitte benützen Sie für die bessere Usability ein Touchpad</div></div></div>");
+            "<div class='form-group row'><div class='col-md-12'><div class='alert alert-warning usability'>Bitte benützen Sie für die bessere Usability ein Touchpad</div></div></div>");
         $mform->setType('signing', PARAM_RAW);
 
         $mform->addElement(
             'html',
             "<div class='form-group row'><div class='col-md-3'>Unterschrift</div><div class='col-md-9'><canvas id='canvas' class='form-control' height='250px' width='1000px'></canvas>
-            <canvas id='blank' style='display:none'></canvas><a class='btn btn-secondary' id='clearCanvas'  role='button'>Reset</a></div></div>"
+            <a class='btn btn-secondary' id='clearCanvas'  role='button'>Reset</a></div></div>"
         );
         // $mform->addElement('filepicker', 'userfile', get_string('file'), null,
         // array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
-        $PAGE->requires->js_call_amd('edusignsubmission_signing/signingjs', 'save');
+        $PAGE->requires->js_call_amd('edusignsubmission_signing/signingjs', 'init');
 
         return true;
     }

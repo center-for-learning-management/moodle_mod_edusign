@@ -255,7 +255,7 @@ $string['gradeoutof'] = 'Grade out of {$a}';
 $string['gradeoutofhelp'] = 'Grade';
 $string['gradeoutofhelp_help'] = 'Enter the grade for the student\'s submission here. You may include decimals.';
 $string['gradestudent'] = 'Grade student: (id={$a->id}, fullname={$a->fullname}). ';
-$string['grading'] = 'Grading';
+$string['grading'] = 'Signings';
 $string['gradingchangessaved'] = 'The grade changes were saved';
 $string['gradingduedate'] = 'Remind me to grade by';
 $string['gradingduedate_help'] = 'The expected date that marking of the submissions should be completed by. This date is used to prioritise dashboard notifications for teachers.';
