@@ -166,12 +166,16 @@ function xmldb_edusign_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2017061205, 'edusign');
     }
 
-    if ($oldversion < 2019051405)  {
-        $sql = "ALTER TABLE edusign
-               ALTER COLUMN gradingduedate INT(10) NULL";
+    if ($oldversion < 2019120400)  {
+        // Changing precision of field
+        $table = new xmldb_table('edusign');
+        $field = new xmldb_field('gradingduedate', XMLDB_TYPE_INTEGER, '10', null, null, null, '1', 'cutoffdate');
 
-        $DB->execute($sql);
+        // Launch change of precision for field enablecompletion.
+        $dbman->change_field_precision($table, $field);
 
+        // Edusign savepoint reached.
+        upgrade_mod_savepoint(true, 2019120400, 'edusign');
     }
 
     // Automatically generated Moodle v3.4.0 release upgrade line.
