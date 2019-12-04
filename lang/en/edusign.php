@@ -257,11 +257,11 @@ $string['gradestudent'] = 'Grade student: (id={$a->id}, fullname={$a->fullname})
 $string['grading'] = 'Signings';
 $string['gradingchangessaved'] = 'The grade changes were saved';
 $string['gradechangessaveddetail'] = 'The changes to the grade and feedback were saved';
-$string['gradingmethodpreview'] = 'Grading criteria';
+$string['gradingmethodpreview'] = 'Signing criteria';
 $string['gradingoptions'] = 'Options';
-$string['gradingstatus'] = 'Grading status';
-$string['gradingstudent'] = 'Grading student';
-$string['gradingsummary'] = 'Grading summary';
+$string['gradingstatus'] = 'Signing status';
+$string['gradingstudent'] = 'Signing student';
+$string['gradingsummary'] = 'Signing summary';
 $string['groupoverrides'] = 'Group overrides';
 $string['groupoverridesdeleted'] = 'Group overrides deleted';
 $string['groupsnone'] = 'No groups you can access.';
