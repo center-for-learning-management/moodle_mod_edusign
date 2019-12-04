@@ -119,21 +119,6 @@ class mod_edusign_mod_form extends moodleform_mod {
                 'requiresubmissionstatement',
                 'edusign'
         );
-       /* $mform->setType('requiresubmissionstatement', PARAM_BOOL);
-
-        $options = array(
-                EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE => get_string('attemptreopenmethod_none', 'mod_edusign'),
-                EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL => get_string('attemptreopenmethod_manual', 'mod_edusign'),
-                EDUSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS => get_string('attemptreopenmethod_untilpass', 'mod_edusign')
-        );*/
-        $mform->addElement('select', 'attemptreopenmethod', get_string('attemptreopenmethod', 'mod_edusign'), $options);
-        $mform->addHelpButton('attemptreopenmethod', 'attemptreopenmethod', 'mod_edusign');
-
-        $options = array(EDUSIGN_UNLIMITED_ATTEMPTS => get_string('unlimitedattempts', 'mod_edusign'));
-        $options += array_combine(range(1, 30), range(1, 30));
-        $mform->addElement('select', 'maxattempts', get_string('maxattempts', 'mod_edusign'), $options);
-        $mform->addHelpButton('maxattempts', 'maxattempts', 'edusign');
-        $mform->disabledIf('maxattempts', 'attemptreopenmethod', 'eq', EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE);
 
         $mform->addElement('header', 'groupsubmissionsettings', get_string('groupsubmissionsettings', 'edusign'));
 
@@ -245,9 +230,6 @@ class mod_edusign_mod_form extends moodleform_mod {
             if ($data['cutoffdate'] < $data['allowsubmissionsfromdate']) {
                 $errors['cutoffdate'] = get_string('cutoffdatefromdatevalidation', 'edusign');
             }
-        }
-        if ($data['blindmarking'] && $data['attemptreopenmethod'] == EDUSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS) {
-            $errors['attemptreopenmethod'] = get_string('reopenuntilpassincompatiblewithblindmarking', 'edusign');
         }
 
         return $errors;

@@ -107,8 +107,6 @@ class edusign_upgrade_manager {
         $data->requireallteammemberssubmit = 0;
         $data->teamsubmissiongroupingid = 0;
         $data->blindmarking = 0;
-        $data->attemptreopenmethod = 'none';
-        $data->maxattempts = EDUSIGN_UNLIMITED_ATTEMPTS;
 
         $newedusignment = new edusign(null, null, null);
 
