@@ -73,7 +73,6 @@ define('EDUSIGN_INTROATTACHMENT_FILEAREA', 'introattachment');
 
 // Event types.
 define('EDUSIGN_EVENT_TYPE_DUE', 'due');
-define('EDUSIGN_EVENT_TYPE_GRADINGDUE', 'gradingdue');
 define('EDUSIGN_EVENT_TYPE_OPEN', 'open');
 define('EDUSIGN_EVENT_TYPE_CLOSE', 'close');
 
@@ -656,7 +655,6 @@ class edusign {
         }
         $update->duedate = $formdata->duedate;
         $update->cutoffdate = $formdata->cutoffdate;
-        $update->gradingduedate = $formdata->gradingduedate;
         $update->allowsubmissionsfromdate = $formdata->allowsubmissionsfromdate;
         $update->grade = $formdata->grade;
         $update->completionsubmit = !empty($formdata->completionsubmit);
@@ -1021,7 +1019,6 @@ class edusign {
         $submissionsfromdate = $instance->allowsubmissionsfromdate;
         $cutoffdate = $instance->cutoffdate;
         $duedate = $instance->duedate;
-        $gradingduedate = $instance->gradingduedate;
         $mindate = null;
         $maxdate = null;
 
@@ -1046,30 +1043,6 @@ class edusign {
                 $maxdate = [
                         $cutoffdate,
                         get_string('cutoffdatevalidation', 'edusign'),
-                ];
-            }
-
-            if ($gradingduedate) {
-                // If we don't have a cutoff date or we've got a grading due date
-                // that is earlier than the cutoff then we should use that as the
-                // upper limit for the due date.
-                if (!$cutoffdate || $gradingduedate < $cutoffdate) {
-                    $maxdate = [
-                            $gradingduedate,
-                            get_string('gradingdueduedatevalidation', 'edusign'),
-                    ];
-                }
-            }
-        } else if ($event->eventtype == EDUSIGN_EVENT_TYPE_GRADINGDUE) {
-            if ($duedate) {
-                $mindate = [
-                        $duedate,
-                        get_string('gradingdueduedatevalidation', 'edusign'),
-                ];
-            } else if ($submissionsfromdate) {
-                $mindate = [
-                        $submissionsfromdate,
-                        get_string('gradingduefromdatevalidation', 'edusign'),
                 ];
             }
         }
@@ -1360,28 +1333,6 @@ class edusign {
             $DB->delete_records('event', array('modulename' => 'edusign', 'instance' => $instance->id,
                     'eventtype' => $eventtype));
         }
-
-        $eventtype = EDUSIGN_EVENT_TYPE_GRADINGDUE;
-        if ($instance->gradingduedate) {
-            $event->name = get_string('calendargradingdue', 'edusign', $instance->name);
-            $event->eventtype = $eventtype;
-            $event->timestart = $instance->gradingduedate;
-            $event->timesort = $instance->gradingduedate;
-            $event->id = $DB->get_field('event', 'id', array('modulename' => 'edusign',
-                    'instance' => $instance->id, 'eventtype' => $event->eventtype));
-
-            // Now process the event.
-            if ($event->id) {
-                $calendarevent = calendar_event::load($event->id);
-                $calendarevent->update($event, false);
-            } else {
-                calendar_event::create($event, false);
-            }
-        } else {
-            $DB->delete_records('event', array('modulename' => 'edusign', 'instance' => $instance->id,
-                    'eventtype' => $eventtype));
-        }
-
         return true;
     }
 
@@ -1413,7 +1364,6 @@ class edusign {
         }
         $update->duedate = $formdata->duedate;
         $update->cutoffdate = $formdata->cutoffdate;
-        $update->gradingduedate = $formdata->gradingduedate;
         $update->allowsubmissionsfromdate = $formdata->allowsubmissionsfromdate;
         $update->grade = $formdata->grade;
         if (!empty($formdata->completionunlocked)) {

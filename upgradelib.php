@@ -99,7 +99,6 @@ class edusign_upgrade_manager {
         $data->markingworkflow = 0;
         $data->markingallocation = 0;
         $data->cutoffdate = 0;
-        $data->gradingduedate = 0;
         // New way to specify no late submissions.
         if ($oldedusignment->preventlate) {
             $data->cutoffdate = $data->duedate;

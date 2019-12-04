@@ -88,46 +88,6 @@ function xmldb_edusign_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2017021500, 'edusign');
     }
 
-    if ($oldversion < 2017031300) {
-        // Add a 'gradingduedate' field to the 'edusign' table.
-        $table = new xmldb_table('edusign');
-        $field = new xmldb_field('gradingduedate', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'cutoffdate');
-
-        // Conditionally launch add field.
-        if (!$dbman->field_exists($table, $field)) {
-            $dbman->add_field($table, $field);
-        }
-
-        // edusign savepoint reached.
-        upgrade_mod_savepoint(true, 2017031300, 'edusign');
-    }
-
-    if ($oldversion < 2017042800) {
-        // Update query to set the grading due date one week after the due date.
-        // Only edusign instances with grading due date not set and with a due date of not older than 3 weeks will be updated.
-        $sql = "UPDATE {edusign}
-                   SET gradingduedate = duedate + :weeksecs
-                 WHERE gradingduedate = 0
-                       AND duedate > :timelimit";
-
-        // Calculate the time limit, which is 3 weeks before the current date.
-        $interval = new DateInterval('P3W');
-        $timelimit = new DateTime();
-        $timelimit->sub($interval);
-
-        // Update query params.
-        $params = [
-                'weeksecs' => WEEKSECS,
-                'timelimit' => $timelimit->getTimestamp()
-        ];
-
-        // Execute DB update for edusign instances.
-        $DB->execute($sql, $params);
-
-        // edusign savepoint reached.
-        upgrade_mod_savepoint(true, 2017042800, 'edusign');
-    }
-
     // Automatically generated Moodle v3.3.0 release upgrade line.
     // Put any upgrade step following this.
     if ($oldversion < 2017061200) {
@@ -166,16 +126,18 @@ function xmldb_edusign_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2017061205, 'edusign');
     }
 
-    if ($oldversion < 2019120400)  {
-        // Changing precision of field
+    if ($oldversion < 2019120401) {
+        // Remove 'gradingduedate' field from the 'edusign' table.
         $table = new xmldb_table('edusign');
-        $field = new xmldb_field('gradingduedate', XMLDB_TYPE_INTEGER, '10', null, null, null, '1', 'cutoffdate');
+        $field = new xmldb_field('gradingduedate', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'cutoffdate');
 
-        // Launch change of precision for field enablecompletion.
-        $dbman->change_field_precision($table, $field);
+        // Conditionally launch add field.
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
 
-        // Edusign savepoint reached.
-        upgrade_mod_savepoint(true, 2019120400, 'edusign');
+        // edusign savepoint reached.
+        upgrade_mod_savepoint(true, 2019120401, 'edusign');
     }
 
     // Automatically generated Moodle v3.4.0 release upgrade line.

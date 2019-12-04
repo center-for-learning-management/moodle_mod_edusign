@@ -99,11 +99,6 @@ class mod_edusign_mod_form extends moodleform_mod {
         $mform->addElement('date_time_selector', 'cutoffdate', $name, array('optional' => true));
         $mform->addHelpButton('cutoffdate', 'cutoffdate', 'edusign');
 
-        $name = get_string('gradingduedate', 'edusign');
-        $mform->addElement('hidden', 'gradingduedate', $name);
-        $mform->setType('gradingduedate', PARAM_BOOL);
-        $mform->setDefault('gradingduedate', false);
-
         $name = get_string('alwaysshowdescription', 'edusign');
         $mform->addElement('checkbox', 'alwaysshowdescription', $name);
         $mform->addHelpButton('alwaysshowdescription', 'alwaysshowdescription', 'edusign');
@@ -249,14 +244,6 @@ class mod_edusign_mod_form extends moodleform_mod {
         if (!empty($data['allowsubmissionsfromdate']) && !empty($data['cutoffdate'])) {
             if ($data['cutoffdate'] < $data['allowsubmissionsfromdate']) {
                 $errors['cutoffdate'] = get_string('cutoffdatefromdatevalidation', 'edusign');
-            }
-        }
-        if ($data['gradingduedate']) {
-            if ($data['allowsubmissionsfromdate'] && $data['allowsubmissionsfromdate'] > $data['gradingduedate']) {
-                $errors['gradingduedate'] = get_string('gradingduefromdatevalidation', 'edusign');
-            }
-            if ($data['duedate'] && $data['duedate'] > $data['gradingduedate']) {
-                $errors['gradingduedate'] = get_string('gradingdueduedatevalidation', 'edusign');
             }
         }
         if ($data['blindmarking'] && $data['attemptreopenmethod'] == EDUSIGN_ATTEMPT_REOPEN_METHOD_UNTILPASS) {

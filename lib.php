@@ -1886,8 +1886,7 @@ function edusign_check_updates_since(cm_info $cm, $from, $filter = array()) {
 /**
  * Is the event visible?
  *
- * This is used to determine global visibility of an event in all places throughout Moodle. For example,
- * the EDUSIGN_EVENT_TYPE_GRADINGDUE event will not be shown to students on their calendar.
+ * This is used to determine global visibility of an event in all places throughout Moodle.
  *
  * @param calendar_event $event
  * @param int $userid User id to use for all capability checks, etc. Set to 0 for current user (default).
@@ -1907,11 +1906,7 @@ function mod_edusign_core_calendar_is_event_visible(calendar_event $event, $user
 
     $edusign = new edusign($context, $cm, null);
 
-    if ($event->eventtype == EDUSIGN_EVENT_TYPE_GRADINGDUE) {
-        return $edusign->can_grade($userid);
-    } else {
-        return true;
-    }
+    return true;
 }
 
 /**
@@ -1925,11 +1920,8 @@ function mod_edusign_core_calendar_is_event_visible(calendar_event $event, $user
  * @param int $userid User id to use for all capability checks, etc. Set to 0 for current user (default).
  * @return \core_calendar\local\event\entities\action_interface|null
  */
-function mod_edusign_core_calendar_provide_event_action(
-        calendar_event $event,
-        \core_calendar\action_factory $factory,
-        $userid = 0
-) {
+function mod_edusign_core_calendar_provide_event_action(calendar_event $event, \core_calendar\action_factory $factory,
+    $userid = 0) {
 
     global $CFG, $USER;
 
@@ -1946,64 +1938,36 @@ function mod_edusign_core_calendar_provide_event_action(
 
     // Apply overrides.
     $edusign->update_effective_access($userid);
-
-    if ($event->eventtype == EDUSIGN_EVENT_TYPE_GRADINGDUE) {
-        $name = get_string('grade');
-        $url = new \moodle_url('/mod/edusign/view.php', [
-                'id' => $cm->id,
-                'action' => 'grader'
-        ]);
-        $itemcount = $edusign->count_submissions_need_grading();
-        $actionable = $edusign->can_grade($userid) && (time() >= $edusign->get_instance()->allowsubmissionsfromdate);
-    } else {
-        $usersubmission = $edusign->get_user_submission($userid, false);
-        if ($usersubmission && $usersubmission->status === EDUSIGN_SUBMISSION_STATUS_SUBMITTED) {
-            // The user has already submitted.
-            // We do not want to change the text to edit the submission, we want to remove the event from the Dashboard entirely.
-            return null;
-        }
-
-        $participant = $edusign->get_participant($userid);
-
-        if (!$participant) {
-            // If the user is not a participant in the edusignment then they have
-            // no action to take. This will filter out the events for teachers.
-            return null;
-        }
-
-        // The user has not yet submitted anything. Show the addsubmission link.
-        $name = get_string('addsubmission', 'edusign');
-        $url = new \moodle_url('/mod/edusign/view.php', [
-                'id' => $cm->id,
-                'action' => 'editsubmission'
-        ]);
-        $itemcount = 1;
-        $actionable = $edusign->is_any_submission_plugin_enabled() && $edusign->can_edit_submission($userid, $userid);
+    $usersubmission = $edusign->get_user_submission($userid, false);
+    if ($usersubmission && $usersubmission->status === EDUSIGN_SUBMISSION_STATUS_SUBMITTED) {
+        // The user has already submitted.
+        // We do not want to change the text to edit the submission, we want to remove the event from the Dashboard entirely.
+        return null;
     }
 
-    return $factory->create_instance(
-            $name,
-            $url,
-            $itemcount,
-            $actionable
-    );
-}
+    $participant = $edusign->get_participant($userid);
 
-/**
- * Callback function that determines whether an action event should be showing its item count
- * based on the event type and the item count.
- *
- * @param calendar_event $event The calendar event.
- * @param int $itemcount The item count associated with the action event.
- * @return bool
- */
-function mod_edusign_core_calendar_event_action_shows_item_count(calendar_event $event, $itemcount = 0) {
-    // List of event types where the action event's item count should be shown.
-    $eventtypesshowingitemcount = [
-            EDUSIGN_EVENT_TYPE_GRADINGDUE
-    ];
-    // For mod_edusign, item count should be shown if the event type is 'gradingdue' and there is one or more item count.
-    return in_array($event->eventtype, $eventtypesshowingitemcount) && $itemcount > 0;
+    if (!$participant) {
+        // If the user is not a participant in the edusignment then they have
+        // no action to take. This will filter out the events for teachers.
+        return null;
+    }
+
+    // The user has not yet submitted anything. Show the addsubmission link.
+    $name = get_string('addsubmission', 'edusign');
+    $url = new \moodle_url('/mod/edusign/view.php', [
+        'id' => $cm->id,
+        'action' => 'editsubmission'
+    ]);
+    $itemcount = 1;
+    $actionable = $edusign->is_any_submission_plugin_enabled() && $edusign->can_edit_submission($userid, $userid);
+
+    return $factory->create_instance(
+        $name,
+        $url,
+        $itemcount,
+        $actionable
+    );
 }
 
 /**
@@ -2067,7 +2031,7 @@ function mod_edusign_core_calendar_event_timestart_updated(\calendar_event $even
         return;
     }
 
-    if (!in_array($event->eventtype, [EDUSIGN_EVENT_TYPE_DUE, EDUSIGN_EVENT_TYPE_GRADINGDUE])) {
+    if (!in_array($event->eventtype, [EDUSIGN_EVENT_TYPE_DUE])) {
         return;
     }
 
@@ -2099,13 +2063,6 @@ function mod_edusign_core_calendar_event_timestart_updated(\calendar_event $even
 
         if ($newduedate != $instance->duedate) {
             $instance->duedate = $newduedate;
-            $modified = true;
-        }
-    } else if ($event->eventtype == EDUSIGN_EVENT_TYPE_GRADINGDUE) {
-        $newduedate = $event->timestart;
-
-        if ($newduedate != $instance->gradingduedate) {
-            $instance->gradingduedate = $newduedate;
             $modified = true;
         }
     }
