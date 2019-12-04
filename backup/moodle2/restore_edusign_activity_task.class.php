@@ -73,10 +73,10 @@ class restore_edusign_activity_task extends restore_activity_task {
     static public function define_decode_rules() {
         $rules = array();
 
-        $rules[] = new restore_decode_rule('edusignVIEWBYID',
+        $rules[] = new restore_decode_rule('EDUSIGNVIEWBYID',
                 '/mod/edusign/view.php?id=$1',
                 'course_module');
-        $rules[] = new restore_decode_rule('edusignINDEX',
+        $rules[] = new restore_decode_rule('EDUSIGNINDEX',
                 '/mod/edusign/index.php?id=$1',
                 'course_module');
 
