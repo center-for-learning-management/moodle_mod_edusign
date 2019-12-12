@@ -37,6 +37,14 @@ $capabilities = array(
                 )
         ),
 
+        'mod/edusign:sign' => array(
+                'captype' => 'write',
+                'contextlevel' => CONTEXT_MODULE,
+                'archetypes' => array(
+                        'student' => CAP_ALLOW
+                )
+        ),
+
         'mod/edusign:submit' => array(
 
                 'captype' => 'write',

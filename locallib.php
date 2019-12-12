@@ -645,13 +645,13 @@ class edusign {
         $update->intro = $formdata->intro;
         $update->introformat = $formdata->introformat;
         $update->alwaysshowdescription = !empty($formdata->alwaysshowdescription);
-        $update->submissiondrafts = $formdata->submissiondrafts;
-        $update->requiresubmissionstatement = $formdata->requiresubmissionstatement;
-        $update->sendnotifications = $formdata->sendnotifications;
-        $update->sendlatenotifications = $formdata->sendlatenotifications;
-        $update->sendstudentnotifications = $adminconfig->sendstudentnotifications;
+        $update->submissiondrafts = 0; //$formdata->submissiondrafts;
+        $update->requiresubmissionstatement = 0; //$formdata->requiresubmissionstatement;
+        $update->sendnotifications = 0;
+        $update->sendlatenotifications = 0;
+        $update->sendstudentnotifications = 0;
         if (isset($formdata->sendstudentnotifications)) {
-            $update->sendstudentnotifications = $formdata->sendstudentnotifications;
+            $update->sendstudentnotifications = 0;
         }
         $update->duedate = $formdata->duedate;
         $update->cutoffdate = $formdata->cutoffdate;
@@ -663,14 +663,14 @@ class edusign {
         if (isset($formdata->teamsubmissiongroupingid)) {
             $update->teamsubmissiongroupingid = $formdata->teamsubmissiongroupingid;
         }
-        $update->blindmarking = $formdata->blindmarking;
+        $update->blindmarking = 0;
         $update->attemptreopenmethod = EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE; // Todo: Remove completely.
         $update->maxattempts = 1; // Todo: Remove completely.
         if (isset($formdata->preventsubmissionnotingroup)) {
             $update->preventsubmissionnotingroup = $formdata->preventsubmissionnotingroup;
         }
-        $update->markingworkflow = $formdata->markingworkflow;
-        $update->markingallocation = $formdata->markingallocation;
+        $update->markingworkflow = 0;
+        $update->markingallocation = 0;
         if (empty($update->markingworkflow)) { // If marking workflow is disabled, make sure allocation is disabled.
             $update->markingallocation = 0;
         }
@@ -682,6 +682,9 @@ class edusign {
 
         $this->save_intro_draft_files($formdata);
 
+        $formdata->edusignsubmission_signing_enabled = 1; // set signing_submission to true
+        $formdata->edusignfeedback_comments_enabled = 1; // set default feedbacktype
+        $formdata->edusignfeedback_comments_commentinline = 0;
         if ($callplugins) {
             // Call save_settings hook for submission plugins.
             foreach ($this->submissionplugins as $plugin) {
@@ -1349,13 +1352,13 @@ class edusign {
         $update->intro = $formdata->intro;
         $update->introformat = $formdata->introformat;
         $update->alwaysshowdescription = !empty($formdata->alwaysshowdescription);
-        $update->submissiondrafts = $formdata->submissiondrafts;
-        $update->requiresubmissionstatement = $formdata->requiresubmissionstatement;
-        $update->sendnotifications = $formdata->sendnotifications;
-        $update->sendlatenotifications = $formdata->sendlatenotifications;
-        $update->sendstudentnotifications = $adminconfig->sendstudentnotifications;
+        $update->submissiondrafts = 0; //$formdata->submissiondrafts;
+        $update->requiresubmissionstatement =  0; //$formdata->requiresubmissionstatement;
+        $update->sendnotifications = 0; //$formdata->sendnotifications;
+        $update->sendlatenotifications = 0; //$formdata->sendlatenotifications;
+        $update->sendstudentnotifications = 0; //$adminconfig->sendstudentnotifications;
         if (isset($formdata->sendstudentnotifications)) {
-            $update->sendstudentnotifications = $formdata->sendstudentnotifications;
+            $update->sendstudentnotifications = 0; //$formdata->sendstudentnotifications;
         }
         $update->duedate = $formdata->duedate;
         $update->cutoffdate = $formdata->cutoffdate;
@@ -1369,14 +1372,14 @@ class edusign {
         if (isset($formdata->teamsubmissiongroupingid)) {
             $update->teamsubmissiongroupingid = $formdata->teamsubmissiongroupingid;
         }
-        $update->blindmarking = $formdata->blindmarking;
+        $update->blindmarking = 0; //$formdata->blindmarking;
         $update->attemptreopenmethod = EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE;
         $update->maxattempts = 1;
         if (isset($formdata->preventsubmissionnotingroup)) {
             $update->preventsubmissionnotingroup = $formdata->preventsubmissionnotingroup;
         }
-        $update->markingworkflow = $formdata->markingworkflow;
-        $update->markingallocation = $formdata->markingallocation;
+        $update->markingworkflow = 0; //$formdata->markingworkflow;
+        $update->markingallocation = 0;
         if (empty($update->markingworkflow)) { // If marking workflow is disabled, make sure allocation is disabled.
             $update->markingallocation = 0;
         }
@@ -1389,6 +1392,9 @@ class edusign {
         // Load the edusignment so the plugins have access to it.
 
         // Call save_settings hook for submission plugins.
+        $formdata->edusignsubmission_signing_enabled = 1; // set signing_submission to true
+        $formdata->edusignfeedback_comments_enabled = 1; // set default feedbacktype
+        $formdata->edusignfeedback_comments_commentinline = 0;
         foreach ($this->submissionplugins as $plugin) {
             if (!$this->update_plugin_instance($plugin, $formdata)) {
                 print_error($plugin->get_error());
@@ -3330,6 +3336,22 @@ class edusign {
     public function can_grade($user = null) {
         // Permissions check.
         if (!has_capability('mod/edusign:grade', $this->context, $user)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Does this user have sign permission for this edusignment?
+     *
+     * @param int|stdClass $user The object or id of the user who will do the editing (default to current user).
+     * @return bool
+     */
+
+    public function can_sign($user = null) {
+        // Permissions check.
+        if (!has_capability('mod/edusign:sign', $this->context, $user)) {
             return false;
         }
 

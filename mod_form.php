@@ -104,8 +104,9 @@ class mod_edusign_mod_form extends moodleform_mod {
         $mform->addHelpButton('alwaysshowdescription', 'alwaysshowdescription', 'edusign');
         $mform->disabledIf('alwaysshowdescription', 'allowsubmissionsfromdate[enabled]', 'notchecked');
 
-        $edusignment->add_all_plugin_settings($mform);
+        //$edusignment->add_all_plugin_settings($mform);
 
+        /*
         $mform->addElement('header', 'submissionsettings', get_string('submissionsettings', 'edusign'));
 
         $name = get_string('submissiondrafts', 'edusign');
@@ -119,6 +120,7 @@ class mod_edusign_mod_form extends moodleform_mod {
                 'requiresubmissionstatement',
                 'edusign'
         );
+        */
 
         $mform->addElement('header', 'groupsubmissionsettings', get_string('groupsubmissionsettings', 'edusign'));
 
@@ -159,7 +161,7 @@ class mod_edusign_mod_form extends moodleform_mod {
         if ($edusignment->has_submissions_or_grades()) {
             $mform->freeze('teamsubmissiongroupingid');
         }
-
+    /*
         $mform->addElement('header', 'notifications', get_string('notifications', 'edusign'));
 
         $name = get_string('sendnotifications', 'edusign');
@@ -174,13 +176,13 @@ class mod_edusign_mod_form extends moodleform_mod {
         $name = get_string('sendstudentnotificationsdefault', 'edusign');
         $mform->addElement('selectyesno', 'sendstudentnotifications', $name);
         $mform->addHelpButton('sendstudentnotifications', 'sendstudentnotificationsdefault', 'edusign');
-
+        */
         // Plagiarism enabling form.
         if (!empty($CFG->enableplagiarism)) {
             require_once($CFG->libdir . '/plagiarismlib.php');
             plagiarism_get_form_elements_module($mform, $ctx->get_course_context(), 'mod_edusign');
         }
-
+        /*
         $this->standard_grading_coursemodule_elements();
         $name = get_string('blindmarking', 'edusign');
         $mform->addElement('selectyesno', 'blindmarking', $name);
@@ -197,7 +199,7 @@ class mod_edusign_mod_form extends moodleform_mod {
         $mform->addElement('selectyesno', 'markingallocation', $name);
         $mform->addHelpButton('markingallocation', 'markingallocation', 'edusign');
         $mform->disabledIf('markingallocation', 'markingworkflow', 'eq', 0);
-
+        */
         $this->standard_coursemodule_elements();
         $mform->addElement('hidden', 'grade');
         $mform->setType('grade', PARAM_INT);
