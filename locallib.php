@@ -1978,8 +1978,8 @@ class edusign {
 
             if ($instance->markingworkflow &&
                     $instance->markingallocation &&
-                    !has_capability('mod/edusign:manageallocations', $this->get_context()) &&
-                    has_capability('mod/edusign:grade', $this->get_context())) {
+                    !has_capability('mod/assign:manageallocations', $this->get_context()) &&
+                    has_capability('mod/assign:grade', $this->get_context())) {
                 $additionaljoins .= ' LEFT JOIN {edusign_user_flags} uf
                                      ON u.id = uf.userid
                                      AND uf.edusignment = :edusignmentid3';
@@ -2907,7 +2907,7 @@ class edusign {
             $edusignment->update_effective_access($USER->id);
             $timedue = $edusignment->get_instance()->duedate;
 
-            if (has_capability('mod/edusign:grade', $context)) {
+            if (has_capability('mod/assign:grade', $context)) {
                 $submitted = $edusignment->count_submissions_with_status(EDUSIGN_SUBMISSION_STATUS_SUBMITTED);
             } else if (has_capability('mod/edusign:submit', $context)) {
                 if ($edusignment->get_instance()->teamsubmission) {
@@ -3172,7 +3172,7 @@ class edusign {
         $params = array('overflowdiv' => true, 'context' => $this->get_context());
         $result .= format_text($finaltext, $format, $params);
 
-        if ($CFG->enableportfolios && has_capability('mod/edusign:exportownsubmission', $this->context)) {
+        if ($CFG->enableportfolios && has_capability('mod/assign:exportownsubmission', $this->context)) {
             require_once($CFG->libdir . '/portfoliolib.php');
 
             $button = new portfolio_add_button();
@@ -3276,7 +3276,7 @@ class edusign {
      */
     public function require_view_group_submission($groupid) {
         if (!$this->can_view_group_submission($groupid)) {
-            throw new required_capability_exception($this->context, 'mod/edusign:viewgrades', 'nopermission', '');
+            throw new required_capability_exception($this->context, 'mod/edusign:viewsignings', 'nopermission', '');
         }
     }
 
@@ -3288,7 +3288,7 @@ class edusign {
      */
     public function require_view_submission($userid) {
         if (!$this->can_view_submission($userid)) {
-            throw new required_capability_exception($this->context, 'mod/edusign:viewgrades', 'nopermission', '');
+            throw new required_capability_exception($this->context, 'mod/edusign:viewsignings', 'nopermission', '');
         }
     }
 
@@ -3300,7 +3300,7 @@ class edusign {
      */
     public function require_view_grades() {
         if (!$this->can_view_grades()) {
-            throw new required_capability_exception($this->context, 'mod/edusign:viewgrades', 'nopermission', '');
+            throw new required_capability_exception($this->context, 'mod/edusign:viewsignings', 'nopermission', '');
         }
     }
 
@@ -3312,7 +3312,7 @@ class edusign {
      */
     public function can_view_grades($groupid = null) {
         // Permissions check.
-        if (!has_any_capability(array('mod/edusign:viewgrades', 'mod/edusign:grade'), $this->context)) {
+        if (!has_any_capability(array('mod/edusign:viewsignings', 'mod/assign:grade'), $this->context)) {
             return false;
         }
         // Checks for the edge case when user belongs to no groups and groupmode is sep.
@@ -3335,23 +3335,7 @@ class edusign {
      */
     public function can_grade($user = null) {
         // Permissions check.
-        if (!has_capability('mod/edusign:grade', $this->context, $user)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Does this user have sign permission for this edusignment?
-     *
-     * @param int|stdClass $user The object or id of the user who will do the editing (default to current user).
-     * @return bool
-     */
-
-    public function can_sign($user = null) {
-        // Permissions check.
-        if (!has_capability('mod/edusign:sign', $this->context, $user)) {
+        if (!has_capability('mod/assign:grade', $this->context, $user)) {
             return false;
         }
 
@@ -3792,7 +3776,7 @@ class edusign {
         require_once($CFG->dirroot . '/mod/edusign/gradeform.php');
 
         // Need submit permission to submit an edusignment.
-        require_capability('mod/edusign:grade', $this->context);
+        require_capability('mod/assign:grade', $this->context);
 
         // If userid is passed - we are only grading a single student.
         $userid = $args['userid'];
@@ -3960,7 +3944,7 @@ class edusign {
         require_once($CFG->dirroot . '/mod/edusign/gradeform.php');
 
         // Need submit permission to submit an edusignment.
-        require_capability('mod/edusign:grade', $this->context);
+        require_capability('mod/assign:grade', $this->context);
 
         $header = new edusign_header(
                 $instance,
@@ -4156,7 +4140,7 @@ class edusign {
      * @return string
      */
     protected function view_reveal_identities_confirm() {
-        require_capability('mod/edusign:revealidentities', $this->get_context());
+        require_capability('mod/assign:revealidentities', $this->get_context());
 
         $o = '';
         $header = new edusign_header(
@@ -4233,7 +4217,7 @@ class edusign {
             $links[$downloadurl] = get_string('downloadall', 'edusign');
         }
         if ($this->is_blind_marking() &&
-                has_capability('mod/edusign:revealidentities', $this->get_context())) {
+                has_capability('mod/assign:revealidentities', $this->get_context())) {
             $revealidentitiesurl = '/mod/edusign/view.php?id=' . $cmid . '&action=revealidentities';
             $links[$revealidentitiesurl] = get_string('revealidentities', 'edusign');
         }
@@ -4270,13 +4254,13 @@ class edusign {
 
         $markingallocation = $this->get_instance()->markingworkflow &&
                 $this->get_instance()->markingallocation &&
-                has_capability('mod/edusign:manageallocations', $this->context);
+                has_capability('mod/assign:manageallocations', $this->context);
         // Get markers to use in drop lists.
         $markingallocationoptions = array();
         if ($markingallocation) {
             list($sort, $params) = users_order_by_sql('u');
             // Only enrolled users could be edusigned as potential markers.
-            $markers = get_enrolled_users($this->context, 'mod/edusign:grade', 0, 'u.*', $sort);
+            $markers = get_enrolled_users($this->context, 'mod/assign:grade', 0, 'u.*', $sort);
             $markingallocationoptions[''] = get_string('filternone', 'edusign');
             $markingallocationoptions[EDUSIGN_MARKER_FILTER_NO_MARKER] = get_string('markerfilternomarker', 'edusign');
             $viewfullnames = has_capability('moodle/site:viewfullnames', $this->context);
@@ -4366,7 +4350,7 @@ class edusign {
             $o .= plagiarism_update_status($this->get_course(), $this->get_course_module());
         }
 
-        if ($this->is_blind_marking() && has_capability('mod/edusign:viewblinddetails', $this->get_context())) {
+        if ($this->is_blind_marking() && has_capability('mod/assign:viewblinddetails', $this->get_context())) {
             $o .= $this->get_renderer()->notification(get_string('blindmarkingenabledwarning', 'edusign'), 'notifymessage');
         }
 
@@ -4533,7 +4517,7 @@ class edusign {
      */
     public function fullname($user) {
         if ($this->is_blind_marking()) {
-            $hasviewblind = has_capability('mod/edusign:viewblinddetails', $this->get_context());
+            $hasviewblind = has_capability('mod/assign:viewblinddetails', $this->get_context());
             if (empty($user->recordid)) {
                 $uniqueid = $this->get_uniqueid_for_user($user->id);
             } else {
@@ -4697,7 +4681,7 @@ class edusign {
         if (!is_enrolled($this->get_course_context(), $userid)) {
             return false;
         }
-        if (has_any_capability(array('mod/edusign:viewgrades', 'mod/edusign:grade'), $this->context)) {
+        if (has_any_capability(array('mod/edusign:viewsignings', 'mod/assign:grade'), $this->context)) {
             return true;
         }
         if ($userid == $USER->id && has_capability('mod/edusign:submit', $this->context)) {
@@ -4713,7 +4697,7 @@ class edusign {
      * @return none
      */
     protected function view_plugin_grading_batch_operation($mform) {
-        require_capability('mod/edusign:grade', $this->context);
+        require_capability('mod/assign:grade', $this->context);
         $prefix = 'plugingradingbatchoperation_';
 
         if ($data = $mform->get_data()) {
@@ -4744,7 +4728,7 @@ class edusign {
 
         $markingallocation = $this->get_instance()->markingworkflow &&
                 $this->get_instance()->markingallocation &&
-                has_capability('mod/edusign:manageallocations', $this->context);
+                has_capability('mod/assign:manageallocations', $this->context);
 
         $batchformparams = array('cm' => $this->get_course_module()->id,
                 'submissiondrafts' => $this->get_instance()->submissiondrafts,
@@ -4933,7 +4917,7 @@ class edusign {
 
         list($sort, $params) = users_order_by_sql('u');
         // Only enrolled users could be edusigned as potential markers.
-        $markers = get_enrolled_users($this->get_context(), 'mod/edusign:grade', 0, 'u.*', $sort);
+        $markers = get_enrolled_users($this->get_context(), 'mod/assign:grade', 0, 'u.*', $sort);
         $markerlist = array();
         foreach ($markers as $marker) {
             $markerlist[$marker->id] = fullname($marker);
@@ -5162,7 +5146,7 @@ class edusign {
             $emptyplugins = true; // Don't show feedback plugins until released either.
         }
 
-        $cangrade = has_capability('mod/edusign:grade', $this->get_context());
+        $cangrade = has_capability('mod/assign:grade', $this->get_context());
         $hasgrade = $this->get_instance()->grade != GRADE_TYPE_NONE &&
                 !is_null($gradebookgrade) && !is_null($gradebookgrade->grade);
         $gradevisible = $cangrade || $this->get_instance()->grade == GRADE_TYPE_NONE ||
@@ -5337,7 +5321,7 @@ class edusign {
         $grades = $DB->get_records('edusign_grades', $params, 'attemptnumber ASC');
 
         $gradercache = array();
-        $cangrade = has_capability('mod/edusign:grade', $this->get_context());
+        $cangrade = has_capability('mod/assign:grade', $this->get_context());
 
         // Need gradingitem and gradingmanager.
         $gradingmanager = get_grading_manager($this->get_context(), 'mod_edusign', 'submissions');
@@ -5880,7 +5864,7 @@ class edusign {
             }
         }
 
-        if (!has_capability('mod/edusign:editothersubmission', $this->context, $graderid)) {
+        if (!has_capability('mod/assign:editothersubmission', $this->context, $graderid)) {
             return false;
         }
 
@@ -5918,7 +5902,7 @@ class edusign {
      */
     protected function get_graders($userid) {
         // Potential graders should be active users only.
-        $potentialgraders = get_enrolled_users($this->context, "mod/edusign:grade", null, 'u.*', null, null, null, true);
+        $potentialgraders = get_enrolled_users($this->context, "mod/assign:grade", null, 'u.*', null, null, null, true);
 
         $graders = array();
         if (groups_get_activity_groupmode($this->get_course_module()) == SEPARATEGROUPS) {
@@ -5971,7 +5955,7 @@ class edusign {
         // Potential users should be active users only.
         $potentialusers = get_enrolled_users(
                 $this->context,
-                "mod/edusign:receivegradernotifications",
+                "mod/assign:receivegradernotifications",
                 null,
                 'u.*',
                 null,
@@ -6472,7 +6456,7 @@ class edusign {
         global $DB;
 
         // Need submit permission to submit an edusignment.
-        require_capability('mod/edusign:grantextension', $this->context);
+        require_capability('mod/assign:grantextension', $this->context);
 
         if (!is_enrolled($this->get_course_context(), $userid)) {
             return false;
@@ -6583,7 +6567,7 @@ class edusign {
         global $USER, $DB, $CFG;
 
         // Need grade permission.
-        require_capability('mod/edusign:grade', $this->context);
+        require_capability('mod/assign:grade', $this->context);
         require_sesskey();
 
         // Make sure advanced grading is disabled.
@@ -6811,7 +6795,7 @@ class edusign {
     public function reveal_identities() {
         global $DB;
 
-        require_capability('mod/edusign:revealidentities', $this->context);
+        require_capability('mod/assign:revealidentities', $this->context);
 
         if ($this->get_instance()->revealidentities || empty($this->get_instance()->blindmarking)) {
             return false;
@@ -6892,7 +6876,7 @@ class edusign {
 
         $markingallocation = $this->get_instance()->markingworkflow &&
                 $this->get_instance()->markingallocation &&
-                has_capability('mod/edusign:manageallocations', $this->context);
+                has_capability('mod/assign:manageallocations', $this->context);
         // Get markers to use in drop lists.
         $markingallocationoptions = array();
         if ($markingallocation) {
@@ -6900,7 +6884,7 @@ class edusign {
             $markingallocationoptions[EDUSIGN_MARKER_FILTER_NO_MARKER] = get_string('markerfilternomarker', 'edusign');
             list($sort, $params) = users_order_by_sql('u');
             // Only enrolled users could be edusigned as potential markers.
-            $markers = get_enrolled_users($this->context, 'mod/edusign:grade', 0, 'u.*', $sort);
+            $markers = get_enrolled_users($this->context, 'mod/assign:grade', 0, 'u.*', $sort);
             foreach ($markers as $marker) {
                 $markingallocationoptions[$marker->id] = fullname($marker);
             }
@@ -7543,10 +7527,10 @@ class edusign {
 
         if ($this->get_instance()->markingworkflow &&
                 $this->get_instance()->markingallocation &&
-                has_capability('mod/edusign:manageallocations', $this->context)) {
+                has_capability('mod/assign:manageallocations', $this->context)) {
             list($sort, $params) = users_order_by_sql('u');
             // Only enrolled users could be edusigned as potential markers.
-            $markers = get_enrolled_users($this->context, 'mod/edusign:grade', 0, 'u.*', $sort);
+            $markers = get_enrolled_users($this->context, 'mod/assign:grade', 0, 'u.*', $sort);
             $markerlist = array('' => get_string('choosemarker', 'edusign'));
             $viewfullnames = has_capability('moodle/site:viewfullnames', $this->context);
             foreach ($markers as $marker) {
@@ -7803,7 +7787,7 @@ class edusign {
         global $DB, $USER;
 
         // Need grade permission.
-        require_capability('mod/edusign:grade', $this->context);
+        require_capability('mod/assign:grade', $this->context);
 
         if ($this->get_instance()->teamsubmission) {
             $submission = $this->get_group_submission($userid, 0, false);
@@ -7864,7 +7848,7 @@ class edusign {
     public function lock_submission($userid) {
         global $USER, $DB;
         // Need grade permission.
-        require_capability('mod/edusign:grade', $this->context);
+        require_capability('mod/assign:grade', $this->context);
 
         // Give each submission plugin a chance to process the locking.
         $plugins = $this->get_submission_plugins();
@@ -7965,7 +7949,7 @@ class edusign {
 
         list($sort, $params) = users_order_by_sql('u');
         // Only enrolled users could be edusigned as potential markers.
-        $markers = get_enrolled_users($this->get_context(), 'mod/edusign:grade', 0, 'u.*', $sort);
+        $markers = get_enrolled_users($this->get_context(), 'mod/assign:grade', 0, 'u.*', $sort);
         $markerlist = array();
         foreach ($markers as $marker) {
             $markerlist[$marker->id] = fullname($marker);
@@ -8030,7 +8014,7 @@ class edusign {
         global $USER, $DB;
 
         // Need grade permission.
-        require_capability('mod/edusign:grade', $this->context);
+        require_capability('mod/assign:grade', $this->context);
 
         // Give each submission plugin a chance to process the unlocking.
         $plugins = $this->get_submission_plugins();
@@ -8258,7 +8242,7 @@ class edusign {
     public function save_grade($userid, $data) {
 
         // Need grade permission.
-        require_capability('mod/edusign:grade', $this->context);
+        require_capability('mod/assign:grade', $this->context);
 
         $instance = $this->get_instance();
         $submission = null;
@@ -8494,7 +8478,7 @@ class edusign {
      * @return bool - true if successful.
      */
     protected function add_attempt($userid) {
-        require_capability('mod/edusign:grade', $this->context);
+        require_capability('mod/assign:grade', $this->context);
 
         if ($this->get_instance()->attemptreopenmethod == EDUSIGN_ATTEMPT_REOPEN_METHOD_NONE) {
             return false;
@@ -8747,17 +8731,17 @@ class edusign {
             return $this->markingworkflowstates;
         }
         $states = array();
-        if (has_capability('mod/edusign:grade', $this->context)) {
+        if (has_capability('mod/assign:grade', $this->context)) {
             $states[EDUSIGN_MARKING_WORKFLOW_STATE_INMARKING] = get_string('markingworkflowstateinmarking', 'edusign');
             $states[EDUSIGN_MARKING_WORKFLOW_STATE_READYFORREVIEW] = get_string('markingworkflowstatereadyforreview', 'edusign');
         }
-        if (has_any_capability(array('mod/edusign:reviewgrades',
-                'mod/edusign:managegrades'), $this->context)) {
+        if (has_any_capability(array('mod/assign:reviewgrades',
+                'mod/assign:managegrades'), $this->context)) {
             $states[EDUSIGN_MARKING_WORKFLOW_STATE_INREVIEW] = get_string('markingworkflowstateinreview', 'edusign');
             $states[EDUSIGN_MARKING_WORKFLOW_STATE_READYFORRELEASE] = get_string('markingworkflowstatereadyforrelease', 'edusign');
         }
-        if (has_any_capability(array('mod/edusign:releasegrades',
-                'mod/edusign:managegrades'), $this->context)) {
+        if (has_any_capability(array('mod/assign:releasegrades',
+                'mod/assign:managegrades'), $this->context)) {
             $states[EDUSIGN_MARKING_WORKFLOW_STATE_RELEASED] = get_string('markingworkflowstatereleased', 'edusign');
         }
         $this->markingworkflowstates = $states;
@@ -8919,7 +8903,7 @@ class edusign {
      * @return void The notifications API will render the notifications at the appropriate part of the page.
      */
     protected function add_grade_notices() {
-        if (has_capability('mod/edusign:grade', $this->get_context()) &&
+        if (has_capability('mod/assign:grade', $this->get_context()) &&
                 get_config('edusign', 'has_rescaled_null_grades_' . $this->get_instance()->id)) {
             $link = new \moodle_url(
                     '/mod/edusign/view.php',
@@ -8959,7 +8943,7 @@ class edusign {
 
         $o = '';
 
-        require_capability('mod/edusign:grade', $this->get_context());
+        require_capability('mod/assign:grade', $this->get_context());
 
         $instance = $this->get_instance();
 
@@ -9303,7 +9287,7 @@ class edusign_portfolio_caller extends portfolio_module_caller_base {
      */
     public function check_permissions() {
         $context = context_module::instance($this->cmid);
-        return has_capability('mod/edusign:exportownsubmission', $context);
+        return has_capability('mod/assign:exportownsubmission', $context);
     }
 
     /**

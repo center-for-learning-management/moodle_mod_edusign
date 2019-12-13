@@ -90,14 +90,14 @@ class edusign_grading_table extends table_sql implements renderable {
 
         // Check permissions up front.
         $this->hasgrantextension = has_capability(
-            'mod/edusign:grantextension',
+            'mod/assign:grantextension',
             $this->edusignment->get_context()
         );
         $this->hasgrade = $this->edusignment->can_grade();
 
         // Check if we have the elevated view capablities to see the blind details.
         $this->hasviewblind = has_capability(
-            'mod/edusign:viewblinddetails',
+            'mod/assign:viewblinddetails',
             $this->edusignment->get_context()
         );
 
@@ -289,7 +289,7 @@ class edusign_grading_table extends table_sql implements renderable {
 
         if ($this->edusignment->get_instance()->markingworkflow &&
             $this->edusignment->get_instance()->markingallocation) {
-            if (has_capability('mod/edusign:manageallocations', $this->edusignment->get_context())) {
+            if (has_capability('mod/assign:manageallocations', $this->edusignment->get_context())) {
                 // Check to see if marker filter is set.
                 $markerfilter = (int) get_user_preferences('edusign_markerfilter', '');
                 if (!empty($markerfilter)) {
@@ -393,7 +393,7 @@ class edusign_grading_table extends table_sql implements renderable {
         // Allocated marker.
         if ($this->edusignment->get_instance()->markingworkflow &&
             $this->edusignment->get_instance()->markingallocation &&
-            has_capability('mod/edusign:manageallocations', $this->edusignment->get_context())) {
+            has_capability('mod/assign:manageallocations', $this->edusignment->get_context())) {
             // Add a column for the allocated marker.
             $columns[] = 'allocatedmarker';
             $headers[] = get_string('marker', 'edusign');
@@ -604,7 +604,7 @@ class edusign_grading_table extends table_sql implements renderable {
             // Check if this user is a marker that can't manage allocations and doesn't have the marker column added.
             if ($this->edusignment->get_instance()->markingworkflow &&
                 $this->edusignment->get_instance()->markingallocation &&
-                !has_capability('mod/edusign:manageallocations', $this->edusignment->get_context())) {
+                !has_capability('mod/assign:manageallocations', $this->edusignment->get_context())) {
                 $name = 'quickgrade_' . $row->id . '_allocatedmarker';
                 $o .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => $name,
                     'value' => $row->allocatedmarker));
@@ -642,7 +642,7 @@ class edusign_grading_table extends table_sql implements renderable {
         if ($markers === null) {
             list($sort, $params) = users_order_by_sql('u');
             // Only enrolled users could be edusigned as potential markers.
-            $markers = get_enrolled_users($this->edusignment->get_context(), 'mod/edusign:grade', 0, 'u.*', $sort);
+            $markers = get_enrolled_users($this->edusignment->get_context(), 'mod/assign:grade', 0, 'u.*', $sort);
             $markerlist[0] = get_string('choosemarker', 'edusign');
             $viewfullnames = has_capability('moodle/site:viewfullnames', $this->edusignment->get_context());
             foreach ($markers as $marker) {
@@ -664,7 +664,7 @@ class edusign_grading_table extends table_sql implements renderable {
             }
         }
 
-        if ($this->quickgrading && has_capability('mod/edusign:manageallocations', $this->edusignment->get_context()) &&
+        if ($this->quickgrading && has_capability('mod/assign:manageallocations', $this->edusignment->get_context()) &&
             (empty($row->workflowstate) ||
                 $row->workflowstate == EDUSIGN_MARKING_WORKFLOW_STATE_INMARKING ||
                 $row->workflowstate == EDUSIGN_MARKING_WORKFLOW_STATE_NOTMARKED)) {

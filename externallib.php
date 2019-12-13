@@ -945,7 +945,7 @@ class mod_edusign_external extends external_api {
 
         // Load edusignment if it exists and if the user has the capability.
         list($edusign, $course, $cm, $context) = self::validate_edusign($params['edusignmentid']);
-        require_capability('mod/edusign:grade', $context);
+        require_capability('mod/assign:grade', $context);
 
         $results = array();
         foreach ($params['userflags'] as $userflag) {
@@ -1087,7 +1087,7 @@ class mod_edusign_external extends external_api {
             try {
                 $context = context_module::instance($cm->id);
                 self::validate_context($context);
-                require_capability('mod/edusign:grade', $context);
+                require_capability('mod/assign:grade', $context);
             } catch (Exception $e) {
                 $requestededusignmentids = array_diff($requestededusignmentids, array($cm->instance));
                 $warning = array();
@@ -1247,7 +1247,7 @@ class mod_edusign_external extends external_api {
             try {
                 $context = context_module::instance($cm->id);
                 self::validate_context($context);
-                require_capability('mod/edusign:revealidentities', $context);
+                require_capability('mod/assign:revealidentities', $context);
             } catch (Exception $e) {
                 $requestededusignmentids = array_diff($requestededusignmentids, array($cm->instance));
                 $warning = array();
@@ -2373,7 +2373,7 @@ class mod_edusign_external extends external_api {
         core_user::require_active_user($user);
 
         if (!$edusign->can_view_submission($user->id)) {
-            throw new required_capability_exception($context, 'mod/edusign:viewgrades', 'nopermission', '');
+            throw new required_capability_exception($context, 'mod/edusign:viewsignings', 'nopermission', '');
         }
 
         $gradingsummary = $lastattempt = $feedback = $previousattempts = null;

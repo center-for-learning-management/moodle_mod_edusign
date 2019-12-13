@@ -50,7 +50,7 @@ class mod_edusign_grading_batch_operations_form extends moodleform {
         if ($instance['submissiondrafts']) {
             $options['reverttodraft'] = get_string('reverttodraft', 'edusign');
         }
-        if ($instance['duedate'] && has_capability('mod/edusign:grantextension', $instance['context'])) {
+        if ($instance['duedate'] && has_capability('mod/assign:grantextension', $instance['context'])) {
             $options['grantextension'] = get_string('grantextension', 'edusign');
         }
         if ($instance['attemptreopenmethod'] == EDUSIGN_ATTEMPT_REOPEN_METHOD_MANUAL) {

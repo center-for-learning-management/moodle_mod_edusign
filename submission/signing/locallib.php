@@ -174,7 +174,6 @@ class edusign_submission_signing extends edusign_submission_plugin {
         $mform->addElement('html',
             "<div class='form-group row'><div class='col-md-12'><div class='alert alert-warning usability'>Bitte benützen Sie für die bessere Usability ein Touchpad</div></div></div>");
         $mform->setType('signing', PARAM_RAW);
-
         $mform->addElement(
             'html',
             "<div class='form-group row'><div class='col-md-3'>Unterschrift</div><div class='col-md-9'><canvas id='canvas' class='form-control' height='250px' width='1000px'></canvas>

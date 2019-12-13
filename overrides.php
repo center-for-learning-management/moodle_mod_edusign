@@ -41,7 +41,7 @@ require_login($course, false, $cm);
 $context = context_module::instance($cm->id);
 
 // Check the user has the required capabilities to list overrides.
-require_capability('mod/edusign:manageoverrides', $context);
+require_capability('mod/assign:manageoverrides', $context);
 
 $edusigngroupmode = groups_get_activity_groupmode($cm);
 $accessallgroups = ($edusigngroupmode == NOGROUPS) || has_capability('moodle/site:accessallgroups', $context);

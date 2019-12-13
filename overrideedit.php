@@ -69,7 +69,7 @@ $edusign = new edusign($context, $cm, $course);
 $edusigninstance = $edusign->get_instance();
 
 // Add or edit an override.
-require_capability('mod/edusign:manageoverrides', $context);
+require_capability('mod/assign:manageoverrides', $context);
 
 if ($overrideid) {
     // Editing an override.

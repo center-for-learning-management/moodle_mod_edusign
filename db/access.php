@@ -37,14 +37,6 @@ $capabilities = array(
                 )
         ),
 
-        'mod/edusign:sign' => array(
-                'captype' => 'write',
-                'contextlevel' => CONTEXT_MODULE,
-                'archetypes' => array(
-                        'student' => CAP_ALLOW
-                )
-        ),
-
         'mod/edusign:submit' => array(
 
                 'captype' => 'write',
@@ -54,7 +46,9 @@ $capabilities = array(
                 )
         ),
 
-        'mod/edusign:grade' => array(
+        /*
+         *
+        'mod/assign:grade' => array(
                 'riskbitmask' => RISK_XSS,
 
                 'captype' => 'write',
@@ -65,8 +59,10 @@ $capabilities = array(
                         'manager' => CAP_ALLOW
                 )
         ),
-
-        'mod/edusign:exportownsubmission' => array(
+         */
+       /*
+        *
+       'mod/assign:exportownsubmission' => array(
 
                 'captype' => 'read',
                 'contextlevel' => CONTEXT_MODULE,
@@ -77,6 +73,7 @@ $capabilities = array(
                         'student' => CAP_ALLOW,
                 )
         ),
+        */
 
         'mod/edusign:addinstance' => array(
                 'riskbitmask' => RISK_XSS,
@@ -89,14 +86,15 @@ $capabilities = array(
                 ),
                 'clonepermissionsfrom' => 'moodle/course:manageactivities'
         ),
-
-        'mod/edusign:editothersubmission' => array(
+        /*
+        'mod/assign:editothersubmission' => array(
                 'riskbitmask' => RISK_MANAGETRUST | RISK_DATALOSS | RISK_PERSONAL,
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_MODULE
         ),
-
-        'mod/edusign:grantextension' => array(
+        */
+        /*
+        'mod/assign:grantextension' => array(
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
@@ -106,8 +104,9 @@ $capabilities = array(
                 ),
                 'clonepermissionsfrom' => 'gradereport/grader:view'
         ),
-
-        'mod/edusign:revealidentities' => array(
+        */
+        /*
+        'mod/assign:revealidentities' => array(
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
@@ -115,8 +114,9 @@ $capabilities = array(
                         'manager' => CAP_ALLOW
                 )
         ),
-
-        'mod/edusign:reviewgrades' => array(
+        */
+        /*
+        'mod/assign:reviewgrades' => array(
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
@@ -125,8 +125,9 @@ $capabilities = array(
                 ),
                 'clonepermissionsfrom' => 'moodle/grade:manage'
         ),
-
-        'mod/edusign:releasegrades' => array(
+        */
+        /*
+        'mod/assign:releasegrades' => array(
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
@@ -135,8 +136,9 @@ $capabilities = array(
                 ),
                 'clonepermissionsfrom' => 'moodle/grade:manage'
         ),
-
-        'mod/edusign:managegrades' => array(
+        */
+        /*
+        'mod/assign:managegrades' => array(
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
@@ -145,8 +147,9 @@ $capabilities = array(
                 ),
                 'clonepermissionsfrom' => 'moodle/grade:manage'
         ),
-
-        'mod/edusign:manageallocations' => array(
+        */
+        /*
+        'mod/assign:manageallocations' => array(
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
@@ -155,8 +158,8 @@ $capabilities = array(
                 ),
                 'clonepermissionsfrom' => 'moodle/grade:manage'
         ),
-
-        'mod/edusign:viewgrades' => array(
+        */
+        'mod/edusign:viewsignings' => array(
                 'captype' => 'read',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
@@ -165,8 +168,8 @@ $capabilities = array(
                         'teacher' => CAP_ALLOW
                 )
         ),
-
-        'mod/edusign:viewblinddetails' => array(
+        /*
+        'mod/assign:viewblinddetails' => array(
                 'riskbitmask' => RISK_PERSONAL,
 
                 'captype' => 'write',
@@ -176,7 +179,7 @@ $capabilities = array(
                 )
         ),
 
-        'mod/edusign:receivegradernotifications' => array(
+        'mod/assign:receivegradernotifications' => array(
                 'captype' => 'read',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
@@ -185,9 +188,10 @@ $capabilities = array(
                         'manager' => CAP_ALLOW
                 )
         ),
-
+        */
     // Edit the edusign overrides.
-        'mod/edusign:manageoverrides' => array(
+        /*
+        'mod/assign:manageoverrides' => array(
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
@@ -195,5 +199,6 @@ $capabilities = array(
                         'manager' => CAP_ALLOW
                 )
         ),
+        */
 );
 

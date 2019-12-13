@@ -41,7 +41,7 @@ $edusign = new edusign($context, null, null);
 require_login($course, false, $cm);
 
 // Check the user has the required capabilities to modify an override.
-require_capability('mod/edusign:manageoverrides', $context);
+require_capability('mod/assign:manageoverrides', $context);
 
 if ($override->groupid) {
     if (!groups_group_visible($override->groupid, $course, $cm)) {

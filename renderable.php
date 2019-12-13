@@ -905,7 +905,7 @@ class edusign_files implements renderable {
         if (!empty($CFG->enableportfolios)) {
             require_once($CFG->libdir . '/portfoliolib.php');
             if (count($files) >= 1 && !empty($sid) &&
-                    has_capability('mod/edusign:exportownsubmission', $this->context)) {
+                    has_capability('mod/assign:exportownsubmission', $this->context)) {
                 $button = new portfolio_add_button();
                 $callbackparams = array('cmid' => $this->cm->id,
                         'sid' => $sid,
@@ -942,7 +942,7 @@ class edusign_files implements renderable {
             if (!empty($CFG->enableportfolios)) {
                 require_once($CFG->libdir . '/portfoliolib.php');
                 $button = new portfolio_add_button();
-                if (has_capability('mod/edusign:exportownsubmission', $this->context)) {
+                if (has_capability('mod/assign:exportownsubmission', $this->context)) {
                     $portfolioparams = array('cmid' => $this->cm->id, 'fileid' => $file->get_id());
                     $button->set_callback_options('edusign_portfolio_caller',
                             $portfolioparams,

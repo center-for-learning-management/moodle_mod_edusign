@@ -453,7 +453,7 @@ function edusign_extend_settings_navigation(settings_navigation $settings, navig
         return;
     }
 
-    if (has_capability('mod/edusign:manageoverrides', $PAGE->cm->context)) {
+    if (has_capability('mod/assign:manageoverrides', $PAGE->cm->context)) {
         $url = new moodle_url('/mod/edusign/overrides.php', array('cmid' => $PAGE->cm->id));
         $node = navigation_node::create(
                 get_string('groupoverrides', 'edusign'),
@@ -483,7 +483,7 @@ function edusign_extend_settings_navigation(settings_navigation $settings, navig
     }
 
     // Link to download all submissions.
-    if (has_any_capability(array('mod/edusign:grade', 'mod/edusign:viewgrades'), $context)) {
+    if (has_any_capability(array('mod/assign:grade', 'mod/edusign:viewsignings'), $context)) {
         $link = new moodle_url('/mod/edusign/view.php', array('id' => $cm->id, 'action' => 'grading'));
         $node = $navref->add(get_string('viewgrading', 'edusign'), $link, navigation_node::TYPE_SETTING);
 
@@ -491,7 +491,7 @@ function edusign_extend_settings_navigation(settings_navigation $settings, navig
         $node = $navref->add(get_string('downloadall', 'edusign'), $link, navigation_node::TYPE_SETTING);
     }
 
-    if (has_capability('mod/edusign:revealidentities', $context)) {
+    if (has_capability('mod/assign:revealidentities', $context)) {
         $dbparams = array('id' => $cm->instance);
         $edusignment = $DB->get_record('edusign', $dbparams, 'blindmarking, revealidentities');
 
@@ -657,9 +657,9 @@ function edusign_print_overview($courses, &$htmlarray) {
         }
 
         $context = context_module::instance($edusignment->coursemodule);
-
+        $test = has_capability('mod/assign:submit', $context, null, false);
         // Does the submission status of the edusignment require notification?
-        if (has_capability('mod/edusign:submit', $context, null, false)) {
+        if (has_capability('mod/assign:submit', $context, null, false)) {
             // Does the submission status of the edusignment require notification?
             $submitdetails = edusign_get_mysubmission_details_for_print_overview(
                     $mysubmissions,
@@ -671,7 +671,7 @@ function edusign_print_overview($courses, &$htmlarray) {
             $submitdetails = false;
         }
 
-        if (has_capability('mod/edusign:grade', $context, null, false)) {
+        if (has_capability('mod/assign:grade', $context, null, false)) {
             // Does the grading status of the edusignment require notification ?
             $gradedetails = edusign_get_grade_details_for_print_overview(
                     $unmarkedsubmissions,
@@ -1851,7 +1851,7 @@ function edusign_check_updates_since(cm_info $cm, $from, $filter = array()) {
     }
 
     // Now, teachers should see other students updates.
-    if (has_capability('mod/edusign:viewgrades', $cm->context)) {
+    if (has_capability('mod/edusign:viewsignings', $cm->context)) {
         $params = array('id' => $cm->instance, 'since1' => $from, 'since2' => $from);
         $select = 'edusignment = :id AND (timecreated > :since1 OR timemodified > :since2)';
 

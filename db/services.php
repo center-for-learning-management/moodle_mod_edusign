@@ -77,7 +77,7 @@ $functions = array(
                 'classpath' => 'mod/edusign/externallib.php',
                 'description' => 'Creates or updates user flags',
                 'type' => 'write',
-                'capabilities' => 'mod/edusign:grade',
+                'capabilities' => 'mod/assign:grade',
                 'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
@@ -177,7 +177,7 @@ $functions = array(
                 'classpath' => 'mod/edusign/externallib.php',
                 'description' => 'Trigger the grading_table_viewed event.',
                 'type' => 'write',
-                'capabilities' => 'mod/edusign:view, mod/edusign:viewgrades',
+                'capabilities' => 'mod/edusign:view, mod/edusign:viewsignings',
                 'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
@@ -208,7 +208,7 @@ $functions = array(
                 'description' => 'List the participants for a single edusignment, with some summary info about their submissions.',
                 'type' => 'read',
                 'ajax' => true,
-                'capabilities' => 'mod/edusign:view, mod/edusign:viewgrades',
+                'capabilities' => 'mod/edusign:view, mod/edusign:viewsignings',
                 'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
 
@@ -219,7 +219,7 @@ $functions = array(
                 'description' => 'Submit the grading form data via ajax',
                 'type' => 'write',
                 'ajax' => true,
-                'capabilities' => 'mod/edusign:grade',
+                'capabilities' => 'mod/assign:grade',
                 'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
         'mod_edusign_get_participant' => array(
@@ -229,7 +229,7 @@ $functions = array(
                 'description' => 'Get a participant for an edusignment, with some summary info about their submissions.',
                 'type' => 'read',
                 'ajax' => true,
-                'capabilities' => 'mod/edusign:view, mod/edusign:viewgrades',
+                'capabilities' => 'mod/edusign:view, mod/edusign:viewsignings',
                 'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
         ),
         'mod_edusign_view_edusign' => array(
