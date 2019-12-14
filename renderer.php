@@ -984,18 +984,6 @@ class mod_edusign_renderer extends plugin_renderer_base {
                     $o .= get_string('addnewattempt_help', 'edusign');
                     $o .= $this->output->box_end();
                     $o .= $this->output->box_end();
-                } else {
-                    $o .= $this->output->box_start('generalbox submissionaction');
-                    $urlparams = array('id' => $status->coursemoduleid, 'action' => 'editsubmission');
-                    $o .= $this->output->single_button(
-                            new moodle_url('/mod/edusign/view.php', $urlparams),
-                            get_string('editsubmission', 'edusign'),
-                            'get'
-                    );
-                    $o .= $this->output->box_start('boxaligncenter submithelp');
-                    $o .= get_string('editsubmission_help', 'edusign');
-                    $o .= $this->output->box_end();
-                    $o .= $this->output->box_end();
                 }
             }
 
