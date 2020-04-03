@@ -40,7 +40,7 @@ $string['allowsubmissions'] = 'Nutzer/in erlauben, für diese Aufgabe weiter Lö
 $string['allowsubmissionsanddescriptionfromdatesummary'] = 'Die Details und die Unterschrift stehen zur Verfügung ab <strong>{$a}</strong>';
 $string['allowsubmissionsfromdate'] = 'Verfügbar ab';
 $string['allowsubmissionsfromdate_help'] = 'Wenn diese Option aktiviert ist, können Unterschriften nicht vor diesem Zeitpunkt abgegeben werden. Wenn diese Option deaktiviert ist, ist die Unterschrift sofort möglich.';
-$string['allowsubmissionsfromdatesummary'] = 'Abgabe möglich ab <strong>{$a}</strong>';
+$string['allowsubmissionsfromdatesummary'] = 'Unterschrift möglich ab <strong>{$a}</strong>';
 $string['allowsubmissionsshort'] = 'Abgabeänderung erlauben';
 $string['alwaysshowdescription'] = 'Beschreibung immer anzeigen';
 $string['alwaysshowdescription_help'] = 'Wenn diese Option deaktiviert ist, wird die Aufgabenbeschreibung für Teilnehmer/innen nur ab dem Abgabebeginn angezeigt.';
@@ -321,7 +321,7 @@ $string['multipleteams_desc'] = 'Diese Aufgabe wird in Gruppen abgegeben. Sie si
 $string['multipleteamsgrader'] = 'Mitglied in mehreren Gruppen. Die Abgabe von Aufgaben ist nicht möglich.';
 $string['mysubmission'] = 'Meine Unterschrift:&nbsp;';
 $string['newsubmissions'] = 'Aufgaben abgegeben';
-$string['noattempt'] = 'Kein Versuch';
+$string['noattempt'] = 'Keine Unterschrift';
 $string['noclose'] = 'Kein Enddatum';
 $string['nofiles'] = 'Keine Dateien.';
 $string['nofilters'] = 'Keine Filter';
@@ -422,7 +422,7 @@ $string['reviewed'] = 'Nachgeprüft';
 $string['save'] = 'Speichern';
 $string['saveallquickgradingchanges'] = 'Bewertungsänderungen sichern';
 $string['saveandcontinue'] = 'Sichern und weiter';
-$string['savechanges'] = 'Änderungen sichern';
+$string['savechanges'] = 'jetzt unterschreiben';
 $string['savegradingresult'] = 'Bewertung';
 $string['savenext'] = 'Sichern und weiter';
 $string['saveoverrideandstay'] = 'Speichern und weitere Überschreibung anlegen';
@@ -479,7 +479,7 @@ $string['submissionreceiptothertext'] = 'Ihre Unterschrift für \'{$a->edusignme
 
 Sie können den Status Ihrer Unterschrift unter {$a->url} einsehen.';
 $string['submissionreceipts'] = 'Abgabebestätigungen versenden';
-$string['submissionreceiptsmall'] = 'Sie haben {$a->edusignment} unterschrieben.';
+$string['submissionreceiptsmall'] = 'Sie haben \'{$a->edusignment}\' unterschrieben.';
 $string['submissionreceipttext'] = 'Sie haben \'{$a->edusignment}\' unterschrieben.
 
 Sie können Ihre Unterschrift einsehen unter:
@@ -495,7 +495,7 @@ $string['submissionstatement'] = 'Erklärung zur Eigenständigkeit';
 $string['submissionstatementacceptedlog'] = 'Erklärung zur Eigenständigkeit wurde akzeptiert von {$a}';
 $string['submissionstatementdefault'] = 'Diese Arbeit ist meine persönliche Leistung. Sofern ich irgendwo fremde Quellen verwendet habe, sind diese Stellen entsprechend gekennzeichnet.';
 $string['submissionstatement_help'] = 'Erklärung zur Eigenständigkeit';
-$string['submissionstatus'] = 'Unterschriftstatus';
+$string['submissionstatus'] = 'Status';
 $string['submissionstatus_'] = 'Keine Unterschrift';
 $string['submissionstatus_draft'] = 'Entwurf (nicht abgegeben)';
 $string['submissionstatusheading'] = 'Unterschriftstatus';
