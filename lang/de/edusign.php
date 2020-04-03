@@ -470,27 +470,27 @@ $string['submissionnotcopiedinvalidstatus'] = 'Die Abgabe wurde nicht kopiert, w
 $string['submissionnoteditable'] = 'Teilnehmer/innen können eingereichte Lösung nicht bearbeiten';
 $string['submissionnotready'] = 'Diese Aufgabe ist nicht zur Abgabe fertig';
 $string['submissionplugins'] = 'Plugins zur Abgabe';
-$string['submissionreceipthtml'] = '<p>Sie haben eine Lösung zur Aufgabe \'<i>{$a->edusignment}</i>\' abgegeben.</p><p> Den Bewertungsstatus für die Aufgabe können Sie <a href="{$a->url}">hier</a> einsehen.</p>';
-$string['submissionreceiptotherhtml'] = 'Ihre Aufgabenlösung für \'{$a->edusignment}\' wurde übermittelt.
+$string['submissionreceipthtml'] = '<p>Sie haben \'<i>{$a->edusignment}</i>\' unterschrieben.</p><p> Ihre Unterschrift können Sie <a href="{$a->url}">hier</a> einsehen.</p>';
+$string['submissionreceiptotherhtml'] = 'Ihre Unterschrift für \'{$a->edusignment}\' wurde übermittelt.
 <br /><br />
-Sie können den Status <a href="{$a->url}">Ihrer Aufgabenlösung</a> sehen.';
-$string['submissionreceiptothersmall'] = 'Ihre Aufgabenlösung für \'{$a->edusignment}\' wurde übermittelt.';
-$string['submissionreceiptothertext'] = 'Ihre Aufgabenlösung für \'{$a->edusignment}\' wurde übermittelt.
+Sie können den Status <a href="{$a->url}">Ihrer Unterschrift</a> sehen.';
+$string['submissionreceiptothersmall'] = 'Ihre Unterschrift für \'{$a->edusignment}\' wurde übermittelt.';
+$string['submissionreceiptothertext'] = 'Ihre Unterschrift für \'{$a->edusignment}\' wurde übermittelt.
 
-Sie können den Status Ihrer Aufgabenlösung sehen unter {$a->url}';
+Sie können den Status Ihrer Unterschrift unter {$a->url} einsehen.';
 $string['submissionreceipts'] = 'Abgabebestätigungen versenden';
-$string['submissionreceiptsmall'] = 'Sie haben eine Lösung für {$a->edusignment} abgegeben.';
-$string['submissionreceipttext'] = 'Sie haben eine Lösung für \'{$a->edusignment}\' abgegeben.
+$string['submissionreceiptsmall'] = 'Sie haben {$a->edusignment} unterschrieben.';
+$string['submissionreceipttext'] = 'Sie haben \'{$a->edusignment}\' unterschrieben.
 
-Sie können den Bewertungsstatus für die Aufgabe dort einsehen:
+Sie können Ihre Unterschrift einsehen unter:
 
    {$a->url}';
-$string['submissions'] = 'Abgegebene Aufgaben';
-$string['submissionsclosed'] = 'Abgabe beendet';
-$string['submissionsettings'] = 'Abgabeeinstellungen';
-$string['submissionslocked'] = 'Bei dieser Aufgabe können derzeit keine Lösungen abgeben werden.';
+$string['submissions'] = 'Abgegebene Unterschriften';
+$string['submissionsclosed'] = 'Unterschrift abgegeben';
+$string['submissionsettings'] = 'Unterschriftseinstellungen';
+$string['submissionslocked'] = 'Derzeit kann nicht unterschrieben werden';
 $string['submissionslockedshort'] = 'Unterschriftänderung sind nicht erlaubt';
-$string['submissionsnotgraded'] = 'Nicht bewertete Abgaben: {$a}';
+$string['submissionsnotgraded'] = 'Nicht unterschrieben: {$a}';
 $string['submissionstatement'] = 'Erklärung zur Eigenständigkeit';
 $string['submissionstatementacceptedlog'] = 'Erklärung zur Eigenständigkeit wurde akzeptiert von {$a}';
 $string['submissionstatementdefault'] = 'Diese Arbeit ist meine persönliche Leistung. Sofern ich irgendwo fremde Quellen verwendet habe, sind diese Stellen entsprechend gekennzeichnet.';
