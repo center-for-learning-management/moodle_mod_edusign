@@ -86,7 +86,6 @@ require_once($CFG->dirroot . '/mod/edusign/feedbackplugin.php');
 require_once($CFG->dirroot . '/mod/edusign/submissionplugin.php');
 require_once($CFG->dirroot . '/mod/edusign/renderable.php');
 require_once($CFG->dirroot . '/mod/edusign/gradingtable.php');
-require_once($CFG->libdir . '/eventslib.php');
 require_once($CFG->libdir . '/portfolio/caller.php');
 
 use \mod_edusign\output\grading_app;

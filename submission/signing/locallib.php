@@ -176,7 +176,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
         $mform->setType('signing', PARAM_RAW);
         $mform->addElement(
             'html',
-            "<div class='form-group row'><div class='col-md-3'>Unterschrift</div><div class='col-md-9'><canvas id='canvas' class='form-control' height='250px' width='1000px'></canvas>
+            "<div class='form-group row'><div class='col-md-3'>Unterschrift</div><div class='col-md-9'><canvas id='canvas' class='form-control' style='height:250px !important' height='250px' width='1000px'></canvas>
             <a class='btn btn-secondary' id='clearCanvas'  role='button'>Reset</a></div></div>"
         );
         // $mform->addElement('filepicker', 'userfile', get_string('file'), null,
