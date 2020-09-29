@@ -1,0 +1,6 @@
+{
+    "plugintypes": {
+        "edusignsubmission": "mod\/edusign\/submission",
+        "edusignfeedback": "mod\/edusign\/feedback"
+    }
+}

@@ -4206,7 +4206,7 @@ class edusign {
         $cmid = $this->get_course_module()->id;
 
         $links = array();
-        if (has_capability('gradereport/grader:view', $this->get_course_context()) &&
+        /*if (has_capability('gradereport/grader:view', $this->get_course_context()) &&
                 has_capability('moodle/grade:viewall', $this->get_course_context())) {
             $gradebookurl = '/grade/report/grader/index.php?id=' . $this->get_course()->id;
             $links[$gradebookurl] = get_string('viewgradebook', 'edusign');
@@ -4232,6 +4232,7 @@ class edusign {
                 }
             }
         }
+        */
 
         // Sort links alphabetically based on the link description.
         core_collator::asort($links);

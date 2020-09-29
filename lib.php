@@ -1355,7 +1355,7 @@ function edusign_get_extra_capabilities() {
  * @return int 0 if ok, error code otherwise
  */
 function edusign_grade_item_update($edusign, $grades = null) {
-    global $CFG;
+    /*global $CFG;
     require_once($CFG->libdir . '/gradelib.php');
 
     if (!isset($edusign->courseid)) {
@@ -1407,7 +1407,7 @@ function edusign_grade_item_update($edusign, $grades = null) {
             0,
             $grades,
             $params
-    );
+    );*/
 }
 
 /**
