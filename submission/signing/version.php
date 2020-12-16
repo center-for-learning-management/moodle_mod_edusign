@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020052000;
+$plugin->version = 2020121600;
 $plugin->requires = 2016112800;
 $plugin->component = 'edusignsubmission_signing';

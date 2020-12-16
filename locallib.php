@@ -427,6 +427,20 @@ class edusign {
     }
 
     /**
+     * Remove files from this submission.
+     *
+     * @param stdClass $submission The submission
+     * @return boolean
+     */
+    public function remove(stdClass $submission) {
+        global $DB;
+        $DB->delete_records('edusignsubmission_signing', array('submission' => $submission->id ));
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
+        var_dump($submission);
+        $DB->delete_records('edusign_submission', array('id' => $submission->id));
+        return true;
+    }
+    /**
      * Display the edusignment, used by view.php
      *
      * The edusignment is displayed differently depending on your role,
@@ -449,7 +463,9 @@ class edusign {
         }
 
         // Handle form submissions first.
-        if ($action == 'savesubmission') {
+        if ($action == 'delete') {
+            $this->remove_submission(required_param('userid', PARAM_INT));
+        } else if ($action == 'savesubmission') {
             $action = 'editsubmission';
             if ($this->process_save_submission($mform, $notices)) {
                 $action = 'redirect';
@@ -1179,6 +1195,41 @@ class edusign {
         return $status;
     }
 
+
+
+    public function remove_submission($userid) {
+        global $USER;
+
+        if (!$this->can_edit_submission($userid, $USER->id)) {
+            $user = core_user::get_user($userid);
+            $message = get_string('usersubmissioncannotberemoved', 'edusign', fullname($user));
+            $this->set_error_message($message);
+            return false;
+        }
+
+        if ($this->get_instance()->teamsubmission) {
+            $submission = $this->get_group_submission($userid, 0, false);
+        } else {
+            $submission = $this->get_user_submission($userid, false);
+        }
+
+        if (!$submission) {
+            return false;
+        }
+
+        // Tell each submission plugin we were saved with no data.
+        $plugins = $this->get_submission_plugins();
+        foreach ($plugins as $plugin) {
+            if ($plugin->is_enabled() && $plugin->is_visible()) {
+                $plugin->remove($submission);
+            }
+        }
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_REOPENED;
+        if ($submission->userid != 0) {
+            \mod_edusign\event\submission_status_updated::create_from_submission($this, $submission)->trigger();
+        }
+        return true;
+    }
     /**
      * Update the settings for a single plugin.
      *

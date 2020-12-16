@@ -453,6 +453,15 @@ class edusign_grading_table extends table_sql implements renderable {
             }
         }
 
+
+        if ($edusignment->is_any_submission_plugin_enabled()) {
+            $columns[] = 'delete';
+            $headers[] = get_string('delete', 'edusign');
+        }
+
+
+
+
         // Time marked.
         /*
         $columns[] = 'timemarked';
@@ -824,6 +833,17 @@ class edusign_grading_table extends table_sql implements renderable {
         return $outcomes;
     }
 
+
+    public function col_delete(stdClass $row) {
+      $urlparams = array('id' => $this->edusignment->get_course_module()->id,
+      'userid' => $row->id,
+      'action' => 'delete',
+      'sesskey' => sesskey(),
+      'page' => $this->currpage);
+      $url = new moodle_url('/mod/edusign/view.php', $urlparams);
+      $link = "<a href='" . $url . "'>". get_string('delete', 'edusign') ."</a>";      
+      return $link;
+    }
     /**
      * Format a user picture for display.
      *

@@ -595,6 +595,21 @@ class edusign_submission_signing extends edusign_submission_plugin {
     }
 
     /**
+     * Remove files from this submission.
+     *
+     * @param stdClass $submission The submission
+     * @return boolean
+     */
+    public function remove(stdClass $submission) {
+        global $DB;
+        $DB->delete_records('edusignsubmission_signing', array('submission' => $submission->id ));
+        $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
+        var_dump($submission);
+        $DB->delete_records('edusign_submission', array('id' => $submission->id));
+        return true;
+    }
+    
+    /**
      * Get file areas returns a list of areas this plugin stores files
      *
      * @return array - An array of fileareas (keys) and descriptions (values)

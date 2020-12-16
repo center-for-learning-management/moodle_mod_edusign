@@ -150,6 +150,7 @@ $string['defaultlayout'] = 'Standardlayout wiederherstellen';
 $string['defaultsettings'] = 'Standardmäßige Voreinstellungen';
 $string['defaultsettings_help'] = 'Diese Einstellungen legen Vorgaben für alle neuen Aufgaben fest.';
 $string['defaultteam'] = 'Standard-Gruppe';
+$string['delete'] = 'Löschen';
 $string['deleteallsubmissions'] = 'Alle Unterschriften löschen';
 $string['description'] = 'Beschreibung';
 $string['disabled'] = 'Deaktiviert';
