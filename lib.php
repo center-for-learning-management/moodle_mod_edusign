@@ -558,10 +558,9 @@ function mod_edusign_get_completion_active_rule_descriptions($cm) {
     foreach ($cm->customdata['customcompletionrules'] as $key => $val) {
         switch ($key) {
             case 'completionsubmit':
-                if (empty($val)) {
-                    continue;
+                if (!empty($val)) {
+                    $descriptions[] = get_string('completionsubmit', 'edusign');
                 }
-                $descriptions[] = get_string('completionsubmit', 'edusign');
                 break;
             default:
                 break;
