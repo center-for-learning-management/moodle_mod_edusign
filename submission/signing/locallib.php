@@ -604,7 +604,6 @@ class edusign_submission_signing extends edusign_submission_plugin {
         global $DB;
         $DB->delete_records('edusignsubmission_signing', array('submission' => $submission->id ));
         $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
-        var_dump($submission);
         $DB->delete_records('edusign_submission', array('id' => $submission->id));
         return true;
     }
