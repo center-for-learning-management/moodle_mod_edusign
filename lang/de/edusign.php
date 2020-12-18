@@ -151,6 +151,7 @@ $string['defaultsettings'] = 'Standardmäßige Voreinstellungen';
 $string['defaultsettings_help'] = 'Diese Einstellungen legen Vorgaben für alle neuen Aufgaben fest.';
 $string['defaultteam'] = 'Standard-Gruppe';
 $string['delete'] = 'Löschen';
+$string['deletesignature'] = 'Eingereichte Unterschrift löschen';
 $string['deleteallsubmissions'] = 'Alle Unterschriften löschen';
 $string['description'] = 'Beschreibung';
 $string['disabled'] = 'Deaktiviert';

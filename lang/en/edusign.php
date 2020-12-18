@@ -140,6 +140,7 @@ $string['defaultsettings'] = 'Default edusignment settings';
 $string['defaultsettings_help'] = 'These settings define the defaults for all new edusignments.';
 $string['defaultteam'] = 'Default group';
 $string['delete'] = 'Delete';
+$string['deletesignature'] = 'Delete the submitted signature';
 $string['deleteallsubmissions'] = 'Delete all submissions';
 $string['description'] = 'Description';
 $string['disabled'] = 'Disabled';
