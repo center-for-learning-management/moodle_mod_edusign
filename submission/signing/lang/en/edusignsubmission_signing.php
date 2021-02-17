@@ -46,3 +46,6 @@ $string['wordlimit_help'] = 'If online text submissions are enabled, this is the
         'of words that each student will be allowed to submit.';
 $string['wordlimitexceeded'] = 'The word limit for this edusignment is {$a->limit} words and you ' .
         'are attempting to submit {$a->count} words. Please review your submission and try again.';
+$string['close'] = 'Close';
+$string['delete'] = 'delete signing';
+$string['delete:confirm'] = 'Do you really want to delete the signing?';

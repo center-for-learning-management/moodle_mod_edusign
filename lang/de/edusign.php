@@ -567,3 +567,6 @@ $string['viewsubmissiongradingtable'] = 'Unterschriften zur Abgabe anzeigen';
 $string['viewsummary'] = 'Zusammenfassung anzeigen';
 $string['workflowfilter'] = 'Workflow-Filter';
 $string['xofy'] = '{$a->x} von {$a->y}';
+$string['close'] = 'Schließen';
+$string['delete'] = 'Unterschrift löschen';
+$string['delete:confirm'] = 'Wollen Sie wirklich die Unterschrift löschen?';

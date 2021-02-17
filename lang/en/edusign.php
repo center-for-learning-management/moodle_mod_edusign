@@ -584,3 +584,6 @@ $string['xofy'] = '{$a->x} of {$a->y}';
 
 // Deprecated since Moodle 3.2.
 $string['changegradewarning'] = 'This edusignment has graded submissions and changing the grade will not automatically re-calculate existing submission grades. You must re-grade all existing submissions, if you wish to change the grade.';
+$string['close'] = 'Close';
+$string['delete'] = 'delete signing';
+$string['delete:confirm'] = 'Do you really want to delete the signing?';
