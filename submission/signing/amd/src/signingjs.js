@@ -33,6 +33,7 @@ var mousePos = {x: 0, y: 0};
 var lastPos = mousePos;
 var isMobile = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
+
 $('#clearCanvas').bind('click', function() {
     clearCanvas(canvas, ctx);
 });
@@ -41,44 +42,82 @@ $('#id_submitbutton').click(function() {
         $('[name="signing"]').val(data);
     });
 // Mouse/touch events ..
-canvas.addEventListener((isMobile ? 'touchstart' : 'mousedown'), function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    drawing = true;
-    lastPos = getMousePos(canvas, e);
-    mousePos = lastPos;
-});
-canvas.addEventListener((isMobile ? 'touchmove' : 'mousemove'), function(e) {
-    e.preventDefault();
-   e.stopPropagation();
-    mousePos = getMousePos(canvas, e);
-});
-canvas.addEventListener((isMobile ? 'touchend' : 'mouseup'), function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    drawing = false;
-});
+if (window.PointerEvent) {
+    canvas.addEventListener('pointerdown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        drawing = true;
+        lastPos = getMousePos(canvas, e);
+        mousePos = lastPos;
+    });
+    canvas.addEventListener('pointermove', function(e) {
+        e.preventDefault();
+       e.stopPropagation();
+        mousePos = getMousePos(canvas, e);
+    });
+    canvas.addEventListener('pointerup', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        drawing = false;
+    });
 
-document.body.addEventListener("touchstart", function(e) {
-  if (e.target == canvas) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-}, false);
-document.body.addEventListener("touchend", function(e) {
-  if (e.target == canvas) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-}, false);
-document.body.addEventListener("touchmove", function(e) {
-  if (e.target == canvas) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-}, false);
+    document.body.addEventListener("pointerdown", function(e) {
+      if (e.target == canvas) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, false);
+    document.body.addEventListener("pointermove", function(e) {
+      if (e.target == canvas) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, false);
+    document.body.addEventListener("pointerup", function(e) {
+      if (e.target == canvas) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, false);
+}
+else {
+    canvas.addEventListener((isMobile ? 'touchstart' : 'mousedown'), function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        drawing = true;
+        lastPos = getMousePos(canvas, e);
+        mousePos = lastPos;
+    });
+    canvas.addEventListener((isMobile ? 'touchmove' : 'mousemove'), function(e) {
+        e.preventDefault();
+       e.stopPropagation();
+        mousePos = getMousePos(canvas, e);
+    });
+    canvas.addEventListener((isMobile ? 'touchend' : 'mouseup'), function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        drawing = false;
+    });
 
-
+    document.body.addEventListener("touchstart", function(e) {
+      if (e.target == canvas) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, false);
+    document.body.addEventListener("touchend", function(e) {
+      if (e.target == canvas) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, false);
+    document.body.addEventListener("touchmove", function(e) {
+      if (e.target == canvas) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, false);
+}
 // Helper functions .. 
 function getMousePos(canvasDom, touchOrMouseEvent) {
     var rect = canvasDom.getBoundingClientRect();
