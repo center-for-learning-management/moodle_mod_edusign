@@ -86,13 +86,17 @@ $capabilities = array(
                 ),
                 'clonepermissionsfrom' => 'moodle/course:manageactivities'
         ),
-        /*
-        'mod/assign:editothersubmission' => array(
+        
+        'mod/edusign:editothersubmission' => array(
                 'riskbitmask' => RISK_MANAGETRUST | RISK_DATALOSS | RISK_PERSONAL,
                 'captype' => 'write',
-                'contextlevel' => CONTEXT_MODULE
+                'contextlevel' => CONTEXT_MODULE,
+                'archetypes' => array(
+                        'editingteacher' => CAP_ALLOW,
+                        'manager' => CAP_ALLOW
+                )
         ),
-        */
+        
         /*
         'mod/assign:grantextension' => array(
                 'captype' => 'write',

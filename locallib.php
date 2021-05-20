@@ -1199,11 +1199,8 @@ class edusign {
 
     public function remove_submission($userid) {
         global $USER;
-
         if (!$this->can_edit_submission($userid, $USER->id)) {
             $user = core_user::get_user($userid);
-            $message = get_string('usersubmissioncannotberemoved', 'edusign', fullname($user));
-            $this->set_error_message($message);
             return false;
         }
 
@@ -5909,13 +5906,10 @@ class edusign {
                     has_capability('mod/edusign:submit', $this->context, $graderid)) {
                 // User can edit their own submission.
                 return true;
-            } else {
-                // We need to return here because editothersubmission should never apply to a users own submission.
-                return false;
-            }
+            } 
         }
 
-        if (!has_capability('mod/assign:editothersubmission', $this->context, $graderid)) {
+        if (!has_capability('mod/edusign:editothersubmission', $this->context, $graderid)) {
             return false;
         }
 
