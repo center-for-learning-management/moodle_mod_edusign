@@ -841,7 +841,7 @@ class edusign_grading_table extends table_sql implements renderable {
       'sesskey' => sesskey(),
       'page' => $this->currpage);
       $url = new moodle_url('/mod/edusign/view.php', $urlparams);
-      $modal = '<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      $modal = '<div class="modal fade" id="Modal'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -857,7 +857,7 @@ class edusign_grading_table extends table_sql implements renderable {
                     </div>
                   </div>
                 </div>';
-      $link = '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">'.get_string('delete', 'edusign').'
+      $link = '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modal'.$row->id.'">'.get_string('delete', 'edusign').'
 </button>'.$modal;
 
    
