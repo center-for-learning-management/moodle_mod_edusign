@@ -42,25 +42,25 @@ $('#id_submitbutton').click(function() {
         $('[name="signing"]').val(data);
     });
 // Mouse/touch events ..
-if (window.PointerEvent) {
     canvas.addEventListener('pointerdown', function(e) {
         e.preventDefault();
         e.stopPropagation();
         drawing = true;
+        console.log(e.clientX);
         lastPos = getMousePos(canvas, e);
         mousePos = lastPos;
-    });
+    }, false);
     canvas.addEventListener('pointermove', function(e) {
         e.preventDefault();
-       e.stopPropagation();
+        e.stopPropagation();
         mousePos = getMousePos(canvas, e);
-    });
+    }, false);
     canvas.addEventListener('pointerup', function(e) {
         e.preventDefault();
         e.stopPropagation();
         drawing = false;
-    });
-
+    }, false);
+ 
     document.body.addEventListener("pointerdown", function(e) {
       if (e.target == canvas) {
         e.preventDefault();
@@ -79,45 +79,42 @@ if (window.PointerEvent) {
         e.stopPropagation();
       }
     }, false);
-}
-else {
+
     canvas.addEventListener((isMobile ? 'touchstart' : 'mousedown'), function(e) {
         e.preventDefault();
         e.stopPropagation();
         drawing = true;
         lastPos = getMousePos(canvas, e);
         mousePos = lastPos;
-    });
+    }, false);
     canvas.addEventListener((isMobile ? 'touchmove' : 'mousemove'), function(e) {
         e.preventDefault();
        e.stopPropagation();
         mousePos = getMousePos(canvas, e);
-    });
+    }, false);
     canvas.addEventListener((isMobile ? 'touchend' : 'mouseup'), function(e) {
         e.preventDefault();
         e.stopPropagation();
         drawing = false;
-    });
+    }, false);
 
     document.body.addEventListener("touchstart", function(e) {
       if (e.target == canvas) {
         e.preventDefault();
-        e.stopPropagation();
       }
     }, false);
     document.body.addEventListener("touchend", function(e) {
       if (e.target == canvas) {
         e.preventDefault();
-        e.stopPropagation();
       }
     }, false);
     document.body.addEventListener("touchmove", function(e) {
       if (e.target == canvas) {
         e.preventDefault();
-        e.stopPropagation();
       }
     }, false);
-}
+
+
 // Helper functions .. 
 function getMousePos(canvasDom, touchOrMouseEvent) {
     var rect = canvasDom.getBoundingClientRect();
