@@ -1304,38 +1304,6 @@ function edusign_get_post_actions() {
     return array('upload', 'submit', 'submit for grading');
 }
 
-/**
- * Call cron on the edusign module.
- */
-function edusign_cron() {
-    global $CFG;
-
-    require_once($CFG->dirroot . '/mod/edusign/locallib.php');
-    edusign::cron();
-
-    $plugins = core_component::get_plugin_list('edusignsubmission');
-
-    foreach ($plugins as $name => $plugin) {
-        $disabled = get_config('edusignsubmission_' . $name, 'disabled');
-        if (!$disabled) {
-            $class = 'edusign_submission_' . $name;
-            require_once($CFG->dirroot . '/mod/edusign/submission/' . $name . '/locallib.php');
-            $class::cron();
-        }
-    }
-    $plugins = core_component::get_plugin_list('edusignfeedback');
-
-    foreach ($plugins as $name => $plugin) {
-        $disabled = get_config('edusignfeedback_' . $name, 'disabled');
-        if (!$disabled) {
-            $class = 'edusign_feedback_' . $name;
-            require_once($CFG->dirroot . '/mod/edusign/feedback/' . $name . '/locallib.php');
-            $class::cron();
-        }
-    }
-
-    return true;
-}
 
 /**
  * Returns all other capabilities used by this module.
