@@ -31,7 +31,7 @@ class cron_task extends \core\task\scheduled_task {
      * @return string
      */
     public function get_name() {
-        return get_string('crontask', 'mod_assign');
+        return get_string('crontask', 'mod_edusign');
     }
 
     /**
@@ -40,26 +40,26 @@ class cron_task extends \core\task\scheduled_task {
     public function execute() {
         global $CFG;
 
-        require_once($CFG->dirroot . '/mod/assign/locallib.php');
-        \assign::cron();
+        require_once($CFG->dirroot . '/mod/edusign/locallib.php');
+        \edusign::cron();
 
-        $plugins = \core_component::get_plugin_list('assignsubmission');
+        $plugins = \core_component::get_plugin_list('edusignsubmission');
 
         foreach ($plugins as $name => $plugin) {
-            $disabled = get_config('assignsubmission_' . $name, 'disabled');
+            $disabled = get_config('edusignsubmission_' . $name, 'disabled');
             if (!$disabled) {
-                $class = 'assign_submission_' . $name;
-                require_once($CFG->dirroot . '/mod/assign/submission/' . $name . '/locallib.php');
+                $class = 'edusign_submission_' . $name;
+                require_once($CFG->dirroot . '/mod/edusign/submission/' . $name . '/locallib.php');
                 $class::cron();
             }
         }
-        $plugins = \core_component::get_plugin_list('assignfeedback');
+        $plugins = \core_component::get_plugin_list('edusignfeedback');
 
         foreach ($plugins as $name => $plugin) {
-            $disabled = get_config('assignfeedback_' . $name, 'disabled');
+            $disabled = get_config('edusignfeedback_' . $name, 'disabled');
             if (!$disabled) {
-                $class = 'assign_feedback_' . $name;
-                require_once($CFG->dirroot . '/mod/assign/feedback/' . $name . '/locallib.php');
+                $class = 'edusign_feedback_' . $name;
+                require_once($CFG->dirroot . '/mod/edusign/feedback/' . $name . '/locallib.php');
                 $class::cron();
             }
         }
