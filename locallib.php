@@ -436,7 +436,6 @@ class edusign {
         global $DB;
         $DB->delete_records('edusignsubmission_signing', array('submission' => $submission->id ));
         $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
-        var_dump($submission);
         $DB->delete_records('edusign_submission', array('id' => $submission->id));
         return true;
     }
@@ -465,6 +464,8 @@ class edusign {
         // Handle form submissions first.
         if ($action == 'delete') {
             $this->remove_submission(required_param('userid', PARAM_INT));
+            $action = 'redirect';
+            $nextpageparams['action'] = 'grading';
         } else if ($action == 'savesubmission') {
             $action = 'editsubmission';
             if ($this->process_save_submission($mform, $notices)) {
@@ -587,6 +588,9 @@ class edusign {
             $nextpageurl = new moodle_url('/mod/edusign/view.php', $nextpageparams);
             redirect($nextpageurl);
             return;
+        } else if ($action == 'delete') {
+            $nextpageurl = new moodle_url('/mod/edusign/view.php', $nextpageparams);
+            redirect($nextpageurl);
         } else if ($action == 'savegradingresult') {
             $message = get_string('gradingchangessaved', 'edusign');
             $o .= $this->view_savegrading_result($message);

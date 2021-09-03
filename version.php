@@ -25,6 +25,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_edusign'; // Full name of the plugin (used for diagnostics).
-$plugin->version = 2021085400;    // The current module version (Date: YYYYMMDDXX).
+$plugin->version = 2021090300;    // The current module version (Date: YYYYMMDDXX).
 $plugin->requires = 2018050800;    // Requires this Moodle version.
 
