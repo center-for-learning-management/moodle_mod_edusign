@@ -17,21 +17,21 @@ define(['jquery'], function($) {
 
 function initialize() {
 
-    canvas = document.getElementById('canvas');
-    ctx = canvas.getContext('2d');
-var rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+let canvas = document.getElementById('canvas');
+let ctx = canvas.getContext('2d');
+let rect = canvas.getBoundingClientRect();
+canvas.width = rect.width;
+canvas.height = rect.height;
 // Setup lines styles .. 
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = 1;
+ctx.strokeStyle = "#000";
+ctx.lineWidth = 1;
     clearCanvas(canvas, ctx);
 
 // Some variables we'll need .. 
-var drawing = false;
-var mousePos = {x: 0, y: 0};
-var lastPos = mousePos;
-var isMobile = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+let drawing = false;
+let mousePos = {x: 0, y: 0};
+let lastPos = mousePos;
+let isMobile = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
 
 $('#clearCanvas').bind('click', function() {
@@ -79,7 +79,7 @@ $('#id_submitbutton').click(function() {
         e.stopPropagation();
       }
     }, false);
-
+/*
     canvas.addEventListener((isMobile ? 'touchstart' : 'mousedown'), function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -113,16 +113,26 @@ $('#id_submitbutton').click(function() {
         e.preventDefault();
       }
     }, false);
-
+*/
 
 // Helper functions .. 
 function getMousePos(canvasDom, touchOrMouseEvent) {
     var rect = canvasDom.getBoundingClientRect();
-    return {
-        x: (isMobile ? touchOrMouseEvent.touches[0].clientX : touchOrMouseEvent.clientX) - rect.left,
-        y: (isMobile ? touchOrMouseEvent.touches[0].clientY : touchOrMouseEvent.clientY) - rect.top
+        console.log(touchOrMouseEvent.clientX);
+    return {   
+        x: touchOrMouseEvent.clientX - rect.left,
+        y: touchOrMouseEvent.clientY - rect.top
     };
 }
+/*
+function getTouchPos(canvasDom, touchOrMouseEvent) {
+    var rect = canvasDom.getBoundingClientRect();
+        console.log(touchOrMouseEvent.touches[0].clientX);
+    return {   
+        x: touchOrMouseEvent.touches[0].clientX - rect.left,
+        y: touchOrMouseEvent.touches[0].clientY - rect.top
+    };
+}*/
 
 // Drawing .. 
 window.requestAnimFrame = (function(callback) {

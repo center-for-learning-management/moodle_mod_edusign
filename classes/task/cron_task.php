@@ -14,14 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_assign\task;
+namespace mod_edusign\task;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * A schedule task for assignment cron.
+ * A schedule task for edusign cron.
  *
- * @package   mod_assign
- * @copyright 2019 Simey Lameze <simey@moodle.com>
+ * @package   mod_edusign
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class cron_task extends \core\task\scheduled_task {
