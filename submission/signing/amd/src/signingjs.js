@@ -79,41 +79,6 @@ $('#id_submitbutton').click(function() {
         e.stopPropagation();
       }
     }, false);
-/*
-    canvas.addEventListener((isMobile ? 'touchstart' : 'mousedown'), function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        drawing = true;
-        lastPos = getMousePos(canvas, e);
-        mousePos = lastPos;
-    }, false);
-    canvas.addEventListener((isMobile ? 'touchmove' : 'mousemove'), function(e) {
-        e.preventDefault();
-       e.stopPropagation();
-        mousePos = getMousePos(canvas, e);
-    }, false);
-    canvas.addEventListener((isMobile ? 'touchend' : 'mouseup'), function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        drawing = false;
-    }, false);
-
-    document.body.addEventListener("touchstart", function(e) {
-      if (e.target == canvas) {
-        e.preventDefault();
-      }
-    }, false);
-    document.body.addEventListener("touchend", function(e) {
-      if (e.target == canvas) {
-        e.preventDefault();
-      }
-    }, false);
-    document.body.addEventListener("touchmove", function(e) {
-      if (e.target == canvas) {
-        e.preventDefault();
-      }
-    }, false);
-*/
 
 // Helper functions .. 
 function getMousePos(canvasDom, touchOrMouseEvent) {
@@ -124,15 +89,6 @@ function getMousePos(canvasDom, touchOrMouseEvent) {
         y: touchOrMouseEvent.clientY - rect.top
     };
 }
-/*
-function getTouchPos(canvasDom, touchOrMouseEvent) {
-    var rect = canvasDom.getBoundingClientRect();
-        console.log(touchOrMouseEvent.touches[0].clientX);
-    return {   
-        x: touchOrMouseEvent.touches[0].clientX - rect.left,
-        y: touchOrMouseEvent.touches[0].clientY - rect.top
-    };
-}*/
 
 // Drawing .. 
 window.requestAnimFrame = (function(callback) {
