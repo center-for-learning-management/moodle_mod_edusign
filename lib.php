@@ -1904,7 +1904,6 @@ function mod_edusign_core_calendar_provide_event_action(calendar_event $event, \
     $edusign = new edusign($context, $cm, null);
 
     // Apply overrides.
-    $edusign->update_effective_access($userid);
     $usersubmission = $edusign->get_user_submission($userid, false);
     if ($usersubmission && $usersubmission->status === EDUSIGN_SUBMISSION_STATUS_SUBMITTED) {
         // The user has already submitted.

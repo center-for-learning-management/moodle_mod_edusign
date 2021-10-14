@@ -173,74 +173,6 @@ class edusign_grading_table extends table_sql implements renderable {
                          ON u.id = uf.userid
                         AND uf.edusignment = :edusignmentid3 ';
 
-        $hasoverrides = $this->edusignment->has_overrides();
-
-        if ($hasoverrides) {
-            $params['edusignmentid5'] = (int) $this->edusignment->get_instance()->id;
-            $params['edusignmentid6'] = (int) $this->edusignment->get_instance()->id;
-            $params['edusignmentid7'] = (int) $this->edusignment->get_instance()->id;
-            $params['edusignmentid8'] = (int) $this->edusignment->get_instance()->id;
-            $params['edusignmentid9'] = (int) $this->edusignment->get_instance()->id;
-
-            $fields .= ', priority.priority, ';
-            $fields .= 'effective.allowsubmissionsfromdate, ';
-            $fields .= 'effective.duedate, ';
-            $fields .= 'effective.cutoffdate ';
-
-            $from .= ' LEFT JOIN (
-               SELECT merged.userid, min(merged.priority) priority FROM (
-                  ( SELECT u.id as userid, 9999999 AS priority
-                      FROM {user} u
-                  )
-                  UNION
-                  ( SELECT uo.userid, 0 AS priority
-                      FROM {edusign_overrides} uo
-                     WHERE uo.edusignid = :edusignmentid5
-                  )
-                  UNION
-                  ( SELECT gm.userid, go.sortorder AS priority
-                      FROM {edusign_overrides} go
-                      JOIN {groups} g ON g.id = go.groupid
-                      JOIN {groups_members} gm ON gm.groupid = g.id
-                     WHERE go.edusignid = :edusignmentid6
-                  )
-                ) merged
-                GROUP BY merged.userid
-              ) priority ON priority.userid = u.id
-
-            JOIN (
-              (SELECT 9999999 AS priority,
-                      u.id AS userid,
-                      a.allowsubmissionsfromdate,
-                      a.duedate,
-                      a.cutoffdate
-                 FROM {user} u
-                 JOIN {edusign} a ON a.id = :edusignmentid7
-              )
-              UNION
-              (SELECT 0 AS priority,
-                      uo.userid,
-                      uo.allowsubmissionsfromdate,
-                      uo.duedate,
-                      uo.cutoffdate
-                 FROM {edusign_overrides} uo
-                WHERE uo.edusignid = :edusignmentid8
-              )
-              UNION
-              (SELECT go.sortorder AS priority,
-                      gm.userid,
-                      go.allowsubmissionsfromdate,
-                      go.duedate,
-                      go.cutoffdate
-                 FROM {edusign_overrides} go
-                 JOIN {groups} g ON g.id = go.groupid
-                 JOIN {groups_members} gm ON gm.groupid = g.id
-                WHERE go.edusignid = :edusignmentid9
-              )
-
-            ) effective ON effective.priority = priority.priority AND effective.userid = priority.userid ';
-        }
-
         if (!empty($this->edusignment->get_instance()->blindmarking)) {
             $from .= 'LEFT JOIN {edusign_user_mapping} um
                              ON u.id = um.userid
@@ -398,35 +330,7 @@ class edusign_grading_table extends table_sql implements renderable {
             $columns[] = 'allocatedmarker';
             $headers[] = get_string('marker', 'edusign');
         }
-        // Grade.
-        /*$columns[] = 'grade';
-        $headers[] = get_string('grade');
-        if ($this->is_downloading()) {
-            $gradetype = $this->edusignment->get_instance()->grade;
-            if ($gradetype > 0) {
-                $columns[] = 'grademax';
-                $headers[] = get_string('maxgrade', 'edusign');
-            } else if ($gradetype < 0) {
-                // This is a custom scale.
-                $columns[] = 'scale';
-                $headers[] = get_string('scale', 'edusign');
-            }
 
-            if ($this->edusignment->get_instance()->markingworkflow) {
-                // Add a column for the marking workflow state.
-                $columns[] = 'workflowstate';
-                $headers[] = get_string('markingworkflowstate', 'edusign');
-            }
-            // Add a column to show if this grade can be changed.
-            $columns[] = 'gradecanbechanged';
-            $headers[] = get_string('gradecanbechanged', 'edusign');
-        }
-        if (!$this->is_downloading() && $this->hasgrade) {
-            // We have to call this column userid so we can use userid as a default sortable column.
-            $columns[] = 'userid';
-            $headers[] = get_string('edit');
-        }
-        */
         // Submission plugins.
         if ($edusignment->is_any_submission_plugin_enabled()) {
             $columns[] = 'timesubmitted';
@@ -459,38 +363,6 @@ class edusign_grading_table extends table_sql implements renderable {
             $headers[] = get_string('delete', 'edusign');
         }
 
-
-
-
-        // Time marked.
-        /*
-        $columns[] = 'timemarked';
-        $headers[] = get_string('lastmodifiedgrade', 'edusign');
-        */
-        // Feedback plugins.
-        /*foreach ($this->edusignment->get_feedback_plugins() as $plugin) {
-            if ($this->is_downloading()) {
-                if ($plugin->is_visible() && $plugin->is_enabled()) {
-                    foreach ($plugin->get_editor_fields() as $field => $description) {
-                        $index = 'plugin' . count($this->plugincache);
-                        $this->plugincache[$index] = array($plugin, $field);
-                        $columns[] = $index;
-                        $headers[] = $description;
-                    }
-                }
-            } else if ($plugin->is_visible() && $plugin->is_enabled() && $plugin->has_user_summary()) {
-                $index = 'plugin' . count($this->plugincache);
-                $this->plugincache[$index] = array($plugin);
-                $columns[] = $index;
-                $headers[] = $plugin->get_name();
-            }*/
-
-        // Exclude 'Final grade' column in downloaded grading worksheets.
-        /*if (!$this->is_downloading()) {
-            // Final grade.
-            $columns[] = 'finalgrade';
-            $headers[] = get_string('finalgrade', 'grades');
-        }*/
 
         // Load the grading info for all users.
         $this->gradinginfo = grade_get_grades(

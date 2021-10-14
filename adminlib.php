@@ -101,7 +101,7 @@ class edusign_plugin_manager {
     /**
      * Constructor for this edusignment plugin manager
      *
-     * @param string $subtype - either edusignsubmission or edusignfeedback
+     * @param string $subtype - either edusignsubmissios
      */
     public function __construct($subtype) {
         $this->pageurl = new moodle_url('/mod/edusign/adminmanageplugins.php', array('subtype' => $subtype));

@@ -411,8 +411,6 @@ class mod_edusign_external extends external_api {
                     }
 
                     $edusign = new edusign($context, null, null);
-                    // Update edusign with override information.
-                    $edusign->update_effective_access($USER->id);
 
                     // Get configurations for only enabled plugins.
                     $plugins = $edusign->get_submission_plugins();
@@ -1843,7 +1841,6 @@ class mod_edusign_external extends external_api {
 
         $notices = array();
 
-        $edusignment->update_effective_access($USER->id);
         if (!$edusignment->submissions_open($USER->id)) {
             $notices[] = get_string('duedatereached', 'edusign');
         } else {
@@ -2820,8 +2817,6 @@ class mod_edusign_external extends external_api {
 
         $participant = $edusign->get_participant($params['userid']);
 
-        // Update edusign with override information.
-        $edusign->update_effective_access($params['userid']);
 
         if (!$participant) {
             // No participant found so we can return early.

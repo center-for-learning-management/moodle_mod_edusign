@@ -33,22 +33,6 @@ $settings = new admin_settingpage($section, get_string('settings', 'mod_edusign'
         $module->is_enabled() === false);
 
 if ($ADMIN->fulltree) {
-    $menu = array();
-    foreach (core_component::get_plugin_list('edusignfeedback') as $type => $notused) {
-        $visible = !get_config('edusignfeedback_' . $type, 'disabled');
-        if ($visible) {
-            $menu['edusignfeedback_' . $type] = new lang_string('pluginname', 'edusignfeedback_' . $type);
-        }
-    }
-
-    // The default here is feedback_comments (if it exists).
-    $name = new lang_string('feedbackplugin', 'mod_edusign');
-    $description = new lang_string('feedbackpluginforgradebook', 'mod_edusign');
-    $settings->add(new admin_setting_configselect('edusign/feedback_plugin_for_gradebook',
-            $name,
-            $description,
-            'edusignfeedback_comments',
-            $menu));
 
     $name = new lang_string('showrecentsubmissions', 'mod_edusign');
     $description = new lang_string('configshowrecentsubmissions', 'mod_edusign');

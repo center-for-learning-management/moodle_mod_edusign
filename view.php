@@ -47,8 +47,6 @@ $PAGE->set_url($url);
 // Update module completion status.
 $edusign->set_module_viewed();
 
-// Apply overrides.
-$edusign->update_effective_access($USER->id);
 
 // Get the edusign class to
 // render the page.

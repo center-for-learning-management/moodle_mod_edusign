@@ -601,8 +601,6 @@ class edusign {
             $o .= $this->view_single_grading_panel($args);
         } else if ($action == 'grade') {
             $o .= $this->view_single_grade_page($mform);
-        } else if ($action == 'viewpluginedusignfeedback') {
-            $o .= $this->view_plugin_content('edusignfeedback');
         } else if ($action == 'viewpluginedusignsubmission') {
             $o .= $this->view_plugin_content('edusignsubmission');
         } else if ($action == 'editsubmission') {
@@ -702,17 +700,9 @@ class edusign {
         $this->save_intro_draft_files($formdata);
 
         $formdata->edusignsubmission_signing_enabled = 1; // set signing_submission to true
-        $formdata->edusignfeedback_comments_enabled = 1; // set default feedbacktype
-        $formdata->edusignfeedback_comments_commentinline = 0;
         if ($callplugins) {
             // Call save_settings hook for submission plugins.
             foreach ($this->submissionplugins as $plugin) {
-                if (!$this->update_plugin_instance($plugin, $formdata)) {
-                    print_error($plugin->get_error());
-                    return false;
-                }
-            }
-            foreach ($this->feedbackplugins as $plugin) {
                 if (!$this->update_plugin_instance($plugin, $formdata)) {
                     print_error($plugin->get_error());
                     return false;
@@ -810,161 +800,6 @@ class edusign {
         return $result;
     }
 
-    /**
-     * Deletes a edusign override from the database and clears any corresponding calendar events
-     *
-     * @param int $overrideid The id of the override being deleted
-     * @return bool true on success
-     */
-    public function delete_override($overrideid) {
-        global $CFG, $DB;
-
-        require_once($CFG->dirroot . '/calendar/lib.php');
-
-        $cm = $this->get_course_module();
-        if (empty($cm)) {
-            $instance = $this->get_instance();
-            $cm = get_coursemodule_from_instance('edusign', $instance->id, $instance->course);
-        }
-
-        $override = $DB->get_record('edusign_overrides', array('id' => $overrideid), '*', MUST_EXIST);
-
-        // Delete the events.
-        $conds = array('modulename' => 'edusign', 'instance' => $this->get_instance()->id);
-        if (isset($override->userid)) {
-            $conds['userid'] = $override->userid;
-        } else {
-            $conds['groupid'] = $override->groupid;
-        }
-        $events = $DB->get_records('event', $conds);
-        foreach ($events as $event) {
-            $eventold = calendar_event::load($event);
-            $eventold->delete();
-        }
-
-        $DB->delete_records('edusign_overrides', array('id' => $overrideid));
-
-        // Set the common parameters for one of the events we will be triggering.
-        $params = array(
-                'objectid' => $override->id,
-                'context' => context_module::instance($cm->id),
-                'other' => array(
-                        'edusignid' => $override->edusignid
-                )
-        );
-        // Determine which override deleted event to fire.
-        if (!empty($override->userid)) {
-            $params['relateduserid'] = $override->userid;
-            $event = \mod_edusign\event\user_override_deleted::create($params);
-        } else {
-            $params['other']['groupid'] = $override->groupid;
-            $event = \mod_edusign\event\group_override_deleted::create($params);
-        }
-
-        // Trigger the override deleted event.
-        $event->add_record_snapshot('edusign_overrides', $override);
-        $event->trigger();
-
-        return true;
-    }
-
-    /**
-     * Deletes all edusign overrides from the database and clears any corresponding calendar events
-     */
-    public function delete_all_overrides() {
-        global $DB;
-
-        $overrides = $DB->get_records('edusign_overrides', array('edusignid' => $this->get_instance()->id), 'id');
-        foreach ($overrides as $override) {
-            $this->delete_override($override->id);
-        }
-    }
-
-    /**
-     * Updates the edusign properties with override information for a user.
-     *
-     * Algorithm:  For each edusign setting, if there is a matching user-specific override,
-     *   then use that otherwise, if there are group-specific overrides, return the most
-     *   lenient combination of them.  If neither applies, leave the edusign setting unchanged.
-     *
-     * @param int $userid The userid.
-     */
-    public function update_effective_access($userid) {
-
-        $override = $this->override_exists($userid);
-
-        // Merge with edusign defaults.
-        $keys = array('duedate', 'cutoffdate', 'allowsubmissionsfromdate');
-        foreach ($keys as $key) {
-            if (isset($override->{$key})) {
-                $this->get_instance()->{$key} = $override->{$key};
-            }
-        }
-    }
-
-    /**
-     * Returns whether an edusign has any overrides.
-     *
-     * @return true if any, false if not
-     */
-    public function has_overrides() {
-        global $DB;
-
-        $override = $DB->record_exists('edusign_overrides', array('edusignid' => $this->get_instance()->id));
-
-        if ($override) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns user override
-     *
-     * Algorithm:  For each edusign setting, if there is a matching user-specific override,
-     *   then use that otherwise, if there are group-specific overrides, use the one with the
-     *   lowest sort order. If neither applies, leave the edusign setting unchanged.
-     *
-     * @param int $userid The userid.
-     * @return stdClass The override
-     */
-    public function override_exists($userid) {
-        global $DB;
-
-        // Gets an assoc array containing the keys for defined user overrides only.
-        $getuseroverride = function($userid) use ($DB) {
-            $useroverride = $DB->get_record('edusign_overrides', ['edusignid' => $this->get_instance()->id, 'userid' => $userid]);
-            return $useroverride ? get_object_vars($useroverride) : [];
-        };
-
-        // Gets an assoc array containing the keys for defined group overrides only.
-        $getgroupoverride = function($userid) use ($DB) {
-            $groupings = groups_get_user_groups($this->get_instance()->course, $userid);
-
-            if (empty($groupings[0])) {
-                return [];
-            }
-
-            // Select all overrides that apply to the User's groups.
-            list($extra, $params) = $DB->get_in_or_equal(array_values($groupings[0]));
-            $sql = "SELECT * FROM {edusign_overrides}
-                    WHERE groupid $extra AND edusignid = ? ORDER BY sortorder ASC";
-            $params[] = $this->get_instance()->id;
-            $groupoverride = $DB->get_record_sql($sql, $params, IGNORE_MULTIPLE);
-
-            return $groupoverride ? get_object_vars($groupoverride) : [];
-        };
-
-        // Later arguments clobber earlier ones with array_merge. The two helper functions
-        // return arrays containing keys for only the defined overrides. So we get the
-        // desired behaviour as per the algorithm.
-        return (object) array_merge(
-                ['duedate' => null, 'cutoffdate' => null, 'allowsubmissionsfromdate' => null],
-                $getgroupoverride($userid),
-                $getuseroverride($userid)
-        );
-    }
 
     /**
      * Check if the given calendar_event is either a user or group override
@@ -1098,20 +933,6 @@ class edusign {
                 }
             }
 
-            foreach ($this->feedbackplugins as $plugin) {
-                $fileareas = array();
-                $plugincomponent = $plugin->get_subtype() . '_' . $plugin->get_type();
-                $fileareas = $plugin->get_file_areas();
-                foreach ($fileareas as $filearea => $notused) {
-                    $fs->delete_area_files($this->context->id, $plugincomponent, $filearea);
-                }
-
-                if (!$plugin->delete_instance()) {
-                    $status[] = array('component' => $componentstr,
-                            'item' => get_string('deleteallsubmissions', 'edusign'),
-                            'error' => $plugin->get_error());
-                }
-            }
 
             $edusignids = $DB->get_records('edusign', array('course' => $data->courseid), '', 'id');
             list($sql, $params) = $DB->get_in_or_equal(array_keys($edusignids));
@@ -2693,78 +2514,6 @@ class edusign {
     }
 
     /**
-     * View the grant extension date page.
-     *
-     * Uses url parameters 'userid'
-     * or from parameter 'selectedusers'
-     *
-     * @param moodleform $mform - Used for validation of the submitted data
-     * @return string
-     */
-    protected function view_grant_extension($mform) {
-        global $CFG;
-        require_once($CFG->dirroot . '/mod/edusign/extensionform.php');
-
-        $o = '';
-
-        $data = new stdClass();
-        $data->id = $this->get_course_module()->id;
-
-        $formparams = array(
-                'instance' => $this->get_instance(),
-                'edusign' => $this
-        );
-
-        $users = optional_param('userid', 0, PARAM_INT);
-        if (!$users) {
-            $users = required_param('selectedusers', PARAM_SEQUENCE);
-        }
-        $userlist = explode(',', $users);
-
-        $keys = array('duedate', 'cutoffdate', 'allowsubmissionsfromdate');
-        $maxoverride = array('allowsubmissionsfromdate' => 0, 'duedate' => 0, 'cutoffdate' => 0);
-        foreach ($userlist as $userid) {
-            // To validate extension date with users overrides.
-            $override = $this->override_exists($userid);
-            foreach ($keys as $key) {
-                if ($override->{$key}) {
-                    if ($maxoverride[$key] < $override->{$key}) {
-                        $maxoverride[$key] = $override->{$key};
-                    }
-                } else if ($maxoverride[$key] < $this->get_instance()->{$key}) {
-                    $maxoverride[$key] = $this->get_instance()->{$key};
-                }
-            }
-        }
-        foreach ($keys as $key) {
-            if ($maxoverride[$key]) {
-                $this->get_instance()->{$key} = $maxoverride[$key];
-            }
-        }
-
-        $formparams['userlist'] = $userlist;
-
-        $data->selectedusers = $users;
-        $data->userid = 0;
-
-        if (empty($mform)) {
-            $mform = new mod_edusign_extension_form(null, $formparams);
-        }
-        $mform->set_data($data);
-        $header = new edusign_header(
-                $this->get_instance(),
-                $this->get_context(),
-                $this->show_intro(),
-                $this->get_course_module()->id,
-                get_string('grantextension', 'edusign')
-        );
-        $o .= $this->get_renderer()->render($header);
-        $o .= $this->get_renderer()->render(new edusign_form('extensionform', $mform));
-        $o .= $this->view_footer();
-        return $o;
-    }
-
-    /**
      * Get a list of the users in the same group as this user.
      *
      * @param int $groupid The id of the group whose members we want or 0 for the default group
@@ -2955,7 +2704,6 @@ class edusign {
             $edusignment = new edusign($context, $cm, $course);
 
             // Apply overrides.
-            $edusignment->update_effective_access($USER->id);
             $timedue = $edusignment->get_instance()->duedate;
 
             if (has_capability('mod/assign:grade', $context)) {
@@ -3833,8 +3581,6 @@ class edusign {
         $userid = $args['userid'];
         $attemptnumber = $args['attemptnumber'];
 
-        // Apply overrides.
-        $this->update_effective_access($userid);
 
         $rownum = 0;
         $useridlist = array($userid);
@@ -4040,7 +3786,6 @@ class edusign {
 
         $user = $DB->get_record('user', array('id' => $userid));
         if ($user) {
-            $this->update_effective_access($userid);
             $viewfullnames = has_capability('moodle/site:viewfullnames', $this->get_context());
             $usersummary = new edusign_user_summary(
                     $user,
@@ -4474,7 +4219,6 @@ class edusign {
         $currentgroup = groups_get_activity_group($this->get_course_module(), true);
         $framegrader = new grading_app($userid, $currentgroup, $this);
 
-        $this->update_effective_access($userid);
 
         $o .= $this->get_renderer()->render($framegrader);
 
@@ -6556,25 +6300,6 @@ class edusign {
         $userlist = explode(',', $users);
 
         $keys = array('duedate', 'cutoffdate', 'allowsubmissionsfromdate');
-        $maxoverride = array('allowsubmissionsfromdate' => 0, 'duedate' => 0, 'cutoffdate' => 0);
-        foreach ($userlist as $userid) {
-            // To validate extension date with users overrides.
-            $override = $this->override_exists($userid);
-            foreach ($keys as $key) {
-                if ($override->{$key}) {
-                    if ($maxoverride[$key] < $override->{$key}) {
-                        $maxoverride[$key] = $override->{$key};
-                    }
-                } else if ($maxoverride[$key] < $this->get_instance()->{$key}) {
-                    $maxoverride[$key] = $this->get_instance()->{$key};
-                }
-            }
-        }
-        foreach ($keys as $key) {
-            if ($maxoverride[$key]) {
-                $this->get_instance()->{$key} = $maxoverride[$key];
-            }
-        }
 
         $formparams = array(
                 'instance' => $this->get_instance(),

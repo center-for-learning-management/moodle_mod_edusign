@@ -34,7 +34,26 @@ function xmldb_edusign_upgrade($oldversion) {
     global $CFG, $DB;
 
     $dbman = $DB->get_manager();
+    if ($oldversion < 20210903010) {
 
+
+        $table = new xmldb_table('edusignfeedback_comments');
+
+        // Conditionally launch drop table for role_sortorder.
+        if ($dbman->table_exists($table)) {
+            $dbman->drop_table($table);
+        }
+        $table = new xmldb_table('edusignfeedback_grades');
+
+        // Conditionally launch drop table for role_sortorder.
+        if ($dbman->table_exists($table)) {
+            $dbman->drop_table($table);
+        }
+
+        // Main savepoint reached.
+        upgrade_mod_savepoint(true, 2021090310, 'edusign');
+
+        }
     if ($oldversion < 2016100301) {
 
         // Define table edusign_overrides to be created.
