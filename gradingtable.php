@@ -833,35 +833,36 @@ class edusign_grading_table extends table_sql implements renderable {
         return $outcomes;
     }
 
-
     public function col_delete(stdClass $row) {
-      $urlparams = array('id' => $this->edusignment->get_course_module()->id,
-      'userid' => $row->id,
-      'action' => 'delete',
-      'sesskey' => sesskey(),
-      'page' => $this->currpage);
-      $url = new moodle_url('/mod/edusign/view.php', $urlparams);
-      $modal = '<div class="modal fade" id="Modal'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        if ($row->status !== "submitted") {
+            return '';
+        }
+        $urlparams = array('id' => $this->edusignment->get_course_module()->id,
+                'userid' => $row->id,
+                'action' => 'delete',
+                'sesskey' => sesskey(),
+                'page' => $this->currpage);
+        $url = new moodle_url('/mod/edusign/view.php', $urlparams);
+        $modal = '<div class="modal fade" id="Modal' . $row->id . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">'.get_string('delete', 'edusign').'</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">' . get_string('delete', 'edusign') . '</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         </button>
                       </div>
-                      <div class="modal-body">'.get_string('delete:confirm', 'edusign').'</div>
+                      <div class="modal-body">' . get_string('delete:confirm', 'edusign') . '</div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a  class="btn btn-danger" href="'.$url.'">'.get_string('delete', 'edusign').'</a>
+                        <a  class="btn btn-danger" href="' . $url . '">' . get_string('delete', 'edusign') . '</a>
                       </div>
                     </div>
                   </div>
                 </div>';
-      $link = '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modal'.$row->id.'">'.get_string('delete', 'edusign').'
-</button>'.$modal;
-
-   
-      return $link;
+        $link = '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modal' . $row->id . '">' .
+                get_string('delete', 'edusign') . '
+</button>' . $modal;
+        return $link;
     }
     /**
      * Format a user picture for display.
