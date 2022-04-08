@@ -127,6 +127,7 @@ $string['couldnotconvertsubmission'] = 'Could not convert edusignment submission
 $string['couldnotcreatecoursemodule'] = 'Could not create course module.';
 $string['couldnotcreatenewedusignmentinstance'] = 'Could not create new edusignment instance.';
 $string['couldnotfindedusignmenttoupgrade'] = 'Could not find old edusignment instance to upgrade.';
+$string['crontask'] = 'eduSign Cronjob';
 $string['currentgrade'] = 'Current grade in gradebook';
 $string['currentattempt'] = 'This is attempt {$a}.';
 $string['currentattemptof'] = 'This is attempt {$a->attemptnumber} ( {$a->maxattempts} attempts allowed ).';

@@ -18,13 +18,12 @@
  * Version information
  *
  * @package    mod_edusign
- * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
+ * @copyright  2012 NetSpot {@link http://www.netspot.com.au}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'mod_edusign'; // Full name of the plugin (used for diagnostics).
-$plugin->version = 2021121600;    // The current module version (Date: YYYYMMDDXX).
-$plugin->requires = 2018050800;    // Requires this Moodle version.
-
+$plugin->component = 'mod_edusign';
+$plugin->version = 2022040800;
+$plugin->requires = 2018050800;
