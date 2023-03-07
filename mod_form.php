@@ -207,6 +207,9 @@ class mod_edusign_mod_form extends moodleform_mod {
         $this->apply_admin_defaults();
 
         $this->add_action_buttons();
+
+        // Remove competencies #23.
+        $mform->removeElement('competenciessection');
     }
 
     /**
