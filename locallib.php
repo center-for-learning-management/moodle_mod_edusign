@@ -1208,7 +1208,9 @@ class edusign {
             return false;
         }
 
-        if ($this->get_instance()->teamsubmission) {
+        $teamsubmission = $this->get_instance()->teamsubmission;
+
+        if ($teamsubmission == '1') {
             $submission = $this->get_group_submission($userid, 0, false);
         } else {
             $submission = $this->get_user_submission($userid, false);
@@ -1222,7 +1224,7 @@ class edusign {
         $plugins = $this->get_submission_plugins();
         foreach ($plugins as $plugin) {
             if ($plugin->is_enabled() && $plugin->is_visible()) {
-                $plugin->remove($submission);
+                $plugin->remove($submission, $teamsubmission);
             }
         }
         $submission->status = EDUSIGN_SUBMISSION_STATUS_REOPENED;

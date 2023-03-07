@@ -604,7 +604,26 @@ class edusign_submission_signing extends edusign_submission_plugin {
         global $DB;
         $DB->delete_records('edusignsubmission_signing', array('submission' => $submission->id ));
         $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
+        
+        // Delete record for single users.
         $DB->delete_records('edusign_submission', array('id' => $submission->id));
+
+        // Delete records for groups #22.
+        if ($teamsubmission == '1') {
+            
+            // Delete group submission.
+            $DB->delete_records('edusign_submission', 
+                array('edusignment' => $submission->edusignment, 'groupid' => $submission->groupid));        
+            
+            // Delete user submissions.
+            $members = groups_get_members($submission->groupid);
+            foreach ($members as $member) {
+                $DB->delete_records('edusign_submission', 
+                    array('edusignment' => $submission->edusignment, 'groupid' => '0', 'userid' => $member->id));        
+            }
+            
+        }
+
         return true;
     }
     
