@@ -600,7 +600,7 @@ class edusign_submission_signing extends edusign_submission_plugin {
      * @param stdClass $submission The submission
      * @return boolean
      */
-    public function remove(stdClass $submission) {
+    public function remove(stdClass $submission, $teamsubmission = null) {
         global $DB;
         $DB->delete_records('edusignsubmission_signing', array('submission' => $submission->id ));
         $submission->status = EDUSIGN_SUBMISSION_STATUS_NEW;
