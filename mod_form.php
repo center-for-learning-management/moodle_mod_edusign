@@ -176,13 +176,6 @@ class mod_edusign_mod_form extends moodleform_mod {
         $name = get_string('sendstudentnotificationsdefault', 'edusign');
         $mform->addElement('selectyesno', 'sendstudentnotifications', $name);
         $mform->addHelpButton('sendstudentnotifications', 'sendstudentnotificationsdefault', 'edusign');
-        */
-        // Plagiarism enabling form.
-        if (!empty($CFG->enableplagiarism)) {
-            require_once($CFG->libdir . '/plagiarismlib.php');
-            plagiarism_get_form_elements_module($mform, $ctx->get_course_context(), 'mod_edusign');
-        }
-        /*
         $this->standard_grading_coursemodule_elements();
         $name = get_string('blindmarking', 'edusign');
         $mform->addElement('selectyesno', 'blindmarking', $name);
