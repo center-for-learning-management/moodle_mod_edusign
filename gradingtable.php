@@ -138,9 +138,11 @@ class edusign_grading_table extends table_sql implements renderable {
         $params['edusignmentid3'] = (int) $this->edusignment->get_instance()->id;
         $params['newstatus'] = EDUSIGN_SUBMISSION_STATUS_NEW;
 
-        $extrauserfields = get_extra_user_fields($this->edusignment->get_context());
+        $extrauserfields = \core_user\fields::for_userpic()->get_sql('u', true);
+        $extrauserfield_columns = ['firstname', 'lastname'];
 
-        $fields = user_picture::fields('u', $extrauserfields) . ', ';
+        $fields = 'u.id';
+        $fields .= $extrauserfields->selects.', ';
         $fields .= 'u.id as userid, ';
         $fields .= 's.status as status, ';
         $fields .= 's.id as submissionid, ';
@@ -172,6 +174,9 @@ class edusign_grading_table extends table_sql implements renderable {
         $from .= 'LEFT JOIN {edusign_user_flags} uf
                          ON u.id = uf.userid
                         AND uf.edusignment = :edusignmentid3 ';
+
+        $from .= $extrauserfields->joins;
+        $params += $extrauserfields->params;
 
         $hasoverrides = $this->edusignment->has_overrides();
 
@@ -357,9 +362,9 @@ class edusign_grading_table extends table_sql implements renderable {
                 }
             }
 
-            foreach ($extrauserfields as $extrafield) {
+            foreach ($extrauserfield_columns as $extrafield) {
                 $columns[] = $extrafield;
-                $headers[] = get_user_field_name($extrafield);
+                $headers[] = \core_user\fields::get_display_name($extrafield);
             }
         } else {
             // Record ID.
@@ -509,7 +514,7 @@ class edusign_grading_table extends table_sql implements renderable {
         // Set the columns.
         $this->define_columns($columns);
         $this->define_headers($headers);
-        foreach ($extrauserfields as $extrafield) {
+        foreach ($extrauserfield_columns as $extrafield) {
             $this->column_class($extrafield, $extrafield);
         }
         $this->no_sorting('recordid');

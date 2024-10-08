@@ -57,7 +57,6 @@ class mod_edusign_extension_form extends moodleform {
         $usercount = 0;
         $usershtml = '';
 
-        $extrauserfields = get_extra_user_fields($edusign->get_context());
         foreach ($userlist as $userid) {
             if ($usercount >= 5) {
                 $usershtml .= get_string('moreusers', 'edusign', count($userlist) - 5);
@@ -71,7 +70,7 @@ class mod_edusign_extension_form extends moodleform {
                             $edusign->get_course_context()),
                     $edusign->is_blind_marking(),
                     $edusign->get_uniqueid_for_user($user->id),
-                    $extrauserfields,
+                    ['firstname', 'lastname'],
                     !$edusign->is_active_user($userid)));
             $usercount += 1;
         }

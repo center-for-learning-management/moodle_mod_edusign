@@ -149,10 +149,10 @@ class edusign_override_form extends moodleform {
                 // Get the list of appropriate users, depending on whether and how groups are used.
                 if ($accessallgroups) {
                     $users = get_enrolled_users($this->context, '', 0,
-                            'u.id, u.email, ' . get_all_user_name_fields(true, 'u'), $sort);
+                            'u.id, u.email, ' . \core_user\fields::get_sql_fullname('u'), $sort);
                 } else if ($groups = groups_get_activity_allowed_groups($cm)) {
                     $enrolledjoin = get_enrolled_join($this->context, 'u.id');
-                    $userfields = 'u.id, u.email, ' . get_all_user_name_fields(true, 'u');
+                    $userfields = 'u.id, u.email, ' . \core_user\fields::get_sql_fullname('u');
                     list($ingroupsql, $ingroupparams) = $DB->get_in_or_equal(array_keys($groups), SQL_PARAMS_NAMED);
                     $params = $enrolledjoin->params + $ingroupparams;
                     $sql = "SELECT $userfields
@@ -176,7 +176,7 @@ class edusign_override_form extends moodleform {
                 }
 
                 $userchoices = array();
-                $canviewemail = in_array('email', get_extra_user_fields($this->context));
+                $canviewemail = in_array('email', \core_user\fields::get_identity_fields($this->context, false));
                 foreach ($users as $id => $user) {
                     if (empty($invalidusers[$id]) || (!empty($override) &&
                                     $id == $override->userid)) {

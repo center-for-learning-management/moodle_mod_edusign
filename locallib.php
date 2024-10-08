@@ -4050,7 +4050,7 @@ class edusign {
                     $viewfullnames,
                     $this->is_blind_marking(),
                     $this->get_uniqueid_for_user($user->id),
-                    get_extra_user_fields($this->get_context()),
+                    ['firstname', 'lastname'],
                     !$this->is_active_user($userid)
             );
             $o .= $this->get_renderer()->render($usersummary);
@@ -4875,7 +4875,6 @@ class edusign {
         $usershtml = '';
 
         $usercount = 0;
-        $extrauserfields = get_extra_user_fields($this->get_context());
         $viewfullnames = has_capability('moodle/site:viewfullnames', $this->get_context());
         foreach ($userlist as $userid) {
             if ($usercount >= 5) {
@@ -4890,7 +4889,7 @@ class edusign {
                     $viewfullnames,
                     $this->is_blind_marking(),
                     $this->get_uniqueid_for_user($user->id),
-                    $extrauserfields,
+                    ['firstname', 'lastname'],
                     !$this->is_active_user($userid)
             ));
             $usercount += 1;
@@ -4943,7 +4942,6 @@ class edusign {
         $usershtml = '';
 
         $usercount = 0;
-        $extrauserfields = get_extra_user_fields($this->get_context());
         $viewfullnames = has_capability('moodle/site:viewfullnames', $this->get_context());
         foreach ($userlist as $userid) {
             if ($usercount >= 5) {
@@ -4958,7 +4956,7 @@ class edusign {
                     $viewfullnames,
                     $this->is_blind_marking(),
                     $this->get_uniqueid_for_user($user->id),
-                    $extrauserfields,
+                    ['firstname', 'lastname'],
                     !$this->is_active_user($userid)
             ));
             $usercount += 1;
@@ -5912,7 +5910,7 @@ class edusign {
                     has_capability('mod/edusign:submit', $this->context, $graderid)) {
                 // User can edit their own submission.
                 return true;
-            } 
+            }
         }
 
         if (!has_capability('mod/edusign:editothersubmission', $this->context, $graderid)) {

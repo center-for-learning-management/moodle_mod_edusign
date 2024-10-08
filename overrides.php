@@ -119,26 +119,30 @@ if ($groupmode) {
     list($sort, $params) = users_order_by_sql('u');
     $params['edusignid'] = $edusign->id;
 
+    $extrauserfields = \core_user\fields::for_userpic()->get_sql('u', true);
+
     if ($accessallgroups) {
-        $sql = 'SELECT o.*, ' . get_all_user_name_fields(true, 'u') . '
+        $sql = 'SELECT o.* ' . $extrauserfields->selects . '
                   FROM {edusign_overrides} o
                   JOIN {user} u ON o.userid = u.id
+                  ' . $extrauserfields->joins . '
                  WHERE o.edusignid = :edusignid
               ORDER BY ' . $sort;
 
-        $overrides = $DB->get_records_sql($sql, $params);
+        $overrides = $DB->get_records_sql($sql, $extrauserfields->params + $params);
     } else if ($groups) {
         list($insql, $inparams) = $DB->get_in_or_equal(array_keys($groups), SQL_PARAMS_NAMED);
         $params += $inparams;
 
-        $sql = 'SELECT o.*, ' . get_all_user_name_fields(true, 'u') . '
+        $sql = 'SELECT o.* ' . $extrauserfields->selects . '
                   FROM {edusign_overrides} o
                   JOIN {user} u ON o.userid = u.id
                   JOIN {groups_members} gm ON u.id = gm.userid
+                  ' . $extrauserfields->joins . '
                  WHERE o.edusignid = :edusignid AND gm.groupid ' . $insql . '
               ORDER BY ' . $sort;
 
-        $overrides = $DB->get_records_sql($sql, $params);
+        $overrides = $DB->get_records_sql($sql, $extrauserfields->params + $params);
     }
 }
 
