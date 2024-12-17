@@ -522,6 +522,7 @@ class edusign_grading_table extends table_sql implements renderable {
         $this->no_sorting('userid');
         $this->no_sorting('select');
         $this->no_sorting('outcomes');
+        $this->no_sorting('delete');
 
         if ($edusignment->get_instance()->teamsubmission) {
             $this->no_sorting('team');
