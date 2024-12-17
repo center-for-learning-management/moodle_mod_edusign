@@ -97,17 +97,6 @@ class batch_set_marker_allocation_viewed extends base {
     }
 
     /**
-     * Return legacy data for add_to_log().
-     *
-     * @return array
-     */
-    protected function get_legacy_logdata() {
-        $logmessage = get_string('viewbatchmarkingallocation', 'edusign');
-        $this->set_legacy_logdata('view batch set marker allocation', $logmessage);
-        return parent::get_legacy_logdata();
-    }
-
-    /**
      * Custom validation.
      *
      * @return void

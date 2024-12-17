@@ -97,17 +97,6 @@ class batch_set_workflow_state_viewed extends base {
     }
 
     /**
-     * Return legacy data for add_to_log().
-     *
-     * @return array
-     */
-    protected function get_legacy_logdata() {
-        $logmessage = get_string('viewbatchsetmarkingworkflowstate', 'edusign');
-        $this->set_legacy_logdata('view batch set marking workflow state', $logmessage);
-        return parent::get_legacy_logdata();
-    }
-
-    /**
      * Custom validation.
      *
      * @return void

@@ -127,17 +127,6 @@ class assessable_submitted extends base {
     }
 
     /**
-     * Return legacy data for add_to_log().
-     *
-     * @return array
-     */
-    protected function get_legacy_logdata() {
-        $submission = $this->get_record_snapshot('edusign_submission', $this->objectid);
-        $this->set_legacy_logdata('submit for grading', $this->edusign->format_submission_for_log($submission));
-        return parent::get_legacy_logdata();
-    }
-
-    /**
      * Custom validation.
      *
      * @return void

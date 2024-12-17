@@ -105,22 +105,6 @@ class submission_form_viewed extends base {
     }
 
     /**
-     * Return legacy data for add_to_log().
-     *
-     * @return array
-     */
-    protected function get_legacy_logdata() {
-        if ($this->relateduserid == $this->userid) {
-            $title = get_string('editsubmission', 'edusign');
-        } else {
-            $user = $this->get_record_snapshot('user', $this->relateduserid);
-            $title = get_string('editsubmissionother', 'edusign', fullname($user));
-        }
-        $this->set_legacy_logdata('view submit edusignment form', $title);
-        return parent::get_legacy_logdata();
-    }
-
-    /**
      * Custom validation.
      *
      * @throws \coding_exception

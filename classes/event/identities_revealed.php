@@ -94,16 +94,6 @@ class identities_revealed extends base {
     }
 
     /**
-     * Return legacy data for add_to_log().
-     *
-     * @return array
-     */
-    protected function get_legacy_logdata() {
-        $this->set_legacy_logdata('reveal identities', get_string('revealidentities', 'edusign'));
-        return parent::get_legacy_logdata();
-    }
-
-    /**
      * Custom validation.
      *
      * @return void

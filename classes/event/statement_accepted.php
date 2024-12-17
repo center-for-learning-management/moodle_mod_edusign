@@ -96,18 +96,6 @@ class statement_accepted extends base {
     }
 
     /**
-     * Return legacy data for add_to_log().
-     *
-     * @return array
-     */
-    protected function get_legacy_logdata() {
-        global $USER;
-        $logmessage = get_string('submissionstatementacceptedlog', 'mod_edusign', fullname($USER)); // Nasty hack.
-        $this->set_legacy_logdata('submission statement accepted', $logmessage);
-        return parent::get_legacy_logdata();
-    }
-
-    /**
      * Custom validation.
      *
      * @return void

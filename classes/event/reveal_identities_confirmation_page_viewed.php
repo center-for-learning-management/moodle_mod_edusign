@@ -97,16 +97,6 @@ class reveal_identities_confirmation_page_viewed extends base {
     }
 
     /**
-     * Return legacy data for add_to_log().
-     *
-     * @return array
-     */
-    protected function get_legacy_logdata() {
-        $this->set_legacy_logdata('view', get_string('viewrevealidentitiesconfirm', 'edusign'));
-        return parent::get_legacy_logdata();
-    }
-
-    /**
      * Custom validation.
      *
      * @throws \coding_exception
